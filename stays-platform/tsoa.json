@@ -1,0 +1,19 @@
+{
+    "entryFile": "src/app.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": ["src/**/*Controller.ts"],
+    "spec": {
+        "outputDirectory": "spec",
+        "specVersion": 3,
+        "securityDefinitions": {
+            "user": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "routes": {
+        "authenticationModule": "./src/auth/auth.ts",
+        "routesDir": "build"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "watch": ["src"],
+    "ext": "ts",
+    "ignore": ["src/routes.ts"],
+    "exec": "npm run build:spec-and-routes"
+}

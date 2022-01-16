@@ -1,0 +1,7 @@
+{
+    "exec": "node build/stays-platform/src/server.js",
+    "watch": ["build"],
+    "delay": 5,
+    "ext": "js"
+  }
+  
