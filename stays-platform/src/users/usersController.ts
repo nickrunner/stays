@@ -28,10 +28,9 @@ export class UsersController extends Controller {
             console.log("user: "+userId+" not found");
             throw e;
         }
-        
     }
 
-    @Security("user", ["Admin"])
+    @Security("user")
     @Get()
     public async getUsers(
         @Query() email?: string ,

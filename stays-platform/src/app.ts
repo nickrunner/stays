@@ -7,8 +7,21 @@ import express, {
     NextFunction,
   } from "express";
 import { Error400,Error401, Error409, Error500, Error404 } from "./error";
+import cors from "cors";
 
 export const app = express();
+
+// app.use((__, res, next) => {
+//   res.setHeader("Content-Type", "application/json");
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   next();
+// })
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Content-Type", "application/json");
+  next();
+});
 
 // Use body parser to read sent json payloads
 app.use(
@@ -16,9 +29,13 @@ app.use(
     extended: true,
   })
 );
+
 app.use(bodyParser.json());
 
+
 RegisterRoutes(app);
+
+
 
 app.use(function errorHandler(
     err: unknown,
@@ -33,3 +50,10 @@ app.use(function errorHandler(
     }
     next();
   });
+
+const corsOptions: cors.CorsOptions = {
+  preflightContinue: true
+}
+app.use(cors(corsOptions));
+
+

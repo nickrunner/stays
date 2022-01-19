@@ -4,6 +4,7 @@ import SignUp from "./SignUp";
 import {BrowserRouter, Routes, Route, } from 'react-router-dom';
 import About from "./About";
 import { Nav } from "./AppBar";
+import React from "react";
 
 function App() {
   return (

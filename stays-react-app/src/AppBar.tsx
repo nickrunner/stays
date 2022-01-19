@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "./Theme";
+import React from 'react';
 
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
   height: 64,
@@ -38,7 +39,6 @@ export function Nav() {
                     color="inherit"
                     variant="h6"
                     underline="none"
-                    href="/premium-themes/onepirate/sign-in/"
                     sx={rightLink}
                     >
                     {'Sign In'}
@@ -48,9 +48,8 @@ export function Nav() {
                 <Link
                     variant="h6"
                     underline="none"
-                    href="/premium-themes/onepirate/sign-up/"
                     sx={{ ...rightLink, color: 'secondary.main' }}>
-                    {'Sign Up'}
+                    {'Sign Up Test'}
                 </Link>
             </RouterLink>
             </Box>

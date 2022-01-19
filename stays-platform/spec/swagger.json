@@ -550,9 +550,7 @@
 				},
 				"security": [
 					{
-						"user": [
-							"Admin"
-						]
+						"user": []
 					}
 				],
 				"parameters": [
