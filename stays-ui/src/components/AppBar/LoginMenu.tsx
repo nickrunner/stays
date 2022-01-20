@@ -21,9 +21,9 @@ export default function LoginMenu() {
   return (
     <div>
       <Button
-        sx={{height: 50, p:1, mt:1}}
+        sx={{height: 50, width:120, p:1, mt:1}}
         size="medium"
-        variant='outlined'
+        variant='contained'
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
@@ -51,11 +51,14 @@ export default function LoginMenu() {
           <Typography>Sign in</Typography>
           </MenuItem>
         <Divider />
-        <MenuItem onClick={event => navigate("/stayers")}>
+        <MenuItem onClick={event => navigate("/search")}>
           <Typography>Find a stay</Typography>
           </MenuItem>
         <MenuItem onClick={event => navigate("/hosts")}>
           <Typography>Become a host</Typography>
+        </MenuItem>
+        <MenuItem onClick={event => navigate("/stayers")}>
+          <Typography>Become a member</Typography>
         </MenuItem>
       </Menu>
     </div>

@@ -6,12 +6,13 @@ import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import logo from "../../static/img/stays_purple.png"
 import { useNavigate } from "react-router-dom";
 import LoginMenu from './LoginMenu';
-
+import NavButton  from "./NavButton";
+ 
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
   height: 64,
   [theme.breakpoints.up('sm')]: {
@@ -32,25 +33,51 @@ const rightLink = {
   
 export function Nav() {
 
-
-  let navigate = useNavigate();
+  const [mobile, setMobile] = React.useState(false);
+  const [scroll, setScroll] = React.useState(false);
   React.useEffect(() => {
-
+    handleResize();
+    function handleResize() {
+      setMobile(window.innerWidth < 600);
+    }
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('scroll', () => {setScroll(true)});
+    return () => window.removeEventListener('resize', handleResize)
   }, []);
+
+  function logoHeight() {
+    return mobile ? 60 : 75;
+  }
+
+  function transparentBg(){
+    return  mobile && (!scroll);
+  }
 
     return (
         <ThemeProvider theme={theme}>
-        <AppBar position="fixed">
+        <AppBar position="fixed" 
+        style={{background:(transparentBg() ? "transparent" : "background.default")}}
+        >
             <Toolbar sx={{ 
-              bgcolor: "background.default",
               justifyContent: 'space-between',
+              bgcolor: (transparentBg() ? "common.transparent" : "background.default")
               }}>
-            <Box  sx={{flex: 1, display: 'flex', justifyContent: 'flex-end' }} >
-              <RouterLink to="/"><img height="60"  src={logo} /></RouterLink>
+            <Box  sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: 'flex-start' }} >
+              <RouterLink to="/">
+                <img height={logoHeight()}  src={logo} />
+              </RouterLink>
+              
             </Box>
-            <Box mr={35} sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <LoginMenu />
+            <Box sx={{ flex: 1, display: 'flex', justifyContent: "center", mx:"auto"}}>
+              <NavButton text="Find a Stay" to="/search"></NavButton>
+              <NavButton text="For Stayers" to="/stayers"></NavButton>
+              <NavButton text="For Hosts" to="/hosts"></NavButton>  
             </Box>
+
+            <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end" }}>
+               <LoginMenu />
+            </Box>
+
             
             </Toolbar>
         </AppBar>

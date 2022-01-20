@@ -1,7 +1,9 @@
 import {AxiosRequestConfig} from "axios";
 import { AuthClient } from "./authClient";
 
-export const BASE_URL = "http://localhost:3000"
+//export const BASE_URL = "http://localhost:3001"
+export const BASE_URL = "https://stays-platform.uc.r.appspot.com"
+
 
 export async function defCfg(): Promise<AxiosRequestConfig>
 {

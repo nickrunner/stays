@@ -3,7 +3,9 @@ import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
 import { auth } from "../firebase";
 
-export const url = "http://localhost:3001/users";
+
+export const url = "/users";
+
 
 export class UserClient {
 

@@ -1,14 +1,11 @@
 import { Container, ThemeProvider } from "@mui/material";
 import React from "react";
 import Footer from "../../components/Footer";
-import Jumbotron from "../../components/Jumbotron";
-import Pricing from "../../components/Pricing";
 import UnderConstruction from "../../components/UnderConstruction";
 import { theme } from "../../Theme";
-import dotMap from "../../static/img/dot_map.svg";
 
 
-function Stayers() {
+function Directory() {
     
     const [mobile, setMobile] = React.useState(false);
     React.useEffect(() => {
@@ -21,15 +18,15 @@ function Stayers() {
     }, []);
     
   return (
-    
+      
+  
     <ThemeProvider theme={theme}>
-      <Container component="main">
-        <Jumbotron backgroundImage="dotMap"></Jumbotron>
-        <Pricing />
-        <Footer />
+      <Container component="main" >
+        <UnderConstruction />
+        < Footer />
       </Container>
     </ThemeProvider>
   );
 }
 
-export default Stayers;
+export default Directory;
