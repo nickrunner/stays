@@ -30,7 +30,7 @@ const tiers = [
       'Cancellation opening notices',
       '1 auto entry into all Stays Giveaways',
       'You get to be Jeff\'s bitch',
-      'You should really get premium'
+      'You should really get'
     ],
     buttonText: 'Sign up for free',
     buttonVariant: 'outlined',

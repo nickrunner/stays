@@ -10,6 +10,7 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { Nav } from '../../components/AppBar/AppBar';
 import Jumbotron from '../../components/Jumbotron';
 import Pricing from '../../components/Pricing';
+import { shadows } from "@mui/system";
 
 const backgroundImage = {scribners}
 
@@ -39,37 +40,32 @@ export default function Hero(props: any) {
       height: "1"
     }}
   > 
-      <Jumbotron backgroundImage={aBed}>
+      <Jumbotron backgroundImage="https://cdn.onekindesign.com/wp-content/uploads/2019/12/Rustic-Contemporary-A-Frame-Todd-Gordon-Mather-Architect-01-1-Kindesign.jpg">
           </Jumbotron>
 
-        <Typography align="center" variant={mobile ? "h3" : "h2"} sx={{ mb: 4, mt: { sx: 5, sm: 15 } }}>
-            Book directly with elite vacation rentals
+        <Typography align="center" color="common.white" variant={mobile ? "h2" : "h1"} sx={{ mb: 4, mt: { sx: 5, sm: 15 } }}>
+            Stay in luxury.  Save Money. 
         </Typography>
         <Typography
-            color="inherit"
+            color="common.white"
             align="center"
             variant={mobile ? "h5" : "h4"}
-            sx={{ mb: 10, mt: { sx: 4, sm: 10 } }}
+            sx={{mb: 8, mt: { sx: 4, sm: 8 } }}
         >
-            Stay in luxury.  Save money. 
+            Book directly with elite vacation rentals
         </Typography>
+
         <Button
             color="primary"
             variant="contained"
             size="large"
             component="a"
             onClick={() => navigate("/search")}
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 200}}
         >
             Find your stay
         </Button>
 
-        <Box
-          height="16"
-          width="12"
-          sx={{ position: 'absolute', bottom: 32 }}
-        >
-        </Box>
     </Container>
      
   );

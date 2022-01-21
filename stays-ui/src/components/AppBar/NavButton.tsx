@@ -9,12 +9,15 @@ export default function NavButton(props: any){
     let navigate = useNavigate();
 
     const [mobile, setMobile] = React.useState(false);
+    const [scroll, setScroll] = React.useState(false);
     React.useEffect(() => {
       handleResize();
       function handleResize() {
         setMobile(window.innerWidth < 600);
       }
-      window.addEventListener('resize', handleResize)
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', () => {setScroll(window.scrollY != 0 )});
+
       return () => window.removeEventListener('resize', handleResize)
     }, []);
 
@@ -28,7 +31,7 @@ export default function NavButton(props: any){
                  p:2, 
                  mt:1, 
                  mr:4,
-                 color:"primary.dark",
+                 color: ((!props.changeColor) || scroll) ? "primary.dark" : "primary.light",
                 }
             } 
          onClick={() => navigate(props.to)}

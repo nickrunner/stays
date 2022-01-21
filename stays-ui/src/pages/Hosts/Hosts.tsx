@@ -1,5 +1,6 @@
 import { Container, ThemeProvider } from "@mui/material";
 import React from "react";
+import { Nav } from "../../components/AppBar/AppBar";
 import Copyright from "../../components/Copyright";
 import Footer from "../../components/Footer";
 import UnderConstruction from "../../components/UnderConstruction";
@@ -22,6 +23,7 @@ function Hosts() {
       
     <ThemeProvider theme={theme}>
       <Container component="main" >
+        <Nav transparent={false} />
         <UnderConstruction />
         <Footer />
       </Container>

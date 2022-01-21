@@ -19,6 +19,7 @@ import { AuthClient } from '../../clients/authClient';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from "react-router-dom";
 import { UserClient } from '../../clients/userClient';
+import { Nav } from '../../components/AppBar/AppBar';
 
 export default function SignIn() {
 
@@ -76,6 +77,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Nav transparent={false} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

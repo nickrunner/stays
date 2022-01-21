@@ -9,6 +9,7 @@ import {theme} from "../../Theme";
 import React, { useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import logo from "../../static/img/stays_purple.png"
+import whiteLogo from "../../static/img/stays_white.png"
 import { useNavigate } from "react-router-dom";
 import LoginMenu from './LoginMenu';
 import NavButton  from "./NavButton";
@@ -31,7 +32,7 @@ const rightLink = {
     underline: "none"
   };
   
-export function Nav() {
+export function Nav(props:any) {
 
   const [mobile, setMobile] = React.useState(false);
   const [scroll, setScroll] = React.useState(false);
@@ -41,7 +42,7 @@ export function Nav() {
       setMobile(window.innerWidth < 600);
     }
     window.addEventListener('resize', handleResize)
-    window.addEventListener('scroll', () => {setScroll(true)});
+    window.addEventListener('scroll', () => {setScroll(window.scrollY != 0 )});
     return () => window.removeEventListener('resize', handleResize)
   }, []);
 
@@ -50,7 +51,11 @@ export function Nav() {
   }
 
   function transparentBg(){
-    return  mobile && (!scroll);
+    return  props.transparent && (!scroll);
+  }
+
+  function getLogo() {
+    return transparentBg() ? whiteLogo : logo;
   }
 
     return (
@@ -64,14 +69,14 @@ export function Nav() {
               }}>
             <Box  sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: 'flex-start' }} >
               <RouterLink to="/">
-                <img height={logoHeight()}  src={logo} />
+                <img height={logoHeight()}  src={getLogo()} />
               </RouterLink>
               
             </Box>
             <Box sx={{ flex: 1, display: 'flex', justifyContent: "center", mx:"auto"}}>
-              <NavButton text="Find a Stay" to="/search"></NavButton>
-              <NavButton text="For Stayers" to="/stayers"></NavButton>
-              <NavButton text="For Hosts" to="/hosts"></NavButton>  
+              <NavButton changeColor={props.transparent} text="Find a Stay" to="/search"></NavButton>
+              <NavButton changeColor={props.transparent} text="For Stayers" to="/stayers"></NavButton>
+              <NavButton changeColor={props.transparent} text="For Hosts" to="/hosts"></NavButton>  
             </Box>
 
             <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end" }}>

@@ -6,6 +6,7 @@ import Pricing from "../../components/Pricing";
 import UnderConstruction from "../../components/UnderConstruction";
 import { theme } from "../../Theme";
 import dotMap from "../../static/img/dot_map.svg";
+import { Nav } from "../../components/AppBar/AppBar";
 
 
 function Stayers() {
@@ -24,7 +25,7 @@ function Stayers() {
     
     <ThemeProvider theme={theme}>
       <Container component="main">
-        <Jumbotron backgroundImage="dotMap"></Jumbotron>
+        <Nav transparent={false} />
         <Pricing />
         <Footer />
       </Container>

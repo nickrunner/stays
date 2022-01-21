@@ -1,5 +1,6 @@
 import { Container, ThemeProvider } from "@mui/material";
 import React from "react";
+import { Nav } from "../../components/AppBar/AppBar";
 import Footer from "../../components/Footer";
 import UnderConstruction from "../../components/UnderConstruction";
 import { theme } from "../../Theme";
@@ -22,6 +23,7 @@ function Directory() {
   
     <ThemeProvider theme={theme}>
       <Container component="main" >
+        <Nav transparent={false} />
         <UnderConstruction />
         < Footer />
       </Container>

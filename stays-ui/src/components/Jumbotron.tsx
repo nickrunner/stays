@@ -13,7 +13,7 @@ export default function Jumbotron(props: any) {
             right: 0,
             top: 0,
             bottom: 0,
-            bgcolor: 'primary.light',
+            bgcolor: 'primary.dark',
             zIndex: -1,
             justifyContent: "center"
             
@@ -21,7 +21,6 @@ export default function Jumbotron(props: any) {
             <img
                 className='HeroImage'
                 src={props.backgroundImage}
-                alt="wonder"
                 object-fit="cover"
                 width="100%"
                 height="100%"

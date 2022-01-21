@@ -17,6 +17,7 @@ import { AuthClient } from '../../clients/authClient';
 import { UserClient } from '../../clients/userClient';
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink} from "react-router-dom";
+import { Nav } from '../../components/AppBar/AppBar';
 
 export default function SignUp() {
 
@@ -170,6 +171,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Nav transparent={false} />
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
