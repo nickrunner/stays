@@ -18,6 +18,7 @@ import { UserClient } from '../../clients/userClient';
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink} from "react-router-dom";
 import { Nav } from '../../components/AppBar/AppBar';
+import StaysPage from '../StaysPage';
 
 export default function SignUp() {
 
@@ -170,7 +171,7 @@ export default function SignUp() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <StaysPage>
       <Nav transparent={false} />
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
@@ -271,6 +272,6 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    </StaysPage>
   );
 }

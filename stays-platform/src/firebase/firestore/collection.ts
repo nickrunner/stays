@@ -118,10 +118,12 @@ export class Collection<Type> {
         }
     }
 
-    public async create(attributes: any): Promise<Entity & any> {
+    public async create(attributes: any, clientId?: string): Promise<Entity & any> {
         const entity: Entity & any = {
             createdAt: Date.now(),
             updatedAt: Date.now(),
+            createdBy: clientId,
+            updatedBy: clientId,
             id: uuidv4(),
             ... attributes
         }
@@ -130,12 +132,12 @@ export class Collection<Type> {
         return entity;
     }
 
-    public async updateAll(attributes: any, filters?: any): Promise<(Entity & Type)[]>{
+    public async updateAll(attributes: any, filters?: any, clientId?: string): Promise<(Entity & Type)[]>{
         console.log("updateAll() attr, filters", {attributes}, {filters});
         const entities: (Entity & Type)[] = await this.getAll(filters);
         const batch = firestore.batch();
         for(let entity of entities){
-            entity = this.updateEntity(entity, attributes);
+            entity = this.updateEntity(entity, attributes, clientId);
             const ref = this.col.doc(entity.id);
             batch.set(ref, attributes);
         }
@@ -143,27 +145,29 @@ export class Collection<Type> {
         return entities;
     }
 
-    public async update(id: string, attributes: any): Promise<void>{
+    public async update(id: string, attributes: any, clientId?: string): Promise<void>{
         const newAttr = {
             updatedAt: Date.now(),
+            updatedBy: clientId,
             ... attributes
         }
         console.log("update() id: "+id, {newAttr});
         await this.col.doc(id).set(newAttr, {merge: true});
     }
 
-    public async updateFirst(attributes: any, filters?: any): Promise<(Entity & Type)>{
+    public async updateFirst(attributes: any, filters?: any, clientId?: string): Promise<(Entity & Type)>{
         console.log("updateFirst() attr, filters", {attributes}, {filters});
         let entity: (Entity & Type) = await this.getFirst(filters);
-        entity = this.updateEntity(entity, attributes);
+        entity = this.updateEntity(entity, attributes, clientId);
         await this.col.doc(entity.id).set(attributes, {merge: true});
         return entity
     }
 
-    private updateEntity(original: Entity & Type, attributes: any): Entity & Type{
+    private updateEntity(original: Entity & Type, attributes: any, clientId?: string): Entity & Type{
         console.log("updateEntity() original: ", {original});
         console.log("updateEntity() new attr: ", {attributes});
         original.updatedAt = Date.now();
+        original.updatedBy = clientId;
         const newEntity: Entity & Type = {... original, ...attributes};
         console.log("updateEntity() new entity: ", {newEntity});
         return newEntity;

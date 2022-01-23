@@ -20,6 +20,7 @@ import { LoadingButton } from '@mui/lab';
 import { useNavigate } from "react-router-dom";
 import { UserClient } from '../../clients/userClient';
 import { Nav } from '../../components/AppBar/AppBar';
+import StaysPage from '../StaysPage';
 
 export default function SignIn() {
 
@@ -76,7 +77,7 @@ export default function SignIn() {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    <StaysPage>
       <Nav transparent={false} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -147,6 +148,6 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
+    </StaysPage>
   );
 }

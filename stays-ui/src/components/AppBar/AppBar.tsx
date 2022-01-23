@@ -13,6 +13,9 @@ import whiteLogo from "../../static/img/stays_white.png"
 import { useNavigate } from "react-router-dom";
 import LoginMenu from './LoginMenu';
 import NavButton  from "./NavButton";
+import { UserClient } from '../../clients/userClient';
+import { User } from '../../models/User';
+import { globalContext } from '../../GlobalStore';
  
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
   height: 64,
@@ -25,29 +28,26 @@ function AppBar(props: AppBarProps) {
   return <MuiAppBar elevation={0} position="fixed" {...props} />;
 }
 
-const rightLink = {
-    fontSize: 16,
-    color: 'primary',
-    ml: 3,
-    underline: "none"
-  };
+export interface StaysAppBarProps {
+  transparent: boolean
+}
   
-export function Nav(props:any) {
-
-  const [mobile, setMobile] = React.useState(false);
+export function Nav(props: StaysAppBarProps) {
   const [scroll, setScroll] = React.useState(false);
+  const { globalState, dispatch } = React.useContext(globalContext);
+
   React.useEffect(() => {
-    handleResize();
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
+
+    function handleScroll(){
+      setScroll(window.scrollY != 0 );
     }
-    window.addEventListener('resize', handleResize)
-    window.addEventListener('scroll', () => {setScroll(window.scrollY != 0 )});
-    return () => window.removeEventListener('resize', handleResize)
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll)
   }, []);
 
   function logoHeight() {
-    return mobile ? 60 : 75;
+    return globalState.mobile ? 60 : 75;
   }
 
   function transparentBg(){
@@ -74,13 +74,13 @@ export function Nav(props:any) {
               
             </Box>
             <Box sx={{ flex: 1, display: 'flex', justifyContent: "center", mx:"auto"}}>
-              <NavButton changeColor={props.transparent} text="Find a Stay" to="/search"></NavButton>
-              <NavButton changeColor={props.transparent} text="For Stayers" to="/stayers"></NavButton>
-              <NavButton changeColor={props.transparent} text="For Hosts" to="/hosts"></NavButton>  
+              <NavButton transparent={props.transparent} text="Find a Stay" to="/search"></NavButton>
+              <NavButton transparent={props.transparent} text="For Stayers" to="/stayers"></NavButton>
+              <NavButton transparent={props.transparent} text="For Hosts" to="/hosts"></NavButton>  
             </Box>
 
             <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end" }}>
-               <LoginMenu />
+               <LoginMenu transparent={props.transparent}/>
             </Box>
 
             

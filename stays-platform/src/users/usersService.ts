@@ -2,13 +2,12 @@ import { User, UserRecord } from "../../../common/models/user";
 import { Error404, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 
-const USERS_COLLECTION = "users";
 
 export class UsersService {
 
     private db: Collection<User>;
     public constructor() {
-        this.db = new Collection<User>(USERS_COLLECTION);
+        this.db = new Collection<User>("users");
     }
 
     public async getUsers(filters?: any, or?: boolean): Promise<UserRecord[]> {
@@ -29,7 +28,7 @@ export class UsersService {
         return await this.db.exists({id:userId});
     }
 
-    public async createUser(user: User): Promise<UserRecord> {
+    public async createUser(user: User, clientId?: string): Promise<UserRecord> {
         console.log("Creating User :) "+user.email);
         const userExists: boolean = await this.db.exists
         (
@@ -39,7 +38,7 @@ export class UsersService {
         )
         console.log("User exists: "+userExists);
         if(userExists == false){ 
-            const userRecord: UserRecord = await this.db.create(user);
+            const userRecord: UserRecord = await this.db.create(user, clientId);
             return userRecord; 
         }
         else{
@@ -48,9 +47,9 @@ export class UsersService {
         }   
     }
 
-    public async updateUser(userId: string, attributes: any): Promise<void> {
+    public async updateUser(userId: string, attributes: any, clientId?: string): Promise<void> {
         if(await this.userExists(userId) ){
-            await this.db.update(userId, attributes);
+            await this.db.update(userId, attributes, clientId);
         }
         else{
             throw new Error404();

@@ -7,14 +7,22 @@ import { Token } from "./token";
 
 export class AuthService {
 
-    public async verifyToken(token: string): Promise<UserRecord> {
+    private currentUser?: UserRecord;
+
+    public async verifyToken(token: string): Promise<string | undefined> {
         try{
             const decodedToken: DecodedIdToken = await auth.verifyIdToken(token);
-            return await new UsersService().getUserByEmail(decodedToken.email as string);
+            //this.currentUser = await new UsersService().getUserByEmail(decodedToken.email as string);
+            return decodedToken.email;
         }
         catch(e){
             throw new Error401();
         }
-        
     }
+
+    public async getCurrentUserId(): Promise<string | undefined> {
+        return this.currentUser ? await this.currentUser.id : undefined;
+    }
+
+    
 }

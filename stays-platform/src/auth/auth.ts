@@ -6,12 +6,19 @@ import { AuthService } from "./authService";
 import { Role, UserRecord } from "../../../common/models/user";
 import { Error401 } from "../error";
 
+export interface AuthenticatedRequest extends express.Request{
+  email?: string,
+  self?: UserRecord
+}
+
+
 export async function expressAuthentication(
   request: express.Request,
   securityName: string,
   scopes?: string[]
-): Promise<any> {
+): Promise<express.Request> {
   if( securityName == "user"){
+      const authenticatedRequest: AuthenticatedRequest = request;
       try{
         console.log("Performing user authentication for scopes: ", {scopes});
         
@@ -28,16 +35,25 @@ export async function expressAuthentication(
           console.log("Authentication error: token not valid");
           throw new Error401();
         }
+        const email: string | undefined = await new AuthService().verifyToken(token);
+        if(!email){
+          console.log("No email associated with this token... not authorized");
+          throw new Error401();
+        }
+        authenticatedRequest.email = email;
         
-        const user: UserRecord = await new AuthService().verifyToken(token);
         if(!scopes){
           console.log("No scopes required... allow");
-            return user;
+            return authenticatedRequest;
         }
         if(scopes.length <= 0){
           console.log("No scopes required... allow");
-          return user;
+          return authenticatedRequest;
         }
+        const user: UserRecord = await new UsersService().getUserByEmail(email);
+        authenticatedRequest.self = user;
+        
+        authenticatedRequest.email = user.email;
         const roles = scopes as Role[]
         for(const role of roles){
             if(!user.roles.includes(role)){
@@ -45,12 +61,14 @@ export async function expressAuthentication(
                 throw new Error401();
             }
         } 
-        return user;
+        return authenticatedRequest;
       }
       catch(e){
           console.log("Authentication error: ", {e});
           throw new Error401();
       }
   }
+
+  return request;
   
 }

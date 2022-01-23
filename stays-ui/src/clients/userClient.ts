@@ -1,7 +1,6 @@
 import { Membership, Role, User } from "../models/User";
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
-import { auth } from "../firebase";
 
 
 export const url = "/users";
@@ -18,6 +17,13 @@ export class UserClient {
             roles: [Role.Stayer]
         }
         const response = await axios.post(url, user, await defCfg());
+        return response.data as User;
+    }
+
+    public async getSelf(): Promise<User> {
+        const response = await axios.get(url+"/self", await defCfg());
+        const user = response.data as User;
+        console.log("Received user: "+user.email);
         return response.data as User;
     }
 

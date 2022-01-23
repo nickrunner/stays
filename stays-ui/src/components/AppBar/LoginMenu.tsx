@@ -4,11 +4,16 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from "@mui/icons-material/Menu";
 import { AccountCircle } from "@mui/icons-material";
 import MenuItem from '@mui/material/MenuItem';
-import { Box, Divider, IconButton, Typography } from '@mui/material';
+import { AppBarProps, Box, Divider, IconButton, Typography } from '@mui/material';
 import {useNavigate} from "react-router-dom";
+import { User } from '../../models/User';
+import { StaysAppBarProps } from './AppBar';
+import { globalContext } from '../../GlobalStore';
 
-export default function LoginMenu() {
+
+export default function LoginMenu(props: StaysAppBarProps) {
   let navigate = useNavigate();
+  const { globalState, dispatch } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +49,9 @@ export default function LoginMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={event => navigate("/sign_up")}>
+        <MenuItem 
+        disabled={ globalState.self != undefined}
+        onClick={event => navigate("/sign_up")}>
           <Typography variant="subtitle1">Create account</Typography>
         </MenuItem>
         <MenuItem onClick={event => navigate("/sign_in")}>

@@ -1,3 +1,4 @@
+import { response } from "express";
 import {
     Body,
     Controller,
@@ -8,39 +9,47 @@ import {
     Query,
     Patch,
     Delete,
-    Security
+    Security,
+    Request
   } from "tsoa";
 
 import { User, UserRecord, Membership, Role } from "../../../common/models/user";
+import { AuthenticatedRequest } from "../auth/auth";
+import { Error401 } from "../error";
 import { UsersService } from "./usersService";
 
 @Route("users")
 export class UsersController extends Controller {
     
-    @Get("{userId}")
-    public async getUserById(
-        @Path() userId: string,
+
+    @Security("user", ["Stayer"])
+    @Get("/self")
+    public async getSelf(
+        @Request() req: AuthenticatedRequest
     ): Promise<UserRecord> {
-        try{
-            return await new UsersService().getUserById(userId)
+        console.log("GET", "/users/self");
+        if(!req.self){
+            console.log("User is not signed in!");
+            throw new Error401("Not signed in");
         }
-        catch(e){
-            console.log("user: "+userId+" not found");
-            throw e;
-        }
+        const user: UserRecord = req.self;
+        return user;
     }
 
     @Security("user")
     @Get()
     public async getUsers(
+        @Query() userId?: string,
         @Query() email?: string ,
         @Query() firstName?: string,
         @Query() lastName?: string, 
         @Query() membership?: Membership,
         @Query() role?: Role, 
-        @Query() or?: boolean
+        @Query() or?: boolean,
     ): Promise<UserRecord[]> {
+        console.log("GET", "/users");
         const filters = {
+            id: userId,
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -51,12 +60,14 @@ export class UsersController extends Controller {
     }
 
     @Post()
+    @Security("user")
     public async createUser(
+        @Request() req: AuthenticatedRequest,
         @Body() user: User
     ): Promise<UserRecord> {
         console.log("POST /users with body ", {user});
         try{
-            return await new UsersService().createUser(user);
+            return await new UsersService().createUser(user, req.email);
         }
         catch(e){
             console.log("createUser() Error: "+e);

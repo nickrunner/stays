@@ -9,18 +9,19 @@ import HostsHero from "./Help";
 import Help from "./Help";
 import Description from "./Description";
 import Showcase from "./Showcase";
+import StaysPage from "../StaysPage";
 
 function Home() {
   return (
 
-    <ThemeProvider theme={theme}>
+    <StaysPage>
         <Nav transparent={true} />
         <Hero />
         <Description />
         <Showcase />
         <Help />
         <Footer />
-    </ThemeProvider>
+    </StaysPage>
   );
 }
 

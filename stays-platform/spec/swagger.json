@@ -114,6 +114,12 @@
 					"updatedAt": {
 						"type": "number",
 						"format": "double"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"updatedBy": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -420,9 +426,9 @@
 				}
 			}
 		},
-		"/users/{userId}": {
+		"/users/self": {
 			"get": {
-				"operationId": "GetUserById",
+				"operationId": "GetSelf",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -435,18 +441,131 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
 				"parameters": [
 					{
-						"in": "path",
+						"in": "query",
 						"name": "userId",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "firstName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "lastName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "membership",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Membership"
+						}
+					},
+					{
+						"in": "query",
+						"name": "role",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Role"
+						}
+					},
+					{
+						"in": "query",
+						"name": "or",
+						"required": false,
+						"schema": {
+							"type": "boolean"
 						}
 					}
 				]
 			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
 			"post": {
 				"operationId": "UpdateUser",
 				"responses": {
@@ -528,108 +647,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/users": {
-			"get": {
-				"operationId": "GetUsers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/UserRecord"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "email",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "firstName",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "lastName",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "membership",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/Membership"
-						}
-					},
-					{
-						"in": "query",
-						"name": "role",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/Role"
-						}
-					},
-					{
-						"in": "query",
-						"name": "or",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/User"
-							}
-						}
-					}
-				}
 			}
 		}
 	},

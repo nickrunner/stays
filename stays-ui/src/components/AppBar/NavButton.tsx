@@ -3,35 +3,41 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from 'react';
+import { StaysAppBarProps } from "./AppBar";
+import { globalContext } from "../../GlobalStore";
 
+export interface NavButtonProps extends StaysAppBarProps {
+  text: string;
+  to: string;
+}
 
-export default function NavButton(props: any){
+export default function NavButton(props: NavButtonProps){
     let navigate = useNavigate();
-
-    const [mobile, setMobile] = React.useState(false);
+    const { globalState, dispatch } = React.useContext(globalContext);
     const [scroll, setScroll] = React.useState(false);
-    React.useEffect(() => {
-      handleResize();
-      function handleResize() {
-        setMobile(window.innerWidth < 600);
-      }
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('scroll', () => {setScroll(window.scrollY != 0 )});
 
-      return () => window.removeEventListener('resize', handleResize)
+    React.useEffect(() => {
+
+      function handleScroll(){
+        setScroll(window.scrollY != 0 );
+      }
+
+      window.addEventListener('scroll', handleScroll);
+
+      return () => window.removeEventListener('scroll', handleScroll)
     }, []);
 
 
     return  (
         <Button
          variant = "text"
-         style={{display: mobile ? 'none' : 'block'}}
+         style={{display: globalState.mobile ? 'none' : 'block'}}
          sx={
              {
                  p:2, 
                  mt:1, 
                  mr:4,
-                 color: ((!props.changeColor) || scroll) ? "primary.dark" : "primary.light",
+                 color: ((!props.transparent) || scroll) ? "primary.dark" : "primary.light",
                 }
             } 
          onClick={() => navigate(props.to)}

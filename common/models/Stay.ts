@@ -1,7 +1,6 @@
 import { Entity } from "./Entity";
 import {Range} from "./Range";
 
-
 export interface Stay {
     name: string;
     description: string;
