@@ -14,6 +14,12 @@ import Dashboard from "./pages/cms/Dashboard.";
 import { ThemeProvider } from "@mui/styles";
 import { theme } from "./Theme";
 import { GlobalStore } from "./GlobalStore";
+import Account from "./pages/Account/Account";
+import PremiumSignUp from "./pages/Stayers/PremiumSignUp";
+import HostPortal from "./pages/Hosts/HostPortal";
+import UsersCms from "./pages/cms/Users/UsersCms";
+import StaysCms from "./pages/cms/Stays/StaysCms";
+import ContentCms from "./pages/cms/Content/ContentCms";
 
 function App() {
   return (
@@ -27,9 +33,15 @@ function App() {
             <Route path="/sign_up" element={<SignUp />}/>
             <Route path="/about" element={<About />} />
             <Route path="/stayers" element={<Stayers />}/>
+            <Route path="/stayers/premium/sign_up" element={<PremiumSignUp />}/>
             <Route path="/hosts" element={<Hosts />}/>
+            <Route path="/hosts/portal" element={<HostPortal />}/>
             <Route path="/search" element={<Directory />}/>
+            <Route path="/account" element={<Account />}/>
             <Route path="/cms/dashboard" element={<Dashboard />}/>
+            <Route path="/cms/users" element={<UsersCms />}/>
+            <Route path="/cms/stays" element={<StaysCms />}/>
+            <Route path="/cms/content" element={<ContentCms />}/>
           </Routes>
           
         </div>

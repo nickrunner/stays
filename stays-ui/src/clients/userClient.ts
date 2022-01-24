@@ -1,4 +1,4 @@
-import { Membership, Role, User } from "../models/User";
+import { Membership, Role, User, UserRecord } from "../models/User";
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
 
@@ -31,4 +31,9 @@ export class UserClient {
        const response = await axios.get(url, await queryCfg({email: email}));   
        return response.data as User;  
     }
+
+    public async getUsers(filters: any): Promise<UserRecord[]>{
+        const response = await axios.get(url, await queryCfg(filters));   
+        return response.data as UserRecord[];  
+     }
 }

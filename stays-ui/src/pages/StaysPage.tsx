@@ -21,13 +21,16 @@ export default function StaysPage(props: any){
         }
 
         const getSelf = async() => {
+            console.log("Getting self");
             try{
                 const self: User = await new UserClient().getSelf();
+                console.log("Got self: ", {self});
                 dispatch({type: "GET_SELF", payload: self});
 
             }
             catch(e){
-            console.log("Not signed in");
+                console.log("Not signed in: ", {e});
+                dispatch({type: "GET_SELF", payload: undefined});
             }
         }
         getSelf();

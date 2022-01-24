@@ -1,7 +1,7 @@
 import { Membership, Role, User } from "../models/User";
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
-import { Stay } from "../models/Stay";
+import { Stay, StayRecord } from "../models/Stay";
 
 
 export const url = "/stays";
@@ -14,8 +14,8 @@ export class StayClient {
         return response.data as Stay;
     }
 
-    public async getUserByEmail(email: string): Promise<User>{
-       const response = await axios.get(url, await queryCfg({email: email}));   
-       return response.data as User;  
+    public async getStays(filters: any): Promise<StayRecord[]>{
+       const response = await axios.get(url, await queryCfg(filters));   
+       return response.data as StayRecord[];  
     }
 }

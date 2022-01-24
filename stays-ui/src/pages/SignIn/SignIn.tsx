@@ -21,12 +21,22 @@ import { useNavigate } from "react-router-dom";
 import { UserClient } from '../../clients/userClient';
 import { Nav } from '../../components/AppBar/AppBar';
 import StaysPage from '../StaysPage';
+import { globalContext } from '../../GlobalStore';
 
 export default function SignIn() {
 
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+      async function redirectIfSignedIn(){
+        if(await new AuthClient().isSignedIn()){
+          navigate("/");
+        }
+      }
+      redirectIfSignedIn();
+  });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
     event.preventDefault();

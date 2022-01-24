@@ -2,7 +2,8 @@ import { Dispatch } from "react"
 import { User } from "./models/User"
 
 export interface StaysState {
-    self: User | undefined,
+    self?: User,
+    isSignedIn: boolean,
     mobile: boolean,
     persistenceType: string
 }

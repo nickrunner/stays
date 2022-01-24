@@ -6,9 +6,10 @@ import { AccountCircle } from "@mui/icons-material";
 import MenuItem from '@mui/material/MenuItem';
 import { AppBarProps, Box, Divider, IconButton, Typography } from '@mui/material';
 import {useNavigate} from "react-router-dom";
-import { User } from '../../models/User';
+import { Membership, Role, User } from '../../models/User';
 import { StaysAppBarProps } from './AppBar';
 import { globalContext } from '../../GlobalStore';
+import { AuthClient } from '../../clients/authClient';
 
 
 export default function LoginMenu(props: StaysAppBarProps) {
@@ -20,8 +21,41 @@ export default function LoginMenu(props: StaysAppBarProps) {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    console.log("Global state: ", {globalState});
     setAnchorEl(null);
   };
+
+  async function onSignOutClick()
+  {
+    await new AuthClient().signOut();
+    navigate("/sign_in");
+  }
+
+  function hasRole(role: Role): boolean {
+    if(!globalState.isSignedIn){
+      return false;
+    }
+    if(!globalState.self){
+      return false;
+    }
+    if(!globalState.self.roles){
+      return false;
+    }
+    return globalState.self.roles.includes(role);
+  }
+
+  function hasMembership(tier: Membership): boolean {
+    if(!globalState.isSignedIn){
+      return false;
+    }
+    if(!globalState.self){
+      return false;
+    }
+    if(!globalState.self.membership){
+      return false;
+    }
+    return globalState.self.membership == tier;
+  }
 
   return (
     <div>
@@ -49,24 +83,67 @@ export default function LoginMenu(props: StaysAppBarProps) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem 
-        disabled={ globalState.self != undefined}
-        onClick={event => navigate("/sign_up")}>
-          <Typography variant="subtitle1">Create account</Typography>
+
+
+        <MenuItem onClick={() => navigate("/stayers/premium/sign_up")}
+          sx={{display: (globalState.isSignedIn && !hasMembership(Membership.Premium)) ? "block" : "none"}}>
+          <Typography variant="subtitle1">Upgrade to Premium</Typography>
         </MenuItem>
-        <MenuItem onClick={event => navigate("/sign_in")}>
+
+        <Divider sx={{display: globalState.isSignedIn ? "block" : "none"}}></Divider>
+
+        <MenuItem 
+        sx={{display: globalState.isSignedIn ? "none" : "block"}}
+        onClick={() => navigate("/sign_up")}>
+          <Typography variant="subtitle1">Create account for free</Typography>
+        </MenuItem>
+
+        <MenuItem 
+        sx={{display: globalState.isSignedIn? "block" : "none"}}
+        onClick={() => onSignOutClick()}>
+          <Typography>Sign out</Typography>
+        </MenuItem>
+
+        <MenuItem 
+        sx={{display: globalState.isSignedIn? "block" : "none"}}
+        onClick={() => navigate("/account")}>
+          <Typography>Account Settings</Typography>
+        </MenuItem>
+          
+          
+        <MenuItem onClick={() => navigate("/sign_in")}
+          sx={{display: globalState.isSignedIn ? "none" : "block"}}>
           <Typography>Sign in</Typography>
-          </MenuItem>
+        </MenuItem>
+
         <Divider />
-        <MenuItem onClick={event => navigate("/search")}>
+
+        <MenuItem onClick={() => navigate("/search")}>
           <Typography>Find a stay</Typography>
           </MenuItem>
-        <MenuItem onClick={event => navigate("/hosts")}>
+          
+        <MenuItem onClick={() => navigate("/hosts")}
+          sx={{display: hasRole(Role.Host) ? "none" : "block"}}>
           <Typography>Become a host</Typography>
         </MenuItem>
-        <MenuItem onClick={event => navigate("/stayers")}>
+
+        <MenuItem onClick={ () => navigate("/hosts/portal")}
+          sx={{display: hasRole(Role.Host) ? "block" : "none"}}>
+          <Typography>Host Portal</Typography>
+        </MenuItem>
+
+        <MenuItem onClick={() => navigate("/stayers")}
+          sx={{display: globalState.isSignedIn ? "none" : "block"}}>
           <Typography>Become a member</Typography>
         </MenuItem>
+
+        <MenuItem onClick={ () => navigate("/cms/dashboard")}
+          sx={{display: (hasRole(Role.Admin) || hasRole(Role.Employee)) ? "block" : "none"}}>
+          <Typography>CMS</Typography>
+        </MenuItem>
+
+
+
       </Menu>
     </div>
   );

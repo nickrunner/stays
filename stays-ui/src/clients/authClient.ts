@@ -1,3 +1,4 @@
+import { TurnedIn } from "@mui/icons-material";
 import { create } from "domain";
 import { getAuth, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import {auth} from "../firebase";
@@ -16,6 +17,10 @@ export class AuthClient {
         return userCredential;
     }
 
+    public async signOut(){
+        await auth.signOut();
+    }
+
     public async removeUser():Promise<void> {
         if(auth.currentUser){
             await deleteUser(auth.currentUser)
@@ -23,15 +28,43 @@ export class AuthClient {
         else{
             throw new Error("User is not signed in");
         }
-
     }
 
-    public async getToken(): Promise<string>{
+    public async isSignedIn(): Promise<boolean> {
+        await this.waitForLoad(1000);
+        if(auth.currentUser){
+            return true;
+        }
+        return false;
+    }
+
+    private delay(delayInMs: number) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+            resolve(2);
+            }, delayInMs);
+        });
+    }
+
+    private async waitForLoad(timeout: number) {
+        let count: number = 0;
+        while(!auth.currentUser){
+            await this.delay(10);
+            count = count + 10;
+            if(count >= timeout){break;}
+        }
+    }
+
+    public async getToken(timeout: number): Promise<string>{
+       
+        await this.waitForLoad(timeout);
+
         if(auth.currentUser){
             const token = await auth.currentUser.getIdToken();
             return token;
         }
         else{
+            console.log("Auth: tried to get token on null user");
             throw new Error("Not signed in");
         }
 

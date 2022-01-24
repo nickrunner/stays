@@ -2,16 +2,18 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Copyright from '../../components/Copyright';
+import Copyright from '../../../components/Copyright';
 import { Box } from '@mui/material';
-import CmsFrame from './CmsFrame';
-import StaysPage from '../StaysPage';
+import StaysTable from './../Stays/StaysTable';
+import CmsFrame from './../CmsFrame';
+import { StayClient } from '../../../clients/stayClient';
+import { StayRecord } from '../../../models/Stay';
+import StaysPage from '../../StaysPage';
 
 
-export default function Dashboard() {
+export default function ContentCms() {
 
   return (
-
     <StaysPage>
     <Box sx={{ display: 'flex' }}>
         <CmsFrame />
@@ -49,8 +51,8 @@ export default function Dashboard() {
         </Grid>
         <Copyright sx={{ pt: 4 }} />
         </Container>
-    </Box>
-    </StaysPage>
-
+        </Box>
+        </StaysPage>
   );
 }
+

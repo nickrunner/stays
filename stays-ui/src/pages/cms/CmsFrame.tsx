@@ -13,10 +13,15 @@ import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ArticleIcon from "@mui/icons-material/Article";
 import { theme } from "../../Theme";
-import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from 'react-router-dom';
+import logo from "../../static/img/stays_purple.png"
+import { globalContext } from '../../GlobalStore';
 
 const drawerWidth: number = 240;
 
@@ -68,11 +73,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-function CmsAppBar(){
+
+
+export default function CmsFrame(){
+   const { globalState, dispatch } = React.useContext(globalContext);
+    let navigate = useNavigate();
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
       setOpen(!open);
     };
+
+    function logoHeight() {
+      return globalState.mobile ? 50 : 65;
+    }
   
     return (
         <Box
@@ -113,7 +126,7 @@ function CmsAppBar(){
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Stays CMS Dashboard
+                    Content Management
                 </Typography>
                 <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">
@@ -128,28 +141,46 @@ function CmsAppBar(){
             sx={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'flex-end',
+                justifyContent: 'flex-center',
                 px: [1],
             }}
             >
+            <img height={logoHeight()}  src={logo} />
             <IconButton onClick={toggleDrawer}>
-                <ChevronLeftIcon />
+                <ChevronLeftIcon sx={{color: "primary"}} />
             </IconButton>
             </Toolbar>
             <Divider />
             <List>
-            <ListItem button>
+            
+            <ListItemButton onClick={() => navigate("/cms/dashboard")} >
+              <ListItemIcon>
+                  <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/content")} >
             <ListItemIcon>
-                <PersonIcon />
+                <ArticleIcon />
             </ListItemIcon>
+            <ListItemText primary="Content" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/users")}>
+              <ListItemIcon>
+                  <PersonIcon />
+              </ListItemIcon>
             <ListItemText primary="Users" />
-            </ListItem>
-            <ListItem button>
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/stays")} >
             <ListItemIcon>
                 <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Stays" />
-            </ListItem>
+            </ListItemButton>
+            
             </List>
             <Divider />
         </Drawer>
@@ -158,7 +189,4 @@ function CmsAppBar(){
 }
 
 
-export default function Dashboard() {
-    return <CmsAppBar />;
-  }
 

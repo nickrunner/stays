@@ -33,6 +33,7 @@ export interface StaysAppBarProps {
 }
   
 export function Nav(props: StaysAppBarProps) {
+  let navigate = useNavigate();
   const [scroll, setScroll] = React.useState(false);
   const { globalState, dispatch } = React.useContext(globalContext);
 
@@ -80,6 +81,11 @@ export function Nav(props: StaysAppBarProps) {
             </Box>
 
             <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end" }}>
+            <Box
+              style={{display: globalState.isSignedIn ? 'block' : 'none'}}
+              >
+              <NavButton transparent={props.transparent} text={"Welcome "+globalState.self?.firstName+" !"} to="/account"></NavButton>  
+            </Box>
                <LoginMenu transparent={props.transparent}/>
             </Box>
 

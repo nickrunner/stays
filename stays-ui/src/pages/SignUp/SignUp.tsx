@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Link as RouterLink} from "react-router-dom";
 import { Nav } from '../../components/AppBar/AppBar';
 import StaysPage from '../StaysPage';
+import { globalContext } from '../../GlobalStore';
 
 export default function SignUp() {
 
@@ -36,6 +37,15 @@ export default function SignUp() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
+
+  React.useEffect(() => {
+      async function redirectIfSignedIn(){
+        if(await new AuthClient().isSignedIn()){
+          navigate("/");
+        }
+      }
+      redirectIfSignedIn();
+  });
 
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

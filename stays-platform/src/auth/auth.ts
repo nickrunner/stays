@@ -51,6 +51,7 @@ export async function expressAuthentication(
           return authenticatedRequest;
         }
         const user: UserRecord = await new UsersService().getUserByEmail(email);
+        user.lastActive = Date.now();
         authenticatedRequest.self = user;
         
         authenticatedRequest.email = user.email;
