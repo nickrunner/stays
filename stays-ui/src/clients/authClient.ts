@@ -2,6 +2,8 @@ import { TurnedIn } from "@mui/icons-material";
 import { create } from "domain";
 import { getAuth, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import {auth} from "../firebase";
+import { User, UserRecord } from "../models/User";
+import { UserClient } from "./userClient";
 
 export class AuthClient {
     
@@ -35,8 +37,15 @@ export class AuthClient {
     public async isSignedIn(): Promise<boolean> {
         await this.waitForLoad(1000);
         if(auth.currentUser){
-            console.log("Signed in as: "+auth.currentUser.email);
-            return true;
+            let user: User;
+            try{
+                user = await new UserClient().getSelf();
+                console.log("Signed in as: "+auth.currentUser.email);
+                return user != undefined;
+            }
+            catch{
+                return false;
+            }
         }
         return false;
     }

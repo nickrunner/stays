@@ -46,10 +46,11 @@ export default function SignIn() {
     const password: string = data.get('password') as string;
     setErrMsg("");
     setLoading(true);
-
+    const authClient = new AuthClient();
+    const userClient = new UserClient();
     
     try{
-      await new AuthClient().signIn(email, password);
+      await authClient.signIn(email, password);
     }
     catch(error: any){
       setLoading(false);
@@ -72,11 +73,14 @@ export default function SignIn() {
           return;
       }
     }
-    try{
-      setLoading(true);
-      const user = await new UserClient().getUserByEmail(email);
-      setLoading(false);
-      navigate("/");
+    try{      
+      if(await authClient.isSignedIn()){
+        setLoading(false);
+        navigate("/");
+      }
+      else{
+        setErrMsg("Stays is experiencing technical difficulties. Please try again in a few moments.");
+      }
     }
     catch(error: any){
       setErrMsg("Stays is experiencing technical difficulties.");
