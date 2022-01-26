@@ -6,7 +6,7 @@ import { AccountCircle } from "@mui/icons-material";
 import MenuItem from '@mui/material/MenuItem';
 import { AppBarProps, Box, Divider, IconButton, Typography } from '@mui/material';
 import {useNavigate} from "react-router-dom";
-import { Membership, Role, User } from '../../models/User';
+import { StayerMembership, Role, User } from '../../models/User';
 import { StaysAppBarProps } from './AppBar';
 import { globalContext } from '../../GlobalStore';
 import { AuthClient } from '../../clients/authClient';
@@ -44,17 +44,17 @@ export default function LoginMenu(props: StaysAppBarProps) {
     return globalState.self.roles.includes(role);
   }
 
-  function hasMembership(tier: Membership): boolean {
+  function hasMembership(tier: StayerMembership): boolean {
     if(!globalState.isSignedIn){
       return false;
     }
     if(!globalState.self){
       return false;
     }
-    if(!globalState.self.membership){
+    if(!globalState.self.stayerMembership){
       return false;
     }
-    return globalState.self.membership == tier;
+    return globalState.self.stayerMembership == tier;
   }
 
   return (
@@ -86,7 +86,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
 
 
         <MenuItem onClick={() => navigate("/stayers/premium/sign_up")}
-          sx={{display: (globalState.isSignedIn && !hasMembership(Membership.Premium)) ? "block" : "none"}}>
+          sx={{display: (globalState.isSignedIn && !hasMembership(StayerMembership.Premium)) ? "block" : "none"}}>
           <Typography variant="subtitle1">Upgrade to Premium</Typography>
         </MenuItem>
 
@@ -95,7 +95,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
         <MenuItem 
         sx={{display: globalState.isSignedIn ? "none" : "block"}}
         onClick={() => navigate("/sign_up")}>
-          <Typography variant="subtitle1">Create account for free</Typography>
+          <Typography variant="subtitle1">Create free account</Typography>
         </MenuItem>
 
         <MenuItem 

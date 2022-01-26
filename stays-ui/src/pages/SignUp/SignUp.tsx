@@ -41,24 +41,19 @@ export default function SignUp() {
   React.useEffect(() => {
       async function redirectIfSignedIn(){
         if(await new AuthClient().isSignedIn()){
+          console.log("Signup: redirect. Already signed in");
           navigate("/");
         }
       }
       redirectIfSignedIn();
-  });
+      return;
+  }, []);
 
-  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    const data = new FormData(event.currentTarget);
-    const email: string = data.get('email') as string;
-    const password:string = data.get("password") as string;
-    const firstName:string = data.get("firstName") as string;
-    const lastName:string = data.get("lastName") as string;
-
+  async function signUpWithAuth(email: string, password: string): Promise<boolean>{
     //Create firebase user account
     try{
       await new AuthClient().signUp(email, password);
+      return true;
     }
     catch(error: any){
       switch(error.code){
@@ -71,27 +66,77 @@ export default function SignUp() {
           setErrMsg("Password must be 8 characters and contain at least one digit (0-9).");
           setPwErr(true);
       }
+      console.log("removing user from auth");
+      try{
+        await new AuthClient().removeUser();
+      }
+      catch{
+        console.log("User never created");
+      }
+      
       setLoading(false);
+      return false;
+    }
+  }
+
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    const data = new FormData(event.currentTarget);
+    const email: string = data.get('email') as string;
+    const password:string = data.get("password") as string;
+    const firstName:string = data.get("firstName") as string;
+    const lastName:string = data.get("lastName") as string;
+
+    if(! await signUpWithAuth(email, password)){
       return;
     }
-    
-    //Create stays platform user record 
+    //Create user in stays database remove auth if something went wrong
     console.log("Creating user in stays");
     try{
-      const user = await new UserClient().createUser(email, firstName, lastName);
-      setLoading(false);
-      navigate("/");
+      const userClient = new UserClient();
+      await userClient.createUser(email, firstName, lastName);
+      const user = await userClient.getSelf(); // Just to double check
+      console.log("Created new user: ",{ user });
+      if(!user){
+        console.log("Error: User was not created in stays db.  Removing auth");
+        await new AuthClient().removeUser();
+        setLoading(false);
+        setErrMsg("Stays is experiencing technical difficulties. Please try again in a few moments.");
+        return;
+      }
     }
     catch(error: any){
       //Back end error: need to delete the user
       console.log("Signup Error!");
       setErrMsg("Stays is experiencing technical difficulties. Please try again in a few moments.");
+     
       try{
-        new AuthClient().removeUser();
+        await new AuthClient().removeUser();
+        setLoading(false);
+        return;
       }
       catch{
         setErrMsg("Check internet connection and try again. ");
+        setLoading(false);
+        return;
       }
+    }
+
+    console.log("Signing in with new user: ");
+    try{
+      await new AuthClient().signIn(email, password);
+      if ( await new AuthClient().isSignedIn()){
+        setLoading(false);
+        navigate("/");
+        return;
+      }
+      else{
+        setErrMsg("Check internet connection and try again. ");
+      }
+    }
+    catch{
+      setErrMsg("Check internet connection and try again. ");
     }
     console.log("Done!");
     setLoading(false);

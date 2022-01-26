@@ -41,56 +41,60 @@ function UsersCmsContent() {
     <StaysPage>
     <Box sx={{ display: 'flex' }}>
         <CmsFrame />
-        <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
+        <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
         <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-            <Paper
-                sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-                }}
-            >
 
-                <Typography style={{overflow:'auto'}}>
-                    <JSONPretty data={selectedUser}/>
-                </Typography>
-            </Paper>
+                <Grid item xs={12}>
+                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+                        <Button variant="contained" sx={{m:1, width:200}}>
+                            <AddIcon />
+                            Add User
+                        </Button>
+                        <Button variant="contained" sx={{m:1, width:200}} disabled={selectedUser == undefined}>
+                            <EditIcon />
+                            Edit User
+                        </Button>
+                        <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedUser == undefined}>
+                            <DeleteIcon />
+                            Delete User
+                        </Button>
+                    
+                    </Paper>
+                </Grid>
+                    
+                <Grid item xs={12} md={8} lg={9}>
+                    <Paper
+                        sx={{
+                        p: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 600,
+                        }}
+                    >
+                         <UsersTable users={users} onSelect={handleUserSelection}/>  
+                    </Paper>
+                    </Grid>
+
+                    <Grid item xs={12} md={4} lg={3}>
+                    <Paper
+                        sx={{
+                        p: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 600,
+                        overflow: "auto"
+                        }}
+                    >
+                        {/* JSON data */}
+                        <Typography>
+                            <JSONPretty data={selectedUser}/>
+                        </Typography>
+                        
+                    </Paper>
+                </Grid>
+                
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-            <Paper
-                sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-                }}
-            >
-                <Button variant="contained" sx={{m:2, width:200}}>
-                    <AddIcon />
-                    Add User
-                </Button>
-                <Button variant="contained" sx={{m:2, width:200}} disabled={selectedUser == undefined}>
-                    <EditIcon />
-                    Edit User
-                </Button>
-                <Button variant="contained" sx={{m:2, width:200, bgcolor:"error.main"}} disabled={selectedUser == undefined}>
-                    <DeleteIcon />
-                    Delete User
-                </Button>
-            </Paper>
-            </Grid>
-            
-            <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                <UsersTable users={users} onSelect={handleUserSelection}/>
-            </Paper>
-            </Grid>
-        </Grid>
-        <Copyright sx={{ pt: 4 }} />
+            <Copyright sx={{ pt: 4 }} />
         </Container>
         </Box>
         </StaysPage>

@@ -1,4 +1,4 @@
-import { User, UserRecord } from "../../../common/models/user";
+import { HostMembersip, Role, StayerMembership, User, UserRecord } from "../../../common/models/user";
 import { Error404, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 
@@ -28,6 +28,21 @@ export class UsersService {
         return await this.db.exists({id:userId});
     }
 
+    public async createDefaultUser(email: string, clientId?: string):Promise<UserRecord> {
+        console.log("Creating default user with email: "+email);
+        const user: User =  {
+            enabled: true,
+            firstName: "",
+            lastName: "",
+            email: email,
+            stayerMembership: StayerMembership.Standard,
+            hostMembership: HostMembersip.None,
+            lastActive: Date.now(),
+            roles: [Role.Stayer]
+        }
+        return await this.createUser(user, clientId);
+    }
+
     public async createUser(user: User, clientId?: string): Promise<UserRecord> {
         console.log("Creating User :) "+user.email);
         const userExists: boolean = await this.db.exists
@@ -52,6 +67,7 @@ export class UsersService {
             await this.db.update(userId, attributes, clientId);
         }
         else{
+            console.log("Tried to update user that was no found in DB: "+userId);
             throw new Error404();
         }
     }

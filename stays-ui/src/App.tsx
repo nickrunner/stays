@@ -20,6 +20,7 @@ import HostPortal from "./pages/Hosts/HostPortal";
 import UsersCms from "./pages/cms/Users/UsersCms";
 import StaysCms from "./pages/cms/Stays/StaysCms";
 import ContentCms from "./pages/cms/Content/ContentCms";
+import AddStaysCms from "./pages/cms/Stays/AddStaysCms";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/cms/dashboard" element={<Dashboard />}/>
             <Route path="/cms/users" element={<UsersCms />}/>
             <Route path="/cms/stays" element={<StaysCms />}/>
+            <Route path="/cms/stays/add" element={<AddStaysCms />}/>
             <Route path="/cms/content" element={<ContentCms />}/>
           </Routes>
           

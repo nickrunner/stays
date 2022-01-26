@@ -13,7 +13,7 @@ import {
     Request
   } from "tsoa";
 
-import { User, UserRecord, Membership, Role } from "../../../common/models/user";
+import { User, UserRecord, Role, StayerMembership, HostMembersip } from "../../../common/models/user";
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
 import { UsersService } from "./usersService";
@@ -43,7 +43,8 @@ export class UsersController extends Controller {
         @Query() email?: string ,
         @Query() firstName?: string,
         @Query() lastName?: string, 
-        @Query() membership?: Membership,
+        @Query() stayerMembership?: StayerMembership,
+        @Query() hostMembership?: HostMembersip,
         @Query() role?: Role, 
         @Query() or?: boolean,
     ): Promise<UserRecord[]> {
@@ -53,7 +54,8 @@ export class UsersController extends Controller {
             email: email,
             firstName: firstName,
             lastName: lastName,
-            membership: membership,
+            stayerMembership: stayerMembership,
+            HostMembersip: hostMembership,
             role: role
         }
         return await new UsersService().getUsers(filters, or);

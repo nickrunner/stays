@@ -3,8 +3,8 @@ import { UsersController } from "../users/usersController";
 import { UsersService } from "../users/usersService";
 import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AuthService } from "./authService";
-import { Role, UserRecord } from "../../../common/models/user";
-import { Error401 } from "../error";
+import { HostMembersip, Role, StayerMembership, UserRecord } from "../../../common/models/user";
+import { Error401, Error404 } from "../error";
 
 export interface AuthenticatedRequest extends express.Request{
   email?: string,
@@ -19,6 +19,8 @@ export async function expressAuthentication(
 ): Promise<express.Request> {
   if( securityName == "user"){
       const authenticatedRequest: AuthenticatedRequest = request;
+      const userService: UsersService = new UsersService();
+      const authService: AuthService = new AuthService();
       try{
         console.log("Performing user authentication for scopes: ", {scopes});
         
@@ -35,13 +37,33 @@ export async function expressAuthentication(
           console.log("Authentication error: token not valid");
           throw new Error401();
         }
-        const email: string | undefined = await new AuthService().verifyToken(token);
+        const email: string | undefined = await authService.verifyToken(token);
         if(!email){
           console.log("No email associated with this token... not authorized");
           throw new Error401();
         }
         authenticatedRequest.email = email;
+
+        let user: UserRecord;
+        try{
+          user = await userService.getUserByEmail(email);
+          user.lastActive = Date.now();
+        }
+        catch{
+          console.log("Error: user was authenticated but not found in stays database.");
+          //user = await userService.createDefaultUser(email, email);
+          throw new Error404("User not in Stays database!");
+        }
+        try{
+          await userService.updateUser(user.id, {lastActive: Date.now()});
+        }
+        catch{
+          console.log("Failed updating last active time for user");
+        }
         
+        authenticatedRequest.self = user;
+        authenticatedRequest.email = user.email;
+
         if(!scopes){
           console.log("No scopes required... allow");
             return authenticatedRequest;
@@ -50,11 +72,7 @@ export async function expressAuthentication(
           console.log("No scopes required... allow");
           return authenticatedRequest;
         }
-        const user: UserRecord = await new UsersService().getUserByEmail(email);
-        user.lastActive = Date.now();
-        authenticatedRequest.self = user;
         
-        authenticatedRequest.email = user.email;
         const roles = scopes as Role[]
         for(const role of roles){
             if(!user.roles.includes(role)){

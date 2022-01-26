@@ -106,26 +106,31 @@ export class Collection<Type> {
     }
 
     public async exists(filters: any): Promise<boolean> {
-        console.log("exists(): filters:", {filters});
-        try{
-            await this.getFirst(filters);
-            console.log("exists() ? true");
-            return true;
+        console.log("exists() filters: ", {filters});
+        if(filters){
+            if(filters.hasOwnProperty('id')){
+                console.log("exists() contains ID: "+filters.id);
+                const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(filters.id).get();
+                console.log("exists() ? "+docSnap.exists);
+                return docSnap.exists;
+            }
         }
-        catch{
-            console.log("exists() ? false");
-            return false;
-        }
+        const results: (Entity & Type)[] = await this.getAll(filters);
+        const retval =  results.length > 0;
+        console.log("exists() ? "+retval);
+        return retval;
     }
 
     public async create(attributes: any, clientId?: string): Promise<Entity & any> {
         const entity: Entity & any = {
             createdAt: Date.now(),
             updatedAt: Date.now(),
-            createdBy: clientId,
-            updatedBy: clientId,
             id: uuidv4(),
             ... attributes
+        }
+        if(clientId){
+            entity.createdBy = clientId;
+            entity.updatedBy = clientId;
         }
         console.log("create() enitity: ", {entity})
         await this.col.doc(entity.id).set(entity);
@@ -148,8 +153,10 @@ export class Collection<Type> {
     public async update(id: string, attributes: any, clientId?: string): Promise<void>{
         const newAttr = {
             updatedAt: Date.now(),
-            updatedBy: clientId,
             ... attributes
+        }
+        if(clientId){
+            newAttr.clientId = clientId;
         }
         console.log("update() id: "+id, {newAttr});
         await this.col.doc(id).set(newAttr, {merge: true});
@@ -167,7 +174,9 @@ export class Collection<Type> {
         console.log("updateEntity() original: ", {original});
         console.log("updateEntity() new attr: ", {attributes});
         original.updatedAt = Date.now();
-        original.updatedBy = clientId;
+        if(clientId){
+            original.updatedBy = clientId;
+        }
         const newEntity: Entity & Type = {... original, ...attributes};
         console.log("updateEntity() new entity: ", {newEntity});
         return newEntity;

@@ -6,6 +6,7 @@ export enum StayerMembership {
 };
 
 export enum HostMembersip {
+    None = "None",
     Standard = "Standard",
     Silver = "Silver",
     Gold = "Gold",
@@ -23,6 +24,7 @@ export enum Role {
 export interface User {
     firstName: string;
     lastName: string;
+    enabled: boolean;
     email: string;
     stayerMembership: StayerMembership;
     hostMembership: HostMembersip; 

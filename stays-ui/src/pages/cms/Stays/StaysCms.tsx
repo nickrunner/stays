@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Copyright from '../../../components/Copyright';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Modal, Typography } from '@mui/material';
 import StaysTable from './../Stays/StaysTable';
 import CmsFrame from './../CmsFrame';
 import { StayClient } from '../../../clients/stayClient';
@@ -12,11 +12,17 @@ import StaysPage from '../../StaysPage';
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import JSONPretty from 'react-json-pretty';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+
+
 
 function StaysCmsContent() {
-
+    let navigate = useNavigate();
     const[stays, setStays] = React.useState<StayRecord[]>([]);
-    const[selectedStay, setSelectedStay] = React.useState<StayRecord | null>(null);
+    const[selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
+    const[addStayOpen, setAddStayOpen] = React.useState(false);
 
     const getStays = async() => {
         const users = await new StayClient().getStays({});
@@ -25,7 +31,7 @@ function StaysCmsContent() {
 
     React.useEffect(() => {
         getStays();
-        return
+        return;
     }, []);
 
     function handleStaySelection(stay: StayRecord){
@@ -35,61 +41,69 @@ function StaysCmsContent() {
 
   return (
     <StaysPage>
-    <Box sx={{ display: 'flex' }}>
-        <CmsFrame />
-        <Container maxWidth="xl" sx={{ mt: 10, mb: 4 }}>
-        <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-            <Paper
-                sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-                }}
-            >
-                <Typography>
-                    Selected Stay: {JSON.stringify(selectedStay, null, 2)}
-                </Typography>
+        <Box sx={{ display: 'flex' }}>
+            <CmsFrame />
+            <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
+
+                <Grid container spacing={3}>
+
+                <Grid item xs={12}>
+                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+
+                    <Button variant="contained" sx={{m:1, width:200}} onClick={() => navigate("/cms/stays/add")}>
+                        <AddIcon />
+                        Add Stay
+                    </Button>
+
+                    <Button variant="contained" sx={{m:1, width:200}} disabled={selectedStay == undefined}>
+                        <EditIcon />
+                        Edit Stay
+                    </Button>
+                    <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedStay == undefined}>
+                        <DeleteIcon />
+                        Delete Stay
+                    </Button>
+                    
+                    </Paper>
+
+                </Grid>
+                    
+                <Grid item xs={12} md={8} lg={9}>
+                    <Paper
+                        sx={{
+                        p: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 600,
+                        }}
+                    >
+                         <StaysTable stays={stays} onSelect={handleStaySelection}/>  
+                    </Paper>
+                    </Grid>
+
+                    <Grid item xs={12} md={4} lg={3}>
+                    <Paper
+                        sx={{
+                        p: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 600,
+                        overflow: "auto"
+                        }}
+                    >
+                        {/* JSON data */}
+                        <Typography>
+                            <JSONPretty data={selectedStay}/>
+                        </Typography>
+                        
+                    </Paper>
+                </Grid>
                 
-            </Paper>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-            <Paper
-                sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-                }}
-            >
-                <Button variant="contained" sx={{m:2, width:200}}>
-                    <AddIcon />
-                    Add Stay
-                </Button>
-                <Button variant="contained" sx={{m:2, width:200}} disabled={selectedStay == undefined}>
-                    <EditIcon />
-                    Edit Stay
-                </Button>
-                <Button variant="contained" sx={{m:2, width:200, bgcolor:"error.main"}} disabled={selectedStay == undefined}>
-                    <DeleteIcon />
-                    Delete Stay
-                </Button>
-            </Paper>
-            </Grid>
-            
-            <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <StaysTable stays={stays} onSelect={handleStaySelection}/>
-            </Paper>
-            </Grid>
-        </Grid>
-        <Copyright sx={{ pt: 4 }} />
+            <Copyright sx={{ pt: 4 }} />
         </Container>
         </Box>
-        </StaysPage>
+    </StaysPage>
   );
 }
 

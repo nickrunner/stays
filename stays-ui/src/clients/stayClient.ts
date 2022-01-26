@@ -1,4 +1,3 @@
-import { Membership, Role, User } from "../models/User";
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
 import { Stay, StayRecord } from "../models/Stay";

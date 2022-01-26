@@ -6,20 +6,91 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Range": {
+			"Address": {
 				"properties": {
-					"min": {
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"address": {
 						"type": "number",
 						"format": "double"
 					},
-					"max": {
+					"zip": {
+						"type": "number",
+						"format": "double"
+					},
+					"street": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"city",
+					"state",
+					"address",
+					"zip",
+					"street"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Coordinates": {
+				"properties": {
+					"latitude": {
+						"type": "number",
+						"format": "double"
+					},
+					"longitude": {
 						"type": "number",
 						"format": "double"
 					}
 				},
 				"required": [
-					"min",
-					"max"
+					"latitude",
+					"longitude"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Location": {
+				"properties": {
+					"address": {
+						"$ref": "#/components/schemas/Address"
+					},
+					"coordinates": {
+						"$ref": "#/components/schemas/Coordinates"
+					},
+					"region": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"address",
+					"coordinates",
+					"region"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Photo": {
+				"properties": {
+					"url": {
+						"type": "string"
+					},
+					"priority": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"url",
+					"priority",
+					"description"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -29,23 +100,26 @@
 					"name": {
 						"type": "string"
 					},
+					"enable": {
+						"type": "boolean"
+					},
 					"description": {
 						"type": "string"
 					},
-					"city": {
-						"type": "string"
+					"location": {
+						"$ref": "#/components/schemas/Location"
 					},
-					"state": {
-						"type": "string"
+					"currentRate": {
+						"type": "number",
+						"format": "double"
 					},
-					"region": {
-						"type": "string"
-					},
-					"avgRate": {
-						"$ref": "#/components/schemas/Range"
+					"averageRate": {
+						"type": "number",
+						"format": "double"
 					},
 					"capacity": {
-						"$ref": "#/components/schemas/Range"
+						"type": "number",
+						"format": "double"
 					},
 					"bedrooms": {
 						"type": "number",
@@ -57,7 +131,7 @@
 					"onSiteParking": {
 						"type": "boolean"
 					},
-					"hostId": {
+					"hostEmail": {
 						"type": "string"
 					},
 					"type": {
@@ -78,26 +152,26 @@
 						},
 						"type": "array"
 					},
-					"photoUrls": {
+					"photos": {
 						"items": {
-							"type": "string"
+							"$ref": "#/components/schemas/Photo"
 						},
 						"type": "array"
 					}
 				},
 				"required": [
 					"name",
+					"enable",
 					"description",
-					"city",
-					"state",
-					"region",
-					"avgRate",
+					"location",
+					"currentRate",
+					"averageRate",
 					"capacity",
 					"bedrooms",
 					"petsAllowed",
 					"onSiteParking",
-					"hostId",
-					"photoUrls"
+					"hostEmail",
+					"photos"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -140,10 +214,20 @@
 					}
 				]
 			},
-			"Membership": {
+			"StayerMembership": {
 				"enum": [
 					"Standard",
 					"Premium"
+				],
+				"type": "string"
+			},
+			"HostMembersip": {
+				"enum": [
+					"None",
+					"Standard",
+					"Silver",
+					"Gold",
+					"Platinum"
 				],
 				"type": "string"
 			},
@@ -164,11 +248,21 @@
 					"lastName": {
 						"type": "string"
 					},
+					"enabled": {
+						"type": "boolean"
+					},
 					"email": {
 						"type": "string"
 					},
-					"membership": {
-						"$ref": "#/components/schemas/Membership"
+					"stayerMembership": {
+						"$ref": "#/components/schemas/StayerMembership"
+					},
+					"hostMembership": {
+						"$ref": "#/components/schemas/HostMembersip"
+					},
+					"lastActive": {
+						"type": "number",
+						"format": "double"
 					},
 					"roles": {
 						"items": {
@@ -180,8 +274,11 @@
 				"required": [
 					"firstName",
 					"lastName",
+					"enabled",
 					"email",
-					"membership",
+					"stayerMembership",
+					"hostMembership",
+					"lastActive",
 					"roles"
 				],
 				"type": "object",
@@ -509,10 +606,18 @@
 					},
 					{
 						"in": "query",
-						"name": "membership",
+						"name": "stayerMembership",
 						"required": false,
 						"schema": {
-							"$ref": "#/components/schemas/Membership"
+							"$ref": "#/components/schemas/StayerMembership"
+						}
+					},
+					{
+						"in": "query",
+						"name": "hostMembership",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/HostMembersip"
 						}
 					},
 					{

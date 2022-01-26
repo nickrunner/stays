@@ -11,27 +11,26 @@ import { Checkbox, Typography } from '@mui/material';
 import { UserClient } from '../../../clients/userClient';
 import { DataGrid, GridColDef, GridValueGetterParams, GridCellParams } from '@mui/x-data-grid';
 
+function dateString(timestamp: number): string {
+  const date: Date = new Date(timestamp);
+  return date.toLocaleDateString()+" "+date.toLocaleTimeString();
+}
+
 const columns: GridColDef[] = [
   {
     field: 'email',
     headerName: 'Email',
     sortable: true,
-    width: 250,
+    width: 200,
     editable: false,
   },
   {
     field: 'fullName',
     headerName: 'Full name',
     sortable: false,
-    width: 160,
+    width: 150,
     valueGetter: (params: GridValueGetterParams) =>
       `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-  {
-    field: 'membership',
-    headerName: 'Membership',
-    width: 150,
-    editable: false,
   },
   {
     field: 'roles',
@@ -40,20 +39,39 @@ const columns: GridColDef[] = [
     width: 150,
     editable: false,
   },
-
   {
-    field: 'createdAt',
-    headerName: 'Created On',
-    sortable: true,
-    width: 200,
-    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt).toDateString()
+    field: 'stayerMembership',
+    headerName: 'Stayer',
+    width: 150,
+    editable: false,
   },
   {
-    field: 'updatedAt',
-    headerName: 'Updated On',
+    field: 'hostMembership',
+    headerName: 'Host',
+    width: 150,
+    editable: false,
+  },
+  {
+    field: 'lastActive',
+    headerName: 'Active',
     sortable: true,
     width: 200,
-    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt).toDateString()
+    valueGetter: (params: GridValueGetterParams) => dateString(params.row.lastActive)
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Created',
+    sortable: true,
+    width: 200,
+    valueGetter: (params: GridValueGetterParams) => dateString(params.row.createdAt)
+  },
+
+  {
+    field: 'updatedAt',
+    headerName: 'Updated',
+    sortable: true,
+    width: 200,
+    valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
   },
   
 ];

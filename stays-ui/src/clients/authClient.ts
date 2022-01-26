@@ -22,8 +22,10 @@ export class AuthClient {
     }
 
     public async removeUser():Promise<void> {
-        if(auth.currentUser){
-            await deleteUser(auth.currentUser)
+        if(await this.isSignedIn()){
+            if(auth.currentUser){
+                await deleteUser(auth.currentUser);
+            }
         }
         else{
             throw new Error("User is not signed in");
@@ -33,12 +35,13 @@ export class AuthClient {
     public async isSignedIn(): Promise<boolean> {
         await this.waitForLoad(1000);
         if(auth.currentUser){
+            console.log("Signed in as: "+auth.currentUser.email);
             return true;
         }
         return false;
     }
 
-    private delay(delayInMs: number) {
+    private async delay(delayInMs: number) {
         return new Promise(resolve => {
             setTimeout(() => {
             resolve(2);

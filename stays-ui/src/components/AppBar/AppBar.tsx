@@ -7,14 +7,11 @@ import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
 import React, { useState } from 'react';
-import { Button, Typography } from '@mui/material';
 import logo from "../../static/img/stays_purple.png"
 import whiteLogo from "../../static/img/stays_white.png"
 import { useNavigate } from "react-router-dom";
 import LoginMenu from './LoginMenu';
 import NavButton  from "./NavButton";
-import { UserClient } from '../../clients/userClient';
-import { User } from '../../models/User';
 import { globalContext } from '../../GlobalStore';
  
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled,ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -15,10 +15,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from "@mui/icons-material/Article";
-import { theme } from "../../Theme";
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import HomeIcon from '@mui/icons-material/Home';
+import HotelIcon from '@mui/icons-material/Hotel';
+import RoomServiceIcon from '@mui/icons-material/RoomService';
+import SkiIcon from "@mui/icons-material/DownhillSkiing";
+import CabinIcon from "@mui/icons-material/Cabin";
+import ApprovalIcon from "@mui/icons-material/Approval";
+import StoreFrontIcon from "@mui/icons-material/Storefront";
 import { useNavigate } from 'react-router-dom';
 import logo from "../../static/img/stays_purple.png"
 import { globalContext } from '../../GlobalStore';
@@ -126,8 +130,9 @@ export default function CmsFrame(){
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Content Management
+                    Content Management Portal
                 </Typography>
+                
                 <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">
                     <NotificationsIcon />
@@ -176,9 +181,44 @@ export default function CmsFrame(){
 
             <ListItemButton onClick={() => navigate("/cms/stays")} >
             <ListItemIcon>
-                <HomeIcon />
+                <HotelIcon />
             </ListItemIcon>
             <ListItemText primary="Stays" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/property_ypes")} >
+            <ListItemIcon>
+                <CabinIcon />
+            </ListItemIcon>
+            <ListItemText primary="Property Types" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/amenities")} >
+            <ListItemIcon>
+                <RoomServiceIcon />
+            </ListItemIcon>
+            <ListItemText primary="Amenities" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/perks")} >
+            <ListItemIcon>
+                <SkiIcon />
+            </ListItemIcon>
+            <ListItemText primary="Special Interests" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/host_applications")} >
+            <ListItemIcon>
+                <ApprovalIcon />
+            </ListItemIcon>
+            <ListItemText primary="Host Applications" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => navigate("/cms/promotions")} >
+            <ListItemIcon>
+                <StoreFrontIcon />
+            </ListItemIcon>
+            <ListItemText primary="Promotions" />
             </ListItemButton>
             
             </List>
