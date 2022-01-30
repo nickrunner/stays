@@ -9,9 +9,10 @@ export interface Photo {
 export interface Address {
     city: string,
     state: string,
-    address: number,
+    address1: string,
+    address2: string,
     zip: number,
-    street: string
+    country: string
 }
 
 export interface Coordinates {
@@ -37,9 +38,9 @@ export interface Stay {
     petsAllowed: boolean;
     onSiteParking: boolean;
     hostEmail: string;
-    type?: string[];
-    perks?: string[];
-    amenities?: string[];
+    type: string[];
+    perks: string[];
+    amenities: string[];
     photos: Photo[];
 };
 

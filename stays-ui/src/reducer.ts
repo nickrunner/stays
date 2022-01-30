@@ -5,7 +5,7 @@ const Reducer = (state: StaysState, action: ActionType): any => {
     switch(action.type){
         case "GET_SELF":
             const user: User = action.payload;
-            const signedIn = (user != undefined);
+            const signedIn = (user !== undefined);
             console.log("Get Self: ", {user});
             console.log("signed in ? "+signedIn);
             state.isSignedIn = signedIn;
@@ -20,6 +20,11 @@ const Reducer = (state: StaysState, action: ActionType): any => {
                 ...state,
                 mobile: action.payload
             }
+        case "SAVE_STAY_INFO":
+            return {
+                ...state,
+                stayInfo: action.payload
+            };
         default:
             return state;
     }

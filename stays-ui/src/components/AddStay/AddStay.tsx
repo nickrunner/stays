@@ -16,41 +16,48 @@ import StayInfoForm from './StayInfoForm';
 import StayLocation from './StayLocation';
 import StayPhotoForm from './StayPhotoForm';
 import StayReview from './StayReview';
+import { Location, Photo, Stay } from '../../models/Stay';
+import { globalContext } from '../../GlobalStore';
+import { StayAttribute } from '../../models/StayAttributes';
+import { AddStayContext, addStayContext } from './AddStayContext';
+import { StayClient } from '../../clients/stayClient';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
-const steps = ['Information', 'Location', "Photos", 'Review'];
+const steps = ['About', "Photos", 'Review'];
 
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return <StayInfoForm />;
-    case 1:
-      return <StayLocation />;
-    case 2:
-      return <StayPhotoForm />;
-    case 3:
-      return <StayReview />
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
+
 
 export default function AddStay(props: any) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { stay } = React.useContext(addStayContext);
+
+
+  function getStepContent(step: number) {
+    switch (step) {
+      case 0:
+        return <StayInfoForm />;
+      case 1:
+        return <StayPhotoForm />;
+      case 2:
+        return <StayReview />
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   const handleNext = () => {
+
+    switch(activeStep){
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            new StayClient().createStay(stay);
+            break;
+    }
+
     setActiveStep(activeStep + 1);
   };
 
@@ -59,7 +66,7 @@ export default function AddStay(props: any) {
   };
 
   return (
-
+    <AddStayContext>
       <Container component="main" maxWidth="sm" sx={{ mb: 4}}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }}}>
           <Typography component="h1" variant="h4" align="center">
@@ -96,7 +103,7 @@ export default function AddStay(props: any) {
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                   </Button>
                 </Box>
               </React.Fragment>
@@ -104,6 +111,7 @@ export default function AddStay(props: any) {
           </React.Fragment>
         </Paper>
       </Container>
+      </AddStayContext>
 
   );
 }

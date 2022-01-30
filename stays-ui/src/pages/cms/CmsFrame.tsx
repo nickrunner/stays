@@ -26,6 +26,7 @@ import StoreFrontIcon from "@mui/icons-material/Storefront";
 import { useNavigate } from 'react-router-dom';
 import logo from "../../static/img/stays_purple.png"
 import { globalContext } from '../../GlobalStore';
+import {Link as RouterLink} from "react-router-dom";
 
 const drawerWidth: number = 240;
 
@@ -150,7 +151,9 @@ export default function CmsFrame(){
                 px: [1],
             }}
             >
-            <img height={logoHeight()}  src={logo} />
+            <RouterLink to="/">
+              <img height={logoHeight()}  src={logo} />
+            </RouterLink>
             <IconButton onClick={toggleDrawer}>
                 <ChevronLeftIcon sx={{color: "primary"}} />
             </IconButton>
@@ -186,7 +189,7 @@ export default function CmsFrame(){
             <ListItemText primary="Stays" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => navigate("/cms/property_ypes")} >
+            <ListItemButton onClick={() => navigate("/cms/property_types")} >
             <ListItemIcon>
                 <CabinIcon />
             </ListItemIcon>
@@ -200,7 +203,7 @@ export default function CmsFrame(){
             <ListItemText primary="Amenities" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => navigate("/cms/perks")} >
+            <ListItemButton onClick={() => navigate("/cms/special_interests")} >
             <ListItemIcon>
                 <SkiIcon />
             </ListItemIcon>

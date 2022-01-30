@@ -21,6 +21,8 @@ import UsersCms from "./pages/cms/Users/UsersCms";
 import StaysCms from "./pages/cms/Stays/StaysCms";
 import ContentCms from "./pages/cms/Content/ContentCms";
 import AddStaysCms from "./pages/cms/Stays/AddStaysCms";
+import StayAttributesCms from "./pages/cms/StayAttributes/StayAttributesCms";
+import { StayAttributeType } from "./models/StayAttributes";
 
 function App() {
   return (
@@ -42,6 +44,9 @@ function App() {
             <Route path="/cms/dashboard" element={<Dashboard />}/>
             <Route path="/cms/users" element={<UsersCms />}/>
             <Route path="/cms/stays" element={<StaysCms />}/>
+            <Route path="/cms/amenities" element={<StayAttributesCms type={StayAttributeType.Amenity} />}/>
+            <Route path="/cms/property_types" element={<StayAttributesCms type={StayAttributeType.PropertyType} />}/>
+            <Route path="/cms/special_interests" element={<StayAttributesCms type={StayAttributeType.SpecialInterest} />}/>
             <Route path="/cms/stays/add" element={<AddStaysCms />}/>
             <Route path="/cms/content" element={<ContentCms />}/>
           </Routes>

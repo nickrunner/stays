@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Copyright from '../../../components/Copyright';
 import { Box, Button, Modal, Typography } from '@mui/material';
-import StaysTable from './../Stays/StaysTable';
-import CmsFrame from './../CmsFrame';
+import StaysTable from '../Stays/StaysTable';
+import CmsFrame from '../CmsFrame';
 import { StayClient } from '../../../clients/stayClient';
 import { StayRecord } from '../../../models/Stay';
 import StaysPage from '../../StaysPage';
@@ -14,33 +14,58 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import JSONPretty from 'react-json-pretty';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { StayAttributeRecord, StayAttributeType } from '../../../models/StayAttributes';
+import StayAttributesTable from './StayAttributesTable';
+import AddStayAttribute from './AddStayAttribute';
 
+export interface StayAttributeCmsProps {
+    type: StayAttributeType
+}
 
-
-
-function StaysCmsContent() {
+export default function StayAttributesCms(props: StayAttributeCmsProps) {
     let navigate = useNavigate();
-    const[stays, setStays] = React.useState<StayRecord[]>([]);
-    const[selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
-    const[addStayOpen, setAddStayOpen] = React.useState(false);
+    const[stayAttributes, setStayAttributes] = React.useState<StayAttributeRecord[]>([]);
+    const[selectedStayAttribute, setSelectedStayAttribute] = React.useState<StayAttributeRecord | undefined>(undefined);
+    const [addOpen, setAddOpen] = React.useState(false);
+    const handleAddOpen = () => setAddOpen(true);
+    const handleAddClose = () => setAddOpen(false);
 
-    const getStays = async() => {
-        const stays = await new StayClient().getStays({});
-        setStays(stays);
+    const getStayAttributes = async() => {
+        const stayAttributes: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
+        setStayAttributes(stayAttributes);
     }
 
+
     React.useEffect(() => {
-        getStays();
+        getStayAttributes();
         return;
     }, []);
 
-    function handleStaySelection(stay: StayRecord){
-        console.log("Stay selected: ",{stay});
-        setSelectedStay(stay);
+    function handleStayAttributeSelection(stayAttribute: StayAttributeRecord){
+        setSelectedStayAttribute(stayAttribute);
+    }
+
+    function getAttributeTypeText(){
+        switch(props.type){
+            case StayAttributeType.Amenity:
+                return "Amenity";
+            case StayAttributeType.PropertyType:
+                return "Property Type";
+            case StayAttributeType.SpecialInterest:
+                return "Special Interest";
+        }
     }
 
   return (
     <StaysPage>
+
+        <Modal 
+        open={addOpen}
+        onClose={handleAddClose}
+        >
+            <AddStayAttribute type={props.type} />
+        </Modal>
+
         <Box sx={{ display: 'flex' }}>
             <CmsFrame />
             <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
@@ -50,18 +75,18 @@ function StaysCmsContent() {
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
 
-                    <Button variant="contained" sx={{m:1, width:200}} onClick={() => navigate("/cms/stays/add")}>
+                    <Button variant="contained" sx={{m:1, width:200}} onClick={() => setAddOpen(true)}>
                         <AddIcon />
-                        Add Stay
+                        Add {getAttributeTypeText()}
                     </Button>
 
-                    <Button variant="contained" sx={{m:1, width:200}} disabled={selectedStay == undefined}>
+                    <Button variant="contained" sx={{m:1, width:200}} disabled={selectedStayAttribute == undefined}>
                         <EditIcon />
-                        Edit Stay
+                        Edit {getAttributeTypeText()}
                     </Button>
-                    <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedStay == undefined}>
+                    <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedStayAttribute == undefined}>
                         <DeleteIcon />
-                        Delete Stay
+                        Delete {getAttributeTypeText()}
                     </Button>
                     
                     </Paper>
@@ -77,7 +102,7 @@ function StaysCmsContent() {
                         height: 600,
                         }}
                     >
-                         <StaysTable stays={stays} onSelect={handleStaySelection}/>  
+                         <StayAttributesTable type={props.type} stayAttributes={stayAttributes} onSelect={handleStayAttributeSelection}/>  
                     </Paper>
                     </Grid>
 
@@ -93,7 +118,7 @@ function StaysCmsContent() {
                     >
                         {/* JSON data */}
                         <Typography>
-                            <JSONPretty data={selectedStay}/>
+                            <JSONPretty data={selectedStayAttribute}/>
                         </Typography>
                         
                     </Paper>
@@ -105,8 +130,4 @@ function StaysCmsContent() {
         </Box>
     </StaysPage>
   );
-}
-
-export default function StaysCms() {
-  return <StaysCmsContent />;
 }

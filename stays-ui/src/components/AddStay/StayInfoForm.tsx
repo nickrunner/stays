@@ -4,25 +4,69 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
-import CurrencyTextField from '../CurrencyTextField';
+import { Box, FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { StayAttributeType } from '../../models/StayAttributes';
+import { addStayContext } from './AddStayContext';
+import StayAttributeSelector from './StayAttributeSelector';
+import StayLocation from './StayLocation';
+import { DropzoneArea } from 'material-ui-dropzone';
+import { FilesClient } from '../../clients/filesClient';
+
 
 export default function StayInfoForm() {
+  const { stay } = React.useContext(addStayContext);
+  const [pets, setPets] = React.useState(stay.petsAllowed);
+  const [parking, setParking] = React.useState(stay.onSiteParking);
+  const [files, setFiles] = React.useState<File[]>([]);
+
+  function handleNameChange(newName: string){
+      stay.name = newName;
+  }
+
+  function handleDescriptionChange(description: string){
+      stay.description = description;
+  }
+
+  function handleRateChange(rate: string){
+
+      stay.currentRate = Number(rate);
+  }
+
+  function handleCapacityChange(capacity: number){
+      stay.capacity = capacity;
+  }
+
+  function handleBedroomChange(bedrooms: number){
+      stay.bedrooms = bedrooms;
+  }
+
+  function handleOnSiteParkingChange(onSiteParking: boolean){
+      setParking(onSiteParking);
+      stay.onSiteParking = onSiteParking;
+  }
+
+  function handlePetsAllowedChange(petsAllowed: boolean){
+      setPets(petsAllowed);
+      stay.petsAllowed = petsAllowed;
+  }
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <StayLocation />
+      <Typography variant="h6" gutterBottom sx={{mt:5}}>
         Stay Information
       </Typography>
       <FormGroup>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-
         <FormControl sx={{mt:1, width:"65%" }}>
           <TextField
             required
             id="name"
             name="name"
             label="Stay Name"
+            defaultValue={stay.name}
+            onChange={(e) => handleNameChange(e.target.value)}
           />
           </FormControl>
           <FormControl sx={{ ml: 1, mt:1, width:"25%" }}>
@@ -32,6 +76,8 @@ export default function StayInfoForm() {
             id="outlined-adornment-amount"
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             label="Amount"
+            defaultValue={stay.currentRate}
+            onChange={(event) => handleRateChange(event.target.value)}
           />
           </FormControl>
           
@@ -43,9 +89,10 @@ export default function StayInfoForm() {
             name="description"
             label="Description of Stay"
             fullWidth
-
             multiline
             rows={5}
+            defaultValue={stay.description}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -55,8 +102,11 @@ export default function StayInfoForm() {
             <Select
                 sx={{width:150, mr:1}}
                 labelId="capacityLabel"
-                id="capacitySelect"
+                id="capacity"
+                name="capacity"
                 label="Guest Capacity"
+                defaultValue={stay.capacity}
+                onChange={(e) => handleCapacityChange(e.target.value as number)}
             >
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
@@ -76,8 +126,11 @@ export default function StayInfoForm() {
                 required
                 sx={{width:150, mr:1}}
                 labelId="bedroomsLabel"
-                id="bedroomsSelect"
+                id="bedrooms"
+                name="bedrooms"
                 label="Bedrooms"
+                defaultValue={stay.bedrooms}
+                onChange={(e) => handleBedroomChange(e.target.value as number)}
             >
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
@@ -97,46 +150,45 @@ export default function StayInfoForm() {
 
             <FormControl>
             <InputLabel id="propertyTypeLabel">Property Type</InputLabel>
-            <Select
-                required
-                sx={{width:150, mr:1}}
-                labelId="propertyTypeLabel"
-                id="propertyTypeSelect"
-                label="Property Type"
-            >
-                <MenuItem>Cabin/Cottage</MenuItem>
-                <MenuItem>A-Frame</MenuItem>
-            </Select>
+            <StayAttributeSelector 
+            type={StayAttributeType.PropertyType} 
+            label="Property Type"
+            />
             </FormControl>
-
+        </Grid>
+            
+        <Grid item xs={12}>
             <FormControl sx={{width:150, mr:1}}>
             <InputLabel id="amenitiesLabel">Amenities</InputLabel>
-            <Select
-                labelId="amenitiesLabel"
-                id="amenitiesSelect"
-                label="Amenities"
-            >
-                <MenuItem>Air Conditioning</MenuItem>
-                <MenuItem>Hot Tub</MenuItem>
-            </Select>
+            <StayAttributeSelector 
+            type={StayAttributeType.Amenity} 
+            label="Amenities"
+            />
             </FormControl>
-
+        </Grid>
+        <Grid item xs={12}>
             <FormControl sx={{width:155, mr:1}}>
             <InputLabel id="specialInterestsLabel">Special Interests</InputLabel>
-            <Select
-                labelId="specialInterestsLabel"
-                id="specialInterestsSelect"
-                label="Special Interests"
-            >
-                <MenuItem>Golf</MenuItem>
-                <MenuItem>Skiing</MenuItem>
-            </Select>
+            <StayAttributeSelector 
+            type={StayAttributeType.SpecialInterest} 
+            label="Special Interests"
+            />
             </FormControl>
 
         </Grid>
         <Grid item xs={12} >
-            <FormControlLabel control={<Checkbox />} label="Pets Allowed?" />
-            <FormControlLabel control={<Checkbox />} label="On-Site Parking Available" />
+            
+            <FormControlLabel 
+            checked={pets} 
+            control={<Checkbox />} 
+            label="Pets Allowed?" 
+            onChange={(e, checked)=>handlePetsAllowedChange(checked)}/>
+            
+            <FormControlLabel 
+            checked={parking}
+            control={<Checkbox />} 
+            label="On-Site Parking Available"
+            onChange={(e, checked)=>handleOnSiteParkingChange(checked)} />
         </Grid>
       </Grid>
       </FormGroup>

@@ -6,6 +6,154 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Entity": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"updatedBy": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayerMembership": {
+				"enum": [
+					"Standard",
+					"Premium"
+				],
+				"type": "string"
+			},
+			"HostMembersip": {
+				"enum": [
+					"None",
+					"Standard",
+					"Silver",
+					"Gold",
+					"Platinum"
+				],
+				"type": "string"
+			},
+			"Role": {
+				"enum": [
+					"Stayer",
+					"Host",
+					"Employee",
+					"Admin"
+				],
+				"type": "string"
+			},
+			"User": {
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"enabled": {
+						"type": "boolean"
+					},
+					"email": {
+						"type": "string"
+					},
+					"stayerMembership": {
+						"$ref": "#/components/schemas/StayerMembership"
+					},
+					"hostMembership": {
+						"$ref": "#/components/schemas/HostMembersip"
+					},
+					"lastActive": {
+						"type": "number",
+						"format": "double"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/Role"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"firstName",
+					"lastName",
+					"enabled",
+					"email",
+					"stayerMembership",
+					"hostMembership",
+					"lastActive",
+					"roles"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/User"
+					}
+				]
+			},
+			"StayAttributeType": {
+				"enum": [
+					"amenity",
+					"propertyType",
+					"specialInterest"
+				],
+				"type": "string"
+			},
+			"StayAttribute": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/StayAttributeType"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"iconUrl": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"type",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayAttributeRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/StayAttribute"
+					}
+				]
+			},
 			"Address": {
 				"properties": {
 					"city": {
@@ -14,24 +162,27 @@
 					"state": {
 						"type": "string"
 					},
-					"address": {
-						"type": "number",
-						"format": "double"
+					"address1": {
+						"type": "string"
+					},
+					"address2": {
+						"type": "string"
 					},
 					"zip": {
 						"type": "number",
 						"format": "double"
 					},
-					"street": {
+					"country": {
 						"type": "string"
 					}
 				},
 				"required": [
 					"city",
 					"state",
-					"address",
+					"address1",
+					"address2",
 					"zip",
-					"street"
+					"country"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -171,35 +322,10 @@
 					"petsAllowed",
 					"onSiteParking",
 					"hostEmail",
+					"type",
+					"perks",
+					"amenities",
 					"photos"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Entity": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "number",
-						"format": "double"
-					},
-					"updatedAt": {
-						"type": "number",
-						"format": "double"
-					},
-					"createdBy": {
-						"type": "string"
-					},
-					"updatedBy": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"id",
-					"createdAt",
-					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -211,86 +337,6 @@
 					},
 					{
 						"$ref": "#/components/schemas/Entity"
-					}
-				]
-			},
-			"StayerMembership": {
-				"enum": [
-					"Standard",
-					"Premium"
-				],
-				"type": "string"
-			},
-			"HostMembersip": {
-				"enum": [
-					"None",
-					"Standard",
-					"Silver",
-					"Gold",
-					"Platinum"
-				],
-				"type": "string"
-			},
-			"Role": {
-				"enum": [
-					"Stayer",
-					"Host",
-					"Employee",
-					"Admin"
-				],
-				"type": "string"
-			},
-			"User": {
-				"properties": {
-					"firstName": {
-						"type": "string"
-					},
-					"lastName": {
-						"type": "string"
-					},
-					"enabled": {
-						"type": "boolean"
-					},
-					"email": {
-						"type": "string"
-					},
-					"stayerMembership": {
-						"$ref": "#/components/schemas/StayerMembership"
-					},
-					"hostMembership": {
-						"$ref": "#/components/schemas/HostMembersip"
-					},
-					"lastActive": {
-						"type": "number",
-						"format": "double"
-					},
-					"roles": {
-						"items": {
-							"$ref": "#/components/schemas/Role"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"firstName",
-					"lastName",
-					"enabled",
-					"email",
-					"stayerMembership",
-					"hostMembership",
-					"lastActive",
-					"roles"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"UserRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/User"
 					}
 				]
 			}
@@ -315,214 +361,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/stays/{stayId}": {
-			"get": {
-				"operationId": "GetStayById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/StayRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "stayId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "UpdateStay",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/StayRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "stayId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Stay"
-							}
-						}
-					}
-				}
-			},
-			"patch": {
-				"operationId": "PatchStay",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "stayId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteStay",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "stayId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/stays": {
-			"get": {
-				"operationId": "GetStays",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/StayRecord"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "name",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "region",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "petsAllowed",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					},
-					{
-						"in": "query",
-						"name": "onSiteParking",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					},
-					{
-						"in": "query",
-						"name": "hostId",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "or",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "CreateStay",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/StayRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Stay"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/users/self": {
 			"get": {
 				"operationId": "GetSelf",
@@ -752,6 +590,287 @@
 						}
 					}
 				]
+			}
+		},
+		"/stays/attributes/{type}": {
+			"get": {
+				"operationId": "GetStayAttributes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/StayAttributeRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "type",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/StayAttributeType"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AddStayAttribute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayAttributeRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "type",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/StayAttributeType"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StayAttribute"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/stays/{stayId}": {
+			"get": {
+				"operationId": "GetStayById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "UpdateStay",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Stay"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"operationId": "PatchStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays": {
+			"get": {
+				"operationId": "GetStays",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/StayRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "region",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "petsAllowed",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "onSiteParking",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "hostId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "or",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateStay",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Stay"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

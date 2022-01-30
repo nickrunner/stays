@@ -51,8 +51,10 @@ export async function expressAuthentication(
         }
         catch{
           console.log("Error: user was authenticated but not found in stays database.");
-          //user = await userService.createDefaultUser(email, email);
-          throw new Error404("User not in Stays database!");
+          if(scopes){
+            throw new Error401("User was authenticated but not found in Stays database");
+          }
+          return authenticatedRequest;
         }
         try{
           await userService.updateUser(user.id, {lastActive: Date.now()});
