@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {CollectionReference, DocumentSnapshot, Query, QuerySnapshot } from "firebase-admin/firestore";
 import { createCollection, firestore } from "../firebase";
 import { Error404 } from "../../error";
-import { CollectionFilter } from "./collectionFilter";
+import { ColExpression, CollectionQuery } from "./collectionQuery";
 
 
 
@@ -16,21 +16,22 @@ export class Collection<Type> {
     }
 
 
-    public async getAll(filters?: CollectionFilter[]): Promise<(Entity & Type)[]>{
-        console.log("getAll() filters: ", {filters});
+    public async getAll(query?: CollectionQuery): Promise<(Entity & Type)[]>{
+        console.log("getAll() filters: ", {query});
         const results: Map<string, (Entity & Type)> = new Map();
-        if (filters && filters.length > 0){
-            let qSnap = await this.col.where(filters[0].key, filters[0].op, filters[0].val).get();
+        if (query && query.expressions.length > 0){
+            const exp0 = query.expressions[0];
+            let qSnap = await this.col.where(exp0.key, exp0.op, exp0.val).get();
             qSnap.forEach((doc) => { 
                 results.set(doc.data().id, doc.data());
             });
             let i = 0;
-            filters.forEach( async (f: CollectionFilter) =>{
+            query.expressions.forEach( async (exp: ColExpression) =>{
                 if(i > 0){
-                    const qSnap = await this.col.where(f.key, f.op, f.val).get();
+                    const qSnap = await this.col.where(exp.key, exp.op, exp.val).get();
                     qSnap.forEach((doc) => { 
                         const data = doc.data();
-                        if(f.or){
+                        if(exp._or){
                             results.set(data.id, data);
                         }
                         else if(!results.has(data.id)){
@@ -54,10 +55,10 @@ export class Collection<Type> {
          // todo: 
     }
 
-    public async getFirst(filters?: CollectionFilter[]): Promise< (Entity & Type) > {
-        console.log("getFirst() filters: ", {filters});
-        if(filters){
-            const id = this.hasId(filters);
+    public async getFirst(query?: CollectionQuery): Promise< (Entity & Type) > {
+        console.log("getFirst() query: ", {query});
+        if(query){
+            const id = this.hasId(query);
             if(id){
                 console.log("exists() contains ID: "+id);
                 const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(id).get();
@@ -67,7 +68,7 @@ export class Collection<Type> {
                 }
             }
         }
-        const results: (Entity & Type)[] = await this.getAll(filters);
+        const results: (Entity & Type)[] = await this.getAll(query);
         if(results.length > 0){
             const result = results[0];
             console.log("getFirst() Found Item: ", {result} );
@@ -100,8 +101,8 @@ export class Collection<Type> {
         await this.col.doc(id).delete();
     }
 
-    private hasId(filters: CollectionFilter[]): string | undefined{
-        for(let filter of filters){
+    private hasId(query: CollectionQuery): string | undefined{
+        for(let filter of query.expressions){
             if(filter.key == "id"){
                 return filter.val;
             }
@@ -109,16 +110,16 @@ export class Collection<Type> {
         return undefined;
     }
 
-    public async exists(filters: CollectionFilter[]): Promise<boolean> {
-        console.log("exists() filters: ", {filters});
-        const id: string | undefined = this.hasId(filters);
+    public async exists(query: CollectionQuery): Promise<boolean> {
+        console.log("exists() query: ", {query});
+        const id: string | undefined = this.hasId(query);
         if(id){
             console.log("exists() contains ID: "+id);
             const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(id).get();
             console.log("exists() ? "+docSnap.exists);
             return docSnap.exists;
         }
-        const results: (Entity & Type)[] = await this.getAll(filters);
+        const results: (Entity & Type)[] = await this.getAll(query);
         const retval =  results.length > 0;
         console.log("exists() ? "+retval);
         return retval;

@@ -1,7 +1,7 @@
 import { Role, UserMembership, User, UserRecord, UserSearchFilter } from "../../../common/models/user";
 import { Error404, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
-import { CollectionFilter, CollectionFilterBuilder } from "../firebase/firestore/collectionFilter";
+import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 
 
 export class UsersService {
@@ -11,19 +11,18 @@ export class UsersService {
         this.users = new Collection<User>("users");
     }
 
-    private resolveFilter(filter: UserSearchFilter): CollectionFilter[] {
-        const builder: CollectionFilterBuilder = new CollectionFilterBuilder();
-        builder.add("firstName", "==", filter.firstName);
-        builder.add("lastName", "==", filter.lastName);
-        builder.add("enabled", "==", filter.enabled);
-        builder.add("email", "==", filter.email);
-        builder.add("userMembership", "==", filter.userMembership);
+    private resolveFilter(filter: UserSearchFilter): CollectionQuery {
+        const query = new CollectionQuery()
+        .where("firstName").eq(filter.firstName)
+        .and("lastName").eq(filter.lastName)
+        .and("enabled").eq(filter.enabled)
+        .and("email").eq(filter.email)
+        .and("userMembership").eq(filter.userMembership)
+        .and("roles").arrContainsAny(filter.roles);
         if(filter.lastActive){
-            builder.add("lastActive", ">=", filter.lastActive.min);
-            builder.add("lastActive", "<=", filter.lastActive.max);
+            query.and("lastActive").inRange("lastActive", filter.lastActive.min, filter.lastActive.max);
         }
-        builder.add("roles", "array-contains-any", filter.roles);
-        return builder.build();
+        return query;
     }
 
     public async getUsers(filter?: UserSearchFilter): Promise<UserRecord[]> {
@@ -41,17 +40,15 @@ export class UsersService {
     }
 
     public async getUserByEmail(email: string): Promise<UserRecord>{
-        const filter: CollectionFilter = {
-            key: "email",
-            op: "==",
-            val: email,
-            or: false
-        }
-        return await this.users.getFirst([filter]);
+        return await this.users.getFirst(
+            new CollectionQuery().where("email").eq(email)
+        );
     }
 
     public async userExists(userId: string): Promise<boolean> {
-        return await this.users.exists(new CollectionFilterBuilder().add("id", "==", userId).build());
+        return await this.users.exists(
+            new CollectionQuery().where("id").eq(userId)
+        );
     }
 
     public async createDefaultUser(email: string, clientId?: string):Promise<UserRecord> {
@@ -72,7 +69,7 @@ export class UsersService {
         console.log("Creating User :) "+user.email);
         const userExists: boolean = await this.users.exists
         (
-           new CollectionFilterBuilder().add("email", "==", user.email).build()
+           new CollectionQuery().where("email").eq(user.email)
         )
         console.log("User exists: "+userExists);
         if(userExists == false){ 

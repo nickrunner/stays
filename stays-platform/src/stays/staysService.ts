@@ -1,11 +1,11 @@
 import { Collection } from "../firebase/firestore/collection";
-import { Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
+import { Coordinates, Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
 import { Error400, Error404 } from "../error";
 import ow from 'ow';
 import LocationService from "../locationService";
 import { User } from "../../../common/models/user";
 import { access } from "fs";
-import { CollectionFilter, CollectionFilterBuilder } from "../firebase/firestore/collectionFilter";
+import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 
 export class StaysService {
 
@@ -15,40 +15,37 @@ export class StaysService {
         this.stays = new Collection<Stay>("stays");
     }
 
-    private resolveFilter(filter: StaySearchFilter): CollectionFilter[]  {
-        const builder = new CollectionFilterBuilder();
-        builder.add("name", "==", filter.name);
-        builder.add("enable", "==", filter.enable);
-        builder.add("city", "==", filter.city);
-        builder.add("state", "==", filter.state);
-        builder.add("zip", "==", filter.zip);
+    private resolveFilter(filter: StaySearchFilter): CollectionQuery  {
+        const query = new CollectionQuery()
+        .where("name").eq(filter.name)
+        .and("enable").eq(filter.enable)
+        .and("city").eq(filter.city)
+        .and("state").eq(filter.state)
+        .and("zip").eq(filter.zip)
+        .and("petsAllowed").eq(filter.petsAllowed)
+        .and("onSiteParking").eq(filter.onSiteParking)
+        .and("status").eq(filter.status)
+        .and("type").arrContainsAny(filter.type)
+        .and("perks").arrContainsAny(filter.specialInterests)
+        .and("amenities").arrContainsAny(filter.amenities)
+        .and("tags").arrContainsAny(filter.tags);
         if(filter.bounds){
-            builder.add("location.coordinates.latitude", ">=", filter.bounds.sw );
-            builder.add("location.coordinates.latitude", "<=", filter.bounds.ne);
-            builder.add("location.coordinates.longitude", ">=", filter.bounds.sw );
-            builder.add("location.coordinates.longitude", "<=", filter.bounds.ne);
+            let key = "location.coordinates.latitude";
+            query.and(key).inRange(key, filter.bounds.sw.latitude, filter.bounds.ne.latitude);
+            key = "location.coordinates.longitude";
+            query.and(key).inRange(key, filter.bounds.sw.longitude, filter.bounds.ne.longitude);
         }
         if(filter.rate){
-            builder.add("currentRate", ">=", filter.rate.min);
-            builder.add("currentRate", "<=", filter.rate.max);
+            query.and("currentRate").inRange("currentRate", filter.rate.min, filter.rate.max);
         }
         if(filter.capacity){
-            builder.add("capacity", ">=", filter.capacity.min);
-            builder.add("capacity", "<=", filter.capacity.max);
+            query.and("capacity").inRange("capacity", filter.capacity.min, filter.capacity.max);
         }
         if(filter.bedrooms){
-            builder.add("bedrooms", ">=", filter.bedrooms.min);
-            builder.add("bedrooms", "<=", filter.bedrooms.max);
+            query.and("bedrooms").inRange("bedrooms", filter.bedrooms.min, filter.bedrooms.max);
         }
-        builder.add("petsAllowed", "==", filter.petsAllowed);
-        builder.add("onSiteParking", "==", filter.onSiteParking);
-        builder.add("type", "array-contains-any", filter.type);
-        builder.add("perks", "array-contains-any", filter.specialInterests);
-        builder.add("amenities", "array-contains-any", filter.amenities);
-        builder.add("tags", "array-contains-any", filter.tags);
-        builder.add("status", "==", filter.status);
-
-        return  builder.build();
+        
+        return query;
     } 
 
     public async getStays(filter?: StaySearchFilter): Promise<StayRecord[]> {
@@ -67,7 +64,7 @@ export class StaysService {
 
     public async stayExists(stayId: string): Promise<boolean> {
         return await this.stays.exists(
-            new CollectionFilterBuilder().add("id", "==", stayId).build()
+            new CollectionQuery().where("id").eq(stayId)
         );
     }
 
@@ -121,14 +118,24 @@ export class StaysService {
     }
 
     private async validateStay(stay: Stay){
+        console.log("Validating stay");
+        
+        console.log("Coordinates not present... running geocoder");
+        ow(stay, ow.object.partialShape({
+            location: {
+                address: {
+                    city: ow.string.nonEmpty,
+                    state: ow.string.nonEmpty,
+                    address1: ow.string.nonEmpty,
+                    zip: ow.number
+                }
+            }
+        }));
+        const coordinates: Coordinates = await new LocationService().getCoordinates(stay.location.address);
+        stay.location.coordinates.latitude = coordinates.latitude;
+        stay.location.coordinates.longitude = coordinates.longitude;
         try{
-            ow(stay.location.coordinates, ow.object.nonEmpty);
-        }
-        catch{
-            stay.location.coordinates = await new LocationService().getCoordinates(stay.location.address);
-        }
-        try{
-            ow(stay, ow.object.exactShape({
+            ow(stay, ow.object.partialShape({
                 name: ow.string.nonEmpty,
                 enable: ow.boolean,
                 description: ow.string.nonEmpty,
@@ -138,10 +145,6 @@ export class StaysService {
                         state: ow.string.nonEmpty,
                         address1: ow.string.nonEmpty,
                         zip: ow.number
-                    },
-                    coordinates: {
-                        latitude: ow.number,
-                        longitute: ow.number
                     },
                     region: ow.string
                 },

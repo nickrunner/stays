@@ -2,6 +2,7 @@ import NodeGeocoder from 'node-geocoder';
 import { Address, Coordinates } from "../../common/models/stay";
 import { Error500 } from "./error";
 import ow from "ow";
+import { couldStartTrivia } from 'typescript';
 
 const API_KEY: string = "AIzaSyAIWw4jpYTFQCc0273z1vjUMf8U44nSas8";
 export default class LocationService{
@@ -17,6 +18,7 @@ export default class LocationService{
     }
 
     public async getCoordinates(address: Address): Promise<Coordinates>{
+        console.log("Getting coordinates from addres: ", { address });
         ow(address,  ow.object.partialShape({
             country: ow.string.nonEmpty,
             address1: ow.string.nonEmpty,
@@ -35,10 +37,11 @@ export default class LocationService{
         if(res.length < 1){
             throw new Error500("Could not locate address");
         }
+        console.log("Got geocoder response: ", {res});
 
         return {
             latitude: res[0].latitude,
-            longitude: res[1].longitude
+            longitude: res[0].longitude
         }
     }
 
