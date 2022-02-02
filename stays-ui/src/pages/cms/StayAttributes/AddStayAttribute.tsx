@@ -4,6 +4,7 @@ import { StayClient } from "../../../clients/stayClient";
 import StaysPage from "../../StaysPage";
 import CmsFrame from "../CmsFrame";
 import { LoadingButton } from '@mui/lab';
+import { StayAttributeType } from "../../../models/StayAttributes";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -17,6 +18,7 @@ const style = {
     p: 4,
   };
   
+  
 
 export default function AddStayAttribute(props: any){
     const [name, setName] = React.useState("");
@@ -24,6 +26,17 @@ export default function AddStayAttribute(props: any){
     const [icon, setIcon] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [errMsg, setErrMsg] = React.useState("");
+
+    function getAttributeTypeText(){
+        switch(props.type){
+            case StayAttributeType.Amenity:
+                return "Amenity";
+            case StayAttributeType.PropertyType:
+                return "Property Type";
+            case StayAttributeType.SpecialInterest:
+                return "Special Interest";
+        }
+    }
 
     async function handleSubmit(){    
         setLoading(true);
@@ -47,7 +60,7 @@ export default function AddStayAttribute(props: any){
 
         <Box sx={style}>
         <Typography variant="h6" gutterBottom>
-            {"Add "+props.type}
+            {"Add "+getAttributeTypeText()}
         </Typography>
         <FormGroup>
         <Grid container spacing={3}>

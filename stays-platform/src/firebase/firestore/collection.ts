@@ -1,8 +1,11 @@
 import { Entity } from "../../../../common/models/Entity";
 import { v4 as uuidv4 } from 'uuid';
-import {CollectionReference, DocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
+import {CollectionReference, DocumentSnapshot, Query, QuerySnapshot } from "firebase-admin/firestore";
 import { createCollection, firestore } from "../firebase";
 import { Error404 } from "../../error";
+import { CollectionFilter } from "./collectionFilter";
+
+
 
 export class Collection<Type> {
 
@@ -12,64 +15,56 @@ export class Collection<Type> {
         this.col = createCollection<Entity & Type>(name.toString());
     }
 
-    public async getAll(filters?: any, or?: boolean): Promise< (Entity & Type)[]>{
+
+    public async getAll(filters?: CollectionFilter[]): Promise<(Entity & Type)[]>{
         console.log("getAll() filters: ", {filters});
-        const and: boolean = !or;
-        const results: (Entity & Type)[] = [];
-        let processed = false;
-        if(filters){
-            for(const key in filters){
-                if(!filters[key]){
-                    continue;
-                }
-                processed = true;
-                console.log("getAll() query: "+key+" == "+filters[key]);
-                const qSnap: QuerySnapshot<Entity & Type> = await this.col.where(key, "==", filters[key]).get();
-                qSnap.forEach((doc) => {
-                    let match = true;
-                    if(and){
-                        const result = doc.data() as any;
-                        for(const key in filters){
-                            if(!filters[key]){
-                                continue;
-                            }
-                            if(!result[key]){
-                                match = false;
-                                break;
-                            }
-                            if(result[key] !== filters[key] )  {
-                                match = false;
-                                break;
-                            }                 
+        const results: Map<string, (Entity & Type)> = new Map();
+        if (filters && filters.length > 0){
+            let qSnap = await this.col.where(filters[0].key, filters[0].op, filters[0].val).get();
+            qSnap.forEach((doc) => { 
+                results.set(doc.data().id, doc.data());
+            });
+            let i = 0;
+            filters.forEach( async (f: CollectionFilter) =>{
+                if(i > 0){
+                    const qSnap = await this.col.where(f.key, f.op, f.val).get();
+                    qSnap.forEach((doc) => { 
+                        const data = doc.data();
+                        if(f.or){
+                            results.set(data.id, data);
                         }
-                    }
-                    if(match){
-                        results.push(doc.data());
-                    }
-                })
-            }
+                        else if(!results.has(data.id)){
+                            results.delete(data.id);
+                        };
+                    });
+                }
+                i = i+1;
+            });
         }
-        if(!processed){
+        else{
             const qSnap: QuerySnapshot<Entity & Type> = await this.col.get();
             qSnap.forEach((doc) => {
-                results.push(doc.data());
+                results.set(doc.data().id, doc.data());
             })
         }
-        
-        return results;
+        return Array.from(results.values());
     }
 
-    public async getSome(filterss: any, start: Number, end: Number){
+    public async getSome(filters: any, start: Number, end: Number){
          // todo: 
     }
 
-    public async getFirst(filters?: any): Promise< (Entity & Type) > {
+    public async getFirst(filters?: CollectionFilter[]): Promise< (Entity & Type) > {
         console.log("getFirst() filters: ", {filters});
         if(filters){
-            console.log("getFirst(): filters present");
-            if(filters.hasOwnProperty('id')){
-                console.log("getFirst() contains ID: "+filters.id);
-                return await this.get(filters.id);
+            const id = this.hasId(filters);
+            if(id){
+                console.log("exists() contains ID: "+id);
+                const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(id).get();
+                const data = docSnap.data();
+                if(data != undefined){
+                    return data;
+                }
             }
         }
         const results: (Entity & Type)[] = await this.getAll(filters);
@@ -105,15 +100,23 @@ export class Collection<Type> {
         await this.col.doc(id).delete();
     }
 
-    public async exists(filters: any): Promise<boolean> {
-        console.log("exists() filters: ", {filters});
-        if(filters){
-            if(filters.hasOwnProperty('id')){
-                console.log("exists() contains ID: "+filters.id);
-                const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(filters.id).get();
-                console.log("exists() ? "+docSnap.exists);
-                return docSnap.exists;
+    private hasId(filters: CollectionFilter[]): string | undefined{
+        for(let filter of filters){
+            if(filter.key == "id"){
+                return filter.val;
             }
+        }
+        return undefined;
+    }
+
+    public async exists(filters: CollectionFilter[]): Promise<boolean> {
+        console.log("exists() filters: ", {filters});
+        const id: string | undefined = this.hasId(filters);
+        if(id){
+            console.log("exists() contains ID: "+id);
+            const docSnap: DocumentSnapshot<Entity & Type> = await this.col.doc(id).get();
+            console.log("exists() ? "+docSnap.exists);
+            return docSnap.exists;
         }
         const results: (Entity & Type)[] = await this.getAll(filters);
         const retval =  results.length > 0;

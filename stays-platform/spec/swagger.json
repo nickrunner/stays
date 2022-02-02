@@ -34,86 +34,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"StayerMembership": {
-				"enum": [
-					"Standard",
-					"Premium"
-				],
-				"type": "string"
-			},
-			"HostMembersip": {
-				"enum": [
-					"None",
-					"Standard",
-					"Silver",
-					"Gold",
-					"Platinum"
-				],
-				"type": "string"
-			},
-			"Role": {
-				"enum": [
-					"Stayer",
-					"Host",
-					"Employee",
-					"Admin"
-				],
-				"type": "string"
-			},
-			"User": {
-				"properties": {
-					"firstName": {
-						"type": "string"
-					},
-					"lastName": {
-						"type": "string"
-					},
-					"enabled": {
-						"type": "boolean"
-					},
-					"email": {
-						"type": "string"
-					},
-					"stayerMembership": {
-						"$ref": "#/components/schemas/StayerMembership"
-					},
-					"hostMembership": {
-						"$ref": "#/components/schemas/HostMembersip"
-					},
-					"lastActive": {
-						"type": "number",
-						"format": "double"
-					},
-					"roles": {
-						"items": {
-							"$ref": "#/components/schemas/Role"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"firstName",
-					"lastName",
-					"enabled",
-					"email",
-					"stayerMembership",
-					"hostMembership",
-					"lastActive",
-					"roles"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"UserRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/User"
-					}
-				]
-			},
 			"StayAttributeType": {
 				"enum": [
 					"amenity",
@@ -246,6 +166,14 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"StayApplicationStatus": {
+				"enum": [
+					"Pending",
+					"Rejected",
+					"Accepted"
+				],
+				"type": "string"
+			},
 			"Stay": {
 				"properties": {
 					"name": {
@@ -303,11 +231,20 @@
 						},
 						"type": "array"
 					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
 					"photos": {
 						"items": {
 							"$ref": "#/components/schemas/Photo"
 						},
 						"type": "array"
+					},
+					"status": {
+						"$ref": "#/components/schemas/StayApplicationStatus"
 					}
 				},
 				"required": [
@@ -325,7 +262,9 @@
 					"type",
 					"perks",
 					"amenities",
-					"photos"
+					"tags",
+					"photos",
+					"status"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -337,6 +276,84 @@
 					},
 					{
 						"$ref": "#/components/schemas/Entity"
+					}
+				]
+			},
+			"StayRejectionInfo": {
+				"properties": {
+					"reason": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"reason"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserMembership": {
+				"enum": [
+					"Standard",
+					"Premium"
+				],
+				"type": "string"
+			},
+			"Role": {
+				"enum": [
+					"Stayer",
+					"Host",
+					"Employee",
+					"Admin"
+				],
+				"type": "string"
+			},
+			"User": {
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"enabled": {
+						"type": "boolean"
+					},
+					"email": {
+						"type": "string"
+					},
+					"userMembership": {
+						"$ref": "#/components/schemas/UserMembership"
+					},
+					"lastActive": {
+						"type": "number",
+						"format": "double"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/Role"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"firstName",
+					"lastName",
+					"enabled",
+					"email",
+					"userMembership",
+					"lastActive",
+					"roles"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/User"
 					}
 				]
 			}
@@ -361,237 +378,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/users/self": {
-			"get": {
-				"operationId": "GetSelf",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Stayer"
-						]
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/users": {
-			"get": {
-				"operationId": "GetUsers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/UserRecord"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "userId",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "email",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "firstName",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "lastName",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "stayerMembership",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/StayerMembership"
-						}
-					},
-					{
-						"in": "query",
-						"name": "hostMembership",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/HostMembersip"
-						}
-					},
-					{
-						"in": "query",
-						"name": "role",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/Role"
-						}
-					},
-					{
-						"in": "query",
-						"name": "or",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/User"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/users/{userId}": {
-			"post": {
-				"operationId": "UpdateUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UserRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/User"
-							}
-						}
-					}
-				}
-			},
-			"patch": {
-				"operationId": "PatchUser",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteUser",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/stays/attributes/{type}": {
 			"get": {
 				"operationId": "GetStayAttributes",
@@ -706,7 +492,13 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -735,7 +527,13 @@
 						"description": "No content"
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -762,7 +560,14 @@
 						"description": "No content"
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -797,50 +602,10 @@
 				"parameters": [
 					{
 						"in": "query",
-						"name": "name",
+						"name": "filter",
 						"required": false,
 						"schema": {
 							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "region",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "petsAllowed",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					},
-					{
-						"in": "query",
-						"name": "onSiteParking",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					},
-					{
-						"in": "query",
-						"name": "hostId",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "or",
-						"required": false,
-						"schema": {
-							"type": "boolean"
 						}
 					}
 				]
@@ -859,7 +624,13 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -871,6 +642,346 @@
 						}
 					}
 				}
+			}
+		},
+		"/stays/apply": {
+			"post": {
+				"operationId": "CreateStayApplication",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Stay"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/stays/{stayId}/publish": {
+			"patch": {
+				"operationId": "AcceptStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays/{stayId}/reject": {
+			"patch": {
+				"operationId": "RejectStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StayRejectionInfo"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/stays/{stayId}/disable": {
+			"patch": {
+				"operationId": "DisableStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays/{stayId}/enable": {
+			"patch": {
+				"operationId": "EnableStay",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/self": {
+			"get": {
+				"operationId": "GetSelf",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"firebase": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"post": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"operationId": "PatchUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

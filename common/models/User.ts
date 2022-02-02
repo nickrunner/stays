@@ -1,16 +1,9 @@
 import { Entity } from "./Entity";
+import { Range } from "./Range";
 
-export enum StayerMembership {
+export enum UserMembership {
     Standard = "Standard",
     Premium = "Premium",
-};
-
-export enum HostMembersip {
-    None = "None",
-    Standard = "Standard",
-    Silver = "Silver",
-    Gold = "Gold",
-    Platinum = "Platinum"
 };
 
 
@@ -26,10 +19,20 @@ export interface User {
     lastName: string;
     enabled: boolean;
     email: string;
-    stayerMembership: StayerMembership;
-    hostMembership: HostMembersip; 
+    userMembership: UserMembership;
     lastActive: number;
     roles: Role[];
 };
+
+export interface UserSearchFilter {
+    firstName?: string;
+    lastName?: string;
+    enabled?: boolean;
+    email?: string;
+    userMembership?: UserMembership;
+    lastActive: Range;
+    roles: Role[];
+
+}
 
 export type UserRecord = Entity & User;

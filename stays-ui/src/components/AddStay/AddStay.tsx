@@ -21,6 +21,7 @@ import { globalContext } from '../../GlobalStore';
 import { StayAttribute } from '../../models/StayAttributes';
 import { AddStayContext, addStayContext } from './AddStayContext';
 import { StayClient } from '../../clients/stayClient';
+import { LoadingButton } from '@mui/lab';
 
 
 const steps = ['About', "Photos", 'Review'];
@@ -31,6 +32,21 @@ const steps = ['About', "Photos", 'Review'];
 export default function AddStay(props: any) {
   const [activeStep, setActiveStep] = React.useState(0);
   const { stay } = React.useContext(addStayContext);
+  const [loading, setLoading] = React.useState(false);
+
+  const createStay = async () => {
+     setLoading(true);
+    
+     try{
+        await new StayClient().createStay(stay);
+     }
+     catch(e){
+        console.log("Error posting stay: ", {e});
+     }
+     
+     setLoading(false);
+     setActiveStep(activeStep + 1);
+  }
 
 
   function getStepContent(step: number) {
@@ -38,15 +54,17 @@ export default function AddStay(props: any) {
       case 0:
         return <StayInfoForm />;
       case 1:
-        return <StayPhotoForm />;
+          return <StayLocation />
       case 2:
+        return <StayPhotoForm />;
+      case 3:
         return <StayReview />
       default:
         throw new Error('Unknown step');
     }
   }
 
-  const handleNext = () => {
+  const handleNext = ()  => {
 
     switch(activeStep){
         case 0:
@@ -54,8 +72,9 @@ export default function AddStay(props: any) {
         case 1:
             break;
         case 2:
-            new StayClient().createStay(stay);
-            break;
+            stay.hostEmail = "admin@stays.co";
+            createStay();
+            return;
     }
 
     setActiveStep(activeStep + 1);
@@ -66,7 +85,7 @@ export default function AddStay(props: any) {
   };
 
   return (
-    <AddStayContext>
+
       <Container component="main" maxWidth="sm" sx={{ mb: 4}}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }}}>
           <Typography component="h1" variant="h4" align="center">
@@ -98,20 +117,20 @@ export default function AddStay(props: any) {
                       Back
                     </Button>
                   )}
-                  <Button
+                  <LoadingButton
                     variant="contained"
                     onClick={handleNext}
+                    loading={false}
                     sx={{ mt: 3, ml: 1 }}
                   >
                     {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                  </Button>
+                  </LoadingButton>
                 </Box>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
       </Container>
-      </AddStayContext>
 
   );
 }

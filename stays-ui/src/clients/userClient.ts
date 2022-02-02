@@ -1,8 +1,7 @@
-import { StayerMembership, Role, User, UserRecord } from "../models/User";
+import { UserMembership, Role, User, UserRecord, UserSearchFilter } from "../models/User";
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
 import { TurnedIn } from "@mui/icons-material";
-import { HostMembersip } from "../models/User";
 
 
 export const url = "/users";
@@ -16,8 +15,7 @@ export class UserClient {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            stayerMembership: StayerMembership.Standard,
-            hostMembership: HostMembersip.None,
+            userMembership: UserMembership.Standard,
             lastActive: Date.now(),
             roles: [Role.Stayer]
         }
@@ -33,7 +31,10 @@ export class UserClient {
     }
 
     public async getUserByEmail(email: string): Promise<User>{
-       const response = await axios.get(url, await queryCfg({email: email}));   
+        const filter: UserSearchFilter = {
+            email: email
+        }
+       const response = await axios.get(url, await queryCfg({filter: filter}));   
        return response.data as User;  
     }
 

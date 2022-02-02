@@ -1,6 +1,6 @@
 import axios from "axios";
 import { defCfg, queryCfg } from "./serverConfig";
-import { Stay, StayRecord } from "../models/Stay";
+import { Stay, StayRecord, StaySearchFilter } from "../models/Stay";
 import { StayAttributeRecord, StayAttributeType } from "../models/StayAttributes";
 
 export const url = "/stays";
@@ -13,8 +13,8 @@ export class StayClient {
         return response.data as Stay;
     }
 
-    public async getStays(filters: any): Promise<StayRecord[]>{
-       const response = await axios.get(url, await queryCfg(filters));   
+    public async getStays(filter: StaySearchFilter): Promise<StayRecord[]>{
+       const response = await axios.get(url, await queryCfg({filter: filter}));   
        return response.data as StayRecord[];  
     }
 

@@ -31,15 +31,16 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
     const handleAddClose = () => setAddOpen(false);
 
     const getStayAttributes = async() => {
+        console.log("Getting stay attributes for "+props.type);
         const stayAttributes: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
         setStayAttributes(stayAttributes);
     }
 
 
     React.useEffect(() => {
+        setStayAttributes([]);
         getStayAttributes();
-        return;
-    }, []);
+    }, [props.type]);
 
     function handleStayAttributeSelection(stayAttribute: StayAttributeRecord){
         setSelectedStayAttribute(stayAttribute);

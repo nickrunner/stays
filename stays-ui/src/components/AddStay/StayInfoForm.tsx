@@ -52,8 +52,7 @@ export default function StayInfoForm() {
 
   return (
     <React.Fragment>
-      <StayLocation />
-      <Typography variant="h6" gutterBottom sx={{mt:5}}>
+      <Typography variant="h6" gutterBottom sx={{mt:2}}>
         Stay Information
       </Typography>
       <FormGroup>

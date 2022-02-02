@@ -13,56 +13,45 @@ import {
     Request
   } from "tsoa";
 
-import { User, UserRecord, Role, StayerMembership, HostMembersip } from "../../../common/models/user";
+import { User, UserRecord, Role } from "../../../common/models/user";
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
 import { UsersService } from "./usersService";
 
 @Route("users")
 export class UsersController extends Controller {
-    
 
-    @Security("user", ["Stayer"])
+    @Security("user", [Role.Stayer])
     @Get("/self")
     public async getSelf(
         @Request() req: AuthenticatedRequest
     ): Promise<UserRecord> {
         console.log("GET", "/users/self");
-        if(!req.self){
+        if(!req.thisUser){
             console.log("User is not signed in!");
             throw new Error401("Not signed in");
         }
-        const user: UserRecord = req.self;
+        const user: UserRecord = req.thisUser;
         return user;
     }
 
     @Security("user")
     @Get()
     public async getUsers(
-        @Query() userId?: string,
-        @Query() email?: string ,
-        @Query() firstName?: string,
-        @Query() lastName?: string, 
-        @Query() stayerMembership?: StayerMembership,
-        @Query() hostMembership?: HostMembersip,
-        @Query() role?: Role, 
-        @Query() or?: boolean,
+        @Query() filter?: string
     ): Promise<UserRecord[]> {
         console.log("GET", "/users");
-        const filters = {
-            id: userId,
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            stayerMembership: stayerMembership,
-            HostMembersip: hostMembership,
-            role: role
+        if(filter){
+            return await new UsersService().getUsers(JSON.parse(filter));
         }
-        return await new UsersService().getUsers(filters, or);
+        else{
+            return await new UsersService().getUsers();
+        }
+        
     }
 
     @Post()
-    @Security("user")
+    @Security("firebase")
     public async createUser(
         @Request() req: AuthenticatedRequest,
         @Body() user: User
@@ -78,7 +67,9 @@ export class UsersController extends Controller {
     }
 
     @Post("{userId}")
+    @Security("user")
     public async updateUser(
+        @Request() req: AuthenticatedRequest,
         @Path() userId: string,
         @Body() user: User
     ): Promise<UserRecord> {
@@ -94,6 +85,7 @@ export class UsersController extends Controller {
     }
 
     @Patch("{userId}")
+    @Security("user", [Role.Admin])
     public async patchUser(
         @Path() userId: string,
         @Body() attributes: any

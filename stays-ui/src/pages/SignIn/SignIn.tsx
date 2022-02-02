@@ -32,6 +32,7 @@ export default function SignIn() {
   React.useEffect(() => {
       async function redirectIfSignedIn(){
         if(await new AuthClient().isSignedIn()){
+          console.log("User is signed in... redirecting to home");
           navigate("/");
         }
       }

@@ -1,31 +1,57 @@
-import { HostMembersip, Role, StayerMembership, User, UserRecord } from "../../../common/models/user";
+import { Role, UserMembership, User, UserRecord, UserSearchFilter } from "../../../common/models/user";
 import { Error404, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
+import { CollectionFilter, CollectionFilterBuilder } from "../firebase/firestore/collectionFilter";
 
 
 export class UsersService {
 
-    private db: Collection<User>;
+    private users: Collection<User>;
     public constructor() {
-        this.db = new Collection<User>("users");
+        this.users = new Collection<User>("users");
     }
 
-    public async getUsers(filters?: any, or?: boolean): Promise<UserRecord[]> {
-        console.log("getUsers() test ", {filters});
-        const user: UserRecord[] = await this.db.getAll(filters, or);
-        return user;
+    private resolveFilter(filter: UserSearchFilter): CollectionFilter[] {
+        const builder: CollectionFilterBuilder = new CollectionFilterBuilder();
+        builder.add("firstName", "==", filter.firstName);
+        builder.add("lastName", "==", filter.lastName);
+        builder.add("enabled", "==", filter.enabled);
+        builder.add("email", "==", filter.email);
+        builder.add("userMembership", "==", filter.userMembership);
+        if(filter.lastActive){
+            builder.add("lastActive", ">=", filter.lastActive.min);
+            builder.add("lastActive", "<=", filter.lastActive.max);
+        }
+        builder.add("roles", "array-contains-any", filter.roles);
+        return builder.build();
+    }
+
+    public async getUsers(filter?: UserSearchFilter): Promise<UserRecord[]> {
+        console.log("getUsers() test ", {filter});
+        if(filter){
+            return await this.users.getAll(this.resolveFilter(filter));
+        }
+        else{
+            return await this.users.getAll();
+        }
     }
 
     public async getUserById(userId: string): Promise<UserRecord> {
-        return await this.db.get(userId);
+        return await this.users.get(userId);
     }
 
     public async getUserByEmail(email: string): Promise<UserRecord>{
-        return await this.db.getFirst({email: email});
+        const filter: CollectionFilter = {
+            key: "email",
+            op: "==",
+            val: email,
+            or: false
+        }
+        return await this.users.getFirst([filter]);
     }
 
     public async userExists(userId: string): Promise<boolean> {
-        return await this.db.exists({id:userId});
+        return await this.users.exists(new CollectionFilterBuilder().add("id", "==", userId).build());
     }
 
     public async createDefaultUser(email: string, clientId?: string):Promise<UserRecord> {
@@ -35,8 +61,7 @@ export class UsersService {
             firstName: "",
             lastName: "",
             email: email,
-            stayerMembership: StayerMembership.Standard,
-            hostMembership: HostMembersip.None,
+            userMembership: UserMembership.Standard,
             lastActive: Date.now(),
             roles: [Role.Stayer]
         }
@@ -45,15 +70,13 @@ export class UsersService {
 
     public async createUser(user: User, clientId?: string): Promise<UserRecord> {
         console.log("Creating User :) "+user.email);
-        const userExists: boolean = await this.db.exists
+        const userExists: boolean = await this.users.exists
         (
-            {
-                email: user.email
-            }
+           new CollectionFilterBuilder().add("email", "==", user.email).build()
         )
         console.log("User exists: "+userExists);
         if(userExists == false){ 
-            const userRecord: UserRecord = await this.db.create(user, clientId);
+            const userRecord: UserRecord = await this.users.create(user, clientId);
             return userRecord; 
         }
         else{
@@ -64,7 +87,7 @@ export class UsersService {
 
     public async updateUser(userId: string, attributes: any, clientId?: string): Promise<void> {
         if(await this.userExists(userId) ){
-            await this.db.update(userId, attributes, clientId);
+            await this.users.update(userId, attributes, clientId);
         }
         else{
             console.log("Tried to update user that was no found in DB: "+userId);
@@ -73,11 +96,11 @@ export class UsersService {
     }
 
     public async updateFirstName(userId: string, firstName: String): Promise<void>{
-        await this.db.update(userId, {firstName: firstName});
+        await this.users.update(userId, {firstName: firstName});
     }
 
     public async deleteUser(userId: string){
-        await this.db.delete(userId);
+        await this.users.delete(userId);
     }
 
 }

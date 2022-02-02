@@ -8,10 +8,14 @@ import {
     Query,
     Patch,
     Delete,
-    Security
+    Security,
+    Request
   } from "tsoa";
 
-import { Stay, StayRecord } from "../../../common/models/stay";
+import { Stay, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
+import { Role } from "../../../common/models/user";
+import { AuthenticatedRequest } from "../auth/auth";
+import { Error401 } from "../error";
 import { StaysService } from "./staysService";
 
 @Route("stays")
@@ -32,24 +36,19 @@ export class StaysController extends Controller {
 
     @Get()
     public async getStays(
-        @Query() name?: string ,
-        @Query() region?: string,
-        @Query() petsAllowed?: boolean, 
-        @Query() onSiteParking?: boolean,
-        @Query() hostId?: string, 
-        @Query() or?: boolean
+        @Query() filter?: string
     ): Promise<StayRecord[]> {
-        const filters = {
-            name: name,
-            region: region,
-            petsAllowed: petsAllowed,
-            onSiteParking: onSiteParking,
-            hostId: hostId
+        if(filter){
+            return await new StaysService().getStays(JSON.parse(filter));
         }
-        return await new StaysService().getStays(filters, or);
+        else{
+            return await new StaysService().getStays();
+        }
+        
     }
 
     @Post()
+    @Security("user", [Role.Admin])
     public async createStay(
         @Body() stay: Stay
     ): Promise<StayRecord> {
@@ -63,7 +62,27 @@ export class StaysController extends Controller {
         }
     }
 
+    @Post("/apply")
+    @Security("user", [Role.Host])
+    public async createStayApplication(
+        @Request() req: AuthenticatedRequest,
+        @Body() stay: Stay
+    ): Promise<StayRecord> {
+        console.log("POST /stays/apply with body ", {stay});
+        try{
+            if(!req.thisUser){
+                throw new Error401();
+            }
+            return await new StaysService().createApplication(stay, req.thisUser.email);
+        }
+        catch(e){
+            console.log("createStay() Error: "+e);
+            throw e;
+        }
+    }
+
     @Post("{stayId}")
+    @Security("user", [Role.Admin])
     public async updateStay(
         @Path() stayId: string,
         @Body() stay: Stay
@@ -74,12 +93,13 @@ export class StaysController extends Controller {
             return await stayService.getStayById(stayId);
         }
         catch(e){
-            console.log("updateStay() Error: "+e);
+            console.log("updateStay() Error: ", {e});
             throw e;
         }
     }
 
     @Patch("{stayId}")
+    @Security("user", [Role.Admin])
     public async patchStay(
         @Path() stayId: string,
         @Body() attributes: any
@@ -88,12 +108,74 @@ export class StaysController extends Controller {
             await new StaysService().updateStay(stayId, attributes);
         }
         catch(e){
-            console.log("patchStay() Error: "+e);
+            console.log("patchStay() Error: ", {e});
+            throw e;
+        }
+    }
+
+    @Patch("/{stayId}/publish")
+    @Security("user", [Role.Admin])
+    public async acceptStay(
+        @Request() req: AuthenticatedRequest,
+        @Path() stayId: string
+    ): Promise<void> {
+        try{
+            await new StaysService().publishStay(stayId, req.email);
+        }
+        catch(e){
+            console.log("publish stay error: ", {e});
+            throw e;
+        }
+    }
+
+    @Patch("/{stayId}/reject")
+    @Security("user", [Role.Admin])
+    public async rejectStay(
+        @Request() req: AuthenticatedRequest,
+        @Path() stayId: string,
+        @Body() rejectionInfo: StayRejectionInfo
+    ): Promise<void> {
+        try{
+            await new StaysService().rejectStay(stayId, rejectionInfo, req.email);
+        }
+        catch(e){
+            console.log("publish stay error: ", {e});
+            throw e;
+        }
+    }
+
+    @Patch("/{stayId}/disable")
+    @Security("user", [Role.Host, Role.Admin])
+    public async disableStay(
+        @Request() req: AuthenticatedRequest,
+        @Path() stayId: string
+    ): Promise<void> {
+        try{
+            await new StaysService().disableStay(stayId, req.email);
+        }
+        catch(e){
+            console.log("publish stay error: ", {e});
+            throw e;
+        }
+    }
+
+    @Patch("/{stayId}/enable")
+    @Security("user", [Role.Host, Role.Admin])
+    public async enableStay(
+        @Request() req: AuthenticatedRequest,
+        @Path() stayId: string
+    ): Promise<void> {
+        try{
+            await new StaysService().enableStay(stayId, req.email);
+        }
+        catch(e){
+            console.log("publish stay error: ", {e});
             throw e;
         }
     }
 
     @Delete("{stayId}")
+    @Security("user", [Role.Host, Role.Admin])
     public async deleteStay(
         @Path() stayId: string
     ): Promise<void> {

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from "react"
-import { Stay } from "../../models/Stay"
+import { Stay, StayApplicationStatus } from "../../models/Stay"
 
 export type AddStayContextType = {
     stay: Stay
@@ -18,11 +18,13 @@ const defaultStay: Stay = {
     type: [],
     amenities: [],
     perks: [],
+    tags: [],
     petsAllowed: false,
     onSiteParking: false,
     photos: [],
     hostEmail: "",
     enable: true,
+    status: StayApplicationStatus.Pending,
     location: {
         address: {
             city: "",
