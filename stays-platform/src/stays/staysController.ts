@@ -38,12 +38,19 @@ export class StaysController extends Controller {
     public async getStays(
         @Query() filter?: string
     ): Promise<StayRecord[]> {
-        if(filter){
-            return await new StaysService().getStays(JSON.parse(filter));
+        try{
+            if(filter){
+                return await new StaysService().getStays(JSON.parse(filter));
+            }
+            else{
+                return await new StaysService().getStays();
+            }
         }
-        else{
-            return await new StaysService().getStays();
+        catch(e){
+            console.log("Error getting stays: ", {e});
+            throw e
         }
+        
         
     }
 

@@ -24,7 +24,7 @@ import { StayClient } from '../../clients/stayClient';
 import { LoadingButton } from '@mui/lab';
 
 
-const steps = ['About', "Photos", 'Review'];
+const steps = ['About', "Location", 'Photos'];
 
 
 
@@ -72,6 +72,8 @@ export default function AddStay(props: any) {
         case 1:
             break;
         case 2:
+            break;
+        case 3:
             stay.hostEmail = "admin@stays.co";
             createStay();
             return;
