@@ -16,13 +16,10 @@ import JSONPretty from 'react-json-pretty';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
-
-
 function StaysCmsContent() {
     let navigate = useNavigate();
     const[stays, setStays] = React.useState<StayRecord[]>([]);
     const[selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
-    const[addStayOpen, setAddStayOpen] = React.useState(false);
 
     const getStays = async() => {
         const stays = await new StayClient().getStays({});

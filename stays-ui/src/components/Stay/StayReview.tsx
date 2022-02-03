@@ -1,14 +1,15 @@
 import { Grid3x3 } from "@mui/icons-material";
-import { Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Box, Grid, ImageListItemBar, List, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 import { Stay } from "../../models/Stay";
-import { addStayContext } from "./AddStayContext";
-import StayPhotoCard from "./StayPhotoCard";
-
+import { stayContext } from "./StayContext";
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 export default function StayReview(props:any) {
-    const { stay } = React.useContext(addStayContext);
-    
+    const { stay } = React.useContext(stayContext);
+
+ 
     return (
         <React.Fragment>
         <Typography variant="h6" gutterBottom>
@@ -47,12 +48,19 @@ export default function StayReview(props:any) {
         <Typography variant="h6" gutterBottom>
             Photos
         </Typography>
-        <Box margin="auto" sx={{justifyContent:"center"}}>
-                {stay.photos.map((photo) => {
-                    return <StayPhotoCard key={photo.url} photo={photo} />
-                })}
-        </Box>
-        
+        <ImageList sx={{ width: 500, height: 450 }} cols={2} rowHeight={164}>
+            {stay.photos.map((photo) => (
+                <ImageListItem key={photo.url}>
+                <img
+                    src= {photo.url+"?w=164&h=164&fit=crop&auto=format&dpr=2 2x"}
+                    srcSet={photo.url}
+                    alt={photo.description}
+                    loading="lazy"
+                />
+                 <ImageListItemBar title={photo.description} subtitle={"Priority: "+photo.priority} />
+                </ImageListItem>
+            ))}
+        </ImageList>
         </Grid>
 
         </React.Fragment>

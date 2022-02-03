@@ -1,26 +1,21 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Photo } from "../../models/Stay";
-import { addStayContext, AddStayContext } from "./AddStayContext";
-import { DropzoneArea, DropzoneDialog } from 'material-ui-dropzone';
+import { stayContext, StayContext } from "./StayContext";
+import {  DropzoneDialog } from 'material-ui-dropzone';
 import { FilesClient } from "../../clients/filesClient";
 import { useContext } from "react";
-import StayPhotoCard from "./StayPhotoCard";
+import { StayPhotoCard } from "./StayPhotoCard";
 import React from "react";
-import CircularProgress from '@mui/material/CircularProgress';
-import { width } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
+import update from 'immutability-helper';
 
 export default function StayPhotoForm(props:any) {
-    const { stay } = useContext(addStayContext);
-    const [photos, setPhotos] = React.useState<Photo[]>([]); 
+    const { stay } = useContext(stayContext);
+    const [photos, setPhotos] = React.useState<Photo[]>(stay.photos); 
     const [open, setOpen] = React.useState(false);
     const [fileCount, setFileCount] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
 
-    React.useEffect( () => {
-        setPhotos(stay.photos);
-        return;
-    });
 
     function handleCompletionEvent(){
         setFileCount(fileCount - 1);
@@ -65,9 +60,35 @@ export default function StayPhotoForm(props:any) {
     }
 
 
+    const moveCard = React.useCallback(
+        (dragIndex, hoverIndex) => {
+          const dragPhoto = photos[dragIndex]
+          setPhotos(
+            update(photos, {
+              $splice: [
+                [dragIndex, 1],
+                [hoverIndex, 0, dragPhoto],
+              ],
+            }),
+          )
+        },
+        [photos],
+    )
+    const renderCard = (photo: Photo, index: number) => {
+    return (
+        <StayPhotoCard 
+            key={photo.priority} 
+            photo={photo} 
+            index={index} 
+            id={photo.priority} 
+            moveCard={moveCard} 
+        />
+      )
+    }
+    
 
     return (
-        <AddStayContext>
+        <StayContext>
             <Box sx={{mt:1, mr:5, ml:5, justifyContent:"center"}} margin="auto">
             <LoadingButton 
             fullWidth={true}
@@ -82,7 +103,8 @@ export default function StayPhotoForm(props:any) {
                 acceptedFiles={['image/*']}
                 cancelButtonText={"cancel"}
                 submitButtonText={"submit"}
-                showAlerts={false}
+                showAlerts={true}
+                filesLimit={5}
                 maxFileSize={5000000}
                 open={open}
                 onClose={() => setOpen(false)}
@@ -94,18 +116,12 @@ export default function StayPhotoForm(props:any) {
                 showFileNamesInPreview={true}
                 clearOnUnmount={true}
             />
-                {/* <DropzoneArea
-                    acceptedFiles={['image/*']}
-                    dropzoneText={"Drag and drop an image here or click"}
-                    onChange={(files: File[]) => handleFileSelection(files)}
-                    onDelete={(file: File) => console.log('Removed File:', file)}
-                    /> */}
             </Box>
+            
             <Box margin="auto" sx={{justifyContent:"center"}}>
-                {photos.map((photo) => {
-                    return <StayPhotoCard key={photo.url} photo={photo} />
-                })}
+                {photos.map((photo, i) => renderCard(photo, i))}
             </Box>
-        </AddStayContext> 
+         
+        </StayContext> 
     );
 }

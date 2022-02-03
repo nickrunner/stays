@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
 import StaysPage from "../../StaysPage";
 import CmsFrame from "../CmsFrame";
-import AddStay from '../../../components/AddStay/AddStay';
-import { AddStayContext } from "../../../components/AddStay/AddStayContext";
+import AddStay from '../../../components/Stay/AddStay';
+import { StayContext } from "../../../components/Stay/StayContext";
 
 export default function AddStaysCms()
 {
@@ -11,9 +11,9 @@ export default function AddStaysCms()
             <Box sx={{ display: 'flex' }}>
                 <CmsFrame />
                 <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
-                    <AddStayContext>
+                    <StayContext>
                         <AddStay />
-                    </AddStayContext>
+                    </StayContext>
                 </Container>
             </Box>
         </StaysPage>

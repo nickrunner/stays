@@ -1,37 +1,33 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import StayInfoForm from './StayInfoForm';
-import StayLocation from './StayLocation';
 import StayPhotoForm from './StayPhotoForm';
 import StayReview from './StayReview';
-import { Location, Photo, Stay } from '../../models/Stay';
-import { globalContext } from '../../GlobalStore';
-import { StayAttribute } from '../../models/StayAttributes';
-import { AddStayContext, addStayContext } from './AddStayContext';
+import { stayContext } from './StayContext';
 import { StayClient } from '../../clients/stayClient';
 import { LoadingButton } from '@mui/lab';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import StayLocation from './StayLocation';
+import { DndProvider } from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 
-const steps = ['About', "Location", 'Photos'];
-
-
+const steps = ['About', "Photos", 'Review'];
 
 
 export default function AddStay(props: any) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const { stay } = React.useContext(addStayContext);
+  const { stay } = React.useContext(stayContext);
   const [loading, setLoading] = React.useState(false);
 
   const createStay = async () => {
@@ -52,13 +48,45 @@ export default function AddStay(props: any) {
   function getStepContent(step: number) {
     switch (step) {
       case 0:
-        return <StayInfoForm />;
+        return (
+          <div>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+               <Typography variant="h6" gutterBottom sx={{mt:2}}>
+              Stay Information
+            </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <StayInfoForm />
+            </AccordionDetails>
+          </Accordion>
+           <Accordion>
+           <AccordionSummary
+             expandIcon={<ExpandMoreIcon />}
+             aria-controls="panel1a-content"
+             id="panel1a-header"
+           >
+             <Typography variant="h6">Stay Address</Typography>
+           </AccordionSummary>
+           <AccordionDetails>
+             <StayLocation />
+           </AccordionDetails>
+         </Accordion>
+         </div>);
       case 1:
-          return <StayLocation />
+          return (
+          <div>
+          <DndProvider backend={HTML5Backend}>
+            <StayPhotoForm />
+          </DndProvider>
+          </div>
+          );
       case 2:
-        return <StayPhotoForm />;
-      case 3:
-        return <StayReview />
+        return <StayReview />;
       default:
         throw new Error('Unknown step');
     }
@@ -72,8 +100,6 @@ export default function AddStay(props: any) {
         case 1:
             break;
         case 2:
-            break;
-        case 3:
             stay.hostEmail = "admin@stays.co";
             createStay();
             return;

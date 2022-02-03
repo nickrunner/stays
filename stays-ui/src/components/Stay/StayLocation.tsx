@@ -2,17 +2,14 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { AddStayContext, addStayContext } from './AddStayContext';
+import { StayContext, stayContext } from './StayContext';
 
 export default function StayInfoForm(props:any) {
-    const { stay } = React.useContext(addStayContext);
+    const { stay } = React.useContext(stayContext);
 
   return (
-    <AddStayContext>
+    <StayContext>
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Stay Address
-      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
@@ -85,6 +82,6 @@ export default function StayInfoForm(props:any) {
         </Grid>
       </Grid>
     </React.Fragment>
-    </AddStayContext>
+    </StayContext>
   );
 }

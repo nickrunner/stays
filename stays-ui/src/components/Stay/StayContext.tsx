@@ -1,11 +1,11 @@
 import React, { ReactElement, ReactNode } from "react"
 import { Stay, StayApplicationStatus } from "../../models/Stay"
 
-export type AddStayContextType = {
+export type StayContextType = {
     stay: Stay
 }
 
-export const addStayContext = React.createContext({} as AddStayContextType);
+export const stayContext = React.createContext({} as StayContextType);
 
 
 const defaultStay: Stay = {
@@ -42,8 +42,8 @@ const defaultStay: Stay = {
     },
 }
 
-export function AddStayContext({children}: {children: ReactNode }): ReactElement {
+export function StayContext({children}: {children: ReactNode }): ReactElement {
     const [stay, setStay] = React.useState<Stay>(defaultStay);
     
-    return <addStayContext.Provider value={{stay}}>{children}</addStayContext.Provider>
+    return <stayContext.Provider value={{stay}}>{children}</stayContext.Provider>
 }

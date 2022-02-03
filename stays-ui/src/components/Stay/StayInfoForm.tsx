@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { StayAttributeType } from '../../models/StayAttributes';
-import { addStayContext } from './AddStayContext';
+import { stayContext } from './StayContext';
 import StayAttributeSelector from './StayAttributeSelector';
 import StayLocation from './StayLocation';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -14,7 +14,7 @@ import { FilesClient } from '../../clients/filesClient';
 
 
 export default function StayInfoForm() {
-  const { stay } = React.useContext(addStayContext);
+  const { stay } = React.useContext(stayContext);
   const [pets, setPets] = React.useState(stay.petsAllowed);
   const [parking, setParking] = React.useState(stay.onSiteParking);
   const [files, setFiles] = React.useState<File[]>([]);
@@ -52,9 +52,7 @@ export default function StayInfoForm() {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom sx={{mt:2}}>
-        Stay Information
-      </Typography>
+     
       <FormGroup>
       <Grid container spacing={3}>
         <Grid item xs={12}>

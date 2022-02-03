@@ -3,7 +3,7 @@ import React from "react";
 import { StayClient } from "../../clients/stayClient";
 import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models/StayAttributes";
 import { theme } from "../../Theme";
-import { addStayContext } from "./AddStayContext";
+import { stayContext } from "./StayContext";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,7 +33,7 @@ export type StayAttributeSelectorProps = {
 }
 
 export default function StayAttributeSelector(props: StayAttributeSelectorProps) {
-    const { stay } = React.useContext(addStayContext);
+    const { stay } = React.useContext(stayContext);
     const [attributes, setAttributes] = React.useState<StayAttributeRecord[]>([]);
 
     function getSelected(){
