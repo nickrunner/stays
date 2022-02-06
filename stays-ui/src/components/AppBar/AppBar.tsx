@@ -1,14 +1,12 @@
 import MuiAppBar, { AppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { Link as RouterLink} from "react-router-dom";
-import Link from "@mui/material/Link"
 import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
 import React, { useState } from 'react';
-import logo from "../../static/img/stays_purple.png"
-import whiteLogo from "../../static/img/stays_white.png"
+import { images } from "../../content";
 import { useNavigate } from "react-router-dom";
 import LoginMenu from './LoginMenu';
 import NavButton  from "./NavButton";
@@ -53,7 +51,7 @@ export function Nav(props: StaysAppBarProps) {
   }
 
   function getLogo() {
-    return transparentBg() ? whiteLogo : logo;
+    return transparentBg() ? images.logo.white : images.logo.purple;
   }
 
   function getNavMargin(){

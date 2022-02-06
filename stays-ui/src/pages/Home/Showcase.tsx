@@ -1,11 +1,4 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import ButtonBase from '@mui/material/ButtonBase';
 import Container from '@mui/material/Container';
-import scribners from "../../static/img/scribners.jpg";
-import aframe from "../../static/img/aframe.jpg";
-import aBed from "../../static/img/aframe-bed.jpg";
 import { Typography } from '@mui/material';
 import Collage from '../../components/Collage';
 

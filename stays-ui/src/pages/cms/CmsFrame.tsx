@@ -24,7 +24,7 @@ import CabinIcon from "@mui/icons-material/Cabin";
 import ApprovalIcon from "@mui/icons-material/Approval";
 import StoreFrontIcon from "@mui/icons-material/Storefront";
 import { useNavigate } from 'react-router-dom';
-import logo from "../../static/img/stays_purple.png"
+import { images } from "../../content";
 import { globalContext } from '../../GlobalStore';
 import {Link as RouterLink} from "react-router-dom";
 
@@ -152,7 +152,7 @@ export default function CmsFrame(){
             }}
             >
             <RouterLink to="/">
-              <img height={logoHeight()}  src={logo} />
+              <img height={logoHeight()}  src={images.logo.purple} />
             </RouterLink>
             <IconButton onClick={toggleDrawer}>
                 <ChevronLeftIcon sx={{color: "primary"}} />

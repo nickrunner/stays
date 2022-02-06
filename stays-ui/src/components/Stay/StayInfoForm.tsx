@@ -1,16 +1,13 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Box, FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { StayAttributeType } from '../../models/StayAttributes';
 import { stayContext } from './StayContext';
 import StayAttributeSelector from './StayAttributeSelector';
-import StayLocation from './StayLocation';
-import { DropzoneArea } from 'material-ui-dropzone';
-import { FilesClient } from '../../clients/filesClient';
+
 
 
 export default function StayInfoForm() {

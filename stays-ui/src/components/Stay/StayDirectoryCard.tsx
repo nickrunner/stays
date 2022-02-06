@@ -9,7 +9,6 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -17,7 +16,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { StayRecord } from '../../models/Stay';
 import { globalContext } from '../../GlobalStore';
 import { Photo } from '../../models/Photo';
-import logo from "../../static/img/stays-icon.png"
+import { images } from "../../content";
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -76,7 +75,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
     <Card sx={{ width: {width} }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={logo}>
+          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={images.logo.purple}>
           </Avatar>
         }
         action={

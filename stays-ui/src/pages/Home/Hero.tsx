@@ -1,18 +1,8 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import * as React from 'react';
-import Image from 'material-ui-image'
-import scribners from "../../static/img/scribners.jpg";
-import aframe from "../../static/img/aframe.jpg";
-import aBed from "../../static/img/aframe-bed.jpg";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css"
-
-import { Nav } from '../../components/AppBar/AppBar';
 import Jumbotron from '../../components/Jumbotron';
-import Pricing from '../../components/Pricing';
-import { shadows } from "@mui/system";
-
-const backgroundImage = {scribners}
 
 export default function Hero(props: any) {
   let navigate = useNavigate();

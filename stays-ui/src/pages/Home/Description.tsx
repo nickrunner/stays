@@ -1,22 +1,14 @@
 import { Box, Button, Container, Grid, SxProps, Theme, Typography } from '@mui/material';
 import * as React from 'react';
-import Image from 'material-ui-image'
 import scribners from "../../static/img/scribners.jpg";
-import aframe from "../../static/img/aframe.jpg";
-import aBed from "../../static/img/aframe-bed.jpg";
-import logo from "../../static/img/stays_purple.png";
-import dotMap from "../../static/img/dot_map.svg"
+import { images } from "../../content";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css"
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { Nav } from '../../components/AppBar/AppBar';
-import Jumbotron from "../../components/Jumbotron";
 import {Search, Loyalty, BookOnline} from "@mui/icons-material";
 
-const backgroundImage = {scribners}
 
 export default function Description(props: any) {
-  let navigate = useNavigate();
   const [mobile, setMobile] = React.useState(false);
   React.useEffect(() => {
     handleResize();
@@ -66,7 +58,7 @@ export default function Description(props: any) {
       >
         <Box
           component="img"
-          src={dotMap}
+          src={images.dotMap}
           sx={{
             pointerEvents: 'none',
             position: 'absolute',
