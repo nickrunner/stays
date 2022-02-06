@@ -6,7 +6,7 @@ import aframe from "../../static/img/aframe.jpg";
 import aBed from "../../static/img/aframe-bed.jpg";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css"
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+
 import { Nav } from '../../components/AppBar/AppBar';
 import Jumbotron from '../../components/Jumbotron';
 import Pricing from '../../components/Pricing';
@@ -60,7 +60,7 @@ export default function Hero(props: any) {
             variant="contained"
             size="large"
             component="a"
-            onClick={() => navigate("/search")}
+            onClick={() => navigate("/directory")}
             sx={{ minWidth: 200}}
         >
             Find your stay

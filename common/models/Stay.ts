@@ -1,40 +1,9 @@
 import { Entity } from "./Entity";
-
-export interface Photo {
-    url: string,
-    priority: number,
-    description: string
-}
-
-export interface Range {
-    min: number;
-    max: number;
-}
-
-export interface Address {
-    city: string,
-    state: string,
-    address1: string,
-    address2: string,
-    zip: number,
-    country: string
-}
-
-export interface Coordinates {
-    latitude: number,
-    longitude: number
-}
-
-export interface Bounds {
-    ne: Coordinates
-    sw: Coordinates,
-}
-
-export interface Location {
-    address: Address,
-    coordinates: Coordinates,
-    region: string
-}
+import { Social } from "./Social";
+import { Booking } from "./Booking";
+import { Range } from "./Range";
+import { Photo } from "./Photo";
+import { Location, Bounds } from "./Location";
 
 export enum StayMembership {
     None = "None",
@@ -43,7 +12,6 @@ export enum StayMembership {
     Gold = "Gold",
     Platinum = "Platinum"
 };
-
 
 export enum StayApplicationStatus {
     Pending = "Pending",
@@ -64,11 +32,14 @@ export interface Stay {
     onSiteParking: boolean;
     hostEmail: string;
     type: string[];
-    perks: string[];
+    specialInterests: string[];
     amenities: string[];
     tags: string[];
     photos: Photo[];
     status: StayApplicationStatus;
+    demand: string;
+    social: Social[];
+    booking: Booking[];
 };
 
 export interface StaySearchFilter {

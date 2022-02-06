@@ -15,9 +15,9 @@ import NavButton  from "./NavButton";
 import { globalContext } from '../../GlobalStore';
  
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
-  height: 64,
+  height: 75,
   [theme.breakpoints.up('sm')]: {
-    height: 70,
+    height: 110,
   },
 }));
 
@@ -56,6 +56,10 @@ export function Nav(props: StaysAppBarProps) {
     return transparentBg() ? whiteLogo : logo;
   }
 
+  function getNavMargin(){
+    return globalState.mobile ? 1 : 7;
+  }
+
     return (
         <ThemeProvider theme={theme}>
         <AppBar position="fixed" 
@@ -65,19 +69,19 @@ export function Nav(props: StaysAppBarProps) {
               justifyContent: 'space-between',
               bgcolor: (transparentBg() ? "common.transparent" : "background.default")
               }}>
-            <Box  sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: 'flex-start' }} >
+            <Box  sx={{mx:"auto", ml:getNavMargin(),  flex: 1, display: 'flex', justifyContent: 'flex-start' }} >
               <RouterLink to="/">
                 <img height={logoHeight()}  src={getLogo()} />
               </RouterLink>
               
             </Box>
-            <Box sx={{ flex: 1, display: 'flex', justifyContent: "center", mx:"auto"}}>
+            <Box sx={{ flex: 1,  display: 'flex', justifyContent: "center", mx:"auto"}}>
               <NavButton transparent={props.transparent} text="Find a Stay" to="/search"></NavButton>
               <NavButton transparent={props.transparent} text="For Stayers" to="/stayers"></NavButton>
               <NavButton transparent={props.transparent} text="For Hosts" to="/hosts"></NavButton>  
             </Box>
 
-            <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end" }}>
+            <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end", mr:getNavMargin(), }}>
             <Box
               style={{display: globalState.isSignedIn ? 'block' : 'none'}}
               >

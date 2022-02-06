@@ -36,9 +36,11 @@
 			},
 			"StayAttributeType": {
 				"enum": [
-					"amenity",
-					"propertyType",
-					"specialInterest"
+					"Amenity",
+					"Property Type",
+					"Special Interest",
+					"Booking Partner",
+					"Social Partner"
 				],
 				"type": "string"
 			},
@@ -174,6 +176,38 @@
 				],
 				"type": "string"
 			},
+			"Social": {
+				"properties": {
+					"partner": {
+						"type": "string"
+					},
+					"link": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"partner",
+					"link"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Booking": {
+				"properties": {
+					"partner": {
+						"type": "string"
+					},
+					"link": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"partner",
+					"link"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Stay": {
 				"properties": {
 					"name": {
@@ -219,7 +253,7 @@
 						},
 						"type": "array"
 					},
-					"perks": {
+					"specialInterests": {
 						"items": {
 							"type": "string"
 						},
@@ -245,6 +279,21 @@
 					},
 					"status": {
 						"$ref": "#/components/schemas/StayApplicationStatus"
+					},
+					"demand": {
+						"type": "string"
+					},
+					"social": {
+						"items": {
+							"$ref": "#/components/schemas/Social"
+						},
+						"type": "array"
+					},
+					"booking": {
+						"items": {
+							"$ref": "#/components/schemas/Booking"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -260,11 +309,14 @@
 					"onSiteParking",
 					"hostEmail",
 					"type",
-					"perks",
+					"specialInterests",
 					"amenities",
 					"tags",
 					"photos",
-					"status"
+					"status",
+					"demand",
+					"social",
+					"booking"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -411,15 +463,8 @@
 			"post": {
 				"operationId": "AddStayAttribute",
 				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/StayAttributeRecord"
-								}
-							}
-						}
+					"204": {
+						"description": "No content"
 					}
 				},
 				"security": [
@@ -523,8 +568,15 @@
 			"patch": {
 				"operationId": "PatchStay",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StayRecord"
+								}
+							}
+						}
 					}
 				},
 				"security": [
@@ -628,41 +680,6 @@
 					{
 						"user": [
 							"Admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Stay"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/stays/apply": {
-			"post": {
-				"operationId": "CreateStayApplication",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/StayRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Host"
 						]
 					}
 				],

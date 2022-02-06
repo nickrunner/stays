@@ -17,7 +17,7 @@ const defaultStay: Stay = {
     bedrooms:1,
     type: [],
     amenities: [],
-    perks: [],
+    specialInterests: [],
     tags: [],
     petsAllowed: false,
     onSiteParking: false,
@@ -25,6 +25,9 @@ const defaultStay: Stay = {
     hostEmail: "",
     enable: true,
     status: StayApplicationStatus.Pending,
+    social: [],
+    booking: [],
+    demand: "",
     location: {
         address: {
             city: "",

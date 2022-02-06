@@ -60,7 +60,7 @@ const images = [
 
 export default function Showcase() {
   return (
-    <Container component="section" sx={{ mt: 8, mb: 4 }}>
+    <Container component="section" sx={{ mt: 8, mb: 4, bgcolor:"backgound.default" }}>
       <Typography variant="h4" align="center" component="h2">
         For all tastes and all desires
       </Typography>

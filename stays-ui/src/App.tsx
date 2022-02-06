@@ -39,7 +39,7 @@ function App() {
             <Route path="/stayers/premium/sign_up" element={<PremiumSignUp />}/>
             <Route path="/hosts" element={<Hosts />}/>
             <Route path="/hosts/portal" element={<HostPortal />}/>
-            <Route path="/search" element={<Directory />}/>
+            <Route path="/directory" element={<Directory />}/>
             <Route path="/account" element={<Account />}/>
             <Route path="/cms/dashboard" element={<Dashboard />}/>
             <Route path="/cms/users" element={<UsersCms />}/>

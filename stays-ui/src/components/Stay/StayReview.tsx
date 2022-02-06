@@ -42,7 +42,7 @@ export default function StayReview(props:any) {
                 <ListItemText primary="Amenities" secondary={stay.amenities} />
             </ListItem>
             <ListItem sx={{ py: 1, px: 0 }}>
-                <ListItemText primary="Special Interests" secondary={stay.perks} />
+                <ListItemText primary="Special Interests" secondary={stay.specialInterests} />
             </ListItem>
         </List>
         <Typography variant="h6" gutterBottom>

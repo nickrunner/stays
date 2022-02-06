@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid'; 
 
@@ -13,11 +14,11 @@ export interface FileUploadListener {
 
 export class FilesClient {
 
-    public async uploadFile(file: File, key: string, listener: FileUploadListener){
+    public async uploadFile(file: File, path: string, listener: FileUploadListener){
         const storage = getStorage();
 
         // Upload file and metadata
-        const storageRef = ref(storage, key + uuidv4());
+        const storageRef = ref(storage, path+"/"+uuidv4());
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         // Listen for state changes, errors, and completion of the upload.
@@ -63,5 +64,12 @@ export class FilesClient {
             });
         }
         );
+    }
+
+    public async download(url: string, name: string): Promise<Blob[]>{
+        const response = await axios.get(url, {
+            responseType: 'blob'
+        });
+        return [response.data];
     }
 }

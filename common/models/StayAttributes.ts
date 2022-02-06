@@ -1,9 +1,11 @@
 import { Entity } from "./Entity";
 
 export enum StayAttributeType {
-    Amenity = "amenity",
-    PropertyType = "propertyType",
-    SpecialInterest = "specialInterest"
+    Amenity = "Amenity",
+    PropertyType = "Property Type",
+    SpecialInterest = "Special Interest",
+    BookingPartner = "Booking Partner",
+    SocialPartner = "Social Partner"
 }
 
 export interface StayAttribute {

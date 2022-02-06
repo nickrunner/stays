@@ -1,8 +1,8 @@
 import NodeGeocoder from 'node-geocoder';
-import { Address, Coordinates } from "../../common/models/stay";
+import { Address, Coordinates } from "../../common/models/Location";
 import { Error500 } from "./error";
 import ow from "ow";
-import { couldStartTrivia } from 'typescript';
+import { couldStartTrivia, createInferTypeNode } from 'typescript';
 
 const API_KEY: string = "AIzaSyAIWw4jpYTFQCc0273z1vjUMf8U44nSas8";
 export default class LocationService{
@@ -18,14 +18,26 @@ export default class LocationService{
     }
 
     public async getCoordinates(address: Address): Promise<Coordinates>{
-        console.log("Getting coordinates from addres: ", { address });
-        ow(address,  ow.object.partialShape({
-            country: ow.string.nonEmpty,
-            address1: ow.string.nonEmpty,
-            zip: ow.number
-        }));
+        console.log("Getting coordinates from address: ", { address });
+        ow(address, ow.object.nonEmpty);
+        let addr = "";
+        if(address.address1){
+            addr = address.address1;
+        }
+        if(address.address2){
+            addr += " "+address.address2;
+        }
+        if(address.city){
+            addr += " "+address.city;
+        }
+        if(address.state){
+            addr += " "+address.state;
+        }
+        if(addr === ""){
+            throw new Error500("Not enough location information to geocode!");
+        }
         const res = await this.geocoder.geocode({
-            address: address.address1+" "+address.address2,
+            address: addr,
             country: address.country,
             zipcode: address.zip
         });

@@ -28,14 +28,7 @@ export default function AddStayAttribute(props: any){
     const [errMsg, setErrMsg] = React.useState("");
 
     function getAttributeTypeText(){
-        switch(props.type){
-            case StayAttributeType.Amenity:
-                return "Amenity";
-            case StayAttributeType.PropertyType:
-                return "Property Type";
-            case StayAttributeType.SpecialInterest:
-                return "Special Interest";
-        }
+        return props.type;
     }
 
     async function handleSubmit(){    

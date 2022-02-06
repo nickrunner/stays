@@ -69,26 +69,26 @@ export class StaysController extends Controller {
         }
     }
 
-    @Post("/apply")
-    @Security("user", [Role.Host])
-    public async createStayApplication(
-        @Request() req: AuthenticatedRequest,
-        @Body() stay: Stay
-    ): Promise<StayRecord> {
-        console.log("POST /stays/apply with body ", {stay});
-        try{
-            if(!req.thisUser){
-                throw new Error401();
-            }
-            return await new StaysService().createApplication(stay, req.thisUser.email);
-        }
-        catch(e){
-            console.log("createStay() Error: "+e);
-            throw e;
-        }
-    }
+    // @Post("/apply")
+    // @Security("user", [Role.Host])
+    // public async createStayApplication(
+    //     @Request() req: AuthenticatedRequest,
+    //     @Body() stay: Stay
+    // ): Promise<StayRecord> {
+    //     console.log("POST /stays/apply with body ", {stay});
+    //     try{
+    //         if(!req.thisUser){
+    //             throw new Error401();
+    //         }
+    //         return await new StaysService().createApplication(stay, req.thisUser.email);
+    //     }
+    //     catch(e){
+    //         console.log("createStay() Error: "+e);
+    //         throw e;
+    //     }
+    // }
 
-    @Post("{stayId}")
+    @Post("/{stayId}")
     @Security("user", [Role.Admin])
     public async updateStay(
         @Path() stayId: string,
@@ -105,14 +105,16 @@ export class StaysController extends Controller {
         }
     }
 
-    @Patch("{stayId}")
+    @Patch("/{stayId}")
     @Security("user", [Role.Admin])
     public async patchStay(
         @Path() stayId: string,
         @Body() attributes: any
-    ): Promise<void> {
+    ): Promise<StayRecord> {
         try{
-            await new StaysService().updateStay(stayId, attributes);
+            const stayService = new StaysService();
+            await stayService.updateStay(stayId, attributes);
+            return await stayService.getStayById(stayId);
         }
         catch(e){
             console.log("patchStay() Error: ", {e});

@@ -14,26 +14,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import JSONPretty from 'react-json-pretty';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { StayContext } from '../../../components/Stay/StayContext';
 
 
 function StaysCmsContent() {
     let navigate = useNavigate();
-    const[stays, setStays] = React.useState<StayRecord[]>([]);
+    
     const[selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
 
-    const getStays = async() => {
-        const stays = await new StayClient().getStays({});
-        setStays(stays);
-    }
-
-    React.useEffect(() => {
-        getStays();
-        return;
-    }, []);
 
     function handleStaySelection(stay: StayRecord){
         console.log("Stay selected: ",{stay});
         setSelectedStay(stay);
+    }
+
+    function getTableHeight(){
+        return window.innerHeight * 0.8;
     }
 
   return (
@@ -65,36 +61,20 @@ function StaysCmsContent() {
 
                 </Grid>
                     
-                <Grid item xs={12} md={8} lg={9}>
+                <Grid item xs={12} >
                     <Paper
                         sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 600,
+                            p: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: getTableHeight(),
                         }}
                     >
-                         <StaysTable stays={stays} onSelect={handleStaySelection}/>  
-                    </Paper>
-                    </Grid>
-
-                    <Grid item xs={12} md={4} lg={3}>
-                    <Paper
-                        sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 600,
-                        overflow: "auto"
-                        }}
-                    >
-                        {/* JSON data */}
-                        <Typography>
-                            <JSONPretty data={selectedStay}/>
-                        </Typography>
-                        
+ 
+                         <StaysTable onSelect={handleStaySelection}/>  
                     </Paper>
                 </Grid>
+
                 
             </Grid>
             <Copyright sx={{ pt: 4 }} />

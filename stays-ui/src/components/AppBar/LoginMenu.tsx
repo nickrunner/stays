@@ -118,7 +118,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
 
         <Divider />
 
-        <MenuItem onClick={() => navigate("/search")}>
+        <MenuItem onClick={() => navigate("/directory")}>
           <Typography>Find a stay</Typography>
           </MenuItem>
           

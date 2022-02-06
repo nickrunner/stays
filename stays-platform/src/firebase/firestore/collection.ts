@@ -4,7 +4,7 @@ import {CollectionReference, DocumentSnapshot, Query, QuerySnapshot } from "fire
 import { createCollection, firestore } from "../firebase";
 import { Error404 } from "../../error";
 import { ColExpression, CollectionQuery } from "./collectionQuery";
-
+import { merge } from "lodash";
 
 
 export class Collection<Type> {
@@ -17,7 +17,7 @@ export class Collection<Type> {
 
 
     public async getAll(query?: CollectionQuery): Promise<(Entity & Type)[]>{
-        console.log("getAll() filters: ", {query});
+        console.log("getAll() query: "+ JSON.stringify(query, null, 2));
         const results: Map<string, (Entity & Type)> = new Map();
         if (query && query.expressions.length > 0){
             const exp0 = query.expressions[0];
@@ -56,7 +56,7 @@ export class Collection<Type> {
     }
 
     public async getFirst(query?: CollectionQuery): Promise< (Entity & Type) > {
-        console.log("getFirst() query: ", {query});
+        console.log("getFirst()");
         if(query){
             const id = this.hasId(query);
             if(id){
@@ -111,7 +111,7 @@ export class Collection<Type> {
     }
 
     public async exists(query: CollectionQuery): Promise<boolean> {
-        console.log("exists() query: ", {query});
+        console.log("exists()");
         const id: string | undefined = this.hasId(query);
         if(id){
             console.log("exists() contains ID: "+id);
@@ -139,6 +139,26 @@ export class Collection<Type> {
         console.log("create() enitity: ", {entity})
         await this.col.doc(entity.id).set(entity);
         return entity;
+    }
+
+    public async batchCreate(attributes: Type[], clientId?: string): Promise<void> {
+        const batch = firestore.batch();
+        for(let attr of attributes){
+            const entity: Entity & Type = {
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                id: uuidv4(),
+                ... attr
+            }
+            if(clientId){
+                entity.createdBy = clientId;
+                entity.updatedBy = clientId;
+            }
+            console.log("batchCreate() enitity: ", {entity})
+            const ref = this.col.doc(entity.id);
+            batch.set(ref, entity);
+        }
+       batch.commit();
     }
 
     public async updateAll(attributes: any, filters?: any, clientId?: string): Promise<(Entity & Type)[]>{
@@ -181,7 +201,7 @@ export class Collection<Type> {
         if(clientId){
             original.updatedBy = clientId;
         }
-        const newEntity: Entity & Type = {... original, ...attributes};
+        const newEntity: Entity & Type = merge(original, attributes);
         console.log("updateEntity() new entity: ", {newEntity});
         return newEntity;
     }

@@ -38,14 +38,14 @@ export class StayAttributesController extends Controller {
     @Request() req: AuthenticatedRequest,
     @Body() attribute: StayAttribute,
     @Path() type: StayAttributeType
-  ): Promise<StayAttributeRecord>{
+  ): Promise<void>{
     try{
       if(type != attribute.type){
         throw new Error409
       }
       const service: StayAttributesService = new StayAttributesService();
       if(req.email){
-        return await service.createStayAttribute(attribute, req.email);
+        await service.createStayAttribute(attribute, req.email);
       }
       else{
         throw new Error401();

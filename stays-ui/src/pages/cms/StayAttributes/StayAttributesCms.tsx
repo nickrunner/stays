@@ -47,14 +47,7 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
     }
 
     function getAttributeTypeText(){
-        switch(props.type){
-            case StayAttributeType.Amenity:
-                return "Amenity";
-            case StayAttributeType.PropertyType:
-                return "Property Type";
-            case StayAttributeType.SpecialInterest:
-                return "Special Interest";
-        }
+        return props.type;
     }
 
   return (

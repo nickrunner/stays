@@ -51,7 +51,7 @@ export default function Description(props: any) {
   return (
     <Box
       component="section"
-      sx={{ mt:20, display: 'flex', bgcolor: 'background.default', overflow: 'hidden' }}
+      sx={{ mt:20, display: 'flex', bgcolor: 'background.default', overflow: 'hidden'}}
     >
       <Container
         sx={{
@@ -61,6 +61,7 @@ export default function Description(props: any) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          bgcolor:"backgound.default"
         }}
       >
         <Box

@@ -40,13 +40,12 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
         switch(props.type){
             case StayAttributeType.Amenity:
                 return stay.amenities;
-                break;
             case StayAttributeType.PropertyType:
                 return stay.type;
-                break;
             case StayAttributeType.SpecialInterest:
-                return stay.perks;
-                break;
+                return stay.specialInterests;
+            default:
+                return [];
         }
     }
     const [selectedAttributes, setSelectedAttributes] = React.useState<string[]>(getSelected());
@@ -76,8 +75,8 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
                 setSelectedAttributes(stay.type);
                 break;
             case StayAttributeType.SpecialInterest:
-                stay.perks = typeof value === 'string' ? value.split(',') : value;
-                setSelectedAttributes(stay.perks);
+                stay.specialInterests = typeof value === 'string' ? value.split(',') : value;
+                setSelectedAttributes(stay.specialInterests);
                 break;
          }
          

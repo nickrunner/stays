@@ -1,11 +1,11 @@
 import { Collection } from "../firebase/firestore/collection";
-import { Coordinates, Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
+import { Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
+import { Coordinates } from "../../../common/models/Location";
 import { Error400, Error404 } from "../error";
 import ow from 'ow';
 import LocationService from "../locationService";
-import { User } from "../../../common/models/user";
-import { access } from "fs";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import _, {isEqual, merge} from "lodash";
 
 export class StaysService {
 
@@ -99,42 +99,77 @@ export class StaysService {
 
     public async createStay(stay: Stay): Promise<StayRecord> {
         console.log("Creating stay: ", {stay});
-        stay.status = StayApplicationStatus.Accepted;
         await this.validateStay(stay);
         return await this.stays.create(stay);
     }
 
-    public async updateStay(stayId: string, attributes: any): Promise<void> {
-        if(await this.stayExists(stayId) ){
-            await this.stays.update(stayId, attributes);
+    public async getStayByName(name: string):Promise<StayRecord>{
+        return await this.stays.getFirst(new CollectionQuery().where("name").eq(name));
+    }
+
+    public async createOrUpdateStay(stay: Stay): Promise<void> {
+        console.log("Create or update stay");
+        if(await this.stays.exists(
+            new CollectionQuery().where("name").eq(stay.name)
+        )
+        ){
+            const currStay = await this.getStayByName(stay.name); 
+            await this.updateStay(currStay.id, stay);
         }
         else{
-            throw new Error404();
+            await this.createStay(stay);
+        }   
+    }
+
+    public async createStays(stays: Stay[]): Promise<void> {
+        for(const stay of stays){
+            await this.validateStay(stay);
         }
+        return await this.stays.batchCreate(stays);
+    }
+
+    public async updateStay(stayId: string, attributes: any): Promise<void> {
+        console.log("Updating stay: "+JSON.stringify(attributes, null ,2));
+        const oldStay: Stay = await this.stays.get(stayId) as Stay;
+        const newStay = merge(oldStay, attributes);
+        // If location has changed we need to re-geocode
+        if(!isEqual(newStay.location.address, oldStay.location.address)){
+            console.log("Re-Geocoding "+JSON.stringify(newStay.location, null, 2)+" old: "+JSON.stringify(oldStay.location, null, 2));
+            newStay.location.coordinates = await new LocationService().getCoordinates(newStay.location.address);
+        }
+        await this.validateStay(newStay);
+        await this.stays.update(stayId, newStay);
+
     }
 
     public async deleteStay(stayId: string){
         await this.stays.delete(stayId);
     }
 
+
     private async validateStay(stay: Stay){
         console.log("Validating stay");
         
-        console.log("Coordinates not present... running geocoder");
-        ow(stay, ow.object.partialShape({
-            location: {
-                address: {
-                    city: ow.string.nonEmpty,
-                    state: ow.string.nonEmpty,
-                    address1: ow.string.nonEmpty,
-                    zip: ow.number
-                }
-            }
-        }));
-        const coordinates: Coordinates = await new LocationService().getCoordinates(stay.location.address);
-        stay.location.coordinates.latitude = coordinates.latitude;
-        stay.location.coordinates.longitude = coordinates.longitude;
+        ow(stay.location, ow.object.nonEmpty);
+
         try{
+            ow(stay.location.coordinates, ow.object.nonEmpty);
+        }
+        catch(err){
+            console.log("Coordinates not present... running geocoder");
+            const coordinates: Coordinates = await new LocationService().getCoordinates(stay.location.address);
+            stay.location.coordinates = coordinates;
+        }
+
+        
+        try{
+            stay.currentRate = Number(stay.currentRate);
+            stay.capacity = Number(stay.capacity);
+            stay.bedrooms = Number(stay.bedrooms);
+            if(stay.averageRate){
+                stay.averageRate = Number(stay.averageRate);
+            }
+        
             ow(stay, ow.object.partialShape({
                 name: ow.string.nonEmpty,
                 enable: ow.boolean,
@@ -143,16 +178,20 @@ export class StaysService {
                     address: {
                         city: ow.string.nonEmpty,
                         state: ow.string.nonEmpty,
-                        address1: ow.string.nonEmpty,
-                        zip: ow.number
                     },
-                    region: ow.string
+                    coordinates: ow.object.nonEmpty,
+                    region: ow.string.nonEmpty,
                 },
                 type: ow.array.nonEmpty,
-                perks: ow.array,
+                specialInterests: ow.array,
                 amenities: ow.array,
                 photos: ow.array.nonEmpty,
-                status: ow.string.nonEmpty
+                status: ow.string.nonEmpty,
+                petsAllowed: ow.boolean,
+                onSiteParking: ow.boolean,
+                tags: ow.array,
+                social: ow.array,
+                booking: ow.array.nonEmpty,
             }));
         }
         catch(e){

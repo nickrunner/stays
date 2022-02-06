@@ -13,6 +13,16 @@ export class StayClient {
         return response.data as Stay;
     }
 
+    public async setStayName(stayId: string, name: string): Promise<StayRecord> {
+        const response = await axios.patch(url+"/"+stayId, {name: name}, await defCfg());
+        return response.data as StayRecord;
+    }
+
+    public async patchStay(stayId: string, key: string, val: string | number | boolean):Promise<StayRecord> {
+        const response = await axios.patch(url+"/"+stayId, {[key]: val}, await defCfg());
+        return response.data as StayRecord;
+    }
+
     public async getStays(filter: StaySearchFilter): Promise<StayRecord[]>{
        const response = await axios.get(url, await queryCfg({filter: filter}));   
        return response.data as StayRecord[];  

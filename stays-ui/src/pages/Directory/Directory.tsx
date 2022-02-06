@@ -1,34 +1,46 @@
-import { Container, ThemeProvider } from "@mui/material";
+import { Container, Grid, ThemeProvider } from "@mui/material";
 import React from "react";
+import { StayClient } from "../../clients/stayClient";
 import { Nav } from "../../components/AppBar/AppBar";
 import Footer from "../../components/Footer";
+import StayDirectoryCard from "../../components/Stay/StayDirectoryCard";
 import UnderConstruction from "../../components/UnderConstruction";
+import { StayApplicationStatus, StayRecord } from "../../models/Stay";
 import { theme } from "../../Theme";
+import StaysPage from "../StaysPage";
 
 
-function Directory() {
-    
-    const [mobile, setMobile] = React.useState(false);
-    React.useEffect(() => {
-        handleResize();
-        function handleResize() {
-        setMobile(window.innerWidth < 600);
+export default function Directory() {
+  const[stays, setStays] = React.useState<StayRecord[]>([]);
+
+  
+    const getStays = async() => {
+      const stays = await new StayClient().getStays({
+        enable: true,
+        status: StayApplicationStatus.Accepted
+      });
+      setStays(stays);
     }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    React.useEffect(() => {
+        getStays();
+        return;
     }, []);
+
     
   return (
-      
-  
-    <ThemeProvider theme={theme}>
-      <Container component="main" >
+    
+    <StaysPage>
         <Nav transparent={false} />
-        <UnderConstruction />
-        < Footer />
-      </Container>
-    </ThemeProvider>
+        <Grid container justifyContent="center" spacing={3} sx={{pl:10, pr:10, bgcolor:"background.default"}}>
+          {stays.map((stay) => (
+            <Grid key={stay.id} item>
+              <StayDirectoryCard stay={stay}/>
+            </Grid>
+          ))}
+        </Grid>
+        <Footer />
+    </StaysPage>
   );
 }
 
-export default Directory;
+

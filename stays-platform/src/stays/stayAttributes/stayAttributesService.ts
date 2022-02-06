@@ -18,14 +18,15 @@ export class StayAttributesService {
         return attributes;
     }
 
-    public async createStayAttribute(attribute: StayAttribute, clientId: string): Promise<StayAttributeRecord>{
+    public async createStayAttribute(attribute: StayAttribute, clientId?: string): Promise<void>{
         if(!await this.stayAttributes.exists(
-            new CollectionQuery().where("name").eq(attribute.name)
+            new CollectionQuery().where("name").eq(attribute.name).and("type").eq(attribute.type)
         )){
             return await this.stayAttributes.create(attribute, clientId);
         }
-        else {
-            throw new Error409();
-        }
+    }
+
+    public async updateStayAttribute(stayAttributeId: string, attributes: any, clientId?: string): Promise<void> {
+        await this.stayAttributes.update(stayAttributeId, attributes, clientId);
     }
 }

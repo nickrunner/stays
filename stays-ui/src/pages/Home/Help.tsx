@@ -9,7 +9,7 @@ function Help() {
   return (
     <Container
       component="section"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 9 }}
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 9, bgcolor:"backgound.default" }}
     >
       <Button
         sx={{
