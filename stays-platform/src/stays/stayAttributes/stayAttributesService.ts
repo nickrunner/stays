@@ -18,11 +18,14 @@ export class StayAttributesService {
         return attributes;
     }
 
-    public async createStayAttribute(attribute: StayAttribute, clientId?: string): Promise<void>{
+    public async createStayAttribute(attribute: StayAttribute, clientId?: string): Promise<StayAttributeRecord>{
         if(!await this.stayAttributes.exists(
             new CollectionQuery().where("name").eq(attribute.name).and("type").eq(attribute.type)
         )){
             return await this.stayAttributes.create(attribute, clientId);
+        }
+        else{
+            throw new Error409("Attribute: "+attribute.name+" already exists");
         }
     }
 
