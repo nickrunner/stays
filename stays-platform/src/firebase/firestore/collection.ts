@@ -125,7 +125,7 @@ export class Collection<Type> {
         return retval;
     }
 
-    public async create(attributes: any, clientId?: string): Promise<Entity & any> {
+    public async create(attributes: Type, clientId?: string): Promise<Entity & Type> {
         const entity: Entity & any = {
             createdAt: Date.now(),
             updatedAt: Date.now(),
