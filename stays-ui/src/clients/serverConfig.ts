@@ -6,6 +6,12 @@ import { AuthClient } from "./authClient";
 export const BASE_URL = "https://stays-platform.uc.r.appspot.com"
 
 
+export function cfg():AxiosRequestConfig {
+    return {
+        baseURL: BASE_URL
+    }
+}
+
 export async function defCfg(): Promise<AxiosRequestConfig>
 {
     const token = await new AuthClient().getToken(1000);
