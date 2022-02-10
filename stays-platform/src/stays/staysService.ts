@@ -30,20 +30,19 @@ export class StaysService {
         .and("amenities").arrContainsAny(filter.amenities)
         .and("tags").arrContainsAny(filter.tags);
         if(filter.bounds){
-            let key = "location.coordinates.latitude";
-            query.and(key).inRange(key, filter.bounds.sw.latitude, filter.bounds.ne.latitude);
-            key = "location.coordinates.longitude";
-            query.and(key).inRange(key, filter.bounds.sw.longitude, filter.bounds.ne.longitude);
+            query.and("location.coordinates.latitude").inRange(filter.bounds.sw.latitude, filter.bounds.ne.latitude);
+            query.and("location.coordinates.longitude").inRange(filter.bounds.sw.longitude, filter.bounds.ne.longitude);
         }
         if(filter.rate){
-            query.and("currentRate").inRange("currentRate", filter.rate.min, filter.rate.max);
+            query.and("currentRate").inRange( filter.rate.min, filter.rate.max);
         }
         if(filter.capacity){
-            query.and("capacity").inRange("capacity", filter.capacity.min, filter.capacity.max);
+            query.and("capacity").inRange(filter.capacity.min, filter.capacity.max);
         }
         if(filter.bedrooms){
-            query.and("bedrooms").inRange("bedrooms", filter.bedrooms.min, filter.bedrooms.max);
+            query.and("bedrooms").inRange(filter.bedrooms.min, filter.bedrooms.max);
         }
+
         
         return query;
     } 

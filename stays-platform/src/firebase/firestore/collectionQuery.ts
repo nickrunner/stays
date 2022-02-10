@@ -1,10 +1,14 @@
 
+export enum Logic {
+    and = "and",
+    or = "or"
+}
 
 export class ColExpression {
     public op: FirebaseFirestore.WhereFilterOp = "==";
     public key:string = "";
     public val:any = "";
-    public _or: boolean = false;
+    public conj: Logic = Logic.and;
 
     public constructor(key: string){
         this.key = key;
@@ -13,6 +17,8 @@ export class ColExpression {
 
 export class CollectionQuery {
     public expressions: ColExpression[] = [];
+    public queries: CollectionQuery[] = [];
+    public conj = Logic.and;
 
     private exp(): ColExpression{
         return this.expressions[this.expressions.length-1];
@@ -22,20 +28,20 @@ export class CollectionQuery {
             this.expressions.pop();
             return this;
         }
-        this.exp().op = "==";
+        this.exp().op = op;
         this.exp().val = val;
         return this;
     }
-    public where(key: string, op?: FirebaseFirestore.WhereFilterOp, val?: any): CollectionQuery {
+    public where(key: string): CollectionQuery {
         this.expressions.push(new ColExpression(key));
         return this;
     }
     public and(key: string): CollectionQuery{
-        this.where(key).exp()._or = false;
+        this.where(key).exp().conj = Logic.and;
         return this;
     }
     public or(key: string): CollectionQuery{
-        this.where(key).exp()._or = false;
+        this.where(key).exp().conj = Logic.or;
         return this;
     }
     public eq(val?:any): CollectionQuery{
@@ -68,8 +74,18 @@ export class CollectionQuery {
     public notIn(val?: any): CollectionQuery{
         return this.set("not-in", val);
     }
-    public inRange(key: string, min: number, max: number){
-        return this.gtEq(min).and(key).ltEq(max);
+    public inRange(min: number, max: number){
+        return this.gtEq(min).and(this.exp().key).ltEq(max);
+    }
+    public andQuery(query: CollectionQuery): CollectionQuery{
+        query.conj = Logic.and;
+        this.queries.push(query);
+        return this;
+    }
+    public orQuery(query: CollectionQuery): CollectionQuery{
+        query.conj = Logic.or;
+        this.queries.push(query);
+        return this;
     }
 }
 

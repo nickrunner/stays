@@ -20,7 +20,7 @@ export class UsersService {
         .and("userMembership").eq(filter.userMembership)
         .and("roles").arrContainsAny(filter.roles);
         if(filter.lastActive){
-            query.and("lastActive").inRange("lastActive", filter.lastActive.min, filter.lastActive.max);
+            query.and("lastActive").inRange(filter.lastActive.min, filter.lastActive.max);
         }
         return query;
     }

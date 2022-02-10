@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {CollectionReference, DocumentSnapshot, Query, QuerySnapshot } from "firebase-admin/firestore";
 import { createCollection, firestore } from "../firebase";
 import { Error404 } from "../../error";
-import { ColExpression, CollectionQuery } from "./collectionQuery";
+import { ColExpression, CollectionQuery, Logic } from "./collectionQuery";
 import { merge } from "lodash";
 
 
@@ -31,7 +31,7 @@ export class Collection<Type> {
                     const qSnap = await this.col.where(exp.key, exp.op, exp.val).get();
                     qSnap.forEach((doc) => { 
                         const data = doc.data();
-                        if(exp._or){
+                        if(exp.conj === Logic.or){
                             results.set(data.id, data);
                         }
                         else if(!results.has(data.id)){
@@ -41,6 +41,19 @@ export class Collection<Type> {
                 }
                 i = i+1;
             });
+            for(let subQuery of query.queries){
+                if(subQuery.conj === Logic.or){
+                    return Array.from(results.values()).concat(await this.getAll(subQuery));
+                }
+                else{
+                    const subRes = await this.getAll(subQuery);
+                    subRes.forEach((r) => {
+                        if(results.has(r.id)){
+                            results.delete(r.id);
+                        }
+                    })
+                }
+            }
         }
         else{
             const qSnap: QuerySnapshot<Entity & Type> = await this.col.get();
@@ -48,6 +61,7 @@ export class Collection<Type> {
                 results.set(doc.data().id, doc.data());
             })
         }
+
         return Array.from(results.values());
     }
 
