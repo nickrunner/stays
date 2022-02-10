@@ -14,12 +14,12 @@ import { Box, TextField, Paper, Avatar, FormControlLabel, Checkbox } from "@mui/
 import {images} from "../../content";
 import { LoadingButton } from "@mui/lab";
 import Jumbotron from "../../components/Jumbotron";
-import { ImagesearchRoller } from "@mui/icons-material";
 import "./ComingSoon.css";
 import { globalContext } from "../../GlobalStore";
+import { WaitlistClient } from "../../clients/waitlistClient";
 
 export default function ComingSoon() {
-  const [errMsg, setErrMsg] = React.useState("");  
+  const [msg, setMsg] = React.useState("");  
   const [emailErr, setEmailErr] = React.useState(false);
   const [isStayer, setStayer] = React.useState(false);
   const [isHost, setHost] = React.useState(false);
@@ -31,6 +31,22 @@ export default function ComingSoon() {
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
+    try{
+      await new WaitlistClient().addToWaitlist(email, isStayer, isHost);
+      setMsg("You have been added to the waitlist!  We will notify you when we are ready to launch.")
+    }
+    catch(err: any){
+      console.log("Error adding to waitlist:: "+ JSON.stringify(err, null, 2));
+      console.log("message: "+err.message);
+      if(err.message === "Request failed with status code 409"){
+        setMsg("You are already on the waitlist!");
+      }
+      else{
+        setMsg("There was a problem adding you to the waitlist. Try again in a few moments.");
+      }
+    }
+   
+    setLoading(false);
   }
   
     const useStyles = makeStyles(theme => ({
@@ -117,8 +133,6 @@ export default function ComingSoon() {
         <React.Fragment>
         <CssBaseline />
 
-          {/* <Jumbotron backgroundImage="https://www.woodnest.no/wp-content/uploads/17-min.jpg" /> */}
-          {/* <Jumbotron backgroundImage={images.dotMap} /> */}
           <Jumbotron backgroundImage={getBackground()} />
 
             <Container maxWidth="sm">
@@ -159,14 +173,22 @@ export default function ComingSoon() {
                   autoFocus
                 />
                 <FormControlLabel 
+                  onChange={(e, checked) => {setStayer(checked)}}
                   checked={isStayer}
                   control={<Checkbox />} 
                   label="I am a traveler" />
 
                 <FormControlLabel 
-                  checked={isHost}
+                  onChange={(e, checked) => {setHost(checked)}}
                   control={<Checkbox />} 
                   label="I am a host" />
+
+                <Box sx={{m:2}}>
+                <Typography 
+                  variant="subtitle2">
+                  {msg}
+                </Typography>
+                </Box>
 
                 <LoadingButton
                 type="submit"
@@ -174,6 +196,7 @@ export default function ComingSoon() {
                 loading={loading}
                 disabled={!submitEnabled}
                 loadingPosition="end"
+                endIcon={<RocketLaunchIcon/>}
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
@@ -182,10 +205,10 @@ export default function ComingSoon() {
               </Paper>
               </Box>
 
-              <Grid container spacing={1} alignItems="center" justify="center">
+              <Grid container spacing={1} alignItems="center" justifyContent="center">
                 {getMockups().map((mockup)=> (
-                  // <Grid key={mockup} item>
-                    <img src={mockup} alt="mockup" className={classes.mockup} />
+
+                    <img key={mockup} src={mockup} alt="mockup" className={classes.mockup} />
                   // </Grid>
                 ))}
                 </Grid>
@@ -193,7 +216,7 @@ export default function ComingSoon() {
               
            
             <Box sx={{mt:5}}>
-            <Grid container spacing={0} alignItems="center" justify="center">
+            <Grid container spacing={0} alignItems="center" justifyContent="center">
                 <Link
                     href="https://www.facebook.com/americanstays/"
                     target="_blank"
