@@ -18,6 +18,7 @@ import ContentCms from "./pages/cms/Content/ContentCms";
 import AddStaysCms from "./pages/cms/Stays/AddStaysCms";
 import StayAttributesCms from "./pages/cms/StayAttributes/StayAttributesCms";
 import { StayAttributeType } from "./models/StayAttributes";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <BrowserRouter>
         <div>  
           <Routes>
-            <Route path="/" element={<Home />}/>
+            <Route path="/" element={<ComingSoon />}/>
             <Route path="/splash" element={<Splash />} />
             <Route path="/sign_in" element={<SignIn />} />
             <Route path="/sign_up" element={<SignUp />}/>

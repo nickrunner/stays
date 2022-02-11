@@ -1,118 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+
 import StaysPage from "../StaysPage";
-import { Box, TextField, Paper, Avatar, FormControlLabel, Checkbox } from "@mui/material";
+import { Box, TextField, Paper, Avatar, FormControlLabel, Checkbox, Stack } from "@mui/material";
 import {images} from "../../content";
 import { LoadingButton } from "@mui/lab";
 import Jumbotron from "../../components/Jumbotron";
 import "./ComingSoon.css";
 import { globalContext } from "../../GlobalStore";
 import { WaitlistClient } from "../../clients/waitlistClient";
+import { fontWeight } from "@mui/system";
+import Waitlist from "../../components/waitlist";
+
 
 export default function ComingSoon() {
-  const [msg, setMsg] = React.useState("");  
-  const [emailErr, setEmailErr] = React.useState(false);
-  const [isStayer, setStayer] = React.useState(false);
-  const [isHost, setHost] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [submitEnabled, setSubmitEnabled] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const {globalState} = React.useContext(globalContext);
-
-  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    try{
-      await new WaitlistClient().addToWaitlist(email, isStayer, isHost);
-      setMsg("You have been added to the waitlist!  We will notify you when we are ready to launch.")
-    }
-    catch(err: any){
-      console.log("Error adding to waitlist:: "+ JSON.stringify(err, null, 2));
-      console.log("message: "+err.message);
-      if(err.message === "Request failed with status code 409"){
-        setMsg("You are already on the waitlist!");
-      }
-      else{
-        setMsg("There was a problem adding you to the waitlist. Try again in a few moments.");
-      }
-    }
-   
-    setLoading(false);
-  }
   
-    const useStyles = makeStyles(theme => ({
-        igIcon: {
-          marginRight: "8px",
-          marginLeft: "8px"
-        },
-        facebookIcon: {
-          marginRight: "8px",
-          marginLeft: "8px"
-        },
-        logo: {
-          maxWidth: "600px",
-          display: "block",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginBottom: "20px",
-          width: "50%"
-        },
-        mockup: {
-          maxWidth: "500px",
-          display: "block",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: "20px",
-          marginBottom: "20px",
-          width: "50%"
-        },
-        heroContent: {
-          padding: 5
-        },
-        comingSoon: {
-          marginTop: "30px",
-          lineHeight: "1.5"
-        },
-        HeroImage: {
-          opacity: 0.3,
-        }
-      }));
-      const classes = useStyles();
-
-      function handleEmailChange(email: string){
-        setEmail(email);
-        validateEmail();
-      }
-    
-
-      function validateEmail(){
-        if(!email.toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-        )
-        {
-          setEmailErr(true);
-          setSubmitEnabled(false);
-  
-        }
-        else{
-          setSubmitEnabled(true);
-        }
-        
-      }
 
     function getBackground(){
       return globalState.mobile ? "https://static.wixstatic.com/media/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg/v1/fill/w_2000,h_1313,al_c,q_90/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg,%20https://static.wixstatic.com/media/d4ce6e_f549d9b6522044bc9079a4dc715e6482~mv2.jpg/v1/fill/w_2399,h_1350,al_c,q_90,usm_0.66_1.00_0.01/d4ce6e_f549d9b6522044bc9079a4dc715e6482~mv2.jpg,%20https://static.wixstatic.com/media/d4ce6e_ec05850186a94db485e74b04875022e0~mv2.png/v1/fill/w_1015,h_1354,al_c,usm_0.66_1.00_0.01/d4ce6e_ec05850186a94db485e74b04875022e0~mv2.png"
-      : images.dotMap
+      : "https://www.woodnest.no/wp-content/uploads/17-min.jpg"
     }
 
     function getMockups(){
@@ -127,109 +42,178 @@ export default function ComingSoon() {
           "https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%203.png?alt=media&token=a77222f1-ac8d-45aa-9609-f19fb285b6d1"
         ] 
     }
-    
+ 
+
     return (
         <StaysPage>
         <React.Fragment>
         <CssBaseline />
 
-          <Jumbotron backgroundImage={getBackground()} />
+        <Box
+            sx={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height:"75%",
+            bgcolor: 'primary.dark',
+            zIndex: -1,
+            justifyContent: "center"
+            
+        }}>
+            <img
+                className='HeroImage'
+                src={getBackground()}
+                width="100%"
+                height="100%"
+            />
 
-            <Container maxWidth="sm">
-
-
-            <div className={classes.heroContent}>
-                <img src={images.logo.purple} alt="logo" className={classes.logo} />
+        </Box>
+          <Container maxWidth="lg" >
+            <Box maxWidth="50%" maxHeight="75%" sx={{
+              position: "absolute",
+              left: "10%",
+              top: "10%"
+            }}>
+                
+                <Typography
+                variant="h2"
+                align="left"
+                color="common.white"
+                >
+                Connecting travelers with the best vacation rentals from around the world.
+                </Typography>
                 <Typography
                 variant="h5"
-                align="center"
-                color="textPrimary"
+                align="left"
+                color="common.white"
+                fontWeight="100"
                 gutterBottom
                 >
-                Coming in June
+                  <br></br>
+                Get booking perks, exclusive rental access and automatic entries into vacation giveaways with a FREE stayer membership.
                 </Typography>
-               
-            </div>
+            </Box>
 
             <Box
+             alignSelf='center' alignItems='center' alignContent='center'
               sx={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: "80%",
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center'
               }}
             >
+              <Box  maxWidth="lg"
+                  justify-content="center"
+                  alignItems="center">
+
+                  <Typography
+                    variant="h1"
+                    align="center"
+                    color="primary.main"
+                    >
+                    Coming June 2022
+                  </Typography>
+                  <br></br>
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    >
+                    stays.co isn't another booking website—it's a <b>free directory tool that helps travelers find, follow and book their dream vacation rental.</b> We partner with the world's best rentals to give our members perks such as discounted stays, cancellation opening notices, early access to booking calendars and even automatic entries into vacation giveaway contests!
+                  </Typography>
+
+                  <Box
+                  maxWidth="sm"
+                  margin="auto"
+                  sx={{mt:10, mb:10, align:"center"}}>
+                  <Waitlist />
+                  </Box>
+
+                  <Typography
+                  variant="h2"
+                  align="center"
+                  color="primary.main"
+                  >
+                  Our powerful filtering and favoriting features help you locate and save your next stay 
+                  </Typography>
+
+                  <Box sx={{mt:10}}>
+                    <Grid container spacing={1} alignItems="center" justifyContent="center">
+                        <img height="500" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%204.png?alt=media&token=5bce7a31-0ec6-4cee-999f-0c3e5db82f47" alt="mockup" />
+                        <img height="500" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%201.png?alt=media&token=fc40c1b3-5710-4986-9be6-8b1af730e7c4" alt="mockup" />
+                    </Grid>
+                  </Box>
+
+                  <Box sx={{mt:20}}>
+                    <Typography
+                    variant="h2"
+                    align="center"
+                    color="primary.main"
+                    >
+                    Stays.co has a ton of perks for our traveler and rental host members
+                    </Typography>
+                    <Box sx={{mt:10}}>
+                      <Grid container spacing={1} alignItems="center" justifyContent="center">
+                          <img height="500" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2F_Stays%20Mockups%20-%20Traveler%20Perks.png?alt=media&token=217fd2eb-27ac-413f-ad67-723b15848773" alt="mockup" />
+                          <img height="500" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2F_Stays%20Mockups%20-%20Host%20Perks.png?alt=media&token=9ff2e39f-f26d-4e71-ae4b-36e58bf6cf5e" alt="mockup" />
+                      </Grid>
+                    </Box>
+                  </Box>
+
+                  <Box sx={{mt:20}} >
+                    <Grid container spacing={1}>
+                        <Grid item xs={3}>
+                          <img height="400" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%202.png?alt=media&token=02c93d41-a961-4f89-8c3b-cb441d928002" alt="mockup" />
+                        </Grid>
+                        <Grid item xs={3}>
+                        <img height="400" src="https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%203.png?alt=media&token=a77222f1-ac8d-45aa-9609-f19fb285b6d1" alt="mockup" />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Stack sx={{pl:5}}>
+                            <Typography variant="h3" color="primary.main">
+                              Stays.co is a game-changer for both travelers and hosts
+                            </Typography>
+                            <br></br>
+                            <Typography variant="body1">
+                            Vacation rental hosts have become increasingly dependent on large booking platforms such as Airbnb, VRBO, etc for not only their booking management, but also for their marketing and visibility. 
+                            <br></br>
+                            <br></br>
+                            Stays.co allows hosts to create 'Stay Profiles' on our website that allow travelers to find them, engage with their linked social media pages, visit their private website and/or be directed to book on any existing platform the host may be listed on. 
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                  </Box>
+
+                  <Box 
+                  maxWidth="sm"
+                  margin="auto"
+                  sx={{mt:10, mb:10, align:"center"}} >
+                    <Waitlist />
+                    
+                  </Box>
               
-              <Paper component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, p:3, alignItems: 'center', }}>
-            
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={event => handleEmailChange(event.target.value)}
-                  autoFocus
-                />
-                <FormControlLabel 
-                  onChange={(e, checked) => {setStayer(checked)}}
-                  checked={isStayer}
-                  control={<Checkbox />} 
-                  label="I am a traveler" />
-
-                <FormControlLabel 
-                  onChange={(e, checked) => {setHost(checked)}}
-                  control={<Checkbox />} 
-                  label="I am a host" />
-
-                <Box sx={{m:2}}>
-                <Typography 
-                  variant="subtitle2">
-                  {msg}
-                </Typography>
-                </Box>
-
-                <LoadingButton
-                type="submit"
-                fullWidth
-                loading={loading}
-                disabled={!submitEnabled}
-                loadingPosition="end"
-                endIcon={<RocketLaunchIcon/>}
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Join the Waitlist
-              </LoadingButton>
-              </Paper>
+                  <Grid container spacing={1} alignItems="center" justifyContent="center">
+                    <Box sx={{m:2, mb:10}}>
+                    <Link
+                      href="https://www.facebook.com/americanstays/"
+                      target="_blank"
+                    >
+                        <FacebookIcon
+                        fontSize="large"
+                        />
+                    </Link>
+                    </Box>
+                    <Box sx={{m:2, mb:10}}>
+                    <Link href="https://www.instagram.com/americanstays/?hl=en" target="_blank">
+                        <InstagramIcon fontSize="large" color="primary" />
+                    </Link>
+                    </Box>
+                </Grid>
               </Box>
-
-              <Grid container spacing={1} alignItems="center" justifyContent="center">
-                {getMockups().map((mockup)=> (
-
-                    <img key={mockup} src={mockup} alt="mockup" className={classes.mockup} />
-                  // </Grid>
-                ))}
-                </Grid>
-           
-              
-           
-            <Box sx={{mt:5}}>
-            <Grid container spacing={0} alignItems="center" justifyContent="center">
-                <Link
-                    href="https://www.facebook.com/americanstays/"
-                    target="_blank"
-                >
-                    <FacebookIcon
-                    className={classes.facebookIcon}
-                    fontSize="large"
-                    />
-                </Link>
-                <Link href="https://www.instagram.com/americanstays/?hl=en" target="_blank">
-                    <InstagramIcon fontSize="large" className={classes.igIcon} color="primary" />
-                </Link>
-                </Grid>
               </Box>
         </Container>
         </React.Fragment>
