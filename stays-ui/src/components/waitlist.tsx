@@ -84,7 +84,6 @@ export default function Waitlist(props: any){
                   name="email"
                   autoComplete="email"
                   onChange={event => handleEmailChange(event.target.value)}
-                  autoFocus
                 />
                 <FormControlLabel 
                   onChange={(e, checked) => {setStayer(checked)}}
