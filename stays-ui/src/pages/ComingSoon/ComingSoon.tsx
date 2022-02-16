@@ -6,7 +6,6 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
-
 import StaysPage from "../StaysPage";
 import { Box, Stack } from "@mui/material";
 import "./ComingSoon.css";
