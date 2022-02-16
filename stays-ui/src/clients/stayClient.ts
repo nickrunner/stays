@@ -24,7 +24,7 @@ export class StayClient {
     }
 
     public async getStays(filter: StaySearchFilter): Promise<StayRecord[]>{
-       const response = await axios.get(url, await queryCfg({filter: filter}));   
+       const response = await axios.get(url, await queryCfg({filter: filter}, true));   
        return response.data as StayRecord[];  
     }
 

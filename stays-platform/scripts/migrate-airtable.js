@@ -75,15 +75,15 @@ async function saveStay(record){
     };
     const stayAttributesService = new StayAttributesService();
     await record.get('Property Type').forEach(async (pt) => {
-        await stayAttributesService.createStayAttribute({type: "Property Type", name:pt})
+        await stayAttributesService.createOrUpdateStayAttribute({type: "Property Type", name:pt})
         stay.type.push(pt);
     });
     await record.get('Amenities').forEach(async (am) => {
-        await stayAttributesService.createStayAttribute({type: "Amenity", name:am})
+        await stayAttributesService.createOrUpdateStayAttribute({type: "Amenity", name:am})
         stay.amenities.push(am);
     });
     await record.get('Special Interests').forEach(async (si) => {
-        await stayAttributesService.createStayAttribute({type: "Special Interest", name:si})
+        await stayAttributesService.createOrUpdateStayAttribute({type: "Special Interest", name:si})
         stay.specialInterests.push(si);
     });
     switch(record.get('Approved?')){
@@ -98,9 +98,9 @@ async function saveStay(record){
             break;
     }
     stay.social.push({partner: "Instagram", link: record.get('Instagram Link')});
-    await stayAttributesService.createStayAttribute({type: "Social Partner", name:"Instagram"})
+    await stayAttributesService.createOrUpdateStayAttribute({type: "Social Partner", name:"Instagram"})
     stay.booking.push({partner: record.get('Booking Platform'), link:record.get('Booking Link')});
-    await stayAttributesService.createStayAttribute({type: "Booking Partner", name:record.get("Booking Platform")})
+    await stayAttributesService.createOrUpdateStayAttribute({type: "Booking Partner", name:record.get("Booking Platform")})
     if(record.get('Thumbnail (link)')){
         const newUrl = await migrateFile(record.get('Thumbnail (link)'), "/stays/"+stay.name)
         stay.photos.push({

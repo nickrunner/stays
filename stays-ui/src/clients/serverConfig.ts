@@ -23,9 +23,9 @@ export async function defCfg(): Promise<AxiosRequestConfig>
     }
 }
 
-export async function queryCfg(params: any): Promise<AxiosRequestConfig> 
+export async function queryCfg(params: any, skipAuth?: boolean): Promise<AxiosRequestConfig> 
 {
-    const config = await defCfg();
+    const config = skipAuth ? cfg() : await defCfg() ;
     config.params = params;
     return config;
 }

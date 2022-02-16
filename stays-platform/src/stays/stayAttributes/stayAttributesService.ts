@@ -29,6 +29,18 @@ export class StayAttributesService {
         }
     }
 
+    public async createOrUpdateStayAttribute(attribute: StayAttribute, clientId?: string): Promise<void>{
+        const query: CollectionQuery = new CollectionQuery().where("name").eq(attribute.name).and("type").eq(attribute.type);
+        if(!await this.stayAttributes.exists(
+            query
+        )){
+            await this.stayAttributes.create(attribute, clientId);
+        }
+        // else{
+        //     return await this.stayAttributes.updateFirst(query);
+        // }
+    }
+
     public async updateStayAttribute(stayAttributeId: string, attributes: any, clientId?: string): Promise<void> {
         await this.stayAttributes.update(stayAttributeId, attributes, clientId);
     }
