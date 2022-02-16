@@ -20,28 +20,31 @@ export class Collection<Type> {
         console.log("getAll() query: "+ JSON.stringify(query, null, 2));
         const results: Map<string, (Entity & Type)> = new Map();
         if (query && query.expressions.length > 0){
-            const exp0 = query.expressions[0];
-            let qSnap = await this.col.where(exp0.key, exp0.op, exp0.val).get();
-            qSnap.forEach((doc) => { 
-                results.set(doc.data().id, doc.data());
-            });
             let i = 0;
-            query.expressions.forEach( async (exp: ColExpression) =>{
-                if(i > 0){
-                    const qSnap = await this.col.where(exp.key, exp.op, exp.val).get();
-                    qSnap.forEach((doc) => { 
-                        const data = doc.data();
-                        if(exp.conj === Logic.or){
-                            results.set(data.id, data);
+            for(const exp of query.expressions){
+                const qSnap = await this.col.where(exp.key, exp.op, exp.val).get();
+                const res2: Map<string, (Entity & Type)> = new Map();
+                qSnap.forEach((doc) => { 
+                    const data = doc.data();
+                    if((i===0) || (exp.conj === Logic.or)){
+                        results.set(data.id, data);
+                    }
+                    else{
+                        res2.set(data.id, data);
+                    }
+                });
+                if((i>0) && (exp.conj === Logic.and)){
+                    results.forEach((value, key) => {
+                        if(res2.has(key) === false){
+                            results.delete(key);
                         }
-                        else if(!results.has(data.id)){
-                            results.delete(data.id);
-                        };
-                    });
+                    })
                 }
+                
                 i = i+1;
-            });
+            }
             for(let subQuery of query.queries){
+                console.log("Sub Query");
                 if(subQuery.conj === Logic.or){
                     return Array.from(results.values()).concat(await this.getAll(subQuery));
                 }
@@ -62,7 +65,9 @@ export class Collection<Type> {
             })
         }
 
-        return Array.from(results.values());
+        const retval = Array.from(results.values());
+        //console.log("returning: "+JSON.stringify(retval, null, 2));
+        return retval;
     }
 
     public async getSome(filters: any, start: Number, end: Number){

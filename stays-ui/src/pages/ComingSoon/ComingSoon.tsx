@@ -1,8 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@mui/material/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -10,14 +8,9 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 
 import StaysPage from "../StaysPage";
-import { Box, TextField, Paper, Avatar, FormControlLabel, Checkbox, Stack } from "@mui/material";
-import {images} from "../../content";
-import { LoadingButton } from "@mui/lab";
-import Jumbotron from "../../components/Jumbotron";
+import { Box, Stack } from "@mui/material";
 import "./ComingSoon.css";
 import { globalContext } from "../../GlobalStore";
-import { WaitlistClient } from "../../clients/waitlistClient";
-import { fontWeight } from "@mui/system";
 import Waitlist from "../../components/waitlist";
 
 
@@ -28,19 +21,6 @@ export default function ComingSoon() {
     function getBackground(){
       return globalState.mobile ? "https://static.wixstatic.com/media/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg/v1/fill/w_2000,h_1313,al_c,q_90/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg,%20https://static.wixstatic.com/media/d4ce6e_f549d9b6522044bc9079a4dc715e6482~mv2.jpg/v1/fill/w_2399,h_1350,al_c,q_90,usm_0.66_1.00_0.01/d4ce6e_f549d9b6522044bc9079a4dc715e6482~mv2.jpg,%20https://static.wixstatic.com/media/d4ce6e_ec05850186a94db485e74b04875022e0~mv2.png/v1/fill/w_1015,h_1354,al_c,usm_0.66_1.00_0.01/d4ce6e_ec05850186a94db485e74b04875022e0~mv2.png"
       : "https://www.woodnest.no/wp-content/uploads/17-min.jpg"
-    }
-
-    function getMockups(){
-      return globalState.mobile ? 
-      [
-        "https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Doubles%202.png?alt=media&token=89123729-64ff-4977-9316-2ffac2248dc4",
-        "https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Doubles%201.png?alt=media&token=6c7357b1-a15b-4895-8ccd-0ba8583e5b27"
-      ]
-        :
-        [
-          "https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Computer%20(Laptop).png?alt=media&token=964e9ce6-d2af-444e-a5a2-15f16ceb670a",
-          "https://firebasestorage.googleapis.com/v0/b/stays-prod.appspot.com/o/content%2FStays%20Mockups%20-%20Singles%203.png?alt=media&token=a77222f1-ac8d-45aa-9609-f19fb285b6d1"
-        ] 
     }
  
 

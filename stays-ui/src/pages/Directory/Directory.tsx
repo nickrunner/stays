@@ -16,8 +16,7 @@ export default function Directory() {
   
     const getStays = async() => {
       const stays = await new StayClient().getStays({
-        enable: true,
-        status: StayApplicationStatus.Accepted
+        enable: true
       });
       setStays(stays);
     }
