@@ -6,7 +6,6 @@ import {default as firebaseConfig} from "./secrets/stays_platform_creds.json";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 
 

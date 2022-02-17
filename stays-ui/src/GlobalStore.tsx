@@ -64,7 +64,7 @@ function initializeState() {
 
   if (typeof (Storage) !== 'undefined') {
   } else {
-    throw new Error('You need to enable Storage to run this app.');
+    return initialState;
   }
 
   const fromLocalStorage = JSON.parse(localStorage.getItem('globalState') as string);

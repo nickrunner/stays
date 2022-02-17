@@ -1,13 +1,13 @@
 import MuiAppBar, { AppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { Link as RouterLink} from "react-router-dom";
+import Link from "next/link";
 import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
 import React, { useState } from 'react';
 import { images } from "../../content";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import LoginMenu from './LoginMenu';
 import NavButton  from "./NavButton";
 import { globalContext } from '../../GlobalStore';
@@ -28,7 +28,7 @@ export interface StaysAppBarProps {
 }
   
 export function Nav(props: StaysAppBarProps) {
-  let navigate = useNavigate();
+  let router = useRouter();
   const [scroll, setScroll] = React.useState(false);
   const { globalState, dispatch } = React.useContext(globalContext);
 
@@ -68,9 +68,9 @@ export function Nav(props: StaysAppBarProps) {
               bgcolor: (transparentBg() ? "common.transparent" : "background.default")
               }}>
             <Box  sx={{mx:"auto", ml:getNavMargin(),  flex: 1, display: 'flex', justifyContent: 'flex-start' }} >
-              <RouterLink to="/">
+              <Link href={"/"}>
                 <img height={logoHeight()}  src={getLogo()} />
-              </RouterLink>
+              </Link>
               
             </Box>
             <Box sx={{ flex: 1,  display: 'flex', justifyContent: "center", mx:"auto"}}>

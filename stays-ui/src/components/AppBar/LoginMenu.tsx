@@ -2,10 +2,10 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuIcon from "@mui/icons-material/Menu";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Reorder } from "@mui/icons-material";
 import MenuItem from '@mui/material/MenuItem';
 import { AppBarProps, Box, Divider, IconButton, Typography } from '@mui/material';
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/router";
 import { UserMembership, Role, User } from '../../models/User';
 import { StaysAppBarProps } from './AppBar';
 import { globalContext } from '../../GlobalStore';
@@ -13,7 +13,7 @@ import { AuthClient } from '../../clients/authClient';
 
 
 export default function LoginMenu(props: StaysAppBarProps) {
-  let navigate = useNavigate();
+  let router = useRouter();
   const { globalState, dispatch } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,7 +28,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
   async function onSignOutClick()
   {
     await new AuthClient().signOut();
-    navigate("/sign_in");
+    router.push("/sign-in");
   }
 
   function hasRole(role: Role): boolean {
@@ -85,7 +85,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
       >
 
 
-        <MenuItem onClick={() => navigate("/stayers/premium/sign_up")}
+        <MenuItem onClick={() => router.push("/stayers/premium/sign-up")}
           sx={{display: (globalState.isSignedIn && !hasMembership(UserMembership.Premium)) ? "block" : "none"}}>
           <Typography variant="subtitle1">Upgrade to Premium</Typography>
         </MenuItem>
@@ -94,7 +94,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
 
         <MenuItem 
         sx={{display: globalState.isSignedIn ? "none" : "block"}}
-        onClick={() => navigate("/sign_up")}>
+        onClick={() => router.push("/sign-up")}>
           <Typography variant="subtitle1">Create free account</Typography>
         </MenuItem>
 
@@ -106,38 +106,38 @@ export default function LoginMenu(props: StaysAppBarProps) {
 
         <MenuItem 
         sx={{display: globalState.isSignedIn? "block" : "none"}}
-        onClick={() => navigate("/account")}>
+        onClick={() => router.push("/account")}>
           <Typography>Account Settings</Typography>
         </MenuItem>
           
           
-        <MenuItem onClick={() => navigate("/sign_in")}
+        <MenuItem onClick={() => router.push("/sign-in")}
           sx={{display: globalState.isSignedIn ? "none" : "block"}}>
           <Typography>Sign in</Typography>
         </MenuItem>
 
         <Divider />
 
-        <MenuItem onClick={() => navigate("/directory")}>
+        <MenuItem onClick={() => router.push("/directory")}>
           <Typography>Find a stay</Typography>
           </MenuItem>
           
-        <MenuItem onClick={() => navigate("/hosts")}
+        <MenuItem onClick={() => router.push("/hosts")}
           sx={{display: hasRole(Role.Host) ? "none" : "block"}}>
           <Typography>Become a host</Typography>
         </MenuItem>
 
-        <MenuItem onClick={ () => navigate("/hosts/portal")}
+        <MenuItem onClick={ () => router.push("/hosts/portal")}
           sx={{display: hasRole(Role.Host) ? "block" : "none"}}>
           <Typography>Host Portal</Typography>
         </MenuItem>
 
-        <MenuItem onClick={() => navigate("/stayers")}
+        <MenuItem onClick={() => router.push("/stayers")}
           sx={{display: globalState.isSignedIn ? "none" : "block"}}>
           <Typography>Become a member</Typography>
         </MenuItem>
 
-        <MenuItem onClick={ () => navigate("/cms/dashboard")}
+        <MenuItem onClick={ () => router.push("/cms/dashboard")}
           sx={{display: (hasRole(Role.Admin) || hasRole(Role.Employee)) ? "block" : "none"}}>
           <Typography>CMS</Typography>
         </MenuItem>

@@ -1,7 +1,7 @@
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import React from 'react';
 import { StaysAppBarProps } from "./AppBar";
 import { globalContext } from "../../GlobalStore";
@@ -12,7 +12,7 @@ export interface NavButtonProps extends StaysAppBarProps {
 }
 
 export default function NavButton(props: NavButtonProps){
-    let navigate = useNavigate();
+    let router = useRouter();
     const { globalState, dispatch } = React.useContext(globalContext);
     const [scroll, setScroll] = React.useState(false);
 
@@ -40,7 +40,7 @@ export default function NavButton(props: NavButtonProps){
                  color: ((!props.transparent) || scroll) ? "primary.dark" : "primary.light",
                 }
             } 
-         onClick={() => navigate(props.to)}
+         onClick={() => router.push(props.to)}
          >
           {props.text}
         </Button>

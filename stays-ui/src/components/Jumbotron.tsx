@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import { table } from "console";
 import { isPropertySignature } from "typescript";
-
+import styles from "../../styles/Hero.module.css";
 
 export default function Jumbotron(props: any) {
 
@@ -12,14 +12,14 @@ export default function Jumbotron(props: any) {
             left: 0,
             right: 0,
             top: 0,
-            bottom: 350,
-            bgcolor: 'primary.main',
+            bottom: 0,
+            bgcolor: 'primary.dark',
             zIndex: -1,
             justifyContent: "center"
             
         }}>
             <img
-                className='HeroImage'
+                className={styles.HeroImage}
                 src={props.backgroundImage}
                 width="100%"
                 height="100%"
