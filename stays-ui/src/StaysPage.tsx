@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/material";
 import React, { useContext } from "react";
-import { theme } from "../src/Theme";
+import { theme } from "./Theme";
 import { User } from "../src/models/User";
 import { UserClient } from "../src/clients/userClient";
 import { globalContext, GlobalStore } from "../src/GlobalStore";
@@ -39,8 +39,9 @@ export default function StaysPage(props: any){
 
 
     return (
-        <ThemeProvider theme={theme}>
+        
+        <div>
             {props.children}
-        </ThemeProvider>
+        </div>
     );
 }

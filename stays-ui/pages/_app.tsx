@@ -6,13 +6,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { theme } from '../src/Theme';
-import createCache from '@emotion/cache';
+import createEmotionCache from '../src/createEmotionCache';
 
-// prepend: true moves MUI styles to the top of the <head> so they're loaded first.
-// It allows developers to easily override MUI styles with other styling solutions, like CSS modules.
-function createEmotionCache() {
-  return createCache({ key: 'css', prepend: true });
-}
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -22,14 +17,26 @@ interface MyAppProps extends AppProps {
 
   export default function MyApp(props: MyAppProps) {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+    React.useEffect(() => {
+        // Remove the server-side injected CSS.
+        const jssStyles = document.querySelector('#jss-server-side');
+        if (jssStyles) {
+          jssStyles?.parentElement?.removeChild(jssStyles);
+        }
+      }, []);
+
   return ( 
   <GlobalStore>
-
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-
-        <Component {...pageProps} />
+      <CacheProvider value={emotionCache}>
+        <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    </CacheProvider>
 
   </GlobalStore>
   );

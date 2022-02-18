@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   breakpoints: {
@@ -131,6 +131,7 @@ export const theme = createTheme({
       }
     }
   },
+  
   palette: {
     action: {
       active: '#6B7280',
@@ -267,7 +268,7 @@ export const theme = createTheme({
       lineHeight: 1.375
     },
     h3: {
-      fontWeight: 550,
+      fontWeight: 500,
       fontSize: '2.25rem',
       lineHeight: 1.375
     },
