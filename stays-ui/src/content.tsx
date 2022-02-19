@@ -1,11 +1,42 @@
-export const images = {
-    logo: {
-        purple: "https://firebasestorage.googleapis.com/v0/b/stays-platform.appspot.com/o/content%2Fstays-purple.png?alt=media&token=37b5ee0c-d855-45cc-9f08-948fa039530a",
-        white: "https://firebasestorage.googleapis.com/v0/b/stays-platform.appspot.com/o/content%2Fstays_white.png?alt=media&token=d3328e11-3528-4af0-87ed-13a461bb136c",
-        black: "https://firebasestorage.googleapis.com/v0/b/stays-platform.appspot.com/o/content%2Fstays-black.png?alt=media&token=a79d3365-f15e-4504-8545-3388bfc26582"
+export const content ={ 
+
+    images: {
+        logo: {
+            purple: "https://ik.imagekit.io/stays/content/stays-purple.png",
+            white: "https://ik.imagekit.io/stays/content/stays-white.png",
+            black: "https://ik.imagekit.io/stays/content/stays-black.png",
+            width: "1800",
+            height: "1000"
+        },
+        dotMap: "https://ik.imagekit.io/stays/content/dot-map.svg",
+        icon: {
+            purple: "https://ik.imagekit.io/stays/content/stays-icon.png"
+        },
+        mockups: {
+            signIn: "https://ik.imagekit.io/stays/content/mockups/sign-in.png",
+            collage: "https://ik.imagekit.io/stays/content/mockups/collage.png",
+            computer: "https://ik.imagekit.io/stays/content/mockups/computer.png",
+            description: "https://ik.imagekit.io/stays/content/mockups/description.png",
+            desk: "https://ik.imagekit.io/stays/content/mockups/desk.png",
+            directory: "https://ik.imagekit.io/stays/content/mockups/directory.png",
+            doubles1: "https://ik.imagekit.io/stays/content/mockups/doubles-1.png",
+            doubles2: "https://ik.imagekit.io/stays/content/mockups/doubles-2.png",
+            forStayers: "https://ik.imagekit.io/stays/content/mockups/for-stayers.png",
+            hostPerks: "https://ik.imagekit.io/stays/content/mockups/host-perks.png",
+            listing: "https://ik.imagekit.io/stays/content/mockups/listing.png",
+            showcase: "https://ik.imagekit.io/stays/content/mockups/showcase.png",
+            travelerPerks: "https://ik.imagekit.io/stays/content/mockups/traveler-perks.png",
+        },
+        woodhouse: "https://ik.imagekit.io/stays/content/woodhouse.jpg",
+        abed: "https://ik.imagekit.io/stays/content/abed.jpg"
     },
-    dotMap: "https://firebasestorage.googleapis.com/v0/b/stays-platform.appspot.com/o/content%2Fdot-map.svg?alt=media&token=58077d10-544a-41dd-bf45-f90aa7deaa06",
-    icon: {
-        purple: "https://firebasestorage.googleapis.com/v0/b/stays-platform.appspot.com/o/content%2Fstays-icon.png?alt=media&token=33a85327-4abb-487b-aa31-644df0cecb68"
+    pages: {
+        comingSoon: {
+            hero: {
+                main: "Connecting travelers with the best vacation rentals from around the world.",
+                sub: "Get booking perks, exclusive rental access and automatic entries into vacation giveaways with a FREE stayer membership."
+            }
+        }
     }
+    
 }   

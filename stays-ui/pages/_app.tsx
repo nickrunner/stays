@@ -29,10 +29,6 @@ interface MyAppProps extends AppProps {
   return ( 
   <GlobalStore>
       <CacheProvider value={emotionCache}>
-        <Head>
-           <title>Stays</title>
-           <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <Component {...pageProps} />

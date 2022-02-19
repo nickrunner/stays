@@ -24,7 +24,7 @@ import CabinIcon from "@mui/icons-material/Cabin";
 import ApprovalIcon from "@mui/icons-material/Approval";
 import StoreFrontIcon from "@mui/icons-material/Storefront";
 import { useRouter } from 'next/router';
-import { images } from "../content";
+import { content } from "../content";
 import { globalContext } from '../GlobalStore';
 import Link from "next/link";
 
@@ -152,7 +152,7 @@ export default function CmsFrame(){
             }}
             >
             <Link href={"/"}>
-              <img height={logoHeight()}  src={images.logo.purple} />
+              <img height={logoHeight()}  src={content.images.logo.purple} />
             </Link>
             <IconButton onClick={toggleDrawer}>
                 <ChevronLeftIcon sx={{color: "primary"}} />

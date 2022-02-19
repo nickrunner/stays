@@ -1,10 +1,7 @@
-import { ThemeProvider } from "@mui/material";
 import React, { useContext } from "react";
-import { theme } from "./Theme";
-import { User } from "../src/models/User";
 import { UserClient } from "../src/clients/userClient";
-import { globalContext, GlobalStore } from "../src/GlobalStore";
-
+import { globalContext } from "../src/GlobalStore";
+import Head from "next/head";
 
 
 export default function StaysPage(props: any){
@@ -39,8 +36,15 @@ export default function StaysPage(props: any){
     return (
         
         <div>
-            <main></main>
+            <Head>
+                <title>Stays</title>
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
+                <meta name="description" content="Direct booking for unique vacation rentals and short-term rentals"/>
+                <meta name="keywords" content="vacation, rental, unique, host, property, stay, influencer"/>
+            </Head>
+            <main>
             {props.children}
+            </main>
         </div>
     );
 }

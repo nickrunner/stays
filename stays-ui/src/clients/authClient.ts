@@ -1,6 +1,6 @@
 import { TurnedIn } from "@mui/icons-material";
 import { create } from "domain";
-import { getAuth, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { getAuth, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, fetchSignInMethodsForEmail } from "firebase/auth";
 import {auth} from "../firebase";
 import { User, UserRecord } from "../models/User";
 import { UserClient } from "./userClient";
@@ -32,6 +32,18 @@ export class AuthClient {
         else{
             throw new Error("User is not signed in");
         }
+    }
+
+    public async isEmailValid(email: string){
+        try{ 
+            await fetchSignInMethodsForEmail(auth, email);
+        }
+        catch(err: any){
+            if(err.code === "auth/invalid-email"){
+                return false;
+            }
+        }
+        return true;
     }
 
     public async isSignedIn(): Promise<boolean> {

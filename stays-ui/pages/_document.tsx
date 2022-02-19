@@ -9,18 +9,14 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>Stays</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <link rel="shortcut icon" href="/static/stays-icon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap"
-          />
-          {/* <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&display=swap"
-          /> */}
+          <link rel="icon" href='/stays-icon.png'></link>
+          <link rel="shortcut icon" href="/stays-icon.png" />
+          
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
+          <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap"
+          />
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>

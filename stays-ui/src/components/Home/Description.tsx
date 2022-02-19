@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, SxProps, Theme, Typography } from '@mui/material';
 import * as React from 'react';
-import { images } from "../../content";
+import { content } from "../../content";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import {Search, Loyalty, BookOnline} from "@mui/icons-material";
 import { useRouter } from 'next/router';
@@ -35,7 +35,7 @@ export default function Description(props: any) {
       >
         <Box
           component="img"
-          src={images.dotMap}
+          src={content.images.dotMap}
           sx={{
             pointerEvents: 'none',
             position: 'absolute',

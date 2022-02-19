@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { images } from "../../content";
+import { content } from "../../content";
 import { Typography } from '@mui/material';
 
 function Help() {
@@ -29,7 +29,7 @@ function Help() {
       </Typography>
       <Box
         component="img"
-        src={images.logo.purple}
+        src={content.images.logo.purple}
         alt="buoy"
         sx={{ width: 60 }}
       />

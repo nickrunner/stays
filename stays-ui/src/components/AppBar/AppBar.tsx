@@ -6,7 +6,7 @@ import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
 import React, { useState } from 'react';
-import { images } from "../../content";
+import { content } from "../../content";
 import { useRouter } from "next/router";
 import LoginMenu from './LoginMenu';
 import Box from '@mui/material/Box';
@@ -59,7 +59,7 @@ export function Nav(props: StaysAppBarProps) {
   }
 
   function getLogo() {
-    return transparentBg() ? images.logo.white : images.logo.purple;
+    return transparentBg() ? content.images.logo.white : content.images.logo.purple;
   }
 
   function getNavMargin(){

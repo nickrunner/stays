@@ -16,7 +16,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { StayRecord } from '../../models/Stay';
 import { globalContext } from '../../GlobalStore';
 import { Photo } from '../../models/Photo';
-import { images } from "../../content";
+import { content } from "../../content";
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -75,7 +75,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
     <Card sx={{ width: {width} }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={images.logo.purple}>
+          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={content.images.logo.purple}>
           </Avatar>
         }
         action={

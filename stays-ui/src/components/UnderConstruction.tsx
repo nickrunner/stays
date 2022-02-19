@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { images } from "../content";
+import { content } from "../content";
 import Copyright from "./Copyright";
 
 export default function UnderConstruction() {
@@ -15,7 +15,7 @@ export default function UnderConstruction() {
         flexDirection:"column",
         fontSize: 25,
     }}>
-        <img width="40%" src={images.logo.purple} />
+        <img width="40%" src={content.images.logo.purple} />
         <code>Page under construction</code>
     </Box>
   );

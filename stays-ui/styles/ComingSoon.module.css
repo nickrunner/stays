@@ -1,3 +1,4 @@
 .HeroImage {
     opacity: 0.4;
+    object-fit: cover;
 }
