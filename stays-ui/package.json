@@ -45,7 +45,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 8080",
+    "deploy": "npm run build && gcloud app deploy"
   },
   "eslintConfig": {
     "extends": [

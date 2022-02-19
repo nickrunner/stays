@@ -17,30 +17,29 @@ export default function StaysPage(props: any){
         function handleResize() {
             dispatch({type:"RESIZE", payload:(window.innerWidth < 600)});
         }
+        
+        console.log("Getting self");
 
-        const getSelf = async() => {
-            console.log("Getting self");
-            try{
-                const self: User = await new UserClient().getSelf();
-                console.log("Got self: ", {self});
-                dispatch({type: "GET_SELF", payload: self});
-
-            }
-            catch(e){
-                console.log("Not signed in: ", {e});
-                dispatch({type: "GET_SELF", payload: undefined});
-            }
-        }
-        getSelf();
-  
+        new UserClient().getSelf().then((value) => {
+            console.log("Got self: ", {value});
+            dispatch({type: "GET_SELF", payload: value});
+        } ).catch((reason) => {
+            console.log("Not signed in: ", {reason});
+            dispatch({type: "GET_SELF", payload: undefined});
+        }).finally(() => {
+            console.log("Get Self Finish");
+        });
         window.addEventListener('resize', handleResize)
-    return 
+  
+        
+    return () => window.removeEventListener('resize', handleResize)
     }, []);
 
 
     return (
         
         <div>
+            <main></main>
             {props.children}
         </div>
     );

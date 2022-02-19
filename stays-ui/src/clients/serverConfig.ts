@@ -1,9 +1,9 @@
 import {AxiosRequestConfig} from "axios";
 import { AuthClient } from "./authClient";
 
-export const BASE_URL = "http://localhost:3001"
+//export const BASE_URL = "http://localhost:3001"
 //export const BASE_URL = "http://192.168.86.206:3001"
-//export const BASE_URL = "https://stays-platform.uc.r.appspot.com"
+export const BASE_URL = "https://platform-dot-stays-dev.uc.r.appspot.com"
 
 
 export function cfg():AxiosRequestConfig {

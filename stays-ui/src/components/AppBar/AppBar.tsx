@@ -1,6 +1,6 @@
 import MuiAppBar, { AppBarProps } from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Link from "next/link";
+
+import Link from "../Link";
 import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
@@ -9,8 +9,14 @@ import React, { useState } from 'react';
 import { images } from "../../content";
 import { useRouter } from "next/router";
 import LoginMenu from './LoginMenu';
-import NavButton  from "./NavButton";
+import Box from '@mui/material/Box';
 import { globalContext } from '../../GlobalStore';
+import { User } from '../../models/User';
+import { UserClient } from '../../clients/userClient';
+import NavButton from './NavButton';
+import dynamic from 'next/dynamic';
+
+const Greeting = dynamic(() => import("./Greeting"), {ssr: false});
  
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
   height: 75,
@@ -18,6 +24,8 @@ const Toolbar = styled(MuiToolbar)(({ theme }) => ({
     height: 110,
   },
 }));
+
+
 
 function AppBar(props: AppBarProps) {
   return <MuiAppBar elevation={0} position="fixed" {...props} />;
@@ -33,7 +41,6 @@ export function Nav(props: StaysAppBarProps) {
   const { globalState, dispatch } = React.useContext(globalContext);
 
   React.useEffect(() => {
-
     function handleScroll(){
       setScroll(window.scrollY != 0 );
     }
@@ -41,6 +48,7 @@ export function Nav(props: StaysAppBarProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll)
   }, []);
+
 
   function logoHeight() {
     return globalState.mobile ? 60 : 75;
@@ -80,11 +88,7 @@ export function Nav(props: StaysAppBarProps) {
             </Box>
 
             <Box sx={{mx:"auto", flex: 1, display: 'flex', justifyContent: "flex-end", mr:getNavMargin(), }}>
-            <Box
-              style={{display: globalState.isSignedIn ? 'block' : 'none'}}
-              >
-              <NavButton transparent={props.transparent} text={"Welcome "+globalState.self?.firstName+" !"} to="/account"></NavButton>  
-            </Box>
+               <Greeting transparent={props.transparent} />
                <LoginMenu transparent={props.transparent}/>
             </Box>
 

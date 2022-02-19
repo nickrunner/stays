@@ -9,7 +9,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA primary color */}
+          <title>Stays</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
           <link rel="shortcut icon" href="/static/stays-icon.ico" />
           <link
             rel="stylesheet"

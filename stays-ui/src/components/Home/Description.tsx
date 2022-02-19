@@ -3,37 +3,17 @@ import * as React from 'react';
 import { images } from "../../content";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import {Search, Loyalty, BookOnline} from "@mui/icons-material";
+import { useRouter } from 'next/router';
 
 
 export default function Description(props: any) {
-  const [mobile, setMobile] = React.useState(false);
-  React.useEffect(() => {
-    handleResize();
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
-    }
-    window.addEventListener('resize', handleResize)
-    window.addEventListener('load', handleResize);
-    return () => window.removeEventListener('resize', handleResize)
-  }, []);
+  const router = useRouter();
 
   const item: SxProps<Theme> = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     px: 5,
-  };
-  
-  const number = {
-    fontSize: 24,
-    fontFamily: 'default',
-    color: 'primary.dark',
-    fontWeight: 'bold',
-  };
-  
-  const image = {
-    height: 55,
-    my: 4,
   };
   
 
@@ -72,7 +52,7 @@ export default function Description(props: any) {
           <Grid container spacing={5}>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
-                <Search sx={{p:3, fontSize:55}}/>
+                <Search sx={{p:3, fontSize:100}}/>
                 <Typography variant="h5" align="center">
                   Browse our expert curated collection of unique vacation rentals.
                 </Typography>
@@ -80,7 +60,7 @@ export default function Description(props: any) {
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
-              <Loyalty sx={{p:3, fontSize:55}}/>
+              <Loyalty sx={{p:3, fontSize:100}}/>
                 <Typography variant="h5" align="center">
                   Become a member and get notified of vacancies before anyone else.
                 </Typography>
@@ -88,7 +68,7 @@ export default function Description(props: any) {
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
-              <BookOnline sx={{p:3, fontSize:55}}/>
+              <BookOnline sx={{p:3, fontSize:100}}/>
                 <Typography variant="h5" align="center">
                   Book directly with the source.  By cutting out the middle-man, you save on your booking cost.
                 </Typography>
@@ -101,7 +81,7 @@ export default function Description(props: any) {
           size="large"
           variant="contained"
           component="a"
-          href="/premium-themes/onepirate/sign-up/"
+          onClick={() => { router.push("/premium-sign-up")} }
           sx={{ mt: 5 }}
         >
           Get started

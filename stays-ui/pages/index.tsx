@@ -15,14 +15,11 @@ import styles from "../styles/ComingSoon.module.css";
 const ComingSoon: NextPage = () => {
   const {globalState} = React.useContext(globalContext);
   
-
     function getBackground(){
       return globalState.mobile ? "https://static.wixstatic.com/media/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg/v1/fill/w_2000,h_1313,al_c,q_90/d4ce6e_ce7e64141e1e4a539669c7227f1c0b23~mv2.jpg"
       : "https://www.woodnest.no/wp-content/uploads/17-min.jpg"
-      //return "https://www.woodnest.no/wp-content/uploads/17-min.jpg"
     }
  
-
     return (
         <StaysPage>
         <Box
@@ -197,3 +194,4 @@ const ComingSoon: NextPage = () => {
 }
 
 export default ComingSoon
+
