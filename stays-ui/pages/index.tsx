@@ -7,9 +7,9 @@ import ComingSoon from "../src/components/ComingSoon/ComingSoon";
 
 const ComingSoonPage: NextPage = () => {
     return (
-        <StaysPage>
+        <div>
           <ComingSoon />
-        </StaysPage>
+        </div>
     );
 }
 

@@ -3,10 +3,13 @@ import Link from "../Link";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import Copyright from "../Copyright";
+import { content } from "../../content";
 
 export default function Footer(props: any) {
     return ( 
         <Box>
+            
+
         <Grid container spacing={1} alignItems="center" justifyContent="center">
             <Box sx={{m:2, mb:10}}>
             <Link
@@ -24,6 +27,8 @@ export default function Footer(props: any) {
             </Link>
             </Box>
         </Grid>
+
+
         <Box
             sx={{
                 mb:4

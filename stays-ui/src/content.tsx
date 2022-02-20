@@ -1,3 +1,5 @@
+import Description from "./components/Home/Description";
+
 export const content ={ 
 
     images: {
@@ -33,8 +35,27 @@ export const content ={
     pages: {
         comingSoon: {
             hero: {
-                main: "Connecting travelers with the best vacation rentals from around the world.",
-                sub: "Get booking perks, exclusive rental access and automatic entries into vacation giveaways with a FREE stayer membership."
+                // main: "Connecting travelers with the best vacation rentals from around the world.",
+                // sub: "Get booking perks, exclusive rental access and automatic entries into vacation giveaways with a FREE stayer membership."
+                main: "Coming, June 2022",
+                sub: "Connecting travelers with the best vacation rentals from around the world."
+            },
+            description: {
+                hook: "Not just another booking app",
+                line: "Stays.co is a free directory tool that helps travelers find, follow and book their dream vacation rental",
+                sinker: " We partner with the world's best rentals to give our members exlusive perks not found anywhere else", 
+                perks: [
+                    "Discounted Stays",
+                    "Cancellation Notices",
+                    "Early Booking Access",
+                    "Automatic Giveaway Entries"
+                ]
+            },
+            perks: "Closing the gap between travelers and their hosts",
+            details: {
+                header: "Stays.co is a game-changer",
+                sub1: "Vacation rental hosts have become increasingly dependent on large booking platforms such as Airbnb, VRBO, etc for not only their booking management, but also for their marketing and visibility.",
+                sub2: "Stays.co allows hosts to create 'Stay Profiles' on our website that allow travelers to find them, engage with their linked social media pages, visit their private website and/or be directed to book on any existing platform the host may be listed on."
             }
         }
     }

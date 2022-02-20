@@ -26,16 +26,16 @@ export const theme = createTheme({
           padding: '8px 20px'
         },
         sizeLarge: {
-          padding: '11px 24px'
+          padding: '15px 30px'
         },
         textSizeSmall: {
           padding: '7px 12px'
         },
         textSizeMedium: {
-          padding: '9px 16px'
+          padding: '11px 20px'
         },
         textSizeLarge: {
-          padding: '12px 16px'
+          padding: '15px 20px'
         }
       }
     },
@@ -237,7 +237,7 @@ export const theme = createTheme({
     },
     subtitle1: {
       fontSize: '1rem',
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: 1.75
     },
     subtitle2: {
@@ -258,7 +258,7 @@ export const theme = createTheme({
       lineHeight: 1.66
     },
     h1: {
-      fontWeight: 700,
+      fontWeight: 1000,
       fontSize: '2rem',
       '@media (min-width:400px)':{
         fontSize: '2.25rem'
@@ -287,7 +287,7 @@ export const theme = createTheme({
       lineHeight: 1.375
     },
     h2: {
-      fontWeight: 600,
+      fontWeight: 900,
       fontSize: '2rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
@@ -320,7 +320,7 @@ export const theme = createTheme({
     
     },
     h3: {
-      fontWeight: 500,
+      fontWeight: 800,
       fontSize: '1.5rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
@@ -352,12 +352,7 @@ export const theme = createTheme({
       },
     },
     h4: {
-      fontWeight: 500,
-      fontSize: '2rem',
-      lineHeight: 1.375
-    },
-    h5: {
-      fontWeight: 500,
+      fontWeight: 700,
       fontSize: '1.2rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
@@ -382,12 +377,41 @@ export const theme = createTheme({
         fontSize: '1.75rem'
       },
       '@media (min-width:1200px)':{
+        fontSize: '2.25frem'
+      },
+    },
+    h5: {
+      fontWeight: 600,
+      fontSize: '1.2rem',
+      lineHeight: 1.375,
+      '@media (min-width:400px)':{
+        fontSize: '1.2rem'
+      },
+      '@media (min-width:500px)':{
+        fontSize: '1.2rem'
+      },
+      '@media (min-width:600px)':{
+        fontSize: '1.2rem'
+      },
+      '@media (min-width:700px)':{
+        fontSize: '1.3rem'
+      },
+      '@media (min-width:lg)':{
+        fontSize: '1.5rem'
+      },
+      '@media (min-width:1000px)':{
+        fontSize: '1.75rem'
+      },
+      '@media (min-width:1100px)':{
+        fontSize: '1.875rem'
+      },
+      '@media (min-width:1200px)':{
         fontSize: '2rem'
       },
       
     },
     h6: {
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: '1rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{

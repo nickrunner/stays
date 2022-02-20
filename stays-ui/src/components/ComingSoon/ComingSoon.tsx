@@ -9,6 +9,8 @@ import Perks from "./Perks";
 import Details from "./Details";
 import Footer from "./Footer";
 import Hero from "./Hero";
+import About from "./About";
+import { content } from "../../content";
 
 export default function ComingSoon(props: any){
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
@@ -55,7 +57,7 @@ export default function ComingSoon(props: any){
               p: {xs:2, md:5},
               display: "flex"
             }}>
-              <Filtering />
+              <About />
             </Box>
 
             <Box
@@ -78,7 +80,7 @@ export default function ComingSoon(props: any){
               display: "flex"
             }}>
               <Details />
-            </Box> 
+            </Box>
              
             <Box
             maxWidth="lg"
@@ -86,23 +88,19 @@ export default function ComingSoon(props: any){
             sx={{
               m: 5,
               p: {xs:2, md:5},
-              display: "flex"
-            }}>
+              display: "grid"
+            }}> 
 
-              <Button
-              onClick={() => setWaitlistOpen(true)}
-              sx={{
-                border: '4px solid currentColor',
-                borderRadius: 0,
-                height: 'auto',
-                py: 2,
-                p: {xs:2, md:5},
-              }}
-              >
-                <Typography variant="h4" component="span">
-                  <b>Join the waitlist!</b>
-                </Typography>
-              </Button>
+            <Button 
+                variant="contained" 
+                onClick={() => setWaitlistOpen(true)}
+                size="large"
+                sx={{
+                    mt:5,
+                    width:300
+                }}>
+                Join the Waitlist
+            </Button>
             </Box>
 
             <Box>

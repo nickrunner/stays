@@ -5,11 +5,11 @@ export default function Perks() {
     return (
         <Box>
             <Typography
-            variant="h2"
+            variant="h1"
             align="center"
             color="primary.main"
             >
-                Stays.co has a ton of perks for our traveler and rental host members
+                {content.pages.comingSoon.perks}
             </Typography>
             <Box sx={{mt:10, justifyContent:"center", display: {xs:"grid", md: "flex"}, gap:5}}>
                 <img height="500" src={content.images.mockups.travelerPerks} alt="Traveler Perks" />
