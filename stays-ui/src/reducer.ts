@@ -1,5 +1,5 @@
+import { User } from "../../common/models/User";
 import { ActionType, StaysState } from "./GlobalTypes";
-import { User } from "./models/User";
 
 const Reducer = (state: StaysState, action: ActionType): any => {
     switch(action.type){

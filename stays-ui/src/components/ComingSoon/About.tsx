@@ -18,11 +18,11 @@ export default function About (props: any) {
                     "Automatic Entries into Vacation Giveaways",
                     "Discounted Stays",
                     "Cancellation Notices",
-                    "Powerful Search Tool"
+                    "Powerful Searching and Filtering"
                 ]
             }
         >
-            <TravelExplore fontSize="large" />
+            <TravelExplore fontSize="large" sx={{color:"secondary.main"}} />
         </AboutCard>
 
         <AboutCard 
@@ -39,7 +39,7 @@ export default function About (props: any) {
             ]
         }
         >
-            <Cabin fontSize="large" />
+            <Cabin fontSize="large" sx={{color:"secondary.main"}}  />
         </AboutCard>
     </Box>
     );

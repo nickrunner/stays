@@ -2,10 +2,13 @@ import { Card, CardContent, CardHeader, Typography, Box } from "@mui/material";
 
 export default function AboutCard(props: any) {
     return (
-    <Card>
+    <Card
+    sx={{maxWidth:"sm"}}
+    >
     <CardHeader
         title={props.title}
         subheader={props.subheader}
+        action={props.children}
         titleTypographyProps={{ 
             align: 'center',
             variant: 'h3', 
@@ -25,16 +28,6 @@ export default function AboutCard(props: any) {
         }}
     />
     <CardContent>
-        <Box
-        sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'baseline',
-            mb: 2,
-        }}
-        >
-            {props.children}
-        </Box>
         <ul>
         {props.description.map((line: any) => (
             <Typography

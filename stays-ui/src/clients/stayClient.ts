@@ -1,7 +1,8 @@
 import axios from "axios";
+import { Stay, StayRecord, StaySearchFilter } from "../../../common/models/Stay";
+import { StayAttributeType, StayAttributeRecord } from "../../../common/models/StayAttributes";
 import { defCfg, queryCfg } from "./serverConfig";
-import { Stay, StayRecord, StaySearchFilter } from "../models/Stay";
-import { StayAttributeRecord, StayAttributeType } from "../models/StayAttributes";
+
 
 export const url = "/stays";
 

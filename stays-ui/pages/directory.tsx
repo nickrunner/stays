@@ -1,12 +1,10 @@
-import { Container, Grid, ThemeProvider } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
+import { StayRecord } from "../../common/models/Stay";
 import { StayClient } from "../src/clients/stayClient";
 import { Nav } from "../src/components/AppBar/AppBar";
 import Footer from "../src/components/Footer";
 import StayDirectoryCard from "../src/components/Stay/StayDirectoryCard";
-import UnderConstruction from "../src/components/UnderConstruction";
-import { StayApplicationStatus, StayRecord } from "../src/models/Stay";
-import { theme } from "../src/Theme";
 import StaysPage from "../src/StaysPage";
 
 

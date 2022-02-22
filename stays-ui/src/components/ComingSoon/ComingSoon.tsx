@@ -1,15 +1,13 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
-import { Box, Button, Modal, Typography } from "@mui/material";
-import { globalContext } from "../../GlobalStore";
+import { Box, Button, Modal } from "@mui/material";
 import Waitlist from "./Waitlist";
-import Filtering from "./Filtering";
 import Description from "./Description";
 import Perks from "./Perks";
 import Details from "./Details";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import About from "./About";
+import PerkList from "./PerkList";
 import { content } from "../../content";
 
 export default function ComingSoon(props: any){
@@ -48,18 +46,32 @@ export default function ComingSoon(props: any){
             >
               <Description />
             </Box>
+            
+
+            <Box
+              maxWidth="lg"
+              sx={{
+                p: {xs:2, md:5},
+                display: "flex"
+              }}
+            >
+              <PerkList />
+            </Box>
+            
 
             <Box
             maxWidth="lg"
-            margin="auto"
             sx={{
-              m: 5,
+              mt: 7,
               p: {xs:2, md:5},
               display: "flex"
             }}>
               <About />
             </Box>
 
+            
+
+            
             <Box
             maxWidth="lg"
             margin="auto"
@@ -70,6 +82,9 @@ export default function ComingSoon(props: any){
             }}>
               <Perks />
             </Box> 
+
+            
+
 
             <Box
             maxWidth="lg"
@@ -96,14 +111,27 @@ export default function ComingSoon(props: any){
                 onClick={() => setWaitlistOpen(true)}
                 size="large"
                 sx={{
-                    mt:5,
                     width:300
                 }}>
                 Join the Waitlist
             </Button>
             </Box>
 
-            <Box>
+            <img 
+            src={content.images.logo.purple}
+            height="50"
+            width="90"> 
+            </img>
+            
+      
+            <Box
+            maxWidth="lg"
+            margin="auto"
+            sx={{
+              mt:1,
+              p:2
+            }}>
+              
               <Footer />
             </Box>
             

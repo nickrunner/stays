@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import {content} from "../../content";
+import Image from "next/image";
 
 export default function Details() {
     return ( 
@@ -8,6 +9,11 @@ export default function Details() {
         sx={{display: {xs: "grid", md: "flex"}, gap: 5, justifyContent:"center"}}>
 
             <Stack sx={{justifyContent:"center"}} >
+                <img 
+                src={content.images.logo.purple}
+                height="100"
+                width="180"> 
+                </img>
                 <Typography variant="h3" color="primary.main">
                 {content.pages.comingSoon.details.header}
                 </Typography>

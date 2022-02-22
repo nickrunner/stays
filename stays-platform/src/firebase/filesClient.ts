@@ -1,6 +1,8 @@
-import { UploadResponse } from "@google-cloud/storage";
+import { UploadResponse, FileOptions } from "@google-cloud/storage";
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid'; 
+import { request } from "http";
+import { blob } from "stream/consumers";
+import fs from "fs";
 import { storage } from "./firebase";
 var FileReader = require('filereader')
 
@@ -16,22 +18,63 @@ export interface FileUploadListener {
 
 export class FilesClient {
     
+    public saveToStorage(attachmentUrl:string, objectName:string) {
+        const request = require('request');
+        const req = request(attachmentUrl);
+        req.pause();
+        req.on('response', (res: { statusCode: number; headers: { [x: string]: any; }; }) => {
+      
+          // Don't set up the pipe to the write stream unless the status is ok.
+          // See https://stackoverflow.com/a/26163128/2669960 for details.
+          if (res.statusCode !== 200) {
+            return;
+          }
+      
+          const writeStream = storage.bucket().file(objectName)
+            .createWriteStream({
+      
+              // Tweak the config options as desired.
+              gzip: true,
+              public: true,
+              metadata: {
+                contentType: res.headers['content-type']
+              }
+            });
+          req.pipe(writeStream)
+            .on('finish', () => console.log('saved'))
+            .on('error', (err: any) => {
+              writeStream.end();
+              console.error(err);
+            });
+      
+          // Resume only when the pipe is set up.
+          req.resume();
+        });
+        req.on('error', (err: any) => console.error(err));
+      }
 
-    public async uploadFile(srcPath: string, dstPath: string): Promise<string>{
+    public async uploadFile(src: Blob, dstPath: string): Promise<void>{
 
 
         // Upload file and metadata
-        const name = uuidv4();
+       
         const storageRef = storage.bucket();
+
+        const file = storageRef.file(dstPath);
+        const blobStream = file.createWriteStream();
+        // blobStream.on('error', err => {
+        //     console.log("Error: "+JSON.stringify(err, null, 2));
+        //   });
+        //   console.log('===---> ', 'no errors::::');
         
-        await storageRef.upload(srcPath, {
-            destination: dstPath+"/"+name
-        } );
-        const url = await storageRef.file(name).getSignedUrl({
-            action: "read",
-            expires: Date.now() + 604800000 
-        });
-        return url[0];
+        // blobStream.on('finish', () => {
+        //     console.log('done::::::', `https://storage.googleapis.com/${storageRef.name}/${file.name}`)
+        //     });
+        
+        await blobStream.write(src);
+        console.log('===---> ', 'past finish::::');
+        blobStream.end();
+        console.log('===---> ', 'at end::::');
     }
 
     public async download(url: string): Promise<Blob>{
@@ -39,6 +82,7 @@ export class FilesClient {
             responseType: 'blob'
         });
         const blob: Blob = response.data;
+        
        return blob;
     }
 }

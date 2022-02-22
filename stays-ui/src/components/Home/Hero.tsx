@@ -24,13 +24,17 @@ export default function Hero(props: any) {
       <Jumbotron backgroundImage="https://cdn.onekindesign.com/wp-content/uploads/2019/12/Rustic-Contemporary-A-Frame-Todd-Gordon-Mather-Architect-01-1-Kindesign.jpg">
           </Jumbotron>
 
-        <Typography align="center" color="common.white" variant={globalState.mobile ? "h2" : "h1"} sx={{ mb: 4, mt: { sx: 5, sm: 15 } }}>
+        <Typography 
+          align="center" 
+          color="common.white" 
+          variant="h1" 
+          sx={{ mb: 4, mt: { sx: 5, sm: 15 } }}>
             Stay in luxury.  Save Money. 
         </Typography>
         <Typography
             color="common.white"
             align="center"
-            variant={globalState.mobile ? "h5" : "h4"}
+            variant="h5"
             sx={{mb: 8, mt: { sx: 4, sm: 8 } }}
         >
             Book directly with elite vacation rentals

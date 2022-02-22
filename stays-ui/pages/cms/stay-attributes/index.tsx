@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import JSONPretty from 'react-json-pretty';
 import { useRouter } from 'next/router';
-import { StayAttributeRecord, StayAttributeType } from '../../../src/models/StayAttributes';
+import { StayAttributeRecord, StayAttributeType } from '../../../../common/models/StayAttributes';
 import StayAttributesTable from '../../../src/components/StayAttributes/StayAttributesTable';
 import AddStayAttribute from './add';
 

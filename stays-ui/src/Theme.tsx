@@ -222,7 +222,7 @@ export const theme = createTheme({
   ],
   typography: {
     button: {
-      fontWeight: 600
+      fontWeight: 600,
     },
     fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
     body1: {
@@ -367,7 +367,7 @@ export const theme = createTheme({
       '@media (min-width:700px)':{
         fontSize: '1.2rem'
       },
-      '@media (min-width:lg)':{
+      '@media (min-width:800px)':{
         fontSize: '1.3rem'
       },
       '@media (min-width:1000px)':{
@@ -381,7 +381,7 @@ export const theme = createTheme({
       },
     },
     h5: {
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: '1.2rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
@@ -396,7 +396,7 @@ export const theme = createTheme({
       '@media (min-width:700px)':{
         fontSize: '1.3rem'
       },
-      '@media (min-width:lg)':{
+      '@media (min-width:800px)':{
         fontSize: '1.5rem'
       },
       '@media (min-width:1000px)':{
@@ -411,32 +411,32 @@ export const theme = createTheme({
       
     },
     h6: {
-      fontWeight: 400,
-      fontSize: '1rem',
+      fontWeight: 700,
+      fontSize: '1.2rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
-        fontSize: '1rem'
+        fontSize: '1.2rem'
       },
       '@media (min-width:500px)':{
-        fontSize: '1rem'
+        fontSize: '1.2rem'
       },
       '@media (min-width:600px)':{
-        fontSize: '1rem'
+        fontSize: '1.2rem'
       },
       '@media (min-width:700px)':{
-        fontSize: '1rem'
+        fontSize: '1.2rem'
       },
       '@media (min-width:lg)':{
-        fontSize: '1.1rem'
+        fontSize: '1.2rem'
       },
       '@media (min-width:1000px)':{
         fontSize: '1.25rem'
       },
       '@media (min-width:1100px)':{
-        fontSize: '1.5rem'
+        fontSize: '1.4rem'
       },
       '@media (min-width:1200px)':{
-        fontSize: '1.75rem'
+        fontSize: '1.5rem'
       },
     }
   }

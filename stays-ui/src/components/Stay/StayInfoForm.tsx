@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, FormGroup, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
-import { StayAttributeType } from '../../models/StayAttributes';
+import { StayAttributeType } from '../../../../common/models/StayAttributes';
 import { stayContext } from './StayContext';
 import StayAttributeSelector from './StayAttributeSelector';
 

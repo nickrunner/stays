@@ -13,10 +13,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { StayRecord } from '../../models/Stay';
+import { Stay, StayRecord } from '../../../../common/models/Stay';
 import { globalContext } from '../../GlobalStore';
-import { Photo } from '../../models/Photo';
+import { Photo } from '../../../../common/models/Photo';
 import { content } from "../../content";
+import ImageCarousel from '../ImageCarousel';
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -71,11 +72,47 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
       return featureUrl;
   }
 
+  function getAvatar(region: string){
+    switch(region){
+      case "Coastal":
+        return content.images.regions.coastal;
+      case "Midwest":
+        return content.images.regions.midwest;
+      case "Northeast":
+        return content.images.regions.northeast;
+      case "Pacific Northwest":
+        return content.images.regions.pnw;
+      case "Southern":
+        return content.images.regions.southern;
+      case "Southwest":
+        return content.images.regions.southwest;
+      case "Western":
+        return content.images.regions.western;
+      default:
+        return content.images.regions.american;
+    }
+  }
+
+  function getCaption(description: string){
+    return description.split(".")[0];
+  }
+
+  function getImageCarouselProps(stay: Stay){
+    const imgs = [];
+    for(const photo of stay.photos){
+      imgs.push({
+        label: photo.description,
+        imgPath: photo.url
+      });
+    }
+    return imgs;
+  }
+
   return (
-    <Card sx={{ width: {width} }}>
+    <Card id={props.stay.id} sx={{ width: {xs:300, sm:400, md:500, lg:600 } }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={content.images.logo.purple}>
+          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={getAvatar(props.stay.location.region)}>
           </Avatar>
         }
         action={
@@ -84,17 +121,26 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
           </IconButton>
         }
         title={props.stay.name}
+        titleTypographyProps={{ 
+          align: 'left',
+          variant: 'h6', 
+          color: "common.black"
+        }}
+        
         subheader={props.stay.location.address.city+", "+props.stay.location.address.state}
+        subheaderTypographyProps={{
+          variant: "subtitle1"
+        }}
       />
-      <CardMedia
-        component="img"
-        height="300"
-        image={getFeatureImage(props.stay.photos)}
-        alt="Feature Photo"
-      />
+      <CardMedia>
+      <ImageCarousel 
+          width="100%" height="400px" 
+          images={getImageCarouselProps(props.stay)}/>
+      </CardMedia>
       <CardContent>
+     
         <Typography variant="body2" color="text.secondary">
-          Teaser text
+          {getCaption(props.stay.description)}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

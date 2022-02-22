@@ -1,7 +1,7 @@
 import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { StayClient } from "../../clients/stayClient";
-import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models/StayAttributes";
+import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
 import { theme } from "../../Theme";
 import { stayContext } from "./StayContext";
 

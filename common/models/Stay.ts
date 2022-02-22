@@ -60,10 +60,10 @@ export interface StaySearchFilter {
     tags?: string[];
     amenities?: string[];
     status?: StayApplicationStatus;
-}
+};
 
 export interface StayRejectionInfo {
     reason: string
-}
+};
 
 export type StayRecord = Stay & Entity;

@@ -1,10 +1,7 @@
 import { Box, Button, Container, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 import { StayClient } from "../../../src/clients/stayClient";
-import StaysPage from "../../../src/StaysPage";
-import CmsFrame from "../../../src/components/CmsFrame";
 import { LoadingButton } from '@mui/lab';
-import { StayAttributeType } from "../../../src/models/StayAttributes";
 
 const style = {
     position: 'absolute' as 'absolute',

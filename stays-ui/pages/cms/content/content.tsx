@@ -4,10 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Copyright from '../../../src/components/Copyright';
 import { Box } from '@mui/material';
-import StaysTable from '../../../src/components/Stay/StaysTable';
 import CmsFrame from '../../../src/components/CmsFrame';
-import { StayClient } from '../../../src/clients/stayClient';
-import { StayRecord } from '../../../src/models/Stay';
 import StaysPage from '../../../src/StaysPage';
 
 

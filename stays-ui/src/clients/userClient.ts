@@ -1,11 +1,8 @@
-import { UserMembership, Role, User, UserRecord, UserSearchFilter } from "../models/User";
 import axios from "axios";
+import { UserMembership, Role, UserSearchFilter, UserRecord, User } from "../../../common/models/User";
 import { defCfg, queryCfg } from "./serverConfig";
-import { TurnedIn } from "@mui/icons-material";
-
 
 export const url = "/users";
-
 
 export class UserClient {
 

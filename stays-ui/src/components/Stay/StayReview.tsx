@@ -1,7 +1,7 @@
 import { Grid3x3 } from "@mui/icons-material";
 import { Box, Grid, ImageListItemBar, List, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
-import { Stay } from "../../models/Stay";
+import { Stay } from "../../../../common/models/Stay";
 import { stayContext } from "./StayContext";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';

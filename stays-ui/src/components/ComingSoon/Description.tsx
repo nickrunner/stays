@@ -1,12 +1,8 @@
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { content } from "../../content";
 import { KeyboardDoubleArrowDown } from "@mui/icons-material";
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import CelebrationIcon from '@mui/icons-material/Celebration';
-import AlarmIcon from '@mui/icons-material/Alarm';
-import { Check, Paid, AttachMoney } from "@mui/icons-material"
 import styles from "../../../styles/ComingSoon.module.css";
-import PerkList from "./PerkList";
+
 
 export default function(props: any){
     return (
@@ -21,6 +17,7 @@ export default function(props: any){
                 <Typography
                 variant="h1"
                 align="center"
+                color={"common.black"}
                 >
                 {content.pages.comingSoon.description.hook}
                 </Typography>
@@ -28,20 +25,27 @@ export default function(props: any){
             </Box>
 
             
-            <Box maxWidth="sm" margin="auto" sx={{mt:5, display:"inline-grid", justifyContent:"center"}}>
-            <Typography
-                variant="h4"
-                align="center"
-                color="primary.main"
-                >
-                Stays.co is a  
-                <span className={styles.mycc}> free directory tool </span>
-                that helps travelers find, follow and book their dream vacation rental
-            </Typography>
-            </Box>
-
-            <PerkList />
+            <Box  sx={{maxWidth:"sm", margin:"auto", justifyContent:"center"}}>
             
+            
+                <Typography
+                    variant="h4"
+                    align="center"
+                    color="primary.main"
+                    >
+                    <Box sx={{p:2}}>
+                        <img 
+                        src={content.images.logo.purple}
+                        height="100"
+                        width="180"> 
+                        </img>
+                    </Box>
+                    
+                    is a  
+                    <span className={styles.mycc}> free directory tool </span>
+                    that helps travelers find, follow and book their dream vacation rental
+                </Typography>
+            </Box>
         </Box>
     );
 }

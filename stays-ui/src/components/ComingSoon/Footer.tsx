@@ -8,6 +8,7 @@ import { content } from "../../content";
 export default function Footer(props: any) {
     return ( 
         <Box>
+
             
 
         <Grid container spacing={1} alignItems="center" justifyContent="center">

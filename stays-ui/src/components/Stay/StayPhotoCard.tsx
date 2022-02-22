@@ -7,7 +7,7 @@ import { CardActionArea, TextField } from '@mui/material';
 import { stayContext } from './StayContext';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Photo } from "../../models/Photo";
+import { Photo } from "../../../../common/models/Photo";
 
 export interface StayPhotoCardProps  {
   photo: Photo;

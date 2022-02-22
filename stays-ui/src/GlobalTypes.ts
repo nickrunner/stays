@@ -1,5 +1,5 @@
 import { Dispatch } from "react"
-import { User } from "./models/User"
+import { User } from "../../common/models/User"
 
 export interface StaysState {
     self?: User,

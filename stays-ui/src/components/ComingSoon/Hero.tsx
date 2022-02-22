@@ -53,15 +53,14 @@ export default function Hero(props: any) {
                     
                     <Typography
                     variant= "h1"
-                    align="left"
+                    sx={{align:{xs: "center", lg: "left"}}}
                     color="common.white"
                     >
                         {content.pages.comingSoon.hero.main}
                     </Typography>
                     <Typography
-                    sx={{mt:{xs:10, sm:5,  md:5, lg:5, xl:5}}}
+                    sx={{mt:{xs:10, sm:5,  md:5, lg:5, xl:5}, align:{xs: "center", lg: "center"} }}
                     variant="h5"
-                    align="left"
                     color="common.white"
                     gutterBottom
                     >
@@ -73,8 +72,10 @@ export default function Hero(props: any) {
                         onClick={() => setWaitlistOpen(true)}
                         size="large"
                         sx={{
+                            // fontSize: "1.5rem",
+                            // fontWeight: "700",
                             mt:5,
-                            width:300
+                            width:{xs: 300, md: 300}
                         }}>
                         Join the Waitlist
                     </Button>

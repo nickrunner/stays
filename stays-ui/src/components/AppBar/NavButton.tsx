@@ -1,6 +1,4 @@
-import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import React from 'react';
 import { StaysAppBarProps } from "./AppBar";
@@ -13,7 +11,6 @@ export interface NavButtonProps extends StaysAppBarProps {
 
 export default function NavButton(props: NavButtonProps){
     let router = useRouter();
-    const { globalState, dispatch } = React.useContext(globalContext);
     const [scroll, setScroll] = React.useState(false);
 
     React.useEffect(() => {
@@ -31,9 +28,9 @@ export default function NavButton(props: NavButtonProps){
     return  (
         <Button
          variant = "text"
-         style={{display: globalState.mobile ? 'none' : 'block'}}
          sx={
              {
+                 display:{ xs:'none',  md: 'block'},
                  p:2, 
                  mt:1, 
                  mr:4,

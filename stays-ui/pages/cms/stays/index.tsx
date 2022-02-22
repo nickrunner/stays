@@ -3,18 +3,15 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Copyright from '../../../src/components/Copyright';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import StaysTable from '../../../src/components/Stay/StaysTable';
 import CmsFrame from '../../../src/components/CmsFrame';
-import { StayClient } from '../../../src/clients/stayClient';
-import { StayRecord } from '../../../src/models/Stay';
+import { StayRecord } from '../../../../common/models/Stay';
 import StaysPage from '../../../src/StaysPage';
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import JSONPretty from 'react-json-pretty';
 import { useRouter } from 'next/router';
-import { StayContext } from '../../../src/components/Stay/StayContext';
 
 
 function StaysCmsContent() {

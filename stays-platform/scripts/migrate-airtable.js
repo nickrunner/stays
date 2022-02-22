@@ -5,13 +5,33 @@ const { StayAttributesService } = require("../build/stays-platform/src/stays/sta
 const { FilesClient } = require("../build/stays-platform/src/firebase/filesClient");
 const http = require('http');
 const fs = require("fs");
+const { uniqueId } = require('lodash');
+const uuid = require('uuid');
 
 async function migrateFile(src, dst){
-    //var blob = await new FilesClient().download(src);
-    // const file = fs.createWriteStream("./tmp.bin");
-    // const blob = await new FilesClient().download(src) 
-    // file.write(blob);
-    // const url = await new FilesClient().uploadFile("./tmp.bin", dst);
+    // var blob = await new FilesClient().download(src);
+    //const blob = await new FilesClient().download(src) 
+    // console.log("SRC: "+src);
+    // let fileName = src.split("/").pop();
+    // if(fileName.includes("?")){
+    //     fileName = fileName.split("?")[0];
+    // }
+    // console.log("Got file: "+fileName);
+    // // const file = fs.createWriteStream("./"+fileName);
+    // // file.write(blob);
+    // const ext = fileName.split(".").pop();
+    // const upload = dst+"."+ext;
+    // console.log("Uploading to "+upload);
+    // //await new FilesClient().uploadFile(blob, upload);
+    // try{
+    //     await new FilesClient().saveToStorage(src, dst);
+    // }
+    // catch(err){
+    //     console.log("Failed saving image");
+    //     return "";
+    // }
+    
+    // return "https://ik.imagekit.io/stays/stays/"+upload
     return src;
 }
 
@@ -44,6 +64,7 @@ function getBedrooms(record){
     }
     return 1;
 }
+
 
 async function saveStay(record){
     var stay = {
@@ -101,8 +122,9 @@ async function saveStay(record){
     await stayAttributesService.createOrUpdateStayAttribute({type: "Social Partner", name:"Instagram"})
     stay.booking.push({partner: record.get('Booking Platform'), link:record.get('Booking Link')});
     await stayAttributesService.createOrUpdateStayAttribute({type: "Booking Partner", name:record.get("Booking Platform")})
+    
     if(record.get('Thumbnail (link)')){
-        const newUrl = await migrateFile(record.get('Thumbnail (link)'), "/stays/"+stay.name)
+        const newUrl = await migrateFile(record.get('Thumbnail (link)'),  "/images/stays/"+uuid.v4())
         stay.photos.push({
             url: newUrl,
             description: "",
@@ -113,7 +135,7 @@ async function saveStay(record){
     var i = 1;
     if(record.get('Listing Photos (links)')){
         await record.get('Listing Photos (links)').split(',').forEach( async (link) => {
-            const newUrl = await migrateFile(link, "/stays/"+stay.name)
+            const newUrl = await migrateFile(link, "/images/stays/"+uuid.v4())
             stay.photos.push({
                 url: newUrl,
                 description: "",
@@ -121,32 +143,14 @@ async function saveStay(record){
             });
         });
     }
-   
+
     try{
         await new StaysService().createOrUpdateStay(stay);
         console.log("Finihsed "+stay.name);
     }
     catch(error){
         console.log("Error creating stay: ", {error});
-    }
-   
-}
-
-
-
-function processRecord(record) {
-    
-    // try{
-    //     await saveStay(record);
-    // }catch(err)
-    // {
-    //     console.log(" Failed processing record: "+err.message, {record});
-    // }
-    
-}
-
-function processPage(records, atRecords) {
-   
+    }  
 }
 
 async function gatherRecords(){
@@ -174,7 +178,7 @@ async function gatherRecords(){
 
 async function migrate(atRecords){
     console.log("Gathered "+atRecords.length+" records");
-    for(let record of atRecords){
+    for(const record of atRecords){
         console.log("Processing: ", { record })
         try{
             await saveStay(record);

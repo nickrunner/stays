@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StayRecord } from '../../models/Stay';
 import { Typography } from '@mui/material';
 import { DataGridPro, GridColDef, GridValueGetterParams, GridCellParams, GridToolbar, GridCellEditCommitParams } from '@mui/x-data-grid-pro';
 import { StayClient } from '../../clients/stayClient';
+import { StayRecord } from '../../../../common/models/Stay';
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);

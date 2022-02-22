@@ -1,18 +1,15 @@
 import MuiAppBar, { AppBarProps } from '@mui/material/AppBar';
-
 import Link from "../Link";
 import { styled } from '@mui/material/styles';
 import MuiToolbar from '@mui/material/Toolbar';
 import {ThemeProvider } from '@mui/material/styles';
 import {theme} from "../../Theme";
-import React, { useState } from 'react';
+import React from 'react';
 import { content } from "../../content";
 import { useRouter } from "next/router";
 import LoginMenu from './LoginMenu';
 import Box from '@mui/material/Box';
 import { globalContext } from '../../GlobalStore';
-import { User } from '../../models/User';
-import { UserClient } from '../../clients/userClient';
 import NavButton from './NavButton';
 import dynamic from 'next/dynamic';
 
@@ -24,7 +21,6 @@ const Toolbar = styled(MuiToolbar)(({ theme }) => ({
     height: 110,
   },
 }));
-
 
 
 function AppBar(props: AppBarProps) {

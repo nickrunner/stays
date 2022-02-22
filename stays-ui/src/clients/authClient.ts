@@ -1,8 +1,6 @@
-import { TurnedIn } from "@mui/icons-material";
-import { create } from "domain";
-import { getAuth, deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, fetchSignInMethodsForEmail } from "firebase/auth";
+import { deleteUser, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, fetchSignInMethodsForEmail } from "firebase/auth";
+import { User } from "../../../common/models/User";
 import {auth} from "../firebase";
-import { User, UserRecord } from "../models/User";
 import { UserClient } from "./userClient";
 
 export class AuthClient {

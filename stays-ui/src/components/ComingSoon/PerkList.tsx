@@ -7,6 +7,8 @@ import AlarmIcon from '@mui/icons-material/Alarm';
 import { Check, Paid, AttachMoney } from "@mui/icons-material"
 import styles from "../../../styles/ComingSoon.module.css";
 import Perk from "./Perk";
+import CottageIcon from '@mui/icons-material/Cottage';
+import Partners from "./Partners";
 
 export default function PerkList (props: any)  {
     return (
@@ -17,19 +19,20 @@ export default function PerkList (props: any)  {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',}}>
-                <img 
-                src={content.images.logo.purple}
-                height="100"
-                width="180"> 
-                </img>
+
+                
+                <Partners />
+
                 <Typography
-                    sx={{m:3}}
+                    sx={{p:3}}
                     variant="subtitle1"
                     align="center"
                     color="common.black"
                     >
                     {content.pages.comingSoon.description.sinker}
                 </Typography>
+
+                
                 
                 <Box sx={{align:"center"}}>
                     <Perk text={content.pages.comingSoon.description.perks[0]} >
@@ -50,13 +53,7 @@ export default function PerkList (props: any)  {
                 </Box>
 
 
-                <Typography
-                    variant="subtitle1"
-                    align="left"
-                    color="primary.main"
-                    sx={{p:1, pl:3}}
-                >
-                </Typography>
+                
               
                </Paper>
             </Box>

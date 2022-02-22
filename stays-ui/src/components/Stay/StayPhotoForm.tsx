@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Photo } from "../../models/Photo";
+import { Photo } from "../../../../common/models/Photo";
 import { stayContext, StayContext } from "./StayContext";
 import {  DropzoneDialog } from 'material-ui-dropzone';
 import { FilesClient } from "../../clients/filesClient";

@@ -10,6 +10,30 @@ export const content ={
             width: "1800",
             height: "1000"
         },
+        partners: {
+            airbnb: {
+                logo: "https://ik.imagekit.io/stays/content/partners/airbnb.png",
+                icon: "https://ik.imagekit.io/stays/content/partners/airbnb-icon.png"
+            },
+            vrbo: {
+                logo: "https://ik.imagekit.io/stays/content/partners/vrbo.png",
+                icon: "https://ik.imagekit.io/stays/content/partners/vrbo-icon.png"
+            },
+            hipcamp: {
+                logo: "https://ik.imagekit.io/stays/content/partners/hipcamp.png",
+                icon: "https://ik.imagekit.io/stays/content/partners/hipcamp-icon.png"
+            },
+        },
+        regions: {
+            american: "https://ik.imagekit.io/stays/content/regions/american.png",
+            coastal: "https://ik.imagekit.io/stays/content/regions/coastal.jpg",
+            midwest: "https://ik.imagekit.io/stays/content/regions/midwest.jpg",
+            northeast: "https://ik.imagekit.io/stays/content/regions/northeast.jpg",
+            pnw: "https://ik.imagekit.io/stays/content/regions/pnw.jpg",
+            southern: "https://ik.imagekit.io/stays/content/regions/southern.jpg",
+            southwest: "https://ik.imagekit.io/stays/content/regions/southwest.jpg",
+            western: "https://ik.imagekit.io/stays/content/regions/western.jpg",
+        },
         dotMap: "https://ik.imagekit.io/stays/content/dot-map.svg",
         icon: {
             purple: "https://ik.imagekit.io/stays/content/stays-icon.png"
@@ -37,13 +61,13 @@ export const content ={
             hero: {
                 // main: "Connecting travelers with the best vacation rentals from around the world.",
                 // sub: "Get booking perks, exclusive rental access and automatic entries into vacation giveaways with a FREE stayer membership."
-                main: "Coming, June 2022",
-                sub: "Connecting travelers with the best vacation rentals from around the world."
+                main: "Coming Summer 2022",
+                sub: "Connecting travelers with the best vacation rentals around the world"
             },
             description: {
-                hook: "Not just another booking app",
-                line: "Stays.co is a free directory tool that helps travelers find, follow and book their dream vacation rental",
-                sinker: " We partner with the world's best rentals to give our members exlusive perks not found anywhere else", 
+                hook: "More than a just booking app",
+                line: "Stays.co is a free directory tool that helps travelers find, follow, and book their dream vacation rental",
+                sinker: " We partner with the world's best rentals to give our members exlusive perks", 
                 perks: [
                     "Discounted Stays",
                     "Cancellation Notices",
@@ -53,7 +77,7 @@ export const content ={
             },
             perks: "Closing the gap between travelers and their hosts",
             details: {
-                header: "Stays.co is a game-changer",
+                header: "is a game-changer",
                 sub1: "Vacation rental hosts have become increasingly dependent on large booking platforms such as Airbnb, VRBO, etc for not only their booking management, but also for their marketing and visibility.",
                 sub2: "Stays.co allows hosts to create 'Stay Profiles' on our website that allow travelers to find them, engage with their linked social media pages, visit their private website and/or be directed to book on any existing platform the host may be listed on."
             }

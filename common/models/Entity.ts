@@ -4,4 +4,4 @@ export interface Entity {
     updatedAt: number;
     createdBy?: string;
     updatedBy?: string;
-}
+};

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { content } from "../content";
-import Copyright from "./Copyright";
 
 export default function UnderConstruction() {
   return (

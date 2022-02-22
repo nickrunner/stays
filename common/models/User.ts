@@ -6,7 +6,6 @@ export enum UserMembership {
     Premium = "Premium",
 };
 
-
 export enum Role {
     Stayer = "Stayer",
     Host = "Host",
@@ -30,9 +29,9 @@ export interface UserSearchFilter {
     enabled?: boolean;
     email?: string;
     userMembership?: UserMembership;
-    lastActive: Range;
-    roles: Role[];
+    lastActive?: Range;
+    roles?: Role[];
 
-}
+};
 
 export type UserRecord = Entity & User;

@@ -5,7 +5,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { User, UserRecord } from '../../models/User';
+import { User, UserRecord } from '../../../../common/models/User';
 import { StayClient } from '../../clients/stayClient';
 import { Checkbox, Typography } from '@mui/material';
 import { UserClient } from '../../clients/userClient';

@@ -3,14 +3,15 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../src/createEmotionCache';
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import { content } from "../src/content"
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href='/stays-icon.png'></link>
-          <link rel="shortcut icon" href="/stays-icon.png" />
+          <link rel="icon" href={content.images.icon.purple}></link>
+          <link rel="shortcut icon" href={content.images.icon.purple} />
           
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           <link

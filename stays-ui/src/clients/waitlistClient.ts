@@ -1,6 +1,6 @@
 import axios from "axios";
-import { WaitlistItem } from "../models/WaitlistItem";
 import { cfg } from "./serverConfig";
+import { WaitlistItem } from "../../../common/models/WaitlistItem";
 
 export const url = "/waitlist";
 
