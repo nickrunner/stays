@@ -19,7 +19,7 @@ export default function About (props: any) {
                 {content.pages.comingSoon.about.hook}
             </Typography>
         
-            <Box sx={{display: {xs:"grid", md: "flex"}, gap: 10, justifyContent: "center"}}>
+            <Box sx={{display: {xs:"grid", md: "flex"}, gap: 5, justifyContent: "center"}}>
                 
                 <AboutCard 
                     title="For Travelers"

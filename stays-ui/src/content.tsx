@@ -114,7 +114,7 @@ export const content ={
                     },
                     {
                         header:"Create a FREE or Premium Account",
-                        sub:"Bookmark and share your favorite stays with anyone.  Get automatically entered into exclusive giveaways."
+                        sub:"Bookmark and share your favorite stays with anyone. Become eligible for giveaways."
                     },
                     {
                         header:"Book Before Anyone Else",

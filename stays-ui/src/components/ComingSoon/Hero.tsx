@@ -57,18 +57,16 @@ export default function Hero(props: any) {
                     
                     <Typography
                     variant= "h1"
-                    sx={{align:{xs: "center", lg: "left"}}}
                     color="common.white"
                     >
                         {content.pages.comingSoon.hero.main}
                     </Typography>
                     <Typography
-                    sx={{mt:{xs:10, sm:5,  md:5, lg:5, xl:5}, align:{xs: "center", lg: "center"} }}
+                    sx={{mt:{xs:"15%", sm:"10%"}, align:{xs: "center", lg: "center"} }}
                     variant="h5"
                     color="common.white"
                     gutterBottom
                     >
-                        <br></br>
                         {content.pages.comingSoon.hero.sub}
                     </Typography>
                     <Button 
@@ -78,14 +76,14 @@ export default function Hero(props: any) {
                         sx={{
                             // fontSize: "1.5rem",
                             // fontWeight: "700",
-                            mt:5,
-                            width:{xs: 300, md: 300}
+                            mt:{xs:"15%", sm:"7%"},
+                            width:{xs: 200, md: 300}
                         }}>
                         Join the Waitlist
                     </Button>
                 </Stack>
             </Box>
-            
+
             <Box
               alignSelf='center' alignItems='center' alignContent='center'
               sx={{

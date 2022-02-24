@@ -14,7 +14,7 @@ export default function AboutCard(props: any) {
             {props.title}
         </Typography>
 
-        <Box>
+        <Box sx={{mt:1}}>
             {props.children}
         </Box>
     </Box>

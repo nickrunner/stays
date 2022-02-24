@@ -24,10 +24,10 @@ export default function Mockups() {
             >
                 {content.pages.comingSoon.mockups}
             </Typography>
-            <Box sx={{mt:5, justifyContent:"center", display: {xs:"grid", md: "flex"}, gap:5}}>
-            <ImageCarousel 
-                width="300px" height="700px" 
-                images={getImageCarouselProps()}/>
+            <Box sx={{width:300, mt:5, justifyContent:"center", margin:"auto", display: {xs:"grid", md: "flex"}, gap:5}}>
+                <ImageCarousel 
+                    width="300" height="700" 
+                    images={getImageCarouselProps()}/>
             </Box>
         </Box>
     );

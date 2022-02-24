@@ -11,11 +11,10 @@ import { Paid, } from "@mui/icons-material"
 import CancelScheduleSendIcon from '@mui/icons-material/CancelScheduleSend';
 import Perk from "./Perk";
 
-export default function StayerPerks (props: any)  {
+export default function HostPerks (props: any)  {
     const perks = content.pages.comingSoon.about.hostPerks;
     return (
-        <div>
-        <Box sx={{align:"left"}}>
+        <Box>
             <Perk text={perks[0].header}
                 subText={perks[0].sub}>
                 <TravelExploreIcon fontSize="large" sx={{color:props.iconColor}} />
@@ -46,6 +45,5 @@ export default function StayerPerks (props: any)  {
                 <CancelScheduleSendIcon fontSize="large" sx={{color:props.iconColor}} />
             </Perk>
         </Box>
-        </div>
     );
 }

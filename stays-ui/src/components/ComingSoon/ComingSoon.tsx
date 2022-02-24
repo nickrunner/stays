@@ -14,6 +14,8 @@ import Partners from "./Partners";
 
 export default function ComingSoon(props: any){
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
+    const boxProp = {maxWidth:"lg", p:"10%", mb:10, display: "flex"};
+    const divProp = {p:0.1, width:"100%", bgcolor:"primary.dark" };
 
     return (
         <React.Fragment>
@@ -43,46 +45,46 @@ export default function ComingSoon(props: any){
             }}
           >
             <section>
-              <Box maxWidth="lg"  sx={{p:"10%", display: "flex"}}>
+              <Box sx={boxProp}>
                 <Description />
               </Box>
             </section>
 
-            <Divider sx={{p:0.1, width:"100%", bgcolor:"primary.dark" }} /> 
+            <Divider sx={divProp} /> 
             
             <section>
-              <Box maxWidth="lg"  sx={{p:"10%", display: "flex"}}>
+              <Box sx={boxProp}>
                 <About />
               </Box>
             </section>
           
-            <Divider sx={{p:0.1, width:"100%", bgcolor:"primary.dark" }} /> 
+            <Divider sx={divProp} /> 
             
             <section>
-              <Box maxWidth="lg" sx={{p:"10%", display: "flex"}}>
+              <Box sx={boxProp}>
                 <Mockups />
               </Box>
             </section>
     
-            <Divider sx={{p:0.1, width:"100%", bgcolor:"primary.dark" }} /> 
+            <Divider sx={divProp} /> 
 
             <section>
-              <Box maxWidth="lg" sx={{p:"10%", display: "flex"}}>
+              <Box sx={boxProp}>
                 <Partners />
               </Box>
             </section>
 
-            <Divider sx={{p:0.1, width:"100%", bgcolor:"primary.dark" }} /> 
+            <Divider sx={divProp} />  
 
             <section>
-              <Box maxWidth="lg"  sx={{p:"10%", display: "flex"}}>
+              <Box sx={boxProp}>
                 <Details />
               </Box>
             </section>
 
-            <Divider sx={{p:0.1, width:"100%", bgcolor:"primary.dark" }} /> 
+            <Divider sx={divProp} /> 
              
-            <Box maxWidth="lg" sx={{p:"10%", display: "flex"}}> 
+            <Box sx={{p:"5%"}}>
 
               <Button 
                   variant="contained" 
@@ -93,7 +95,7 @@ export default function ComingSoon(props: any){
                   }}>
                   Join the Waitlist
               </Button>
-              </Box>
+            </Box>
            
 
                   

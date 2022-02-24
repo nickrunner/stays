@@ -13,14 +13,15 @@ export default function Footer(props: any) {
         <Image 
         src={content.images.logo.purple}
         height="100"
-        width="180"> 
+        width="180"
+        alt="Stays Logo"> 
         </Image>
 
         <Box sx={{display:"flex", gap:5}}  alignItems="center" justifyContent="center">
     
             <Link
                 href="https://www.facebook.com/americanstays/"
-                target="_blank"
+                aria-label="Stays Facebook Page"
             >
                 <FacebookIcon
                 fontSize="large"
@@ -28,8 +29,8 @@ export default function Footer(props: any) {
             </Link>
    
     
-            <Link href="https://www.instagram.com/americanstays/?hl=en" target="_blank">
-                <InstagramIcon fontSize="large" color="primary" />
+            <Link href="https://www.instagram.com/americanstays/?hl=en" aria-label="Stays Instagram Page">
+                <InstagramIcon fontSize="large" color="primary"/>
             </Link>
       
         </Box>
