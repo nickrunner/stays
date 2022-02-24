@@ -679,6 +679,14 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"in": "query",
+						"name": "pagination",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			},

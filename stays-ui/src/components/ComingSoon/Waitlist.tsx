@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Checkbox, FormControlLabel, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
 import { WaitlistClient } from "../../clients/waitlistClient";
-import { globalContext } from "../../GlobalStore";
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import {content} from "../../content";
 import { AuthClient } from "../../clients/authClient";
@@ -11,12 +10,21 @@ export default function Waitlist(props: any){
 
   const [msg, setMsg] = React.useState("");  
   const [msgColor, setMsgColor] = React.useState("text.primary");
-  const [isStayer, setStayer] = React.useState(false);
-  const [isHost, setHost] = React.useState(false);
+  const [isStayer, setIsStayer] = React.useState(false);
+  const [isHost, setIsHost] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [emailErr, setEmailErr] = React.useState(false);
+
+  function enableSubmit(stayer:boolean, host:boolean){
+    if((host===true) || (stayer===true)){
+      setSubmitEnabled(true);
+    }
+    else{
+      setSubmitEnabled(false);
+    }
+  }
 
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,9 +78,21 @@ export default function Waitlist(props: any){
     validateEmail(email);
   }
 
+  function handleStayerChange(state: boolean){
+    console.log("Is Stayer: "+isStayer);
+    setIsStayer(state);
+    console.log("After change: "+isStayer);
+    enableSubmit(state, isHost);
+  }
+
+  function handleHostChanged(state: boolean){
+    setIsHost(state);
+    enableSubmit(isStayer, state);
+  }
+
 
   function validateEmail(email: string){
-    setSubmitEnabled(true);
+    enableSubmit(isStayer, isHost);
     if(!email.toLowerCase()
     .match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
@@ -90,7 +110,7 @@ export default function Waitlist(props: any){
         onSubmit={handleSubmit} 
         noValidate 
         sx={{
-            maxWidth: "sm",
+            maxWidth: "300",
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -98,7 +118,7 @@ export default function Waitlist(props: any){
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: {xs:300, md:400},
             bgcolor: 'background.paper',
             border: '0px solid #000',
             boxShadow: 24,
@@ -124,12 +144,16 @@ export default function Waitlist(props: any){
             />
             <Box sx={{display:"inline",gap:2}}>
               <FormControlLabel 
-                onChange={(e, checked) => {setStayer(checked)}}
+                onChange={(e, checked) => {
+                  handleStayerChange(checked);
+                }}
                 control={<Checkbox />} 
                 label="I am a traveler" />
 
               <FormControlLabel 
-                onChange={(e, checked) => {setHost(checked)}}
+                onChange={(e, checked) => {
+                  handleHostChanged(checked);
+                }}
                 control={<Checkbox />} 
                 label="I am a host" />
             </Box>
@@ -151,8 +175,9 @@ export default function Waitlist(props: any){
             endIcon={<RocketLaunchIcon/>}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            size="large"
           >
-            Join the Waitlist
+            Submit
           </LoadingButton>
         </Paper>
     );

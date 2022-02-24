@@ -4,15 +4,20 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import Copyright from "../Copyright";
 import { content } from "../../content";
+import Image from "next/image";
 
 export default function Footer(props: any) {
     return ( 
-        <Box>
+        <Box margin="auto" sx={{display: "grid", gap:5, justifyContent:"center"}}>
 
-            
+        <Image 
+        src={content.images.logo.purple}
+        height="100"
+        width="180"> 
+        </Image>
 
-        <Grid container spacing={1} alignItems="center" justifyContent="center">
-            <Box sx={{m:2, mb:10}}>
+        <Box sx={{display:"flex", gap:5}}  alignItems="center" justifyContent="center">
+    
             <Link
                 href="https://www.facebook.com/americanstays/"
                 target="_blank"
@@ -21,22 +26,16 @@ export default function Footer(props: any) {
                 fontSize="large"
                 />
             </Link>
-            </Box>
-            <Box sx={{m:2, mb:10}}>
+   
+    
             <Link href="https://www.instagram.com/americanstays/?hl=en" target="_blank">
                 <InstagramIcon fontSize="large" color="primary" />
             </Link>
-            </Box>
-        </Grid>
-
-
-        <Box
-            sx={{
-                mb:4
-            }}
-        >
-            <Copyright/>
+      
         </Box>
+
+        <Copyright/>
+
         </Box>
     );
 }

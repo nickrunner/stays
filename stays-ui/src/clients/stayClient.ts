@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Stay, StayRecord, StaySearchFilter } from "../../../common/models/Stay";
+import { Pagination } from "../../../common/models/Pagination";
 import { StayAttributeType, StayAttributeRecord } from "../../../common/models/StayAttributes";
 import { defCfg, queryCfg } from "./serverConfig";
 
@@ -24,8 +25,13 @@ export class StayClient {
         return response.data as StayRecord;
     }
 
-    public async getStays(filter: StaySearchFilter): Promise<StayRecord[]>{
-       const response = await axios.get(url, await queryCfg({filter: filter}, true));   
+    public async getStays(filter?: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]>{
+       const response = await axios.get(url, await queryCfg(
+            {
+                filter: JSON.stringify(filter),
+                pagination: JSON.stringify(pagination)
+            }, 
+            true));   
        return response.data as StayRecord[];  
     }
 

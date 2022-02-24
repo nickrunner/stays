@@ -3,13 +3,13 @@ import { Box, Button, Stack, Typography, Modal } from "@mui/material";
 import React from "react";
 import styles from "../../../styles/ComingSoon.module.css";
 import { globalContext } from "../../GlobalStore";
+import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 import { content } from "../../content";
 import Image from "next/image";
-import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 
 export default function Hero(props: any) {
-    const {globalState} = React.useContext(globalContext);
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
+    const heroImg = content.images.hero.woodhouse;
 
     return (
         <React.Fragment>
@@ -33,13 +33,17 @@ export default function Hero(props: any) {
             }}>
                 <Image
                     className={styles.HeroImage}
-                    src={content.images.abed}
+                    src={heroImg.img}
                     layout="fill"
                     priority
+                    placeholder="blur"
+                    blurDataURL={heroImg.blur}
                     alt="Beautiful Vacation Rental"
                 />
 
             </Box>
+         
+        
          
             <Box maxWidth="md" maxHeight="75%" 
             sx={{
@@ -81,6 +85,26 @@ export default function Hero(props: any) {
                     </Button>
                 </Stack>
             </Box>
+            
+            <Box
+              alignSelf='center' alignItems='center' alignContent='center'
+              sx={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: "90%",
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                <KeyboardDoubleArrowDown 
+                fontSize="large" 
+                
+                sx={{
+                    margin: "auto",
+                }}>
+                </KeyboardDoubleArrowDown>
+            </Box>
+
             
         </React.Fragment>
     );

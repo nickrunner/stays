@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Main, Head, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../src/createEmotionCache';
 import { ServerStyleSheets } from '@material-ui/core/styles';
@@ -10,14 +10,24 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href={content.images.icon.purple}></link>
-          <link rel="shortcut icon" href={content.images.icon.purple} />
-          
-          {/* Inject MUI styles first to match with the prepend: true configuration. */}
+          <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
+          <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"/>
+          <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"/>
+          <link rel="manifest" href="/icons/site.webmanifest"/>
+          <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#6c5ee6"/>
+          <link rel="shortcut icon" href="/icons/favicon.ico"/>
+          <meta name="msapplication-TileColor" content="#603cba"/>
+          <meta name="msapplication-config" content="icons//browserconfig.xml"/>
+          <meta name="theme-color" content="#ffffff"/>
           <link
               rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800,900,1000,1100,1200&display=swap"
+              href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800,900&display=swap"
           />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
+          {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>

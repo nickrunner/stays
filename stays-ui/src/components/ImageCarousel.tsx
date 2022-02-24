@@ -62,13 +62,13 @@ export default function ImageCarousel(props: ImageCarouselProps) {
             //     src={step.imgPath}
             //     alt={step.label}
             //   />
-            <img
+            <Image
                 className={styles.CarouselImg}
                 src={step.imgPath}
                 alt={step.label}
                 height={props.height}
-                width="100%">
-            </img>
+                width={props.width}>
+            </Image>
             ) : null}
           </div>
         ))}

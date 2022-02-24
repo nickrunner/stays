@@ -10,3 +10,6 @@ handlers:
   - url: /.*
     secure: always
     script: auto
+  - url: /icons
+    static_dir: /public/icons
+

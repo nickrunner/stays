@@ -9,19 +9,40 @@ import StaysPage from "../src/StaysPage";
 
 
 export default function Directory() {
-  const[stays, setStays] = React.useState<StayRecord[]>([]);
+  const[staysArr, setStaysArr] = React.useState<StayRecord[]>([]);
+  let lastKey = 0;
 
-  
-    const getStays = async() => {
-      const stays = await new StayClient().getStays({
+  const getStays = async() => {
+    console.log("GETTING STAYS "+lastKey);
+    const newStays = await new StayClient().getStays(
+      {
         enable: true
+      },
+      {
+        lastEvaluatedKey: lastKey,
+        count: 10
+      }
+    );
+    for(const s of newStays){
+      setStaysArr(staysArr => {
+        return [...staysArr, s]
       });
-      setStays(stays);
     }
-    React.useEffect(() => {
-        getStays();
-        return;
-    }, []);
+    lastKey = lastKey + 10;
+  }
+
+  async function handleScroll(){
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight -40) {
+      await getStays();
+    }
+  }
+
+  React.useEffect(() => {
+      getStays();
+      
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll)
+  }, []);
 
     
   return (
@@ -29,7 +50,7 @@ export default function Directory() {
     <StaysPage>
         <Nav transparent={false} />
         <Grid container justifyContent="center" spacing={3} sx={{pl:10, pr:10, bgcolor:"background.default"}}>
-          {stays.map((stay) => (
+          {staysArr.map((stay) => (
             <Grid key={stay.id} item>
               <StayDirectoryCard stay={stay}/>
             </Grid>

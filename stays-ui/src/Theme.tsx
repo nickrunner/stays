@@ -149,7 +149,8 @@ export const theme = createTheme({
     },
     divider: '#E6E8F0',
     primary: {
-      main: '#6c63ff',
+      main: '#6c5ee6',
+      //main: "#4103fc",
       light: '#FFFFFF',
       dark: '#282c34',
       contrastText: '#FFFFFF'
@@ -258,7 +259,7 @@ export const theme = createTheme({
       lineHeight: 1.66
     },
     h1: {
-      fontWeight: 1000,
+      fontWeight: 900,
       fontSize: '2rem',
       '@media (min-width:400px)':{
         fontSize: '2.25rem'
@@ -362,19 +363,19 @@ export const theme = createTheme({
         fontSize: '1.2rem'
       },
       '@media (min-width:600px)':{
-        fontSize: '1.2rem'
-      },
-      '@media (min-width:700px)':{
-        fontSize: '1.2rem'
-      },
-      '@media (min-width:800px)':{
         fontSize: '1.3rem'
       },
-      '@media (min-width:1000px)':{
+      '@media (min-width:700px)':{
         fontSize: '1.5rem'
       },
-      '@media (min-width:1100px)':{
+      '@media (min-width:800px)':{
         fontSize: '1.75rem'
+      },
+      '@media (min-width:1000px)':{
+        fontSize: '1.875rem'
+      },
+      '@media (min-width:1100px)':{
+        fontSize: '2rem'
       },
       '@media (min-width:1200px)':{
         fontSize: '2.25frem'

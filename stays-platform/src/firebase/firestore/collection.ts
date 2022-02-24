@@ -5,6 +5,7 @@ import { createCollection, firestore } from "../firebase";
 import { Error404 } from "../../error";
 import { ColExpression, CollectionQuery, Logic } from "./collectionQuery";
 import { merge } from "lodash";
+import { Pagination } from "../../../../common/models/Pagination";
 
 
 export class Collection<Type> {
@@ -70,8 +71,12 @@ export class Collection<Type> {
         return retval;
     }
 
-    public async getSome(filters: any, start: Number, end: Number){
-         // todo: 
+    public async getSome(query?: CollectionQuery, pagination?:Pagination){
+        let items: (Entity & Type)[] = await this.getAll(query); 
+        if(pagination){
+            items = items.slice(pagination?.lastEvaluatedKey, pagination.lastEvaluatedKey + pagination.count);
+        }
+        return items;
     }
 
     public async getFirst(query?: CollectionQuery): Promise< (Entity & Type) > {

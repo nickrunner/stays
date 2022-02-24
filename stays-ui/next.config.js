@@ -6,8 +6,7 @@ const nextConfig = {
     reactStrictMode: true,
     images: {
       domains: [
-        "firebasestorage.googleapis.com",
-        "ik.imagekit.io"
+        'ik.imagekit.io',
       ]
     },
   }

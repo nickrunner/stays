@@ -1,6 +1,7 @@
 import { Collection } from "../firebase/firestore/collection";
 import { Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
 import { Coordinates } from "../../../common/models/Location";
+import { Pagination } from "../../../common/models/Pagination";
 import { Error400, Error404 } from "../error";
 import ow from 'ow';
 import LocationService from "../locationService";
@@ -47,10 +48,10 @@ export class StaysService {
         return query;
     } 
 
-    public async getStays(filter?: StaySearchFilter): Promise<StayRecord[]> {
+    public async getStays(filter?: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]> {
         console.log("getStays() test ", {filter});
         if(filter){
-            return await this.stays.getAll(this.resolveFilter(filter));
+            return await this.stays.getSome(this.resolveFilter(filter), pagination);
         }
         else{
             return await this.stays.getAll();

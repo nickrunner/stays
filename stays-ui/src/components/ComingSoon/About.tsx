@@ -1,46 +1,40 @@
 import React from "react";
 import AboutCard from "./AboutCard";
-import { Box } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import { TravelExplore } from "@mui/icons-material";
 import { Cabin } from "@mui/icons-material";
+import StayerPerks from "./StayerPerks";
+import HostPerks from "./HostPerks";
+import { content } from "../../content";
 
 export default function About (props: any) {
     return(
-    <Box sx={{display: {xs:"grid", md: "flex"}, gap: 5, justifyContent: "center"}}>
-        <AboutCard 
-            title="For Travelers"
-            subheader="Find, Follow and Book your dream vacation rental"
-            description={
-                [
-                    "FREE Membership,",
-                    "Booking Perks",
-                    "Exclusive Rental Access",
-                    "Automatic Entries into Vacation Giveaways",
-                    "Discounted Stays",
-                    "Cancellation Notices",
-                    "Powerful Searching and Filtering"
-                ]
-            }
-        >
-            <TravelExplore fontSize="large" sx={{color:"secondary.main"}} />
-        </AboutCard>
+   
+        <Box sx={{display:"grid", gap:10}}>
+            <Typography
+            variant="h1"
+            align="left"
+            color="common.black"
+            >
+                {content.pages.comingSoon.about.hook}
+            </Typography>
+        
+            <Box sx={{display: {xs:"grid", md: "flex"}, gap: 10, justifyContent: "center"}}>
+                
+                <AboutCard 
+                    title="For Travelers"
+                    subheader=""
+                >
+                    <StayerPerks iconColor="primary.main"/>
+                </AboutCard>
 
-        <AboutCard 
-        title="For Hosts"
-        subheader="Engage with Travelers and Promote your Stay"
-        description={
-            [
-                "Social Media Engagement",
-                "Marketing and Visibility",
-                "Private Booking Funnels,",
-                "Promotional Opportunities",
-                "Networking with Content Creators",
-                "Cancellation Risk Management",
-            ]
-        }
-        >
-            <Cabin fontSize="large" sx={{color:"secondary.main"}}  />
-        </AboutCard>
-    </Box>
+                <AboutCard 
+                title="For Hosts"
+                subheader=""
+                >
+                    <HostPerks iconColor="primary.main"/>
+                </AboutCard>
+            </Box>
+        </Box>
     );
 }
