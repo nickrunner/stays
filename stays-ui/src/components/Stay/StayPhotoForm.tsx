@@ -49,7 +49,7 @@ export default function StayPhotoForm(props:any) {
     function handleSubmit(files: File[]){
         setFileCount(files.length);
         const filesClient = new FilesClient();
-        for(let file of files){
+        for(const file of files){
             setLoading(true);
             filesClient.uploadFile(file, "images/", {
                 onComplete: handleFileUploadComplete,

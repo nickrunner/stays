@@ -1,57 +1,37 @@
 import { Box, Typography } from "@mui/material";
-import { content } from "../../content";
-import Image from "next/image";
+import LodgifyLogo from "../../logos/LodgifyLogo";
+import AirbnbLogo from "../../logos/AirbnbLogo";
+import VrboLogo from "../../logos/VrboLogo";
 
-export default function Partners(props:any){
+
+export default function Partners(){
     return (
-        <Box sx={{display:"grid", gap:10, justifyContent:"center"}}>
-            <Typography
-            variant="h1"
-            color="common.black"
-            >
-                {content.pages.comingSoon.partners}
-            </Typography>
-            <Box 
-            sx={{
-                maxWidth:"md",
-                align:"center"
-            }}>
-                <Typography
-                variant="h4"
-                color="primary.main"
-                >
-                    Our goal is to drive traffic to your listing through expert curation, marketing, and promotion.
-                </Typography>
+        <Box sx={{display:"grid"}}>
+            <Box sx={{ 
+                display:{xs:"flex"}, 
+                }}>  
+                <Box sx={{p:{xs:1.5, sm:3}, margin:"auto"}}>    
+                    <AirbnbLogo color="#78756c"/>
+
+                </Box>
+                
+                <Box sx={{p:{xs:1.5, sm:3}, margin:"auto"}}>   
+                    <VrboLogo color="#78756c"/>
+                </Box> 
+
+                <Box sx={{p:{xs:1.5, sm:3}, margin:"auto", display:{xs:"none", sm:"block"}}}>    
+                    <LodgifyLogo color="#78756c"/>
+                </Box>
             </Box>
-            <Box sx={{ display:{xs:"grid", md:"flex", margin:"auto"}, gap:5 }}>       
-                <Image 
-                    src={content.images.partners.vrbo.svg}
-                    height="50"
-                    width="150"
-                    alt="VRBO Partner Icon">
-                </Image>
-                <Image 
-                    src={content.images.partners.airbnb.svg}
-                    height="40"
-                    width="150"
-                    alt="Airbnb Partner Icon">
-                </Image>
-            
-                <Image 
-                    src={content.images.partners.expedia.svg}
-                    height="30"
-                    width="150"
-                    alt="Expedia Partner Icon">
-                </Image>
 
-                <Image 
-                    src={content.images.partners.bookingcom.svg}
-                    height="30"
-                    width="150"
-                    alt="Booking.com Partner Icon">
-                </Image>
-
+            <Box sx={{p:{xs:1.5, sm:3}, margin:"auto", display:{xs:"block", sm:"none"}}}>    
+                <LodgifyLogo color="#78756c"/>
             </Box> 
+            
+            <Typography sx={{p:{xs:1.5, sm:3}, margin:"auto"}} variant="caption">
+                ... and other top platforms
+            </Typography>
         </Box>
+       
     );
 }

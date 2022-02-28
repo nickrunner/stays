@@ -25,9 +25,10 @@ export class StayClient {
         return response.data as StayRecord;
     }
 
-    public async getStays(filter?: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]>{
+    public async getStays(searchPhrase?: string, filter?: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]>{
        const response = await axios.get(url, await queryCfg(
             {
+                search: searchPhrase,
                 filter: JSON.stringify(filter),
                 pagination: JSON.stringify(pagination)
             }, 

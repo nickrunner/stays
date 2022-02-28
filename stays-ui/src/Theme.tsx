@@ -398,40 +398,40 @@ export const theme = createTheme({
         fontSize: '1.3rem'
       },
       '@media (min-width:800px)':{
-        fontSize: '1.5rem'
+        fontSize: '1.4rem'
       },
       '@media (min-width:1000px)':{
-        fontSize: '1.75rem'
+        fontSize: '1.5rem'
       },
       '@media (min-width:1100px)':{
-        fontSize: '1.875rem'
+        fontSize: '1.6rem'
       },
       '@media (min-width:1200px)':{
-        fontSize: '2rem'
+        fontSize: '1.7rem'
       },
       
     },
     h6: {
       fontWeight: 700,
-      fontSize: '1.2rem',
+      fontSize: '1.3rem',
       lineHeight: 1.375,
       '@media (min-width:400px)':{
-        fontSize: '1.2rem'
+        fontSize: '1.3rem'
       },
       '@media (min-width:500px)':{
-        fontSize: '1.2rem'
+        fontSize: '1.3rem'
       },
       '@media (min-width:600px)':{
-        fontSize: '1.2rem'
+        fontSize: '1.3rem'
       },
       '@media (min-width:700px)':{
-        fontSize: '1.2rem'
+        fontSize: '1.4rem'
       },
       '@media (min-width:lg)':{
-        fontSize: '1.2rem'
+        fontSize: '1.4rem'
       },
       '@media (min-width:1000px)':{
-        fontSize: '1.25rem'
+        fontSize: '1.4rem'
       },
       '@media (min-width:1100px)':{
         fontSize: '1.4rem'

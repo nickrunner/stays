@@ -10,7 +10,6 @@ import StaysPage from '../../../src/StaysPage';
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import JSONPretty from 'react-json-pretty';
 import { useRouter } from 'next/router';
 import { StayAttributeRecord, StayAttributeType } from '../../../../common/models/StayAttributes';
 import StayAttributesTable from '../../../src/components/StayAttributes/StayAttributesTable';
@@ -21,7 +20,6 @@ export interface StayAttributeCmsProps {
 }
 
 export default function StayAttributesCms(props: StayAttributeCmsProps) {
-    let router = useRouter();
     const[stayAttributes, setStayAttributes] = React.useState<StayAttributeRecord[]>([]);
     const[selectedStayAttribute, setSelectedStayAttribute] = React.useState<StayAttributeRecord | undefined>(undefined);
     const [addOpen, setAddOpen] = React.useState(false);
@@ -108,11 +106,6 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
                         overflow: "auto"
                         }}
                     >
-                        {/* JSON data */}
-                        <Typography>
-                            <JSONPretty data={selectedStayAttribute}/>
-                        </Typography>
-                        
                     </Paper>
                 </Grid>
                 

@@ -67,6 +67,9 @@ function getBedrooms(record){
 
 
 async function saveStay(record){
+    if(record.get('Listing Name') != "hintercabin"){
+        return;
+    }
     var stay = {
         name: record.get('Listing Name'),
         enable: record.get('Listing Finished?'),
@@ -123,8 +126,8 @@ async function saveStay(record){
     stay.booking.push({partner: record.get('Booking Platform'), link:record.get('Booking Link')});
     await stayAttributesService.createOrUpdateStayAttribute({type: "Booking Partner", name:record.get("Booking Platform")})
     
-    if(record.get('Thumbnail (link)')){
-        const newUrl = await migrateFile(record.get('Thumbnail (link)'),  "/images/stays/"+uuid.v4())
+    if(record.get('Thumbnail Photo (link)')){
+        const newUrl = await migrateFile(record.get('Thumbnail Photo (link)'),  "/images/stays/"+uuid.v4())
         stay.photos.push({
             url: newUrl,
             description: "",
@@ -169,7 +172,7 @@ async function gatherRecords(){
     
     }, async function done(err) {
         if (err) { console.error(err); return; }
-        console.log("Gathered "+atRecords.length+" records");
+       // console.log("Gathered "+atRecords.length+" records");
         await migrate(atRecords);
     });
     return atRecords;
@@ -177,9 +180,9 @@ async function gatherRecords(){
 
 
 async function migrate(atRecords){
-    console.log("Gathered "+atRecords.length+" records");
+    //console.log("Gathered "+atRecords.length+" records");
     for(const record of atRecords){
-        console.log("Processing: ", { record })
+        //console.log("Processing: ", { record })
         try{
             await saveStay(record);
         }catch(err)

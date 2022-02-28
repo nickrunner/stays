@@ -9,10 +9,6 @@ function dateString(timestamp: number): string {
   return date.toLocaleDateString()+" "+date.toLocaleTimeString();
 }
 
-function fit(text: string): number{
-  return text.length * 100;
-}
-
 const columns: GridColDef[] = [
   {
     field: 'enable',
@@ -152,7 +148,7 @@ export interface StaysTableProps {
 export default function StaysTable(props: StaysTableProps) {
   const[stays, setStays] = React.useState<StayRecord[]>([]);
   const getStays = async() => {
-    const stays = await new StayClient().getStays({});
+    const stays = await new StayClient().getStays();
     setStays(stays);
     }
 

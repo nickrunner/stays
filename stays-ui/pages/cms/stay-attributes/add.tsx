@@ -1,10 +1,10 @@
-import { Box, Button, Container, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 import { StayClient } from "../../../src/clients/stayClient";
 import { LoadingButton } from '@mui/lab';
 
 const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -62,7 +62,7 @@ export default function AddStayAttribute(props: any){
                 id="name"
                 name="name"
                 label="Name"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e:any) => setName(e.target.value)}
             />
             </FormControl>
             </Grid>
@@ -75,7 +75,7 @@ export default function AddStayAttribute(props: any){
                 fullWidth
                 multiline
                 rows={5}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e:any) => setDescription(e.target.value)}
             />
             </Grid>
             <Typography sx={{m:2}} variant="subtitle1">

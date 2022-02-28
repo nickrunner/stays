@@ -1,15 +1,8 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { User, UserRecord } from '../../../../common/models/User';
-import { StayClient } from '../../clients/stayClient';
-import { Checkbox, Typography } from '@mui/material';
+import { UserRecord } from '../../../../common/models/User';
 import { UserClient } from '../../clients/userClient';
 import { DataGrid, GridColDef, GridValueGetterParams, GridCellParams } from '@mui/x-data-grid';
+import { Typography } from '@mui/material';
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);

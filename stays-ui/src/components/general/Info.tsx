@@ -1,23 +1,31 @@
 import { Typography, Box, Stack } from "@mui/material";
+import { PropsWithChildren } from "react";
 
-export default function Perk(props: any){
+export interface InfoProps{
+    title: string,
+    icon?: unknown,
+    body: string,
+}
+
+export default function Info(props: PropsWithChildren<InfoProps>){
     return (
         <Box sx={{pt:2, pb:2, display:"flex", gap:2}}>
-            {props.children}
+            {props.icon}
             <Stack>
             <Typography
                 sx={{mt:0.5}}
                 variant="subtitle1"
-                color="common.black"
+                color="text.primary"
             >
-                {props.text}
+                {props.title}
             </Typography>
             <Typography sx={{mt:0.5}}
                 variant="body1"
-                color="common.black"
+                color="text.primary"
             >
-                {props.subText}
+                {props.body}
             </Typography>
+            {props.children}
             </Stack>
         </Box>
     );

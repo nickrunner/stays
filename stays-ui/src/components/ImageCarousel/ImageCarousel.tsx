@@ -1,16 +1,12 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
-import { theme } from "../Theme";
-import Image from 'next/image';
-import styles from "../../styles/Carousel.module.css";
+import { theme } from "../../Theme";
+import styles from "../../../styles/Carousel.module.css";
 
 export interface CarouselImage {
     label: string,
@@ -50,25 +46,13 @@ export default function ImageCarousel(props: ImageCarouselProps) {
         {props.images.map((step, index) => (
           <div key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
-            //   <Box
-            //     component="img"
-            //     sx={{
-            //       height: props.height,
-            //       display: 'block',
-            //       maxWidth: props.width,
-            //       overflow: 'hidden',
-            //       width: '100%',
-            //     }}
-            //     src={step.imgPath}
-            //     alt={step.label}
-            //   />
-            <Image
+            <img
                 className={styles.CarouselImg}
                 src={step.imgPath}
                 alt={step.label}
                 height={props.height}
                 width={props.width}>
-            </Image>
+            </img>
             ) : null}
           </div>
         ))}

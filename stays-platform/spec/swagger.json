@@ -34,6 +34,32 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Promotion": {
+				"properties": {
+					"code": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"code",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PromotionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Promotion"
+					}
+				]
+			},
 			"StayAttributeType": {
 				"enum": [
 					"Amenity",
@@ -414,15 +440,26 @@
 					"email": {
 						"type": "string"
 					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
 					"isStayer": {
 						"type": "boolean"
 					},
 					"isHost": {
 						"type": "boolean"
+					},
+					"promoCode": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"email",
+					"firstName",
+					"lastName",
 					"isStayer",
 					"isHost"
 				],
@@ -450,6 +487,98 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/promotions/{promotionId}": {
+			"get": {
+				"operationId": "GetPromotionById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PromotionRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "promotionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/promotions": {
+			"post": {
+				"operationId": "CreatePromotion",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Promotion"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/promotions/{promoName}/{promoCode}/validate": {
+			"get": {
+				"operationId": "IsCodeValid",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "promoName",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "promoCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/stays/attributes/{type}": {
 			"get": {
 				"operationId": "GetStayAttributes",
@@ -672,6 +801,14 @@
 				},
 				"security": [],
 				"parameters": [
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "query",
 						"name": "filter",

@@ -17,7 +17,7 @@ import { Stay, StayRecord } from '../../../../common/models/Stay';
 import { globalContext } from '../../GlobalStore';
 import { Photo } from '../../../../common/models/Photo';
 import { content } from "../../content";
-import ImageCarousel from '../ImageCarousel';
+import ImageCarousel from '../ImageCarousel/ImageCarousel';
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -41,18 +41,11 @@ export interface StayDirectoryCardProps {
 
 
 export default function StayDirectoryCard(props: StayDirectoryCardProps){
-  const [width, setWidth] = React.useState(1200);
   const [expanded, setExpanded] = React.useState(false);
   const {globalState, dispatch} = React.useContext(globalContext);
 
-  function getWidth(){
-    const w = globalState.mobile ? window.innerWidth/1.2 : window.innerWidth / 3.5;
-    setWidth(w);
-  }
-
   React.useEffect(() => {
-        getWidth();
-        window.addEventListener('resize', getWidth)
+
         return;
     }, []);
 
@@ -109,8 +102,9 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
   }
 
   return (
-    <Card id={props.stay.id} sx={{ width: {xs:300, sm:400, md:500, lg:600 } }}>
+    <Card id={props.stay.id} sx={{ width: {xs:300, sm:500 }, minHeight:500 }}>
       <CardHeader
+        height="200"
         avatar={
           <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={getAvatar(props.stay.location.region)}>
           </Avatar>
@@ -123,7 +117,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
         title={props.stay.name}
         titleTypographyProps={{ 
           align: 'left',
-          variant: 'h6', 
+          variant: 'subtitle1', 
           color: "common.black"
         }}
         
@@ -134,15 +128,15 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
       />
       <CardMedia>
       <ImageCarousel 
-          width="100%" height="400px" 
+          width="100%" height="300" 
           images={getImageCarouselProps(props.stay)}/>
       </CardMedia>
-      <CardContent>
+      {/* <CardContent>
      
         <Typography variant="body2" color="text.secondary">
           {getCaption(props.stay.description)}
         </Typography>
-      </CardContent>
+      </CardContent> */}
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />

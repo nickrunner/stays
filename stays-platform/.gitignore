@@ -24,3 +24,6 @@ yarn-error.log*
 
 /stays-dev-firebase-adminsdk-uwz4z-a24f839c4d.json
 /stays-prod-firebase-adminsdk-ilku1-2f0bb379eb.json
+
+#secrets
+/src/secrets.ts

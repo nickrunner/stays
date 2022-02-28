@@ -26,7 +26,7 @@ export class StaysController extends Controller {
         @Path() stayId: string,
     ): Promise<StayRecord> {
         try{
-            return await new StaysService().getStayById(stayId)
+            return await new StaysService().getStayById(stayId);
         }
         catch(e){
             console.log("stay: "+stayId+" not found");
@@ -36,16 +36,15 @@ export class StaysController extends Controller {
 
     @Get()
     public async getStays(
+        @Query() search?: string,
         @Query() filter?: string,
         @Query() pagination?: string
     ): Promise<StayRecord[]> {
+        search = search ? search : "";
+        const parsedFilter = filter ? JSON.parse(filter) : {};
+        const parsedPagination = pagination ? JSON.parse(pagination) : null;
         try{
-            if(filter && pagination){
-                return await new StaysService().getStays(JSON.parse(filter), JSON.parse(pagination));
-            }
-            else{
-                return await new StaysService().getStays();
-            }
+            return await new StaysService().getStays(search, parsedFilter, parsedPagination);
         }
         catch(e){
             console.log("Error getting stays: ", {e});

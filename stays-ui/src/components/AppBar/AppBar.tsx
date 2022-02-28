@@ -32,7 +32,7 @@ export interface StaysAppBarProps {
 }
   
 export function Nav(props: StaysAppBarProps) {
-  let router = useRouter();
+  const router = useRouter();
   const [scroll, setScroll] = React.useState(false);
   const { globalState, dispatch } = React.useContext(globalContext);
 

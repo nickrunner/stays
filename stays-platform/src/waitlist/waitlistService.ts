@@ -12,8 +12,10 @@ export class WaitlistService {
     }
 
     private validateWaitlistItem(item: WaitlistItem){
-        ow(item, ow.object.exactShape({
+        ow(item, ow.object.partialShape({
             email: ow.string.nonEmpty,
+            firstName: ow.string.nonEmpty,
+            lastName: ow.string.nonEmpty,
             isStayer: ow.boolean,
             isHost: ow.boolean
         }));
@@ -28,7 +30,7 @@ export class WaitlistService {
     public async addToWaitlist(item: WaitlistItem){
         this.validateWaitlistItem(item);
         if(await this.isInWaitlist(item.email)){
-            throw new Error409("Already in waitlist");
+            await this.waitlist.updateFirst(item);
         }
         else{
             await this.waitlist.create(item);

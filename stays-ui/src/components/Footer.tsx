@@ -1,8 +1,7 @@
 import { Container, Grid, Link, Typography } from "@mui/material"
 import Copyright from "./Copyright"
 
-
-export default function () {
+export default function Footer () {
 
     const footers = [
         {
@@ -35,7 +34,7 @@ export default function () {
             maxWidth="md"
             component="footer"
             sx={{
-            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+            borderTop: (theme: { palette: { divider: any; }; }) => `1px solid ${theme.palette.divider}`,
             mt: 8,
             py: [3, 6],
             }}

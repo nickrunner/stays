@@ -6,7 +6,7 @@ import { globalContext } from '../../GlobalStore';
 
 export default function Hero(props: any) {
   const {globalState, dispatch} = React.useContext(globalContext);
-  let router = useRouter();
+  const router = useRouter();
 
   return (  
     <Container

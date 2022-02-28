@@ -2,11 +2,13 @@ import { Collection } from "../firebase/firestore/collection";
 import { Stay, StayApplicationStatus, StayRecord, StayRejectionInfo, StaySearchFilter } from "../../../common/models/stay";
 import { Coordinates } from "../../../common/models/Location";
 import { Pagination } from "../../../common/models/Pagination";
-import { Error400, Error404 } from "../error";
+import { Error400, Error404, Error409 } from "../error";
 import ow from 'ow';
 import LocationService from "../locationService";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 import _, {isEqual, merge} from "lodash";
+import { runCLI } from "tsoa";
+import { KeyObject } from "crypto";
 
 export class StaysService {
 
@@ -16,7 +18,7 @@ export class StaysService {
         this.stays = new Collection<Stay>("stays");
     }
 
-    private resolveFilter(filter: StaySearchFilter): CollectionQuery  {
+    private buildQuery(search: string, filter: StaySearchFilter): CollectionQuery  {
         const query = new CollectionQuery()
         .where("name").eq(filter.name)
         .and("enable").eq(filter.enable)
@@ -43,18 +45,22 @@ export class StaysService {
         if(filter.bedrooms){
             query.and("bedrooms").inRange(filter.bedrooms.min, filter.bedrooms.max);
         }
+        const keywords = this.getKeywordsFromString(search);
+        if(keywords.length > 0){
+            query.and("tags").arrContainsAny(keywords);
+        }
 
-        
         return query;
     } 
 
-    public async getStays(filter?: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]> {
-        console.log("getStays() test ", {filter});
-        if(filter){
-            return await this.stays.getSome(this.resolveFilter(filter), pagination);
+    public async getStays(search: string, filter: StaySearchFilter, pagination?: Pagination): Promise<StayRecord[]> {
+        console.log("getStays() search: "+search+" filter: "+JSON.stringify(filter, null, 2));
+        const query = this.buildQuery(search, filter);
+        if(pagination){
+            return await this.stays.getSome(query, pagination);
         }
         else{
-            return await this.stays.getAll();
+            return await this.stays.getAll(this.buildQuery(search, filter));
         }
     }
 
@@ -93,13 +99,18 @@ export class StaysService {
     public async createApplication(stay: Stay, email:string): Promise<StayRecord> {
         console.log("Creating stay application: ", {stay});
         stay.status = StayApplicationStatus.Pending;
-        await this.validateStay(stay);
         return await this.stays.create(stay);
     }
 
     public async createStay(stay: Stay): Promise<StayRecord> {
         console.log("Creating stay: ", {stay});
+        if(await this.stays.exists(
+            new CollectionQuery().where("name").eq(stay.name)
+        )){
+            throw new Error409("Stay with this name already exists");
+        }
         await this.validateStay(stay);
+        stay.tags = this.generateKeywords(stay);
         return await this.stays.create(stay);
     }
 
@@ -124,34 +135,103 @@ export class StaysService {
     public async createStays(stays: Stay[]): Promise<void> {
         for(const stay of stays){
             await this.validateStay(stay);
+            if(await this.stays.exists(
+                new CollectionQuery().where("name").eq(stay.name)
+            )){
+                throw new Error409("Stay with this name already exists");
+            }
+            stay.tags = this.generateKeywords(stay);
         }
         return await this.stays.batchCreate(stays);
     }
 
     public async updateStay(stayId: string, attributes: any): Promise<void> {
-        console.log("Updating stay: "+JSON.stringify(attributes, null ,2));
+        
         const oldStay: Stay = await this.stays.get(stayId) as Stay;
         const newStay = merge(oldStay, attributes);
         // If location has changed we need to re-geocode
         if(!isEqual(newStay.location.address, oldStay.location.address)){
             console.log("Re-Geocoding "+JSON.stringify(newStay.location, null, 2)+" old: "+JSON.stringify(oldStay.location, null, 2));
-            newStay.location.coordinates = await new LocationService().getCoordinates(newStay.location.address);
+            newStay.location.coordinates = await new LocationService().getCoordinates(oldStay.location.address);
         }
+        newStay.tags = this.generateKeywords(newStay);
+        console.log("Updating stay: "+JSON.stringify(newStay, null ,2));
         await this.validateStay(newStay);
         await this.stays.update(stayId, newStay);
-
     }
 
     public async deleteStay(stayId: string){
         await this.stays.delete(stayId);
     }
 
+    private getKeywordsFromString(description: string): string[]{
+        let keywords: string[] = [];
+        keywords = keywords.concat(description
+            .split(" ")
+            .map((word) => 
+            {
+                word = word.replace(/[^a-z0-9]/gi,'');
+                return word.toLowerCase();
+            })
+            .filter((word) => {
+                return word.length > 3;
+            })
+        );
+        return keywords;
+    }
+
+    private generateKeywords(stay: Stay): string[]{
+        try{
+            ow(stay.tags, ow.array);
+        }
+        catch{
+            stay.tags = [];
+        }
+        let keywords: string[] = [];
+        keywords = keywords.concat(this.getKeywordsFromString(stay.description));
+        try{
+            keywords.push(stay.location.address.city);
+            keywords.push(stay.location.address.country);
+            keywords.push(stay.location.address.state);
+            keywords.push(stay.location.address.zip.toString());
+            keywords.push(stay.location.region);
+        }
+        catch(err){
+            console.log("Failed pushing location keywords");
+        }
+       
+        if(stay.petsAllowed){
+            keywords = keywords.concat(["pet", "pets", "dog", "dogs", "cat", "cats", "animal", "animals"]);
+        }
+        if(stay.onSiteParking){
+            keywords = keywords.concat(["parking", "park"]);
+        }
+        for(const propertyType of stay.type){
+            keywords.push(propertyType.toLowerCase());
+        }
+        for(const amenity of stay.amenities){
+            keywords.push(amenity.toLowerCase());
+        }
+        for(const specialInterest of stay.specialInterests){
+            keywords.push(specialInterest.toLowerCase());
+        }
+        for(const photo of stay.photos){
+            keywords = keywords.concat(this.getKeywordsFromString(photo.description));
+        }
+        for(const social of stay.social){
+            keywords.push(social.partner.toLowerCase());
+        }
+        for(const booking of stay.booking){
+            keywords.push(booking.partner.toLowerCase());
+        }
+        keywords = keywords.filter((word) => {return word});
+        return keywords;
+    }
 
     private async validateStay(stay: Stay){
         console.log("Validating stay");
         
         ow(stay.location, ow.object.nonEmpty);
-
         try{
             ow(stay.location.coordinates, ow.object.nonEmpty);
         }
@@ -161,7 +241,6 @@ export class StaysService {
             stay.location.coordinates = coordinates;
         }
 
-        
         try{
             stay.currentRate = Number(stay.currentRate);
             stay.capacity = Number(stay.capacity);
@@ -198,6 +277,8 @@ export class StaysService {
             console.log("Failed stay validation: ", {e});
             throw new Error400();
         }
+
+
         
     }
 

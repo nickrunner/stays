@@ -10,7 +10,7 @@ export interface NavButtonProps extends StaysAppBarProps {
 }
 
 export default function NavButton(props: NavButtonProps){
-    let router = useRouter();
+    const router = useRouter();
     const [scroll, setScroll] = React.useState(false);
 
     React.useEffect(() => {

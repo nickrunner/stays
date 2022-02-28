@@ -14,7 +14,6 @@ export default function StayInfoForm() {
   const { stay } = React.useContext(stayContext);
   const [pets, setPets] = React.useState(stay.petsAllowed);
   const [parking, setParking] = React.useState(stay.onSiteParking);
-  const [files, setFiles] = React.useState<File[]>([]);
 
   function handleNameChange(newName: string){
       stay.name = newName;
@@ -145,9 +144,9 @@ export default function StayInfoForm() {
             <FormControl>
             <InputLabel id="propertyTypeLabel">Property Type</InputLabel>
             <StayAttributeSelector 
-            type={StayAttributeType.PropertyType} 
-            label="Property Type"
-            />
+              type={StayAttributeType.PropertyType} 
+              label="Property Type"
+              />
             </FormControl>
         </Grid>
             
@@ -155,18 +154,18 @@ export default function StayInfoForm() {
             <FormControl sx={{width:150, mr:1}}>
             <InputLabel id="amenitiesLabel">Amenities</InputLabel>
             <StayAttributeSelector 
-            type={StayAttributeType.Amenity} 
-            label="Amenities"
-            />
+              type={StayAttributeType.Amenity} 
+              label="Amenities"
+              />
             </FormControl>
         </Grid>
         <Grid item xs={12}>
             <FormControl sx={{width:155, mr:1}}>
             <InputLabel id="specialInterestsLabel">Special Interests</InputLabel>
             <StayAttributeSelector 
-            type={StayAttributeType.SpecialInterest} 
-            label="Special Interests"
-            />
+              type={StayAttributeType.SpecialInterest} 
+              label="Special Interests"
+              />
             </FormControl>
 
         </Grid>

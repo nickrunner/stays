@@ -1,8 +1,7 @@
 import Waitlist from "./Waitlist";
-import { Box, Button, Stack, Typography, Modal } from "@mui/material";
+import { Box, Button, Stack, Typography, Modal, Container } from "@mui/material";
 import React from "react";
 import styles from "../../../styles/ComingSoon.module.css";
-import { globalContext } from "../../GlobalStore";
 import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 import { content } from "../../content";
 import Image from "next/image";
@@ -11,14 +10,22 @@ export default function Hero(props: any) {
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
     const heroImg = content.images.hero.woodhouse;
 
+    function closeWaitlist()
+    {
+      console.log("Close Waitlist");
+      setWaitlistOpen(false)
+    }
+
     return (
         <React.Fragment>
             <Modal 
                 open={waitlistOpen}
-                onClose={() => {setWaitlistOpen(false)}}
+                onClose={() => {closeWaitlist()}}
             >
-                <Waitlist type={props.type} />
-            </Modal>
+                <Waitlist 
+                close={closeWaitlist}
+                />
+          </Modal>
 
             <Box
                 sx={{
@@ -40,31 +47,52 @@ export default function Hero(props: any) {
                     blurDataURL={heroImg.blur}
                     alt="Beautiful Vacation Rental"
                 />
-
             </Box>
-         
-        
-         
-            <Box maxWidth="md" maxHeight="75%" 
+            
+
+            <Box 
             sx={{
-                display: 'flex',
+                width:"100%",
                 position: "absolute",
-                top:"3%",
-                left:"3%",
-                p:5
+                top:0,
+                left:0,
+                height: props.height
             }}>
-                <Stack>
+                
+                <Box
+                sx={{
+                    margin:{xs:"auto", sm:0},
+                    maxWidth:{
+                        xs: 400,
+                        sm: 700,
+                        lg: 800,
+                        xl: 1000
+                    },
+                    p:{xs:"10%", sm:"5%"},
+                    pt:{xs:"20%"},
+                    display: "grid",
+                    textAlign:{xs:"center", sm:"left"},
+                    verticalAlign:"center",
+                    alignContent:{xs:"center", sm:"left"},
+                    //bgcolor:"secondary.main"
+                }}>
                     
                     <Typography
                     variant= "h1"
                     color="common.white"
+                    // sx={{mt:{xs:"5%", sm:"10%"}}}
+                    fontWeight={700}
                     >
                         {content.pages.comingSoon.hero.main}
                     </Typography>
                     <Typography
-                    sx={{mt:{xs:"15%", sm:"10%"}, align:{xs: "center", lg: "center"} }}
-                    variant="h5"
+                    sx={{
+                        mt:{xs:"15%", sm:"5%"}, 
+                        align:{xs: "center", lg: "center"}, 
+                    }}
+                    variant="h6"
                     color="common.white"
+                    fontWeight={400}
                     gutterBottom
                     >
                         {content.pages.comingSoon.hero.sub}
@@ -74,15 +102,15 @@ export default function Hero(props: any) {
                         onClick={() => setWaitlistOpen(true)}
                         size="large"
                         sx={{
-                            // fontSize: "1.5rem",
-                            // fontWeight: "700",
-                            mt:{xs:"15%", sm:"7%"},
-                            width:{xs: 200, md: 300}
+                            margin:{xs:"auto", sm:0},
+                            mt:{xs:"25%", sm:"7%"},
+                            width:{xs: 200, md: 300},
                         }}>
                         Join the Waitlist
                     </Button>
-                </Stack>
+                </Box>
             </Box>
+
 
             <Box
               alignSelf='center' alignItems='center' alignContent='center'

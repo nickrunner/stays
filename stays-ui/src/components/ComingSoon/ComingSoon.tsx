@@ -1,37 +1,45 @@
 import React from "react";
-import { Box, Button, Container, Modal, Divider } from "@mui/material";
+import { Box, Button,  fabClasses,  Modal } from "@mui/material";
 import Waitlist from "./Waitlist";
 import Description from "./Description";
-import Perks from "./Mockups";
 import Details from "./Details";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import About from "./About";
-import PerkList from "./StayerPerks";
-import { content } from "../../content";
 import Mockups from "./Mockups";
-import Partners from "./Partners";
+import SocialProof from "./SocialProof";
+import Section from "../general/Section";
+import SectionDivider from "../general/SectionDivider";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ComingSoon(props: any){
+export default function ComingSoon(){
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
-    const boxProp = {maxWidth:"lg", p:"10%", mb:10, display: "flex"};
-    const divProp = {p:0.1, width:"100%", bgcolor:"primary.dark" };
+
+    function closeWaitlist()
+    {
+      console.log("Close Waitlist");
+      setWaitlistOpen(false)
+    }
 
     return (
         <React.Fragment>
 
           <Modal 
             open={waitlistOpen}
-            onClose={() => {setWaitlistOpen(false)}}
+            onClose={() => {closeWaitlist()}}
           >
-            <Waitlist />
+            <Waitlist 
+              close={closeWaitlist}
+            />
           </Modal>
 
-          <section>
+          <Section>
             <Hero height="85%"/>
-          </section>
-          
-          
+          </Section>
 
           <Box
             alignSelf='center' alignItems='center' alignContent='center'
@@ -44,70 +52,43 @@ export default function ComingSoon(props: any){
               flexDirection: 'column',
             }}
           >
-            <section>
-              <Box sx={boxProp}>
-                <Description />
-              </Box>
-            </section>
+            <Section>
+              <Description />
+            </Section>
 
-            <Divider sx={divProp} /> 
-            
-            <section>
-              <Box sx={boxProp}>
-                <About />
-              </Box>
-            </section>
-          
-            <Divider sx={divProp} /> 
-            
-            <section>
-              <Box sx={boxProp}>
-                <Mockups />
-              </Box>
-            </section>
-    
-            <Divider sx={divProp} /> 
-
-            <section>
-              <Box sx={boxProp}>
-                <Partners />
-              </Box>
-            </section>
-
-            <Divider sx={divProp} />  
-
-            <section>
-              <Box sx={boxProp}>
-                <Details />
-              </Box>
-            </section>
-
-            <Divider sx={divProp} /> 
+            <Section>
+              <About />
+            </Section>
+ 
+            <Section>
+              <Mockups />
+            </Section>
+   
+            <Section>
+              <SocialProof />
+            </Section>
+     
+            <Section>
+              <Details />
+            </Section>
              
-            <Box sx={{p:"5%"}}>
-
+            <Box sx={{p:"0%"}}>
               <Button 
                   variant="contained" 
                   onClick={() => setWaitlistOpen(true)}
                   size="large"
                   sx={{
+                      mb:15,
                       width:300
                   }}>
                   Join the Waitlist
               </Button>
             </Box>
-           
 
-                  
             <Box maxWidth="lg"  sx={{p:"1%", display: "flex"}}> 
               <Footer />
             </Box>
-       
-            
-  
           </Box> 
-
         </React.Fragment>
-        
     );
 }

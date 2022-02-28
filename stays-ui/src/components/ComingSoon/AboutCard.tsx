@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 export default function AboutCard(props: any) {
     return (
@@ -8,8 +8,9 @@ export default function AboutCard(props: any) {
     >
         <Typography 
         align='left'
-        variant='h3'
-        color="primary.main"
+        variant='h4'
+        fontWeight="900"
+        color="text.primary"
         >
             {props.title}
         </Typography>

@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { content } from "../../content";
-import ImageCarousel from "../ImageCarousel";
+import NextImageCarousel from "../ImageCarousel/NextImageCarousel";
+import SectionHead from "../general/SectionHead";
 
 export default function Mockups() {
 
@@ -17,16 +18,12 @@ export default function Mockups() {
 
     return (
         <Box>
-            <Typography
-            variant="h1"
-            align="left"
-            color="common.black"
-            >
+            <SectionHead>
                 {content.pages.comingSoon.mockups}
-            </Typography>
+            </SectionHead> 
             <Box sx={{width:300, mt:5, justifyContent:"center", margin:"auto", display: {xs:"grid", md: "flex"}, gap:5}}>
-                <ImageCarousel 
-                    width="300" height="700" 
+                <NextImageCarousel 
+                    width="600" height="1200" 
                     images={getImageCarouselProps()}/>
             </Box>
         </Box>

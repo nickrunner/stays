@@ -85,7 +85,7 @@ export const StayPhotoCard: React.FC<StayPhotoCardProps> = ({ photo, id, index, 
     drag(drop(ref));
 
     function handleDescriptionChange(description: string){
-        for(let photo of stay.photos){
+        for(const photo of stay.photos){
             if(photo.priority == index){
                 photo.description = description;
             }
@@ -115,7 +115,7 @@ export const StayPhotoCard: React.FC<StayPhotoCardProps> = ({ photo, id, index, 
             multiline
             rows={1}
             defaultValue={photo.description}
-            onChange={(e) => handleDescriptionChange(e.target.value)}
+            onChange={(e:any) => handleDescriptionChange(e.target.value)}
           />
         </CardContent>
     </Card>

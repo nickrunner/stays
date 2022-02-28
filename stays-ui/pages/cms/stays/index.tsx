@@ -15,11 +15,9 @@ import { useRouter } from 'next/router';
 
 
 function StaysCmsContent() {
-    let router = useRouter();
+    const router = useRouter();
+    const [selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
     
-    const[selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
-
-
     function handleStaySelection(stay: StayRecord){
         console.log("Stay selected: ",{stay});
         setSelectedStay(stay);

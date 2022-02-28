@@ -2,9 +2,9 @@ import NodeGeocoder from 'node-geocoder';
 import { Address, Coordinates } from "../../common/models/Location";
 import { Error500 } from "./error";
 import ow from "ow";
-import { couldStartTrivia, createInferTypeNode } from 'typescript';
+import { GOOGLE_MAPS_API_KEY } from './secrets';
 
-const API_KEY: string = "AIzaSyAIWw4jpYTFQCc0273z1vjUMf8U44nSas8";
+
 export default class LocationService{
     
     private geocoder: any;
@@ -12,7 +12,7 @@ export default class LocationService{
     public constructor(){
         const options: NodeGeocoder.Options = {
             provider: 'google',
-            apiKey: API_KEY
+            apiKey: GOOGLE_MAPS_API_KEY
         }
         this.geocoder = NodeGeocoder(options);
     }

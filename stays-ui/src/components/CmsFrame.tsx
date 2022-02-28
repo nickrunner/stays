@@ -28,7 +28,7 @@ import { content } from "../content";
 import { globalContext } from '../GlobalStore';
 import Link from "next/link";
 
-const drawerWidth: number = 240;
+const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -81,8 +81,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function CmsFrame(){
-   const { globalState, dispatch } = React.useContext(globalContext);
-    let router = useRouter();
+    const { globalState, dispatch } = React.useContext(globalContext);
+    const router = useRouter();
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
       setOpen(!open);
@@ -230,6 +230,3 @@ export default function CmsFrame(){
     </Box>
     );
 }
-
-
-

@@ -1,38 +1,35 @@
-import Description from "./components/Home/Description";
-
 export const content ={ 
 
     images: {
         logo: {
-            purple: "https://ik.imagekit.io/stays/content/stays-purple.png",
-            white: "https://ik.imagekit.io/stays/content/stays-white.png",
-            black: "https://ik.imagekit.io/stays/content/stays-black.png",
+            purple: "https://ik.imagekit.io/stays/content/logos/stays-purple.svg",
+            white: "https://ik.imagekit.io/stays/content/logos/stays-white.png",
+            black: "https://ik.imagekit.io/stays/content/logos/stays-black.png",
             width: "1800",
             height: "1000"
         },
         partners: {
             airbnb: {
-                logo: "https://ik.imagekit.io/stays/content/partners/airbnb.png",
-                icon: "https://ik.imagekit.io/stays/content/partners/airbnb-icon.png",
-                svg: "https://ik.imagekit.io/stays/content/partners/vector-airbnb.svg"
+                logo: "https://ik.imagekit.io/stays/content/partners/vector-airbnb.svg",
+                icon: "https://ik.imagekit.io/stays/content/partners/vector-airbnb-icon.svg"
             },
             vrbo: {
-                logo: "https://ik.imagekit.io/stays/content/partners/vrbo.png",
-                icon: "https://ik.imagekit.io/stays/content/partners/vrbo-icon.png",
-                svg: "https://ik.imagekit.io/stays/content/partners/vector-vrbo.svg"
+                logo: "https://ik.imagekit.io/stays/content/partners/vector-vrbo.svg",
+                icon: "https://ik.imagekit.io/stays/content/partners/vector-vrbo-icon.svg"
             },
             hipcamp: {
                 logo: "https://ik.imagekit.io/stays/content/partners/hipcamp.png",
-                icon: "https://ik.imagekit.io/stays/content/partners/hipcamp-icon.png",
+                icon: "https://ik.imagekit.io/stays/content/partners/vector-hipcamp-icon.svg",
             },
             bookingcom: {
-                svg: "https://ik.imagekit.io/stays/content/partners/vector-bookingcom.svg",
+                logo: "https://ik.imagekit.io/stays/content/partners/vector-bookingcom.svg",
             },
             expedia: {
-                svg: "https://ik.imagekit.io/stays/content/partners/vector-expedia.svg",
+                logo: "https://ik.imagekit.io/stays/content/partners/vector-expedia.svg",
             },
             lodgify: {
-                svg: "https://ik.imagekit.io/stays/content/partners/vector-lodgify.svg",
+                logo: "https://ik.imagekit.io/stays/content/partners/vector-lodgify.svg",
+                icon: "https://ik.imagekit.io/stays/content/partners/vector-lodgify-icon.svg",
             }
         },
         regions: {
@@ -52,31 +49,19 @@ export const content ={
         mockups: [
             {
                 url:"https://ik.imagekit.io/stays/content/mockups/sign-in.png",
-                description: "Sign In"
-            },
-            {
-                url:"https://ik.imagekit.io/stays/content/mockups/collage.png",
-                description: "Collage"
-            },
-            {
-                url:"https://ik.imagekit.io/stays/content/mockups/computer.png",
-                description: "Computer"
-            },
-            {
-                url:"https://ik.imagekit.io/stays/content/mockups/description.png",
-                description: "Description"
+                description: "Member login portal so you can bookmark your favorite stays, access deals, enter giveaways, and more"
             },
             {
                 url:"https://ik.imagekit.io/stays/content/mockups/directory.png",
-                description: "Directory"
+                description: "Browse our hand-picked selection of stays that offer sophisticated design, prime location, or a unique experience."
+            },
+            {
+                url:"https://ik.imagekit.io/stays/content/mockups/collage.png",
+                description: "Narrow down your stay search by filtering options by property type, location, special interests, and more."
             },
             {
                 url:"https://ik.imagekit.io/stays/content/mockups/listing.png",
-                description: "Listing"
-            },
-            {
-                url:"https://ik.imagekit.io/stays/content/mockups/showcase.png",
-                description: "Showcase"
+                description: "Discover hidden gems from around the world. Learn what they can offer, and then get directed to their booking and/or social media pages."
             }
         ],
         hero: {
@@ -95,18 +80,21 @@ export const content ={
     pages: {
         comingSoon: {
             hero: {
-                main: "Coming Summer 2022",
-                sub: "Connecting travelers with the best vacation rentals around the world"
+                main: "For those who love to stay",
+                sub: "Discover the best vacation stays, get exclusive deals and have chances to win getaways with a free membership"
             },
             description: {
-                hook: "More than just a networking platform",
-                line1: "is a ",
-                emphasis: "free directory tool",
-                line2: " that helps travelers find, follow and book their dream vacation rental", 
+                header: "Working alongside the most popular booking platforms",
+                headerSub: "We provide our members",
+                sub1: "Travelers can find the coolest stays and best booking opportunities from any of the most popular booking platforms",
+                sub2: "Hosts can get discovered and direct interested travelers to the booking site of their choice",
+                line2: "Plus, both travelers and hosts get some amazing membership perks...", 
                 
             },
             about: {
-                hook: "Closing the gap between travelers and hosts",
+                header: "What do stays.co members get?",
+                sub1: "For Travelers",
+                sub2: "For Hosts",
                 stayerPerks: [
                     {
                         header:"Find Your Ideal Stay",
@@ -161,12 +149,48 @@ export const content ={
                 ]
             },
            
-            mockups: "Our intuitive interface allows for a seamless user experience.",
-            partners: "We work alongside the most popular booking platforms",
+            mockups: "Built by travelers, for travelers",
+            socialProof:{
+                header: "Our online community already has over 1 million travelers and hosts",
+                sub: "We use the power of our online community to connect eager travelers with the most amazing stays from across the globe."
+            },
             details: {
-                header: "is a game-changer",
-                sub1: "Vacation rental hosts have become increasingly dependent on large booking platforms such as Airbnb, VRBO, etc for not only their booking management, but also for their marketing and visibility.",
-                sub2: "Stays.co allows hosts to create 'Stay Profiles' on our website that allow travelers to find them, engage with their linked social media pages, visit their private website and/or be directed to book on any existing platform the host may be listed on."
+                header: "Why Should I join?",
+                dropdowns: [
+                    {
+                        header:"As a Traveler",
+                        sections: [
+                            `Airbnb and other big booking platforms are great and all, but for a passionate traveler who values their lodging experience, they just don’t quite get the job done. With so many new rental options saturating these platforms, it's hard to find the best of the best. And even when you do, it’s probably already booked. Ugh!`,
+                            "Stays.co gives travelers an upper hand. Not only do we provide an amazing directory of hand-picked stays for you to browse, filter and bookmark, but we also give you special membership perks that can save you money and get you stay opportunities you otherwise never would have had.",
+
+                            `Remember: big booking platforms want to keep you only on their platform so you can’t book through other channels or even connect with hosts directly. Stays says no more to this nonsense!`,
+
+                            "When you find a stay that you love on stays.co, you’ll find direct links to all its booking pages and social media accounts. From there, you can shop around and book your stay on the platform with the best price and lowest fees. Plus, many of the stays on our platform utilize their own private booking websites instead of use booking platforms like Airbnb, VRBO, etc. What does that mean for you? It means you’ll get better prices and less fees since both you and the hosts can cut out the big booking platform middle man!",
+
+                            `OH NO! The stay you fell in love with is fully booked. No problem! Just add it to your stay.co “favorites” list and you’ll be notified if/when the stay has cancellations or gives out early access to its next upcoming booking calendar. 
+                            `,
+
+                            `And in a similar fashion as other online tools such as Scott’s Cheap Flights, stays.co allows hosts to send you special offers, deals and discounts. We even take it another level by collaborating with some of our partner stays to run FREE stay giveaways to our members. Once a member, you’re automatically entered into ALL giveaway contests!`,
+
+                            `If you book vacation rentals , like saving money and want to have exclusive stay opportunities, joining stays.co is a must. It’s free--what are you waiting for?`
+                        ],
+                    },
+                    {
+                        header: "As a Host",
+                        sections: [
+                            `Travelers want to find and book the best stays. They want to know about deals and discounts. They want to follow a beautiful stay’s social media account. When hosts rely exclusively on large booking platforms such as Airbnb and VRBO, the bridge between travelers and hosts becomes extremely difficult to cross.`,
+
+                            `Large booking platforms have one goal: keep all users exclusively on their website. This prevents travelers from being able to connect with hosts over the long-term and it forces hosts to rely on the platform for marketing, visibility and business growth. This creates an environment of dependency for both travelers and hosts alike. But this is where stays.co can help!`,
+
+                            `Our goal is to use our expertise and massive online community to drive traffic to your listing through expert curation, marketing, and promotion.`,
+
+                            `Stays.co offers hosts a competitive edge that improves their ability to source more bookings, expand their brand and grow their social media audiences. All these factors will be so important to maintain a viable rental business as the vacation rental market continues to explode in the coming years.`,
+
+                            `Since Stays was founded in 2019, our online community has been built around bringing value to both ends of the vacation rental industry. And now we can bring even more value with our innovative stay.co platform. If you’re a host and would like to apply to join the community, please join the waitlist and we will be in touch!`
+                        ]
+                    }
+                ]
+                
             }
         }
     }

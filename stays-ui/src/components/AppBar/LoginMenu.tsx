@@ -13,7 +13,7 @@ import { AuthClient } from '../../clients/authClient';
 
 
 export default function LoginMenu(props: StaysAppBarProps) {
-  let router = useRouter();
+  const router = useRouter();
   const { globalState, dispatch } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
