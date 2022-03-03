@@ -189,7 +189,7 @@ export default function CmsFrame(){
             <ListItemText primary="Stays" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => router.push("/cms/property_types")} >
+            <ListItemButton onClick={() => router.push("/cms/property-types")} >
             <ListItemIcon>
                 <CabinIcon />
             </ListItemIcon>
@@ -203,14 +203,14 @@ export default function CmsFrame(){
             <ListItemText primary="Amenities" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => router.push("/cms/special_interests")} >
+            <ListItemButton onClick={() => router.push("/cms/special-interests")} >
             <ListItemIcon>
                 <SkiIcon />
             </ListItemIcon>
             <ListItemText primary="Special Interests" />
             </ListItemButton>
 
-            <ListItemButton onClick={() => router.push("/cms/host_applications")} >
+            <ListItemButton onClick={() => router.push("/cms/host-applications")} >
             <ListItemIcon>
                 <ApprovalIcon />
             </ListItemIcon>

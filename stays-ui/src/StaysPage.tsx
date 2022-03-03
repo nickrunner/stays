@@ -36,12 +36,6 @@ export default function StaysPage(props: any){
     return (
         
         <div>
-            <Head>
-                <title>Stays</title>
-                <meta name="viewport" content="initial-scale=1, width=device-width" />
-                <meta name="description" content="Direct booking for unique vacation rentals and short-term rentals"/>
-                <meta name="keywords" content="vacation, rental, unique, host, property, stay, influencer"/>
-            </Head>
             <main>
             {props.children}
             </main>

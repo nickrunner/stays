@@ -1,20 +1,15 @@
 import React from "react";
-import { Box, Button,  fabClasses,  Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import Waitlist from "./Waitlist";
 import Description from "./Description";
 import Details from "./Details";
 import Footer from "./Footer";
-import Hero from "./Hero";
+import Hero from "../general/Hero";
 import About from "./About";
 import Mockups from "./Mockups";
 import SocialProof from "./SocialProof";
 import Section from "../general/Section";
-import SectionDivider from "../general/SectionDivider";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { content } from "../../content";
 
 export default function ComingSoon(){
     const [waitlistOpen, setWaitlistOpen] = React.useState(false);
@@ -38,7 +33,15 @@ export default function ComingSoon(){
           </Modal>
 
           <Section>
-            <Hero height="85%"/>
+            <Hero 
+            height="85%"
+            heading={content.pages.comingSoon.hero.main}
+            description={content.pages.comingSoon.hero.sub}
+            buttonText="Join the Waitlist"
+            image={content.images.hero.treehouse.img}
+            blur={content.images.hero.treehouse.blur}
+            onButtonClick={() => setWaitlistOpen(true)}
+            />
           </Section>
 
           <Box

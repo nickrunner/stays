@@ -1,4 +1,4 @@
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Link from "../Link";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -6,7 +6,7 @@ import Copyright from "../Copyright";
 import { content } from "../../content";
 import Image from "next/image";
 
-export default function Footer(props: any) {
+export default function Footer() {
     return ( 
         <Box margin="auto" sx={{display: "grid", gap:5, justifyContent:"center"}}>
 

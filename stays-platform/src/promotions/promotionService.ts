@@ -1,6 +1,7 @@
 import { Collection } from "../firebase/firestore/collection";
 import { Promotion, PromotionRecord } from "../../../common/models/Promotion";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import { getAllJSDocTags } from "typescript";
 
 
 export class PromotionService {
@@ -9,6 +10,11 @@ export class PromotionService {
 
     public constructor(){
         this.promotions = new Collection<Promotion>("promotions");
+    }
+
+    public async getPromotions(): Promise<PromotionRecord[]> {
+        console.log("promotionsService: getPromotions()")
+        return await this.promotions.getAll();
     }
 
     public async getPromotion(promotionId: string): Promise<PromotionRecord>{

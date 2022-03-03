@@ -14,6 +14,10 @@ export class WaitlistClient {
         firstName: string,
         lastName: string,
         promoCode?: string){
+        
+        if(promoCode === ""){
+            promoCode = undefined;
+        }
 
         const item: WaitlistItem = {
             firstName: firstName,
@@ -21,7 +25,7 @@ export class WaitlistClient {
             email: email,
             isStayer: isStayer,
             isHost: isHost,
-            promoCode
+            promoCode: promoCode 
         };
         await axios.post(url, item, cfg());
     }

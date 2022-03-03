@@ -21,6 +21,11 @@ import { PromotionService } from "./promotionService";
 @Route("promotions")
 export class PromotionsController extends Controller {
 
+    @Get()
+    public async getPromotions(): Promise<PromotionRecord[]>{
+        return await new PromotionService().getPromotions();
+    }
+
     @Get("{promotionId}")
     public async getPromotionById(
         @Path() promotionId: string,

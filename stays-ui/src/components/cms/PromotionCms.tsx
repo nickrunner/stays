@@ -2,57 +2,49 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Copyright from '../../../src/components/Copyright';
+import Copyright from '../Copyright';
 import { Box, Button, Modal } from '@mui/material';
-import CmsFrame from '../../../src/components/CmsFrame';
-import { StayClient } from '../../../src/clients/stayClient';
-import StaysPage from '../../../src/StaysPage';
+import CmsFrame from '../CmsFrame';
+import { PromotionClient } from '../../clients/promotionClient';
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { StayAttributeRecord, StayAttributeType } from '../../../../common/models/StayAttributes';
-import StayAttributesTable from '../../../src/components/StayAttributes/StayAttributesTable';
-import AddStayAttribute from './add';
+import { Promotion, PromotionRecord } from '../../../../common/models/Promotion';
+import AddPromotion from './AddPromotion';
+import PromotionsTable from './PromotionsTable';
 
-export interface StayAttributeCmsProps {
-    type: StayAttributeType
-}
-
-export default function StayAttributesCms(props: StayAttributeCmsProps) {
-    const[stayAttributes, setStayAttributes] = React.useState<StayAttributeRecord[]>([]);
-    const[selectedStayAttribute, setSelectedStayAttribute] = React.useState<StayAttributeRecord | undefined>(undefined);
+export default function PromotionCms() {
+    const[promotions, setPromotions] = React.useState<PromotionRecord[]>([]);
+    const[selectedPromotion, setSelectedPromotion] = React.useState<Promotion | undefined>(undefined);
     const [addOpen, setAddOpen] = React.useState(false);
     const handleAddOpen = () => setAddOpen(true);
     const handleAddClose = () => setAddOpen(false);
 
-    const getStayAttributes = async() => {
-        console.log("Getting stay attributes for "+props.type);
-        const stayAttributes: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
-        setStayAttributes(stayAttributes);
-    }
+    const getPromotions = async() => {
+        const promotions: PromotionRecord[] = await new PromotionClient().getPromotions();
+        setPromotions(promotions);
+    };
 
 
     React.useEffect(() => {
-        setStayAttributes([]);
-        getStayAttributes();
-    }, [props.type]);
+        setPromotions([]);
+        getPromotions();
+        return;
+    }, []);
 
-    function handleStayAttributeSelection(stayAttribute: StayAttributeRecord){
-        setSelectedStayAttribute(stayAttribute);
+    function handlePromotionSelection(promotion: PromotionRecord){
+        setSelectedPromotion(promotion);
     }
 
-    function getAttributeTypeText(){
-        return props.type;
-    }
 
   return (
-    <StaysPage>
 
+        <React.Fragment>
         <Modal 
         open={addOpen}
         onClose={handleAddClose}
         >
-            <AddStayAttribute type={props.type} />
+            <AddPromotion />
         </Modal>
 
         <Box sx={{ display: 'flex' }}>
@@ -66,16 +58,16 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
 
                     <Button variant="contained" sx={{m:1, width:200}} onClick={() => setAddOpen(true)}>
                         <AddIcon />
-                        Add {getAttributeTypeText()}
+                        Add Promotion
                     </Button>
 
-                    <Button variant="contained" sx={{m:1, width:200}} disabled={selectedStayAttribute == undefined}>
+                    <Button variant="contained" sx={{m:1, width:200}} disabled={selectedPromotion == undefined}>
                         <EditIcon />
-                        Edit {getAttributeTypeText()}
+                        Edit Promotion
                     </Button>
-                    <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedStayAttribute == undefined}>
+                    <Button variant="contained" sx={{m:1, width:200, bgcolor:"error.main"}} disabled={selectedPromotion == undefined}>
                         <DeleteIcon />
-                        Delete {getAttributeTypeText()}
+                        Delete Promotion
                     </Button>
                     
                     </Paper>
@@ -91,7 +83,9 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
                         height: 600,
                         }}
                     >
-                         <StayAttributesTable type={props.type} stayAttributes={stayAttributes} onSelect={handleStayAttributeSelection}/>  
+                         <PromotionsTable  
+                                onSelect={(promotion: PromotionRecord) => { handlePromotionSelection(promotion); } } 
+                                promotions={promotions}/>  
                     </Paper>
                     </Grid>
 
@@ -111,7 +105,8 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
             </Grid>
             <Copyright sx={{ pt: 4 }} />
         </Container>
-        </Box>
-    </StaysPage>
+    </Box>
+    </React.Fragment>
+
   );
 }

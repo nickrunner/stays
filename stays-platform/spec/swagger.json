@@ -487,6 +487,54 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/promotions": {
+			"get": {
+				"operationId": "GetPromotions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PromotionRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreatePromotion",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Promotion"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/promotions/{promotionId}": {
 			"get": {
 				"operationId": "GetPromotionById",
@@ -513,34 +561,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/promotions": {
-			"post": {
-				"operationId": "CreatePromotion",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Promotion"
-							}
-						}
-					}
-				}
 			}
 		},
 		"/promotions/{promoName}/{promoCode}/validate": {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LoadingButton } from "@mui/lab";
 import { Box, Checkbox, FormControlLabel, Paper, TextField, Accordion, AccordionSummary, Typography, AccordionDetails, Grid, IconButton } from "@mui/material";
 import React from "react";
@@ -9,9 +10,11 @@ import Image from "next/image";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
 
+export interface WaitlistProps{
+  close: () => void;
+}
 
-
-export default function Waitlist(props: any){
+export default function Waitlist(props: WaitlistProps){
 
   const [msg, setMsg] = React.useState("");  
   const [msgColor, setMsgColor] = React.useState("text.primary");
@@ -37,12 +40,20 @@ export default function Waitlist(props: any){
     }
   }
 
+  function clearErr(){
+    setPromoErr(false);
+    setEmailErr(false);
+    setFnErr(false);
+    setLnErr(false);
+  }
+
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setMsgColor("text.primary");
     setMsg("");
-
+    clearErr();
+    
     if(!firstName){
       setFnErr(true);
       setLoading(false);
@@ -79,9 +90,10 @@ export default function Waitlist(props: any){
         setEmailErr(true);
         return;
       }
+      let isPromoValid = false;
       if(promo != ""){
-        const isValid = await waitlistClient.isPromoCodeValid(promo);
-        if(!isValid){
+        isPromoValid = await waitlistClient.isPromoCodeValid(promo);
+        if(!isPromoValid){
           setMsgColor("error.main");
           setMsg("Promo code not valid");
           setLoading(false);
@@ -91,7 +103,13 @@ export default function Waitlist(props: any){
       }
       await waitlistClient.addToWaitlist(email, isStayer, isHost, firstName, lastName, promo);
       setMsgColor("success.main");
-      setMsg("You have been added to the waitlist! We will notify you when it's time for lift-off.")
+      if(isPromoValid && isHost){
+        setMsg("Congratulations. Your promo code is valid.  We will notify you when it's time to get started.");
+      }
+      else{
+        setMsg("You have been added to the waitlist! We will notify you when it's time for lift-off.");
+      }
+      
       setSubmitEnabled(false);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

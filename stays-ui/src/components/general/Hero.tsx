@@ -1,31 +1,24 @@
-import Waitlist from "./Waitlist";
-import { Box, Button, Stack, Typography, Modal, Container } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import styles from "../../../styles/ComingSoon.module.css";
 import { KeyboardDoubleArrowDown } from "@mui/icons-material";
-import { content } from "../../content";
+
 import Image from "next/image";
 
-export default function Hero(props: any) {
-    const [waitlistOpen, setWaitlistOpen] = React.useState(false);
-    const heroImg = content.images.hero.woodhouse;
+export interface HeroProps{
+    height?: string;
+    heading?: string;
+    description?: string;
+    buttonText?: string;
+    image: string;
+    blur?: string;
+    onButtonClick: () => void;
+}
 
-    function closeWaitlist()
-    {
-      console.log("Close Waitlist");
-      setWaitlistOpen(false)
-    }
+export default function Hero(props: HeroProps) {
 
     return (
         <React.Fragment>
-            <Modal 
-                open={waitlistOpen}
-                onClose={() => {closeWaitlist()}}
-            >
-                <Waitlist 
-                close={closeWaitlist}
-                />
-          </Modal>
 
             <Box
                 sx={{
@@ -40,11 +33,11 @@ export default function Hero(props: any) {
             }}>
                 <Image
                     className={styles.HeroImage}
-                    src={heroImg.img}
+                    src={props.image}
                     layout="fill"
                     priority
                     placeholder="blur"
-                    blurDataURL={heroImg.blur}
+                    blurDataURL={props.blur}
                     alt="Beautiful Vacation Rental"
                 />
             </Box>
@@ -83,7 +76,7 @@ export default function Hero(props: any) {
                     // sx={{mt:{xs:"5%", sm:"10%"}}}
                     fontWeight={700}
                     >
-                        {content.pages.comingSoon.hero.main}
+                        {props.heading}
                     </Typography>
                     <Typography
                     sx={{
@@ -95,18 +88,18 @@ export default function Hero(props: any) {
                     fontWeight={400}
                     gutterBottom
                     >
-                        {content.pages.comingSoon.hero.sub}
+                        {props.description}
                     </Typography>
                     <Button 
                         variant="contained" 
-                        onClick={() => setWaitlistOpen(true)}
+                        onClick={() => {props.onButtonClick()}}
                         size="large"
                         sx={{
                             margin:{xs:"auto", sm:0},
                             mt:{xs:"25%", sm:"7%"},
                             width:{xs: 200, md: 300},
                         }}>
-                        Join the Waitlist
+                        {props.buttonText}
                     </Button>
                 </Box>
             </Box>

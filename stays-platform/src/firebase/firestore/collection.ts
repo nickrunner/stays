@@ -18,9 +18,10 @@ export class Collection<Type> {
 
 
     public async getAll(query?: CollectionQuery): Promise<(Entity & Type)[]>{
-        console.log("getAll() query: "+ JSON.stringify(query, null, 2));
+       
         const results: Map<string, (Entity & Type)> = new Map();
         if (query && query.expressions.length > 0){
+            console.log("getAll() query: "+ JSON.stringify(query, null, 2));
             let i = 0;
             for(const exp of query.expressions){
                 const qSnap = await this.col.where(exp.key, exp.op, exp.val).get();
@@ -60,6 +61,7 @@ export class Collection<Type> {
             }
         }
         else{
+            console.log("getAll()");
             const qSnap: QuerySnapshot<Entity & Type> = await this.col.get();
             qSnap.forEach((doc) => {
                 results.set(doc.data().id, doc.data());
