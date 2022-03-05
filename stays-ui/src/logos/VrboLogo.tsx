@@ -1,5 +1,5 @@
-import * as React from "react"
-import { SVGProps } from "react"
+import * as React from "react";
+import { SVGProps } from "react";
 
 const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   <svg width={107} height={34} xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -26,6 +26,6 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
       <path d="m21.387 14.95.077.05c1.824-5.845 2.414-8.425.805-10H20v.05c2.568.873 3.1 3.371 1.387 9.9Zm83.37-2.448v1.113h-.171v-1.113h-.497v-.157h1.182v.157h-.514Zm1.969 1.113v-1.08l-.41 1.064h-.198l-.368-1.064v1.08h-.163l.052-1.27h.3l.342 1.064.394-1.064h.274l.051 1.27h-.274Z" />
     </g>
   </svg>
-)
+);
 
-export default SvgComponent
+export default SvgComponent;

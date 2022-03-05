@@ -1,14 +1,13 @@
-import * as React from "react"
-import { SVGProps } from "react"
+import * as React from "react";
+import { SVGProps } from "react";
 
 const StaysLogo = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={1350}
     height={697.5}
-    viewBox={"0 0 "+props.height+" "+props.width}
-    {...props}
-  >
+    viewBox={"0 0 " + props.height + " " + props.width}
+    {...props}>
     <defs>
       <clipPath id="a">
         <path d="M.484 0H562v587H.484Zm0 0" />
@@ -47,6 +46,6 @@ const StaysLogo = (props: SVGProps<SVGSVGElement>) => (
       />
     </g>
   </svg>
-)
+);
 
-export default StaysLogo
+export default StaysLogo;

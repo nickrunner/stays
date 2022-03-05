@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import createEmotionServer from "@emotion/server/create-instance";
-import { ServerStyleSheets } from "@material-ui/core/styles";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import * as React from "react";
 
-import { content } from "../src/content";
 import createEmotionCache from "../src/createEmotionCache";
 
 export default class MyDocument extends Document {

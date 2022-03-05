@@ -1,14 +1,14 @@
 .HeroImage {
-    opacity: 0.4;
-    object-fit: cover;
+  opacity: 0.4;
+  object-fit: cover;
 }
 
 .empMain {
-    font-weight: 900;
-    color: #6c5ee6;
+  font-weight: 900;
+  color: #6c5ee6;
 }
 
 .empBlack {
-    font-weight: 900;
-    color: #121828;
+  font-weight: 900;
+  color: #121828;
 }

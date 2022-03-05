@@ -1,6 +1,14 @@
-import React, { createContext, ReactElement, ReactNode, useEffect, useReducer, useRef } from 'react';
-import Reducer from './reducer';
-import { StaysContextType, StaysState } from './GlobalTypes';
+import React, {
+  createContext,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useRef
+} from "react";
+
+import { StaysContextType, StaysState } from "./GlobalTypes";
+import Reducer from "./reducer";
 
 /**
  * React Context-based Global Store with a reducer
@@ -21,10 +29,10 @@ export function GlobalStore({ children }: { children: ReactNode }): ReactElement
       return;
     }
     const getPersistenceType = globalState.persistenceType;
-    if (getPersistenceType === 'sessionStorage') {
-      sessionStorage.setItem('globalState', JSON.stringify(globalState));
-    } else if (getPersistenceType === 'localStorage') {
-      localStorage.setItem('globalState', JSON.stringify(globalState));
+    if (getPersistenceType === "sessionStorage") {
+      sessionStorage.setItem("globalState", JSON.stringify(globalState));
+    } else if (getPersistenceType === "localStorage") {
+      localStorage.setItem("globalState", JSON.stringify(globalState));
     }
   }, [globalState]);
 
@@ -37,14 +45,16 @@ export function GlobalStore({ children }: { children: ReactNode }): ReactElement
       return;
     }
     const getPersistenceType = globalState.persistenceType;
-    if (getPersistenceType === 'sessionStorage') {
-      localStorage.removeItem('globalState');
-    } else if (getPersistenceType === 'localStorage') {
-      sessionStorage.removeItem('globalState');
+    if (getPersistenceType === "sessionStorage") {
+      localStorage.removeItem("globalState");
+    } else if (getPersistenceType === "localStorage") {
+      sessionStorage.removeItem("globalState");
     }
   }, [globalState.persistenceType]);
 
-  return <globalContext.Provider value={{ globalState, dispatch }}>{children}</globalContext.Provider>;
+  return (
+    <globalContext.Provider value={{ globalState, dispatch }}>{children}</globalContext.Provider>
+  );
 }
 
 export const globalContext = createContext({} as StaysContextType);
@@ -53,7 +63,7 @@ export const initialState: StaysState = {
   self: undefined,
   isSignedIn: false,
   mobile: false,
-  persistenceType: 'sessionStorage'
+  persistenceType: "sessionStorage"
 };
 
 function initializeState() {
@@ -62,12 +72,11 @@ function initializeState() {
    first try to populate the state from Storage if not return initialState
   */
 
-  if (typeof (Storage) !== 'undefined') {
-  } else {
+  if (typeof Storage === "undefined") {
     return initialState;
   }
 
-  const fromLocalStorage = JSON.parse(localStorage.getItem('globalState') as string);
-  const fromSessionStorage = JSON.parse(sessionStorage.getItem('globalState') as string);
+  const fromLocalStorage = JSON.parse(localStorage.getItem("globalState") as string);
+  const fromSessionStorage = JSON.parse(sessionStorage.getItem("globalState") as string);
   return fromSessionStorage || fromLocalStorage || initialState;
 }
