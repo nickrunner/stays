@@ -5,7 +5,7 @@ import { getAuth } from "firebase-admin/auth";
 import { CollectionReference, DocumentData, getFirestore } from "firebase-admin/firestore";
 import { getStorage } from "firebase-admin/storage";
 
-import { default as serviceAccountJson } from "../../stays-dev-firebase-adminsdk-uwz4z-a24f839c4d.json";
+import { default as serviceAccountJson } from "../../stays-prod-firebase-adminsdk-ilku1-2f0bb379eb.json";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -14,7 +14,7 @@ import { default as serviceAccountJson } from "../../stays-dev-firebase-adminsdk
 const admin = require("firebase-admin");
 export const app: App = initializeApp({
   credential: admin.credential.cert(serviceAccountJson),
-  storageBucket: "stays-dev.appspot.com"
+  storageBucket: "stays-prod.appspot.com"
 });
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
