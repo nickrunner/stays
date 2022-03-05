@@ -1,13 +1,13 @@
-import { Paid } from '@mui/icons-material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
-import CelebrationIcon from '@mui/icons-material/Celebration';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import SavedSearchIcon from '@mui/icons-material/SavedSearch';
-import { Box } from '@mui/material';
+import { Paid } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import SavedSearchIcon from "@mui/icons-material/SavedSearch";
+import { Box } from "@mui/material";
 
-import { content } from '../../content';
-import Info from '../general/Info';
+import { content } from "../../content";
+import Info from "../general/Info";
 
 export interface StayerPerksProps {
   iconColor: string;

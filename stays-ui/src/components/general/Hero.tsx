@@ -1,9 +1,9 @@
-import { KeyboardDoubleArrowDown } from '@mui/icons-material';
-import { Box, Button, Typography } from '@mui/material';
-import Image from 'next/image';
-import React from 'react';
+import { KeyboardDoubleArrowDown } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
+import Image from "next/image";
+import React from "react";
 
-import styles from '../../../styles/ComingSoon.module.css';
+import styles from "../../../styles/ComingSoon.module.css";
 
 export interface HeroProps {
   height?: string;
@@ -20,14 +20,14 @@ export default function Hero(props: HeroProps) {
     <React.Fragment>
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           left: 0,
           right: 0,
           top: 0,
           height: props.height,
-          bgcolor: 'primary.dark',
+          bgcolor: "primary.dark",
           zIndex: -1,
-          justifyContent: 'center'
+          justifyContent: "center"
         }}>
         <Image
           className={styles.HeroImage}
@@ -42,27 +42,27 @@ export default function Hero(props: HeroProps) {
 
       <Box
         sx={{
-          width: '100%',
-          position: 'absolute',
+          width: "100%",
+          position: "absolute",
           top: 0,
           left: 0,
           height: props.height
         }}>
         <Box
           sx={{
-            margin: { xs: 'auto', sm: 0 },
+            margin: { xs: "auto", sm: 0 },
             maxWidth: {
               xs: 400,
               sm: 700,
               lg: 800,
               xl: 1000
             },
-            p: { xs: '10%', sm: '5%' },
-            pt: { xs: '20%' },
-            display: 'grid',
-            textAlign: { xs: 'center', sm: 'left' },
-            verticalAlign: 'center',
-            alignContent: { xs: 'center', sm: 'left' }
+            p: { xs: "10%", sm: "5%" },
+            pt: { xs: "20%" },
+            display: "grid",
+            textAlign: { xs: "center", sm: "left" },
+            verticalAlign: "center",
+            alignContent: { xs: "center", sm: "left" }
             //bgcolor:"secondary.main"
           }}>
           <Typography
@@ -74,8 +74,8 @@ export default function Hero(props: HeroProps) {
           </Typography>
           <Typography
             sx={{
-              mt: { xs: '15%', sm: '5%' },
-              align: { xs: 'center', lg: 'center' }
+              mt: { xs: "15%", sm: "5%" },
+              align: { xs: "center", lg: "center" }
             }}
             variant="h6"
             color="common.white"
@@ -90,8 +90,8 @@ export default function Hero(props: HeroProps) {
             }}
             size="large"
             sx={{
-              margin: { xs: 'auto', sm: 0 },
-              mt: { xs: '25%', sm: '7%' },
+              margin: { xs: "auto", sm: 0 },
+              mt: { xs: "25%", sm: "7%" },
               width: { xs: 200, md: 300 }
             }}>
             {props.buttonText}
@@ -104,17 +104,17 @@ export default function Hero(props: HeroProps) {
         alignItems="center"
         alignContent="center"
         sx={{
-          position: 'absolute',
+          position: "absolute",
           left: 0,
           right: 0,
-          top: '90%',
-          display: 'flex',
-          flexDirection: 'column'
+          top: "90%",
+          display: "flex",
+          flexDirection: "column"
         }}>
         <KeyboardDoubleArrowDown
           fontSize="large"
           sx={{
-            margin: 'auto'
+            margin: "auto"
           }}></KeyboardDoubleArrowDown>
       </Box>
     </React.Fragment>

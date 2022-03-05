@@ -1,30 +1,30 @@
-import { Container, Grid, Link, Typography } from '@mui/material';
+import { Container, Grid, Link, Typography } from "@mui/material";
 
-import Copyright from './Copyright';
+import Copyright from "./Copyright";
 
 export default function Footer() {
   const footers = [
     {
-      title: 'Stays',
-      description: ['Team', 'History', 'Contact us', 'Locations']
+      title: "Stays",
+      description: ["Team", "History", "Contact us", "Locations"]
     },
     {
-      title: 'Features',
+      title: "Features",
       description: [
-        'Cool stuff',
-        'Random feature',
-        'Team feature',
-        'Developer stuff',
-        'Another one'
+        "Cool stuff",
+        "Random feature",
+        "Team feature",
+        "Developer stuff",
+        "Another one"
       ]
     },
     {
-      title: 'Resources',
-      description: ['Resource', 'Resource name', 'Another resource', 'Final resource']
+      title: "Resources",
+      description: ["Resource", "Resource name", "Another resource", "Final resource"]
     },
     {
-      title: 'Legal',
-      description: ['Privacy policy', 'Terms of use']
+      title: "Legal",
+      description: ["Privacy policy", "Terms of use"]
     }
   ];
 
@@ -46,7 +46,7 @@ export default function Footer() {
             <ul>
               {footer.description.map((item) => (
                 <li key={item}>
-                  <Link href="#" variant="subtitle1" color="text.secondary">
+                  <Link href="/" variant="subtitle1" color="text.secondary">
                     {item}
                   </Link>
                 </li>

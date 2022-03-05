@@ -1,14 +1,14 @@
-import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
-import React from 'react';
+import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
+import React from "react";
 
 import {
   StayAttribute,
   StayAttributeRecord,
   StayAttributeType
-} from '../../../../common/models/StayAttributes';
-import { StayClient } from '../../clients/stayClient';
-import { theme } from '../../Theme';
-import { stayContext } from './StayContext';
+} from "../../../../common/models/StayAttributes";
+import { StayClient } from "../../clients/stayClient";
+import { theme } from "../../Theme";
+import { stayContext } from "./StayContext";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -72,15 +72,15 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
 
     switch (props.type) {
       case StayAttributeType.Amenity:
-        stay.amenities = typeof value === 'string' ? value.split(',') : value;
+        stay.amenities = typeof value === "string" ? value.split(",") : value;
         setSelectedAttributes(stay.amenities);
         break;
       case StayAttributeType.PropertyType:
-        stay.type = typeof value === 'string' ? value.split(',') : value;
+        stay.type = typeof value === "string" ? value.split(",") : value;
         setSelectedAttributes(stay.type);
         break;
       case StayAttributeType.SpecialInterest:
-        stay.specialInterests = typeof value === 'string' ? value.split(',') : value;
+        stay.specialInterests = typeof value === "string" ? value.split(",") : value;
         setSelectedAttributes(stay.specialInterests);
         break;
     }
@@ -97,7 +97,7 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
       onChange={(e) => handleAttributeChange(StayAttributeType.PropertyType, e)}
       input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
       renderValue={(selected) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
           {selected.map((value: any) => (
             <Chip key={value} label={value} />
           ))}

@@ -1,5 +1,5 @@
-export interface Token {
-    access: string,
-    identity: string,
-    refresh: string
-}
+export type Token = {
+  access: string;
+  identity: string;
+  refresh: string;
+};

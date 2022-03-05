@@ -1,14 +1,14 @@
-import { LoadingButton } from '@mui/lab';
-import { Box } from '@mui/material';
-import update from 'immutability-helper';
-import { DropzoneDialog } from 'material-ui-dropzone';
-import { useContext } from 'react';
-import React from 'react';
+import { LoadingButton } from "@mui/lab";
+import { Box } from "@mui/material";
+import update from "immutability-helper";
+import { DropzoneDialog } from "material-ui-dropzone";
+import { useContext } from "react";
+import React from "react";
 
-import { Photo } from '../../../../common/models/Photo';
-import { FilesClient } from '../../clients/filesClient';
-import { StayContext, stayContext } from './StayContext';
-import { StayPhotoCard } from './StayPhotoCard';
+import { Photo } from "../../../../common/models/Photo";
+import { FilesClient } from "../../clients/filesClient";
+import { StayContext, stayContext } from "./StayContext";
+import { StayPhotoCard } from "./StayPhotoCard";
 
 export default function StayPhotoForm(props: any) {
   const { stay } = useContext(stayContext);
@@ -26,22 +26,22 @@ export default function StayPhotoForm(props: any) {
   }
 
   function handleFileUploadError(file: File, error: string) {
-    console.log('Error: ' + error);
+    console.log("Error: " + error);
     handleCompletionEvent();
   }
 
   function handleFileUploadComplete(file: File, url: string) {
     stay.photos.push({
       url: url,
-      description: '',
+      description: "",
       priority: stay.photos.length
     });
-    console.log('Added photo: ', { stay });
+    console.log("Added photo: ", { stay });
     handleCompletionEvent();
   }
 
   function handleFileUploadStatus(file: File, status: string, progress: number) {
-    console.log('status: ' + status + ' progress: ' + progress);
+    console.log("status: " + status + " progress: " + progress);
   }
 
   function handleSubmit(files: File[]) {
@@ -49,7 +49,7 @@ export default function StayPhotoForm(props: any) {
     const filesClient = new FilesClient();
     for (const file of files) {
       setLoading(true);
-      filesClient.uploadFile(file, 'images/', {
+      filesClient.uploadFile(file, "images/", {
         onComplete: handleFileUploadComplete,
         onError: handleFileUploadError,
         onStatusChange: handleFileUploadStatus
@@ -85,7 +85,7 @@ export default function StayPhotoForm(props: any) {
 
   return (
     <StayContext>
-      <Box sx={{ mt: 1, mr: 5, ml: 5, justifyContent: 'center' }} margin="auto">
+      <Box sx={{ mt: 1, mr: 5, ml: 5, justifyContent: "center" }} margin="auto">
         <LoadingButton
           fullWidth={true}
           variant="contained"
@@ -95,9 +95,9 @@ export default function StayPhotoForm(props: any) {
           Add Photo
         </LoadingButton>
         <DropzoneDialog
-          acceptedFiles={['image/*']}
-          cancelButtonText={'cancel'}
-          submitButtonText={'submit'}
+          acceptedFiles={["image/*"]}
+          cancelButtonText={"cancel"}
+          submitButtonText={"submit"}
           showAlerts={true}
           filesLimit={5}
           maxFileSize={5000000}
@@ -113,7 +113,7 @@ export default function StayPhotoForm(props: any) {
         />
       </Box>
 
-      <Box margin="auto" sx={{ justifyContent: 'center' }}>
+      <Box margin="auto" sx={{ justifyContent: "center" }}>
         {photos.map((photo, i) => renderCard(photo, i))}
       </Box>
     </StayContext>

@@ -1,17 +1,17 @@
-import { Box } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import * as React from 'react';
+import { Box } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import * as React from "react";
 
-import CmsFrame from '../../../src/components/CmsFrame';
-import Copyright from '../../../src/components/Copyright';
-import StaysPage from '../../../src/StaysPage';
+import CmsFrame from "../../../src/components/CmsFrame";
+import Copyright from "../../../src/components/Copyright";
+import StaysPage from "../../../src/StaysPage";
 
 export default function ContentCms() {
   return (
     <StaysPage>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CmsFrame />
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
@@ -20,8 +20,8 @@ export default function ContentCms() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 240
                 }}></Paper>
             </Grid>
@@ -30,13 +30,13 @@ export default function ContentCms() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 240
                 }}></Paper>
             </Grid>
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}></Paper>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}></Paper>
             </Grid>
           </Grid>
           <Copyright sx={{ pt: 4 }} />

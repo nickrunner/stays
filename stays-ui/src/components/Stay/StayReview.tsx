@@ -1,4 +1,4 @@
-import { Grid3x3 } from '@mui/icons-material';
+import { Grid3x3 } from "@mui/icons-material";
 import {
   Box,
   Grid,
@@ -7,13 +7,13 @@ import {
   ListItem,
   ListItemText,
   Typography
-} from '@mui/material';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import React from 'react';
+} from "@mui/material";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import React from "react";
 
-import { Stay } from '../../../../common/models/Stay';
-import { stayContext } from './StayContext';
+import { Stay } from "../../../../common/models/Stay";
+import { stayContext } from "./StayContext";
 
 export default function StayReview(props: any) {
   const { stay } = React.useContext(stayContext);
@@ -41,12 +41,12 @@ export default function StayReview(props: any) {
         </List>
         <List>
           <ListItem sx={{ py: 1, px: 0 }}>
-            <ListItemText primary="Pets?" secondary={stay.petsAllowed ? 'Yes' : 'No'} />
+            <ListItemText primary="Pets?" secondary={stay.petsAllowed ? "Yes" : "No"} />
           </ListItem>
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText
               primary="On-Site Parking?"
-              secondary={stay.onSiteParking ? 'Yes' : 'No'}
+              secondary={stay.onSiteParking ? "Yes" : "No"}
             />
           </ListItem>
           <ListItem sx={{ py: 1, px: 0 }}>
@@ -63,14 +63,14 @@ export default function StayReview(props: any) {
           {stay.photos.map((photo) => (
             <ImageListItem key={photo.url}>
               <img
-                src={photo.url + '?w=164&h=164&fit=crop&auto=format&dpr=2 2x'}
+                src={photo.url + "?w=164&h=164&fit=crop&auto=format&dpr=2 2x"}
                 srcSet={photo.url}
                 alt={photo.description}
                 loading="lazy"
               />
               <ImageListItemBar
                 title={photo.description}
-                subtitle={'Priority: ' + photo.priority}
+                subtitle={"Priority: " + photo.priority}
               />
             </ImageListItem>
           ))}

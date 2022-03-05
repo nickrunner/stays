@@ -1,18 +1,18 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Modal } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import * as React from 'react';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button, Modal } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import * as React from "react";
 
-import { Promotion, PromotionRecord } from '../../../../common/models/Promotion';
-import { PromotionClient } from '../../clients/promotionClient';
-import CmsFrame from '../CmsFrame';
-import Copyright from '../Copyright';
-import AddPromotion from './AddPromotion';
-import PromotionsTable from './PromotionsTable';
+import { Promotion, PromotionRecord } from "../../../../common/models/Promotion";
+import { PromotionClient } from "../../clients/promotionClient";
+import CmsFrame from "../CmsFrame";
+import Copyright from "../Copyright";
+import AddPromotion from "./AddPromotion";
+import PromotionsTable from "./PromotionsTable";
 
 export default function PromotionCms() {
   const [promotions, setPromotions] = React.useState<PromotionRecord[]>([]);
@@ -44,12 +44,12 @@ export default function PromotionCms() {
         <AddPromotion />
       </Modal>
 
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CmsFrame />
         <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "row" }}>
                 <Button
                   variant="contained"
                   sx={{ m: 1, width: 200 }}
@@ -67,7 +67,7 @@ export default function PromotionCms() {
                 </Button>
                 <Button
                   variant="contained"
-                  sx={{ m: 1, width: 200, bgcolor: 'error.main' }}
+                  sx={{ m: 1, width: 200, bgcolor: "error.main" }}
                   disabled={selectedPromotion == undefined}>
                   <DeleteIcon />
                   Delete Promotion
@@ -79,8 +79,8 @@ export default function PromotionCms() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600
                 }}>
                 <PromotionsTable
@@ -96,10 +96,10 @@ export default function PromotionCms() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600,
-                  overflow: 'auto'
+                  overflow: "auto"
                 }}></Paper>
             </Grid>
           </Grid>

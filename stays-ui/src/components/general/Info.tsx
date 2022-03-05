@@ -1,5 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import { Box, Stack, Typography } from "@mui/material";
+import { PropsWithChildren } from "react";
 
 export interface InfoProps {
   title: string;
@@ -9,7 +9,7 @@ export interface InfoProps {
 
 export default function Info(props: PropsWithChildren<InfoProps>) {
   return (
-    <Box sx={{ pt: 2, pb: 2, display: 'flex', gap: 2 }}>
+    <Box sx={{ pt: 2, pb: 2, display: "flex", gap: 2 }}>
       {props.icon}
       <Stack>
         <Typography sx={{ mt: 0.5 }} variant="subtitle1" color="text.primary">

@@ -1,5 +1,5 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 
 export interface DetailsAccordionProps {
   header: string;
@@ -11,7 +11,7 @@ export default function DetailsAccordion(props: DetailsAccordionProps) {
   return (
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}
+        expandIcon={<ExpandMoreIcon sx={{ color: "primary.main" }} />}
         aria-controls="panel1a-content"
         id="panel1a-header">
         <Typography variant="h5" color="text.primary" gutterBottom sx={{ mt: 2 }}>

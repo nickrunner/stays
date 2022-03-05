@@ -1,9 +1,9 @@
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
-import { StayContext, stayContext } from './StayContext';
+import { StayContext, stayContext } from "./StayContext";
 
 export default function StayInfoForm(props: any) {
   const { stay } = React.useContext(stayContext);

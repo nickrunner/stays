@@ -1,11 +1,11 @@
-import Container from '@mui/material/Container';
-import { NextPage } from 'next';
-import * as React from 'react';
+import Container from "@mui/material/Container";
+import { NextPage } from "next";
+import * as React from "react";
 
-import { Nav } from '../src/components/AppBar/AppBar';
-import Copyright from '../src/components/Copyright';
-import SignIn from '../src/components/SignIn';
-import StaysPage from '../src/StaysPage';
+import { Nav } from "../src/components/AppBar/AppBar";
+import Copyright from "../src/components/Copyright";
+import SignIn from "../src/components/SignIn";
+import StaysPage from "../src/StaysPage";
 
 const SignInPage: NextPage = () => {
   return (

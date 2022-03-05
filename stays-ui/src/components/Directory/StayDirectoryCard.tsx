@@ -1,24 +1,24 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ShareIcon from '@mui/icons-material/Share';
-import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import Collapse from '@mui/material/Collapse';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ShareIcon from "@mui/icons-material/Share";
+import Avatar from "@mui/material/Avatar";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import Collapse from "@mui/material/Collapse";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
-import { Photo } from '../../../../common/models/Photo';
-import { Stay, StayRecord } from '../../../../common/models/Stay';
-import { content } from '../../content';
-import { globalContext } from '../../GlobalStore';
-import ImageCarousel from '../ImageCarousel/ImageCarousel';
+import { Photo } from "../../../../common/models/Photo";
+import { Stay, StayRecord } from "../../../../common/models/Stay";
+import { content } from "../../content";
+import { globalContext } from "../../GlobalStore";
+import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -28,9 +28,9 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest
   })
 }));
@@ -65,19 +65,19 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
 
   function getAvatar(region: string) {
     switch (region) {
-      case 'Coastal':
+      case "Coastal":
         return content.images.regions.coastal;
-      case 'Midwest':
+      case "Midwest":
         return content.images.regions.midwest;
-      case 'Northeast':
+      case "Northeast":
         return content.images.regions.northeast;
-      case 'Pacific Northwest':
+      case "Pacific Northwest":
         return content.images.regions.pnw;
-      case 'Southern':
+      case "Southern":
         return content.images.regions.southern;
-      case 'Southwest':
+      case "Southwest":
         return content.images.regions.southwest;
-      case 'Western':
+      case "Western":
         return content.images.regions.western;
       default:
         return content.images.regions.american;
@@ -85,7 +85,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   }
 
   function getCaption(description: string) {
-    return description.split('.')[0];
+    return description.split(".")[0];
   }
 
   function getImageCarouselProps(stay: Stay) {
@@ -105,7 +105,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         height="200"
         avatar={
           <Avatar
-            sx={{ bgcolor: 'primary.main' }}
+            sx={{ bgcolor: "primary.main" }}
             aria-label="stay"
             src={getAvatar(props.stay.location.region)}></Avatar>
         }
@@ -116,13 +116,13 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         }
         title={props.stay.name}
         titleTypographyProps={{
-          align: 'left',
-          variant: 'subtitle1',
-          color: 'common.black'
+          align: "left",
+          variant: "subtitle1",
+          color: "common.black"
         }}
-        subheader={props.stay.location.address.city + ', ' + props.stay.location.address.state}
+        subheader={props.stay.location.address.city + ", " + props.stay.location.address.state}
         subheaderTypographyProps={{
-          variant: 'subtitle1'
+          variant: "subtitle1"
         }}
       />
       <CardMedia>

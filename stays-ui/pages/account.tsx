@@ -1,11 +1,11 @@
-import { Container, ThemeProvider } from '@mui/material';
-import React from 'react';
+import { Container, ThemeProvider } from "@mui/material";
+import React from "react";
 
-import { Nav } from '../src/components/AppBar/AppBar';
-import Copyright from '../src/components/Copyright';
-import Footer from '../src/components/Footer';
-import UnderConstruction from '../src/components/UnderConstruction';
-import { theme } from '../src/Theme';
+import { Nav } from "../src/components/AppBar/AppBar";
+import Copyright from "../src/components/Copyright";
+import Footer from "../src/components/Footer";
+import UnderConstruction from "../src/components/UnderConstruction";
+import { theme } from "../src/Theme";
 
 function Account() {
   const [mobile, setMobile] = React.useState(false);
@@ -14,8 +14,8 @@ function Account() {
     function handleResize() {
       setMobile(window.innerWidth < 600);
     }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

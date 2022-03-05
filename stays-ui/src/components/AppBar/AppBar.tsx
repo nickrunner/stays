@@ -1,24 +1,23 @@
-import MuiAppBar, { AppBarProps } from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
-import MuiToolbar from '@mui/material/Toolbar';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import React from 'react';
+import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import MuiToolbar from "@mui/material/Toolbar";
+import dynamic from "next/dynamic";
+import React from "react";
 
-import { content } from '../../content';
-import { globalContext } from '../../GlobalStore';
-import { theme } from '../../Theme';
-import Link from '../Link';
-import LoginMenu from './LoginMenu';
-import NavButton from './NavButton';
+import { content } from "../../content";
+import { globalContext } from "../../GlobalStore";
+import { theme } from "../../Theme";
+import Link from "../Link";
+import LoginMenu from "./LoginMenu";
+import NavButton from "./NavButton";
 
-const Greeting = dynamic(() => import('./Greeting'), { ssr: false });
+const Greeting = dynamic(() => import("./Greeting"), { ssr: false });
 
 const Toolbar = styled(MuiToolbar)(({ theme }) => ({
   height: 75,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     height: 110
   }
 }));
@@ -40,8 +39,8 @@ export function Nav(props: StaysAppBarProps) {
       setScroll(window.scrollY != 0);
     }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   function logoHeight() {
@@ -64,25 +63,25 @@ export function Nav(props: StaysAppBarProps) {
     <ThemeProvider theme={theme}>
       <AppBar
         position="fixed"
-        style={{ background: transparentBg() ? 'transparent' : 'background.default' }}>
+        style={{ background: transparentBg() ? "transparent" : "background.default" }}>
         <Toolbar
           sx={{
-            justifyContent: 'space-between',
-            bgcolor: transparentBg() ? 'common.transparent' : 'background.default'
+            justifyContent: "space-between",
+            bgcolor: transparentBg() ? "common.transparent" : "background.default"
           }}>
           <Box
             sx={{
-              mx: 'auto',
+              mx: "auto",
               ml: getNavMargin(),
               flex: 1,
-              display: 'flex',
-              justifyContent: 'flex-start'
+              display: "flex",
+              justifyContent: "flex-start"
             }}>
-            <Link href={'/'}>
-              <img height={logoHeight()} src={getLogo()} />
+            <Link href={"/"}>
+              <img alt="stays logo" height={logoHeight()} src={getLogo()} />
             </Link>
           </Box>
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', mx: 'auto' }}>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "center", mx: "auto" }}>
             <NavButton transparent={props.transparent} text="Find a Stay" to="/search"></NavButton>
             <NavButton transparent={props.transparent} text="For Stayers" to="/stayers"></NavButton>
             <NavButton transparent={props.transparent} text="For Hosts" to="/hosts"></NavButton>
@@ -90,10 +89,10 @@ export function Nav(props: StaysAppBarProps) {
 
           <Box
             sx={{
-              mx: 'auto',
+              mx: "auto",
               flex: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
+              display: "flex",
+              justifyContent: "flex-end",
               mr: getNavMargin()
             }}>
             <Greeting transparent={props.transparent} />

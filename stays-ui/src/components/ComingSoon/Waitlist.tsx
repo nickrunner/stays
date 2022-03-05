@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import { LoadingButton } from '@mui/lab';
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import { LoadingButton } from "@mui/lab";
 import {
   Accordion,
   AccordionDetails,
@@ -15,30 +15,30 @@ import {
   Paper,
   TextField,
   Typography
-} from '@mui/material';
-import React from 'react';
+} from "@mui/material";
+import React from "react";
 
-import { AuthClient } from '../../clients/authClient';
-import { WaitlistClient } from '../../clients/waitlistClient';
+import { AuthClient } from "../../clients/authClient";
+import { WaitlistClient } from "../../clients/waitlistClient";
 
 export interface WaitlistProps {
   close: () => void;
 }
 
 export default function Waitlist(props: WaitlistProps) {
-  const [msg, setMsg] = React.useState('');
-  const [msgColor, setMsgColor] = React.useState('text.primary');
+  const [msg, setMsg] = React.useState("");
+  const [msgColor, setMsgColor] = React.useState("text.primary");
   const [isStayer, setIsStayer] = React.useState(false);
   const [isHost, setIsHost] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const [fnErr, setFnErr] = React.useState(false);
   const [lnErr, setLnErr] = React.useState(false);
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [emailErr, setEmailErr] = React.useState(false);
-  const [promo, setPromo] = React.useState('');
+  const [promo, setPromo] = React.useState("");
   const [promoErr, setPromoErr] = React.useState(false);
   const gridBottomRef = React.useRef<null | HTMLDivElement>(null);
 
@@ -60,29 +60,29 @@ export default function Waitlist(props: WaitlistProps) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setMsgColor('text.primary');
-    setMsg('');
+    setMsgColor("text.primary");
+    setMsg("");
     clearErr();
 
     if (!firstName) {
       setFnErr(true);
       setLoading(false);
-      setMsgColor('error.main');
-      setMsg('First name required');
+      setMsgColor("error.main");
+      setMsg("First name required");
       return;
     }
 
     if (!lastName) {
       setLnErr(true);
       setLoading(false);
-      setMsgColor('error.main');
-      setMsg('Last name required');
+      setMsgColor("error.main");
+      setMsg("Last name required");
       return;
     }
 
     if (!validateEmail(email)) {
-      setMsgColor('error.main');
-      setMsg('Please enter a valid email address');
+      setMsgColor("error.main");
+      setMsg("Please enter a valid email address");
       setLoading(false);
       setEmailErr(true);
       return;
@@ -94,25 +94,25 @@ export default function Waitlist(props: WaitlistProps) {
     try {
       const isEmailValid = await authClient.isEmailValid(email);
       if (!isEmailValid) {
-        setMsgColor('error.main');
-        setMsg('Please enter a valid email address');
+        setMsgColor("error.main");
+        setMsg("Please enter a valid email address");
         setLoading(false);
         setEmailErr(true);
         return;
       }
       let isPromoValid = false;
-      if (promo != '') {
+      if (promo != "") {
         isPromoValid = await waitlistClient.isPromoCodeValid(promo);
         if (!isPromoValid) {
-          setMsgColor('error.main');
-          setMsg('Promo code not valid');
+          setMsgColor("error.main");
+          setMsg("Promo code not valid");
           setLoading(false);
           setPromoErr(true);
           return;
         }
       }
       await waitlistClient.addToWaitlist(email, isStayer, isHost, firstName, lastName, promo);
-      setMsgColor('success.main');
+      setMsgColor("success.main");
       if (isPromoValid && isHost) {
         setMsg(
           "Congratulations. Your promo code is valid.  We will notify you when it's time to get started."
@@ -126,15 +126,15 @@ export default function Waitlist(props: WaitlistProps) {
       setSubmitEnabled(false);
     } catch (err: any) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      console.log('Error adding to waitlist:: ' + JSON.stringify(err, null, 2));
-      console.log('message: ' + err.message);
-      if (err.message === 'Request failed with status code 409') {
-        setMsgColor('success.main');
-        setMsg('You are already on the waitlist!');
+      console.log("Error adding to waitlist:: " + JSON.stringify(err, null, 2));
+      console.log("message: " + err.message);
+      if (err.message === "Request failed with status code 409") {
+        setMsgColor("success.main");
+        setMsg("You are already on the waitlist!");
         setSubmitEnabled(false);
       } else {
-        setMsgColor('error.main');
-        setMsg('There was a problem adding you to the waitlist. Try again in a few moments.');
+        setMsgColor("error.main");
+        setMsg("There was a problem adding you to the waitlist. Try again in a few moments.");
       }
     }
 
@@ -144,7 +144,7 @@ export default function Waitlist(props: WaitlistProps) {
   function handleAccordionExpanded(expanded: boolean) {
     if (expanded) {
       if (gridBottomRef.current) {
-        gridBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        gridBottomRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }
   }
@@ -156,9 +156,9 @@ export default function Waitlist(props: WaitlistProps) {
   }
 
   function handleStayerChange(state: boolean) {
-    console.log('Is Stayer: ' + isStayer);
+    console.log("Is Stayer: " + isStayer);
     setIsStayer(state);
-    console.log('After change: ' + isStayer);
+    console.log("After change: " + isStayer);
     enableSubmit(state, isHost);
   }
 
@@ -204,19 +204,19 @@ export default function Waitlist(props: WaitlistProps) {
       sx={{
         maxWidth: { xs: 400, sm: 800 },
         maxHeight: 600,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         width: { xs: 300, md: 400 },
-        bgcolor: 'background.paper',
-        border: '0px solid #000',
+        bgcolor: "background.paper",
+        border: "0px solid #000",
         boxShadow: 24
       }}>
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start', p: 1, pb: 0 }}>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-start", p: 1, pb: 0 }}>
         <IconButton color="primary" aria-label="close waitlist modal" onClick={props.close}>
           <CloseIcon />
         </IconButton>
@@ -240,7 +240,7 @@ export default function Waitlist(props: WaitlistProps) {
           mt: 0,
           pr: 4,
           pl: 4,
-          overflow: 'auto'
+          overflow: "auto"
         }}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -281,7 +281,7 @@ export default function Waitlist(props: WaitlistProps) {
         <Grid item xs={12}>
           <Accordion onChange={(event, expanded) => handleAccordionExpanded(expanded)}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}
+              expandIcon={<ExpandMoreIcon sx={{ color: "primary.main" }} />}
               aria-controls="promo-code-content"
               id="promo-code-header">
               <Typography variant="body1" color="text.primary" gutterBottom sx={{ mt: 2 }}>
@@ -303,9 +303,9 @@ export default function Waitlist(props: WaitlistProps) {
 
         <div ref={gridBottomRef} />
       </Grid>
-      <Box sx={{ display: 'inline', gap: 2, mt: 5 }}></Box>
+      <Box sx={{ display: "inline", gap: 2, mt: 5 }}></Box>
 
-      <Box sx={{ p: 4, pt: 0, width: '100%', justifyContent: 'center', textAlign: 'center' }}>
+      <Box sx={{ p: 4, pt: 0, width: "100%", justifyContent: "center", textAlign: "center" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <FormControlLabel
@@ -327,7 +327,7 @@ export default function Waitlist(props: WaitlistProps) {
           </Grid>
         </Grid>
 
-        <Typography sx={{ margin: 'auto', pb: 1 }} variant="subtitle2" color={msgColor}>
+        <Typography sx={{ margin: "auto", pb: 1 }} variant="subtitle2" color={msgColor}>
           {msg}
         </Typography>
 

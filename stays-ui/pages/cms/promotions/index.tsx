@@ -1,9 +1,9 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import React from 'react';
+import type { NextPage } from "next";
+import Head from "next/head";
+import React from "react";
 
-import PromotionCms from '../../../src/components/cms/PromotionCms';
-import StaysPage from '../../../src/StaysPage';
+import PromotionCms from "../../../src/components/cms/PromotionCms";
+import StaysPage from "../../../src/StaysPage";
 
 const PromotionsCmsPage: NextPage = () => {
   return (

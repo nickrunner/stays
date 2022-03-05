@@ -1,27 +1,27 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, FormControl, FormGroup, Grid, TextField, Typography } from '@mui/material';
-import React from 'react';
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
+import React from "react";
 
-import { StayClient } from '../../../src/clients/stayClient';
+import { StayClient } from "../../../src/clients/stayClient";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '0px solid #000',
+  bgcolor: "background.paper",
+  border: "0px solid #000",
   boxShadow: 24,
   p: 4
 };
 
 export default function AddStayAttribute(props: any) {
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [icon, setIcon] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [icon, setIcon] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [errMsg, setErrMsg] = React.useState('');
+  const [errMsg, setErrMsg] = React.useState("");
 
   function getAttributeTypeText() {
     return props.type;
@@ -32,8 +32,8 @@ export default function AddStayAttribute(props: any) {
     try {
       await new StayClient().addStayAttribute(props.type, name, icon, description);
     } catch (e: any) {
-      if (e.message == 'Request failed with status code 409') {
-        setErrMsg('Attribute Already Exists');
+      if (e.message == "Request failed with status code 409") {
+        setErrMsg("Attribute Already Exists");
       } else {
         setErrMsg(e.message);
       }
@@ -45,12 +45,12 @@ export default function AddStayAttribute(props: any) {
   return (
     <Box sx={style}>
       <Typography variant="h6" gutterBottom>
-        {'Add ' + getAttributeTypeText()}
+        {"Add " + getAttributeTypeText()}
       </Typography>
       <FormGroup>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <FormControl sx={{ mt: 1, width: '65%' }}>
+            <FormControl sx={{ mt: 1, width: "65%" }}>
               <TextField
                 required
                 id="name"
@@ -65,7 +65,7 @@ export default function AddStayAttribute(props: any) {
               required
               id="description"
               name="description"
-              label={'Description of ' + props.type}
+              label={"Description of " + props.type}
               fullWidth
               multiline
               rows={5}
@@ -78,14 +78,14 @@ export default function AddStayAttribute(props: any) {
         </Grid>
         <div>
           <LoadingButton
-            sx={{ m: 2, width: '20%' }}
+            sx={{ m: 2, width: "20%" }}
             onClick={() => handleSubmit()}
             variant="contained"
             loading={loading}
             loadingPosition="end">
             Submit
           </LoadingButton>
-          <Button sx={{ m: 2, width: '20%' }} variant="contained">
+          <Button sx={{ m: 2, width: "20%" }} variant="contained">
             Cancel
           </Button>
         </div>

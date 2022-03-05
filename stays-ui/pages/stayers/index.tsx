@@ -1,7 +1,7 @@
-import { Nav } from '../../src/components/AppBar/AppBar';
-import Footer from '../../src/components/Footer';
-import Pricing from '../../src/components/Pricing';
-import StaysPage from '../../src/StaysPage';
+import { Nav } from "../../src/components/AppBar/AppBar";
+import Footer from "../../src/components/Footer";
+import Pricing from "../../src/components/Pricing";
+import StaysPage from "../../src/StaysPage";
 
 function Stayers() {
   return (

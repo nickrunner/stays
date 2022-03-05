@@ -1,19 +1,19 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Modal } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import * as React from 'react';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button, Modal } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import * as React from "react";
 
-import { StayAttributeRecord, StayAttributeType } from '../../../../common/models/StayAttributes';
-import { StayClient } from '../../../src/clients/stayClient';
-import CmsFrame from '../../../src/components/CmsFrame';
-import Copyright from '../../../src/components/Copyright';
-import StayAttributesTable from '../../../src/components/StayAttributes/StayAttributesTable';
-import StaysPage from '../../../src/StaysPage';
-import AddStayAttribute from './add';
+import { StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
+import { StayClient } from "../../../src/clients/stayClient";
+import CmsFrame from "../../../src/components/CmsFrame";
+import Copyright from "../../../src/components/Copyright";
+import StayAttributesTable from "../../../src/components/StayAttributes/StayAttributesTable";
+import StaysPage from "../../../src/StaysPage";
+import AddStayAttribute from "./add";
 
 export interface StayAttributeCmsProps {
   type: StayAttributeType;
@@ -29,7 +29,7 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
   const handleAddClose = () => setAddOpen(false);
 
   const getStayAttributes = async () => {
-    console.log('Getting stay attributes for ' + props.type);
+    console.log("Getting stay attributes for " + props.type);
     const stayAttributes: StayAttributeRecord[] = await new StayClient().getStayAttributes(
       props.type
     );
@@ -55,12 +55,12 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
         <AddStayAttribute type={props.type} />
       </Modal>
 
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CmsFrame />
         <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "row" }}>
                 <Button
                   variant="contained"
                   sx={{ m: 1, width: 200 }}
@@ -78,7 +78,7 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
                 </Button>
                 <Button
                   variant="contained"
-                  sx={{ m: 1, width: 200, bgcolor: 'error.main' }}
+                  sx={{ m: 1, width: 200, bgcolor: "error.main" }}
                   disabled={selectedStayAttribute == undefined}>
                   <DeleteIcon />
                   Delete {getAttributeTypeText()}
@@ -90,8 +90,8 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600
                 }}>
                 <StayAttributesTable
@@ -106,10 +106,10 @@ export default function StayAttributesCms(props: StayAttributeCmsProps) {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600,
-                  overflow: 'auto'
+                  overflow: "auto"
                 }}></Paper>
             </Grid>
           </Grid>

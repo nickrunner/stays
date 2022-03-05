@@ -1,22 +1,22 @@
-import { Box, Button, Modal } from '@mui/material';
-import React from 'react';
+import { Box, Button, Modal } from "@mui/material";
+import React from "react";
 
-import { content } from '../../content';
-import Hero from '../general/Hero';
-import Section from '../general/Section';
-import About from './About';
-import Description from './Description';
-import Details from './Details';
-import Footer from './Footer';
-import Mockups from './Mockups';
-import SocialProof from './SocialProof';
-import Waitlist from './Waitlist';
+import { content } from "../../content";
+import Hero from "../general/Hero";
+import Section from "../general/Section";
+import About from "./About";
+import Description from "./Description";
+import Details from "./Details";
+import Footer from "./Footer";
+import Mockups from "./Mockups";
+import SocialProof from "./SocialProof";
+import Waitlist from "./Waitlist";
 
 export default function ComingSoon() {
   const [waitlistOpen, setWaitlistOpen] = React.useState(false);
 
   function closeWaitlist() {
-    console.log('Close Waitlist');
+    console.log("Close Waitlist");
     setWaitlistOpen(false);
   }
 
@@ -47,12 +47,12 @@ export default function ComingSoon() {
         alignItems="center"
         alignContent="center"
         sx={{
-          position: 'absolute',
+          position: "absolute",
           left: 0,
           right: 0,
-          top: '95%',
-          display: 'flex',
-          flexDirection: 'column'
+          top: "95%",
+          display: "flex",
+          flexDirection: "column"
         }}>
         <Section>
           <Description />
@@ -74,7 +74,7 @@ export default function ComingSoon() {
           <Details />
         </Section>
 
-        <Box sx={{ p: '0%' }}>
+        <Box sx={{ p: "0%" }}>
           <Button
             variant="contained"
             onClick={() => setWaitlistOpen(true)}
@@ -87,7 +87,7 @@ export default function ComingSoon() {
           </Button>
         </Box>
 
-        <Box maxWidth="lg" sx={{ p: '1%', display: 'flex' }}>
+        <Box maxWidth="lg" sx={{ p: "1%", display: "flex" }}>
           <Footer />
         </Box>
       </Box>

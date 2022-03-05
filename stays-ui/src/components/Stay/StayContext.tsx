@@ -1,6 +1,6 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from "react";
 
-import { Stay, StayApplicationStatus } from '../../../../common/models/Stay';
+import { Stay, StayApplicationStatus } from "../../../../common/models/Stay";
 
 export type StayContextType = {
   stay: Stay;
@@ -9,10 +9,10 @@ export type StayContextType = {
 export const stayContext = React.createContext({} as StayContextType);
 
 const defaultStay: Stay = {
-  name: '',
+  name: "",
   currentRate: 0,
   averageRate: 0,
-  description: '',
+  description: "",
   capacity: 1,
   bedrooms: 1,
   type: [],
@@ -22,22 +22,22 @@ const defaultStay: Stay = {
   petsAllowed: false,
   onSiteParking: false,
   photos: [],
-  hostEmail: '',
+  hostEmail: "",
   enable: true,
   status: StayApplicationStatus.Pending,
   social: [],
   booking: [],
-  demand: '',
+  demand: "",
   location: {
     address: {
-      city: '',
-      state: '',
+      city: "",
+      state: "",
       zip: 0,
-      address1: '',
-      address2: '',
-      country: ''
+      address1: "",
+      address2: "",
+      country: ""
     },
-    region: '',
+    region: "",
     coordinates: {
       latitude: 0,
       longitude: 0

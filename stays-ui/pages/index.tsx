@@ -1,8 +1,8 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import React from 'react';
+import type { NextPage } from "next";
+import Head from "next/head";
+import React from "react";
 
-import ComingSoon from '../src/components/ComingSoon/ComingSoon';
+import ComingSoon from "../src/components/ComingSoon/ComingSoon";
 
 const ComingSoonPage: NextPage = () => {
   return (

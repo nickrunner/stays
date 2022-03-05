@@ -1,14 +1,14 @@
-import { CardActionArea, TextField } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { XYCoord } from 'dnd-core';
-import * as React from 'react';
-import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
+import { CardActionArea, TextField } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { XYCoord } from "dnd-core";
+import * as React from "react";
+import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 
-import { Photo } from '../../../../common/models/Photo';
-import { stayContext } from './StayContext';
+import { Photo } from "../../../../common/models/Photo";
+import { stayContext } from "./StayContext";
 
 export interface StayPhotoCardProps {
   photo: Photo;
@@ -27,7 +27,7 @@ export const StayPhotoCard: React.FC<StayPhotoCardProps> = ({ photo, id, index, 
   const { stay } = React.useContext(stayContext);
   const ref = React.useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop({
-    accept: 'card',
+    accept: "card",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId()
@@ -72,7 +72,7 @@ export const StayPhotoCard: React.FC<StayPhotoCardProps> = ({ photo, id, index, 
     }
   });
   const [{ isDragging }, drag] = useDrag({
-    type: 'card',
+    type: "card",
     item: () => {
       return { id, index };
     },
@@ -92,12 +92,12 @@ export const StayPhotoCard: React.FC<StayPhotoCardProps> = ({ photo, id, index, 
   }
 
   const style = {
-    cursor: 'move'
+    cursor: "move"
   };
 
   return (
     <Card
-      sx={{ m: 3, border: '1px solid', borderColor: 'primary.dark' }}
+      sx={{ m: 3, border: "1px solid", borderColor: "primary.dark" }}
       ref={ref}
       style={{ ...style, opacity }}
       data-handler-id={handlerId}>

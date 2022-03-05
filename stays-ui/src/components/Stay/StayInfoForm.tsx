@@ -6,16 +6,16 @@ import {
   MenuItem,
   OutlinedInput,
   Select
-} from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import * as React from 'react';
+} from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
 
-import { StayAttributeType } from '../../../../common/models/StayAttributes';
-import StayAttributeSelector from './StayAttributeSelector';
-import { stayContext } from './StayContext';
+import { StayAttributeType } from "../../../../common/models/StayAttributes";
+import StayAttributeSelector from "./StayAttributeSelector";
+import { stayContext } from "./StayContext";
 
 export default function StayInfoForm() {
   const { stay } = React.useContext(stayContext);
@@ -57,7 +57,7 @@ export default function StayInfoForm() {
       <FormGroup>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <FormControl sx={{ mt: 1, width: '65%' }}>
+            <FormControl sx={{ mt: 1, width: "65%" }}>
               <TextField
                 required
                 id="name"
@@ -67,7 +67,7 @@ export default function StayInfoForm() {
                 onChange={(e) => handleNameChange(e.target.value)}
               />
             </FormControl>
-            <FormControl sx={{ ml: 1, mt: 1, width: '25%' }}>
+            <FormControl sx={{ ml: 1, mt: 1, width: "25%" }}>
               <InputLabel htmlFor="outlined-adornment-amount">Current Rate</InputLabel>
               <OutlinedInput
                 required

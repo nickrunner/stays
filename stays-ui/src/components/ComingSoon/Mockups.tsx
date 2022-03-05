@@ -1,8 +1,8 @@
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 
-import { content } from '../../content';
-import SectionHead from '../general/SectionHead';
-import NextImageCarousel from '../ImageCarousel/NextImageCarousel';
+import { content } from "../../content";
+import SectionHead from "../general/SectionHead";
+import NextImageCarousel from "../ImageCarousel/NextImageCarousel";
 
 export default function Mockups() {
   function getImageCarouselProps() {
@@ -23,9 +23,9 @@ export default function Mockups() {
         sx={{
           width: 300,
           mt: 5,
-          justifyContent: 'center',
-          margin: 'auto',
-          display: { xs: 'grid', md: 'flex' },
+          justifyContent: "center",
+          margin: "auto",
+          display: { xs: "grid", md: "flex" },
           gap: 5
         }}>
         <NextImageCarousel width="600" height="1200" images={getImageCarouselProps()} />

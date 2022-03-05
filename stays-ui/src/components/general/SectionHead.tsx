@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SectionHead(props: any) {
@@ -8,7 +8,7 @@ export default function SectionHead(props: any) {
       align="center"
       color="text.primary"
       sx={{
-        align: { xs: 'center', sm: 'left' }
+        align: { xs: "center", sm: "left" }
       }}>
       {props.children}
     </Typography>

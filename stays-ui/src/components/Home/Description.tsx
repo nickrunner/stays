@@ -1,42 +1,42 @@
-import { BookOnline, Loyalty, Search } from '@mui/icons-material';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { Box, Button, Container, Grid, SxProps, Theme, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import { BookOnline, Loyalty, Search } from "@mui/icons-material";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import { Box, Button, Container, Grid, SxProps, Theme, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import * as React from "react";
 
-import { content } from '../../content';
+import { content } from "../../content";
 
 export default function Description(props: any) {
   const router = useRouter();
 
   const item: SxProps<Theme> = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     px: 5
   };
 
   return (
     <Box
       component="section"
-      sx={{ mt: 20, display: 'flex', bgcolor: 'background.default', overflow: 'hidden' }}>
+      sx={{ mt: 20, display: "flex", bgcolor: "background.default", overflow: "hidden" }}>
       <Container
         sx={{
           mt: 5,
           mb: 5,
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          bgcolor: 'backgound.default'
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          bgcolor: "backgound.default"
         }}>
         <Box
           component="img"
           src={content.images.dotMap}
           sx={{
-            pointerEvents: 'none',
-            position: 'absolute',
-            width: '100%',
+            pointerEvents: "none",
+            position: "absolute",
+            width: "100%",
             top: 0,
             opacity: 0.7
           }}
@@ -80,7 +80,7 @@ export default function Description(props: any) {
           variant="contained"
           component="a"
           onClick={() => {
-            router.push('/premium-sign-up');
+            router.push("/premium-sign-up");
           }}
           sx={{ mt: 5 }}>
           Get started

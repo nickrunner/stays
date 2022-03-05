@@ -1,13 +1,13 @@
-import { Paid } from '@mui/icons-material';
-import CancelScheduleSendIcon from '@mui/icons-material/CancelScheduleSend';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
-import RocketIcon from '@mui/icons-material/Rocket';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import { Box } from '@mui/material';
+import { Paid } from "@mui/icons-material";
+import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import RocketIcon from "@mui/icons-material/Rocket";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { Box } from "@mui/material";
 
-import { content } from '../../content';
-import Info from '../general/Info';
+import { content } from "../../content";
+import Info from "../general/Info";
 
 export interface HostPerksProps {
   iconColor: string;

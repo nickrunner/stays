@@ -1,26 +1,26 @@
-import { Copyright } from '@mui/icons-material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { LoadingButton } from '@mui/lab';
-import { Avatar, Box, Container, CssBaseline, Grid, TextField, Typography } from '@mui/material';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React from 'react';
+import { Copyright } from "@mui/icons-material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LoadingButton } from "@mui/lab";
+import { Avatar, Box, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 
-import { AuthClient } from '../clients/authClient';
-import { UserClient } from '../clients/userClient';
-import StaysPage from '../StaysPage';
-import { Nav } from './AppBar/AppBar';
+import { AuthClient } from "../clients/authClient";
+import { UserClient } from "../clients/userClient";
+import StaysPage from "../StaysPage";
+import { Nav } from "./AppBar/AppBar";
 
 export default function SignIn() {
   const router = useRouter();
-  const [errMsg, setErrMsg] = React.useState('');
+  const [errMsg, setErrMsg] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     async function redirectIfSignedIn() {
       if (await new AuthClient().isSignedIn()) {
-        console.log('User is signed in... redirecting to home');
-        router.push('/');
+        console.log("User is signed in... redirecting to home");
+        router.push("/");
       }
     }
     redirectIfSignedIn();
@@ -30,9 +30,9 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    const email: string = data.get('email') as string;
-    const password: string = data.get('password') as string;
-    setErrMsg('');
+    const email: string = data.get("email") as string;
+    const password: string = data.get("password") as string;
+    setErrMsg("");
     setLoading(true);
     const authClient = new AuthClient();
     const userClient = new UserClient();
@@ -41,38 +41,38 @@ export default function SignIn() {
       await authClient.signIn(email, password);
     } catch (error: any) {
       setLoading(false);
-      console.log('Caught error: ' + error.code);
+      console.log("Caught error: " + error.code);
       switch (error.code) {
-        case 'auth/wrong-password':
-          setErrMsg('Password not valid');
+        case "auth/wrong-password":
+          setErrMsg("Password not valid");
           return;
-        case 'auth/user-not-found':
+        case "auth/user-not-found":
           setErrMsg('Stays account not found for email address: "' + email + '"');
           return;
-        case 'auth/invalid-email':
-          setErrMsg('Email address not valid');
+        case "auth/invalid-email":
+          setErrMsg("Email address not valid");
           return;
-        case 'auth/too-many-requests':
+        case "auth/too-many-requests":
           setErrMsg(
-            'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'
+            "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."
           );
           return;
         default:
-          setErrMsg('Sign in failed: ' + error.message);
+          setErrMsg("Sign in failed: " + error.message);
           return;
       }
     }
     try {
       if (await authClient.isSignedIn()) {
         setLoading(false);
-        router.push('/');
+        router.push("/");
       } else {
         setErrMsg(
-          'Stays is experiencing technical difficulties. Please try again in a few moments.'
+          "Stays is experiencing technical difficulties. Please try again in a few moments."
         );
       }
     } catch (error: any) {
-      setErrMsg('Stays is experiencing technical difficulties.');
+      setErrMsg("Stays is experiencing technical difficulties.");
     }
     setLoading(false);
   }
@@ -81,11 +81,11 @@ export default function SignIn() {
     <Box
       sx={{
         marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       }}>
-      <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+      <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -100,7 +100,6 @@ export default function SignIn() {
           label="Email Address"
           name="email"
           autoComplete="email"
-          autoFocus
         />
         <TextField
           margin="normal"
@@ -124,12 +123,12 @@ export default function SignIn() {
         </LoadingButton>
         <Grid container>
           <Grid item xs>
-            <Link href="#">
+            <Link href="/">
               <Typography>Forgot password?</Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href={'/sign_up'}>
+            <Link href={"/sign_up"}>
               <Typography variant="body2">{"Don't have an account? Create one here!"}</Typography>
             </Link>
           </Grid>

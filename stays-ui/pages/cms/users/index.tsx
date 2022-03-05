@@ -1,18 +1,18 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import * as React from 'react';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button, Typography } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import * as React from "react";
 
-import { UserRecord } from '../../../../common/models/User';
-import { UserClient } from '../../../src/clients/userClient';
-import CmsFrame from '../../../src/components/CmsFrame';
-import Copyright from '../../../src/components/Copyright';
-import UsersTable from '../../../src/components/User/UsersTable';
-import StaysPage from '../../../src/StaysPage';
+import { UserRecord } from "../../../../common/models/User";
+import { UserClient } from "../../../src/clients/userClient";
+import CmsFrame from "../../../src/components/CmsFrame";
+import Copyright from "../../../src/components/Copyright";
+import UsersTable from "../../../src/components/User/UsersTable";
+import StaysPage from "../../../src/StaysPage";
 
 function UsersCmsContent() {
   const [users, setUsers] = React.useState<UserRecord[]>([]);
@@ -29,18 +29,18 @@ function UsersCmsContent() {
   }, []);
 
   function handleUserSelection(user: UserRecord) {
-    console.log('User selected: ', { user });
+    console.log("User selected: ", { user });
     setSelectedUser(user);
   }
 
   return (
     <StaysPage>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CmsFrame />
         <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "row" }}>
                 <Button variant="contained" sx={{ m: 1, width: 200 }}>
                   <AddIcon />
                   Add User
@@ -54,7 +54,7 @@ function UsersCmsContent() {
                 </Button>
                 <Button
                   variant="contained"
-                  sx={{ m: 1, width: 200, bgcolor: 'error.main' }}
+                  sx={{ m: 1, width: 200, bgcolor: "error.main" }}
                   disabled={selectedUser == undefined}>
                   <DeleteIcon />
                   Delete User
@@ -66,8 +66,8 @@ function UsersCmsContent() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600
                 }}>
                 <UsersTable users={users} onSelect={handleUserSelection} />
@@ -78,10 +78,10 @@ function UsersCmsContent() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: 600,
-                  overflow: 'auto'
+                  overflow: "auto"
                 }}></Paper>
             </Grid>
           </Grid>

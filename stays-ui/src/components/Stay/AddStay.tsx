@@ -1,28 +1,28 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { LoadingButton } from '@mui/lab';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Stepper from '@mui/material/Stepper';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { LoadingButton } from "@mui/lab";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { StayClient } from '../../clients/stayClient';
-import { stayContext } from './StayContext';
-import StayInfoForm from './StayInfoForm';
-import StayLocation from './StayLocation';
-import StayPhotoForm from './StayPhotoForm';
-import StayReview from './StayReview';
+import { StayClient } from "../../clients/stayClient";
+import { stayContext } from "./StayContext";
+import StayInfoForm from "./StayInfoForm";
+import StayLocation from "./StayLocation";
+import StayPhotoForm from "./StayPhotoForm";
+import StayReview from "./StayReview";
 
-const steps = ['About', 'Photos', 'Review'];
+const steps = ["About", "Photos", "Review"];
 
 export default function AddStay(props: any) {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -35,7 +35,7 @@ export default function AddStay(props: any) {
     try {
       await new StayClient().createStay(stay);
     } catch (e) {
-      console.log('Error posting stay: ', { e });
+      console.log("Error posting stay: ", { e });
     }
 
     setLoading(false);
@@ -84,7 +84,7 @@ export default function AddStay(props: any) {
       case 2:
         return <StayReview />;
       default:
-        throw new Error('Unknown step');
+        throw new Error("Unknown step");
     }
   }
 
@@ -95,7 +95,7 @@ export default function AddStay(props: any) {
       case 1:
         break;
       case 2:
-        stay.hostEmail = 'admin@stays.co';
+        stay.hostEmail = "admin@stays.co";
         createStay();
         return;
     }
@@ -131,7 +131,7 @@ export default function AddStay(props: any) {
           ) : (
             <React.Fragment>
               {getStepContent(activeStep)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Back
@@ -142,7 +142,7 @@ export default function AddStay(props: any) {
                   onClick={handleNext}
                   loading={false}
                   sx={{ mt: 3, ml: 1 }}>
-                  {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                  {activeStep === steps.length - 1 ? "Submit" : "Next"}
                 </LoadingButton>
               </Box>
             </React.Fragment>

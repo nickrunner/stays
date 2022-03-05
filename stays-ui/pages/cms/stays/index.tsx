@@ -1,25 +1,25 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import { useRouter } from "next/router";
+import * as React from "react";
 
-import { StayRecord } from '../../../../common/models/Stay';
-import CmsFrame from '../../../src/components/CmsFrame';
-import Copyright from '../../../src/components/Copyright';
-import StaysTable from '../../../src/components/Stay/StaysTable';
-import StaysPage from '../../../src/StaysPage';
+import { StayRecord } from "../../../../common/models/Stay";
+import CmsFrame from "../../../src/components/CmsFrame";
+import Copyright from "../../../src/components/Copyright";
+import StaysTable from "../../../src/components/Stay/StaysTable";
+import StaysPage from "../../../src/StaysPage";
 
 function StaysCmsContent() {
   const router = useRouter();
   const [selectedStay, setSelectedStay] = React.useState<StayRecord | undefined>(undefined);
 
   function handleStaySelection(stay: StayRecord) {
-    console.log('Stay selected: ', { stay });
+    console.log("Stay selected: ", { stay });
     setSelectedStay(stay);
   }
 
@@ -29,16 +29,16 @@ function StaysCmsContent() {
 
   return (
     <StaysPage>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CmsFrame />
         <Container maxWidth="xl" sx={{ mt: 8, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'row' }}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "row" }}>
                 <Button
                   variant="contained"
                   sx={{ m: 1, width: 200 }}
-                  onClick={() => router.push('/cms/stays/add')}>
+                  onClick={() => router.push("/cms/stays/add")}>
                   <AddIcon />
                   Add Stay
                 </Button>
@@ -52,7 +52,7 @@ function StaysCmsContent() {
                 </Button>
                 <Button
                   variant="contained"
-                  sx={{ m: 1, width: 200, bgcolor: 'error.main' }}
+                  sx={{ m: 1, width: 200, bgcolor: "error.main" }}
                   disabled={selectedStay == undefined}>
                   <DeleteIcon />
                   Delete Stay
@@ -64,8 +64,8 @@ function StaysCmsContent() {
               <Paper
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   height: getTableHeight()
                 }}>
                 <StaysTable onSelect={handleStaySelection} />

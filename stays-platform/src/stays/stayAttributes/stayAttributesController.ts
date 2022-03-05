@@ -1,32 +1,23 @@
+import { Body, Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
+
 import {
-    Controller,
-    Get,
-    Post,
-    Path,
-    Route,
-    Body,
-    Security,
-    Request
-  } from "tsoa";
-import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
+  StayAttribute,
+  StayAttributeRecord,
+  StayAttributeType
+} from "../../../../common/models/StayAttributes";
 import { Role } from "../../../../common/models/user";
 import { AuthenticatedRequest } from "../../auth/auth";
 import { Error401, Error409 } from "../../error";
 import { StayAttributesService } from "./stayAttributesService";
 
-
 @Route("stays/attributes")
 export class StayAttributesController extends Controller {
-
   @Get("{type}")
-  public async getStayAttributes(
-    @Path() type: StayAttributeType
-  ): Promise<StayAttributeRecord[]>{
-    try{
+  public async getStayAttributes(@Path() type: StayAttributeType): Promise<StayAttributeRecord[]> {
+    try {
       const service: StayAttributesService = new StayAttributesService();
       return await service.getStayAttributes(type);
-    }
-    catch(e){
+    } catch (e) {
       console.log("error getting stay attributes");
       throw e;
     }
@@ -38,24 +29,20 @@ export class StayAttributesController extends Controller {
     @Request() req: AuthenticatedRequest,
     @Body() attribute: StayAttribute,
     @Path() type: StayAttributeType
-  ): Promise<void>{
-    try{
-      if(type != attribute.type){
-        throw new Error409
+  ): Promise<void> {
+    try {
+      if (type != attribute.type) {
+        throw new Error409();
       }
       const service: StayAttributesService = new StayAttributesService();
-      if(req.email){
+      if (req.email) {
         await service.createStayAttribute(attribute, req.email);
-      }
-      else{
+      } else {
         throw new Error401();
       }
-      
-    }
-    catch(e){
+    } catch (e) {
       console.log("error getting stay attributes");
       throw e;
     }
   }
-
 }

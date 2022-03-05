@@ -1,37 +1,37 @@
-import { Typography } from '@mui/material';
-import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import * as React from 'react';
+import { Typography } from "@mui/material";
+import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import * as React from "react";
 
-import { PromotionRecord } from '../../../../common/models/Promotion';
+import { PromotionRecord } from "../../../../common/models/Promotion";
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);
-  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+  return date.toLocaleDateString() + " " + date.toLocaleTimeString();
 }
 
 const columns: GridColDef[] = [
   {
-    field: 'name',
-    headerName: 'Name',
+    field: "name",
+    headerName: "Name",
     sortable: true,
     width: 200
   },
   {
-    field: 'code',
-    headerName: 'code',
+    field: "code",
+    headerName: "code",
     sortable: true,
     width: 200
   },
   {
-    field: 'createdAt',
-    headerName: 'Created On',
+    field: "createdAt",
+    headerName: "Created On",
     sortable: true,
     width: 100,
     valueGetter: (params: GridValueGetterParams) => dateString(params.row.createdAt)
   },
   {
-    field: 'updatedAt',
-    headerName: 'Updated On',
+    field: "updatedAt",
+    headerName: "Updated On",
     sortable: true,
     width: 100,
     valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
@@ -49,7 +49,7 @@ export default function PromotionsTable(props: PromotionsTableProps) {
   return (
     <React.Fragment>
       <Typography>Promotions</Typography>
-      <div style={{ height: 700, width: '100%' }}>
+      <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           onCellClick={(params: GridCellParams) => {
             props.onSelect(params.row as PromotionRecord);
