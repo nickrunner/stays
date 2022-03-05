@@ -1,5 +1,5 @@
-import * as React from "react"
-import { SVGProps } from "react"
+import * as React from "react";
+import { SVGProps } from "react";
 
 const AirbnbLogo = (props: SVGProps<SVGSVGElement>) => (
   <svg width={104} height={32} xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -10,6 +10,6 @@ const AirbnbLogo = (props: SVGProps<SVGSVGElement>) => (
       fillRule="evenodd"
     />
   </svg>
-)
+);
 
-export default AirbnbLogo
+export default AirbnbLogo;

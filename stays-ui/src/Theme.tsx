@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   breakpoints: {
@@ -17,25 +17,25 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          textTransform: 'none'
+          textTransform: "none"
         },
         sizeSmall: {
-          padding: '6px 16px'
+          padding: "6px 16px"
         },
         sizeMedium: {
-          padding: '8px 20px'
+          padding: "8px 20px"
         },
         sizeLarge: {
-          padding: '15px 30px'
+          padding: "15px 30px"
         },
         textSizeSmall: {
-          padding: '7px 12px'
+          padding: "7px 12px"
         },
         textSizeMedium: {
-          padding: '11px 20px'
+          padding: "11px 20px"
         },
         textSizeLarge: {
-          padding: '15px 20px'
+          padding: "15px 20px"
         }
       }
     },
@@ -47,9 +47,9 @@ export const theme = createTheme({
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: '32px 24px',
-          '&:last-child': {
-            paddingBottom: '32px'
+          padding: "32px 24px",
+          "&:last-child": {
+            paddingBottom: "32px"
           }
         }
       }
@@ -57,73 +57,73 @@ export const theme = createTheme({
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
-          variant: 'h6'
+          variant: "h6"
         },
         subheaderTypographyProps: {
-          variant: 'body2'
+          variant: "body2"
         }
       },
       styleOverrides: {
         root: {
-          padding: '32px 24px'
+          padding: "32px 24px"
         }
       }
     },
     MuiCssBaseline: {
       styleOverrides: {
-        '*': {
-          boxSizing: 'border-box',
+        "*": {
+          boxSizing: "border-box",
           margin: 0,
           padding: 0
         },
         html: {
-          MozOsxFontSmoothing: 'grayscale',
-          WebkitFontSmoothing: 'antialiased',
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100%',
-          width: '100%'
+          MozOsxFontSmoothing: "grayscale",
+          WebkitFontSmoothing: "antialiased",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100%",
+          width: "100%"
         },
         body: {
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-          minHeight: '100%',
-          width: '100%'
+          display: "flex",
+          flex: "1 1 auto",
+          flexDirection: "column",
+          minHeight: "100%",
+          width: "100%"
         },
-        '#__next': {
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-          height: '100%',
-          width: '100%'
+        "#__next": {
+          display: "flex",
+          flex: "1 1 auto",
+          flexDirection: "column",
+          height: "100%",
+          width: "100%"
         }
       }
     },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: '#b6b3bd'
+          borderColor: "#b6b3bd"
         }
       }
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: '#F3F4F6',
-          '.MuiTableCell-root': {
-            color: '#b6b3bd'
+          backgroundColor: "#F3F4F6",
+          ".MuiTableCell-root": {
+            color: "#b6b3bd"
           },
-          borderBottom: 'none',
-          '& .MuiTableCell-root': {
-            borderBottom: 'none',
-            fontSize: '12px',
+          borderBottom: "none",
+          "& .MuiTableCell-root": {
+            borderBottom: "none",
+            fontSize: "12px",
             fontWeight: 600,
             lineHeight: 1,
             letterSpacing: 0.5,
-            textTransform: 'uppercase'
+            textTransform: "uppercase"
           },
-          '& .MuiTableCell-paddingCheckbox': {
+          "& .MuiTableCell-paddingCheckbox": {
             paddingTop: 4,
             paddingBottom: 4
           }
@@ -131,314 +131,313 @@ export const theme = createTheme({
       }
     }
   },
-  
+
   palette: {
     action: {
-      active: '#6B7280',
-      focus: 'rgba(55, 65, 81, 0.12)',
+      active: "#6B7280",
+      focus: "rgba(55, 65, 81, 0.12)",
       hover: "#d5d8de",
-      selected: 'rgba(55, 65, 81, 0.08)',
-      disabledBackground: 'rgba(55, 65, 81, 0.12)',
-      disabled: 'rgba(55, 65, 81, 0.26)'
+      selected: "rgba(55, 65, 81, 0.08)",
+      disabledBackground: "rgba(55, 65, 81, 0.12)",
+      disabled: "rgba(55, 65, 81, 0.26)"
     },
     background: {
-      default: '#F9FAFC',
+      default: "#F9FAFC",
       //default: '#FFF6EB',
       //default: "#edebd3",
-      paper: '#FFFFFF'
+      paper: "#FFFFFF"
     },
-    divider: '#E6E8F0',
+    divider: "#E6E8F0",
     primary: {
-      main: '#6c5ee6',
+      main: "#6c5ee6",
       //main: "#4103fc",
-      light: '#FFFFFF',
-      dark: '#282c34',
-      contrastText: '#FFFFFF'
+      light: "#FFFFFF",
+      dark: "#282c34",
+      contrastText: "#FFFFFF"
     },
     secondary: {
-      main: '#3FC79A',
-      light: '#3FC79A',
-      dark: '#0B815A',
-      contrastText: '#FFFFFF'
+      main: "#3FC79A",
+      light: "#3FC79A",
+      dark: "#0B815A",
+      contrastText: "#FFFFFF"
     },
     success: {
-      main: '#14B8A6',
-      light: '#43C6B7',
-      dark: '#0E8074',
-      contrastText: '#FFFFFF'
+      main: "#14B8A6",
+      light: "#43C6B7",
+      dark: "#0E8074",
+      contrastText: "#FFFFFF"
     },
     info: {
-      main: '#2196F3',
-      light: '#64B6F7',
-      dark: '#0B79D0',
-      contrastText: '#FFFFFF'
+      main: "#2196F3",
+      light: "#64B6F7",
+      dark: "#0B79D0",
+      contrastText: "#FFFFFF"
     },
     warning: {
-      main: '#FFB020',
-      light: '#FFBF4C',
-      dark: '#B27B16',
-      contrastText: '#FFFFFF'
+      main: "#FFB020",
+      light: "#FFBF4C",
+      dark: "#B27B16",
+      contrastText: "#FFFFFF"
     },
     error: {
-      main: '#D14343',
-      light: '#DA6868',
-      dark: '#922E2E',
-      contrastText: '#FFFFFF'
+      main: "#D14343",
+      light: "#DA6868",
+      dark: "#922E2E",
+      contrastText: "#FFFFFF"
     },
     text: {
-      primary: '#121828',
-      secondary: '#65748B',
-      disabled: 'rgba(55, 65, 81, 0.48)'
+      primary: "#121828",
+      secondary: "#65748B",
+      disabled: "rgba(55, 65, 81, 0.48)"
     }
   },
   shape: {
     borderRadius: 12
   },
   shadows: [
-    'none',
-    '0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)',
-    '0px 1px 2px rgba(100, 116, 139, 0.12)',
-    '0px 1px 4px rgba(100, 116, 139, 0.12)',
-    '0px 1px 5px rgba(100, 116, 139, 0.12)',
-    '0px 1px 6px rgba(100, 116, 139, 0.12)',
-    '0px 2px 6px rgba(100, 116, 139, 0.12)',
-    '0px 3px 6px rgba(100, 116, 139, 0.12)',
-    '0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)',
-    '0px 5px 12px rgba(100, 116, 139, 0.12)',
-    '0px 5px 14px rgba(100, 116, 139, 0.12)',
-    '0px 5px 15px rgba(100, 116, 139, 0.12)',
-    '0px 6px 15px rgba(100, 116, 139, 0.12)',
-    '0px 7px 15px rgba(100, 116, 139, 0.12)',
-    '0px 8px 15px rgba(100, 116, 139, 0.12)',
-    '0px 9px 15px rgba(100, 116, 139, 0.12)',
-    '0px 10px 15px rgba(100, 116, 139, 0.12)',
-    '0px 12px 22px -8px rgba(100, 116, 139, 0.25)',
-    '0px 13px 22px -8px rgba(100, 116, 139, 0.25)',
-    '0px 14px 24px -8px rgba(100, 116, 139, 0.25)',
-    '0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)',
-    '0px 25px 50px rgba(100, 116, 139, 0.25)'
+    "none",
+    "0px 1px 1px rgba(100, 116, 139, 0.06), 0px 1px 2px rgba(100, 116, 139, 0.1)",
+    "0px 1px 2px rgba(100, 116, 139, 0.12)",
+    "0px 1px 4px rgba(100, 116, 139, 0.12)",
+    "0px 1px 5px rgba(100, 116, 139, 0.12)",
+    "0px 1px 6px rgba(100, 116, 139, 0.12)",
+    "0px 2px 6px rgba(100, 116, 139, 0.12)",
+    "0px 3px 6px rgba(100, 116, 139, 0.12)",
+    "0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)",
+    "0px 5px 12px rgba(100, 116, 139, 0.12)",
+    "0px 5px 14px rgba(100, 116, 139, 0.12)",
+    "0px 5px 15px rgba(100, 116, 139, 0.12)",
+    "0px 6px 15px rgba(100, 116, 139, 0.12)",
+    "0px 7px 15px rgba(100, 116, 139, 0.12)",
+    "0px 8px 15px rgba(100, 116, 139, 0.12)",
+    "0px 9px 15px rgba(100, 116, 139, 0.12)",
+    "0px 10px 15px rgba(100, 116, 139, 0.12)",
+    "0px 12px 22px -8px rgba(100, 116, 139, 0.25)",
+    "0px 13px 22px -8px rgba(100, 116, 139, 0.25)",
+    "0px 14px 24px -8px rgba(100, 116, 139, 0.25)",
+    "0px 10px 10px rgba(31, 41, 55, 0.04), 0px 20px 25px rgba(31, 41, 55, 0.1)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)",
+    "0px 25px 50px rgba(100, 116, 139, 0.25)"
   ],
   typography: {
     button: {
-      fontWeight: 600,
+      fontWeight: 600
     },
-    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    fontFamily:
+      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
     body1: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       fontWeight: 400,
       lineHeight: 1.5
     },
     body2: {
-      fontSize: '0.875rem',
+      fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: 1.57
     },
     subtitle1: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       fontWeight: 700,
       lineHeight: 1.75
     },
     subtitle2: {
-      fontSize: '0.875rem',
+      fontSize: "0.875rem",
       fontWeight: 500,
       lineHeight: 1.57
     },
     overline: {
-      fontSize: '0.75rem',
+      fontSize: "0.75rem",
       fontWeight: 600,
-      letterSpacing: '0.5px',
+      letterSpacing: "0.5px",
       lineHeight: 2.5,
-      textTransform: 'uppercase'
+      textTransform: "uppercase"
     },
     caption: {
-      fontSize: '0.75rem',
+      fontSize: "0.75rem",
       fontWeight: 400,
       lineHeight: 1.66
     },
     h1: {
       fontWeight: 900,
-      fontSize: '2rem',
-      '@media (min-width:400px)':{
-        fontSize: '2.25rem'
+      fontSize: "2rem",
+      "@media (min-width:400px)": {
+        fontSize: "2.25rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '2.4rem'
+      "@media (min-width:500px)": {
+        fontSize: "2.4rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '2.5rem'
+      "@media (min-width:700px)": {
+        fontSize: "2.5rem"
       },
-      '@media (min-width:800px)':{
-        fontSize: '2.6rem'
+      "@media (min-width:800px)": {
+        fontSize: "2.6rem"
       },
-      '@media (min-width:900px)':{
-        fontSize: '2.75rem'
+      "@media (min-width:900px)": {
+        fontSize: "2.75rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '3rem'
+      "@media (min-width:1000px)": {
+        fontSize: "3rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '3.25rem'
+      "@media (min-width:1100px)": {
+        fontSize: "3.25rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '3.5rem'
+      "@media (min-width:1200px)": {
+        fontSize: "3.5rem"
       },
       lineHeight: 1.375
     },
     h2: {
       fontWeight: 900,
-      fontSize: '2rem',
+      fontSize: "2rem",
       lineHeight: 1.375,
-      '@media (min-width:400px)':{
-        fontSize: '2.2rem'
+      "@media (min-width:400px)": {
+        fontSize: "2.2rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '2.25rem'
+      "@media (min-width:500px)": {
+        fontSize: "2.25rem"
       },
-      '@media (min-width:600px)':{
-        fontSize: '2.3rem'
+      "@media (min-width:600px)": {
+        fontSize: "2.3rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '2.4rem'
+      "@media (min-width:700px)": {
+        fontSize: "2.4rem"
       },
-      '@media (min-width:800px)':{
-        fontSize: '2.5rem'
+      "@media (min-width:800px)": {
+        fontSize: "2.5rem"
       },
-      '@media (min-width:900px)':{
-        fontSize: '2.6rem'
+      "@media (min-width:900px)": {
+        fontSize: "2.6rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '2.75rem'
+      "@media (min-width:1000px)": {
+        fontSize: "2.75rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '2.9rem'
+      "@media (min-width:1100px)": {
+        fontSize: "2.9rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '3rem'
-      },
-    
+      "@media (min-width:1200px)": {
+        fontSize: "3rem"
+      }
     },
     h3: {
       fontWeight: 800,
-      fontSize: '1.5rem',
+      fontSize: "1.5rem",
       lineHeight: 1.375,
-      '@media (min-width:400px)':{
-        fontSize: '1.5rem'
+      "@media (min-width:400px)": {
+        fontSize: "1.5rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '1.6rem'
+      "@media (min-width:500px)": {
+        fontSize: "1.6rem"
       },
-      '@media (min-width:600px)':{
-        fontSize: '1.7rem'
+      "@media (min-width:600px)": {
+        fontSize: "1.7rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '1.8rem'
+      "@media (min-width:700px)": {
+        fontSize: "1.8rem"
       },
-      '@media (min-width:800px)':{
-        fontSize: '2rem'
+      "@media (min-width:800px)": {
+        fontSize: "2rem"
       },
-      '@media (min-width:900px)':{
-        fontSize: '2.1rem'
+      "@media (min-width:900px)": {
+        fontSize: "2.1rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '2.25rem'
+      "@media (min-width:1000px)": {
+        fontSize: "2.25rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '2.4rem'
+      "@media (min-width:1100px)": {
+        fontSize: "2.4rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '2.5rem'
-      },
+      "@media (min-width:1200px)": {
+        fontSize: "2.5rem"
+      }
     },
     h4: {
       fontWeight: 700,
-      fontSize: '1.2rem',
+      fontSize: "1.2rem",
       lineHeight: 1.375,
-      '@media (min-width:400px)':{
-        fontSize: '1.2rem'
+      "@media (min-width:400px)": {
+        fontSize: "1.2rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '1.2rem'
+      "@media (min-width:500px)": {
+        fontSize: "1.2rem"
       },
-      '@media (min-width:600px)':{
-        fontSize: '1.3rem'
+      "@media (min-width:600px)": {
+        fontSize: "1.3rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '1.5rem'
+      "@media (min-width:700px)": {
+        fontSize: "1.5rem"
       },
-      '@media (min-width:800px)':{
-        fontSize: '1.75rem'
+      "@media (min-width:800px)": {
+        fontSize: "1.75rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '1.875rem'
+      "@media (min-width:1000px)": {
+        fontSize: "1.875rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '2rem'
+      "@media (min-width:1100px)": {
+        fontSize: "2rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '2.25frem'
-      },
+      "@media (min-width:1200px)": {
+        fontSize: "2.25frem"
+      }
     },
     h5: {
       fontWeight: 700,
-      fontSize: '1.2rem',
+      fontSize: "1.2rem",
       lineHeight: 1.375,
-      '@media (min-width:400px)':{
-        fontSize: '1.2rem'
+      "@media (min-width:400px)": {
+        fontSize: "1.2rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '1.2rem'
+      "@media (min-width:500px)": {
+        fontSize: "1.2rem"
       },
-      '@media (min-width:600px)':{
-        fontSize: '1.2rem'
+      "@media (min-width:600px)": {
+        fontSize: "1.2rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '1.3rem'
+      "@media (min-width:700px)": {
+        fontSize: "1.3rem"
       },
-      '@media (min-width:800px)':{
-        fontSize: '1.4rem'
+      "@media (min-width:800px)": {
+        fontSize: "1.4rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '1.5rem'
+      "@media (min-width:1000px)": {
+        fontSize: "1.5rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '1.6rem'
+      "@media (min-width:1100px)": {
+        fontSize: "1.6rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '1.7rem'
-      },
-      
+      "@media (min-width:1200px)": {
+        fontSize: "1.7rem"
+      }
     },
     h6: {
       fontWeight: 700,
-      fontSize: '1.3rem',
+      fontSize: "1.3rem",
       lineHeight: 1.375,
-      '@media (min-width:400px)':{
-        fontSize: '1.3rem'
+      "@media (min-width:400px)": {
+        fontSize: "1.3rem"
       },
-      '@media (min-width:500px)':{
-        fontSize: '1.3rem'
+      "@media (min-width:500px)": {
+        fontSize: "1.3rem"
       },
-      '@media (min-width:600px)':{
-        fontSize: '1.3rem'
+      "@media (min-width:600px)": {
+        fontSize: "1.3rem"
       },
-      '@media (min-width:700px)':{
-        fontSize: '1.4rem'
+      "@media (min-width:700px)": {
+        fontSize: "1.4rem"
       },
-      '@media (min-width:lg)':{
-        fontSize: '1.4rem'
+      "@media (min-width:lg)": {
+        fontSize: "1.4rem"
       },
-      '@media (min-width:1000px)':{
-        fontSize: '1.4rem'
+      "@media (min-width:1000px)": {
+        fontSize: "1.4rem"
       },
-      '@media (min-width:1100px)':{
-        fontSize: '1.4rem'
+      "@media (min-width:1100px)": {
+        fontSize: "1.4rem"
       },
-      '@media (min-width:1200px)':{
-        fontSize: '1.5rem'
-      },
+      "@media (min-width:1200px)": {
+        fontSize: "1.5rem"
+      }
     }
   }
 });
