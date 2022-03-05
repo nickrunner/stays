@@ -1,12 +1,20 @@
-import * as React from 'react';
 import { Typography } from '@mui/material';
-import { DataGridPro, GridColDef, GridValueGetterParams, GridCellParams, GridToolbar, GridCellEditCommitParams } from '@mui/x-data-grid-pro';
-import { StayClient } from '../../clients/stayClient';
+import {
+  DataGridPro,
+  GridCellEditCommitParams,
+  GridCellParams,
+  GridColDef,
+  GridToolbar,
+  GridValueGetterParams
+} from '@mui/x-data-grid-pro';
+import * as React from 'react';
+
 import { StayRecord } from '../../../../common/models/Stay';
+import { StayClient } from '../../clients/stayClient';
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);
-  return date.toLocaleDateString()+" "+date.toLocaleTimeString();
+  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
 
 const columns: GridColDef[] = [
@@ -16,7 +24,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "center",
+    align: 'center'
   },
   {
     field: 'name',
@@ -24,7 +32,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "left",
+    align: 'left',
     minWidth: 100
   },
   {
@@ -33,7 +41,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "left"
+    align: 'left'
   },
   {
     field: 'location',
@@ -41,7 +49,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "left",
+    align: 'left',
     valueGetter: (params: GridValueGetterParams) => params.row.location.address.city
   },
   {
@@ -49,7 +57,7 @@ const columns: GridColDef[] = [
     headerName: 'State',
     sortable: true,
     editable: true,
-    align: "left",
+    align: 'left',
     valueGetter: (params: GridValueGetterParams) => params.row.location.address.state,
     flex: 1
   },
@@ -66,7 +74,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "center",
+    align: 'center'
   },
   {
     field: 'capacity',
@@ -74,7 +82,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "center",
+    align: 'center'
   },
   {
     field: 'bedrooms',
@@ -82,7 +90,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "center",
+    align: 'center'
   },
   {
     field: 'petsAllowed',
@@ -90,7 +98,7 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: true,
     flex: 1,
-    align: "center",
+    align: 'center'
   },
   {
     field: 'onSiteParking',
@@ -114,7 +122,7 @@ const columns: GridColDef[] = [
     editable: true,
     flex: 1
   },
-  
+
   {
     field: 'createdAt',
     headerName: 'Created On',
@@ -128,64 +136,61 @@ const columns: GridColDef[] = [
     sortable: true,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
-  },
-  
+  }
 ];
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
-
-
-export type StayCallback = ((stay:StayRecord) => any);
+export type StayCallback = (stay: StayRecord) => any;
 
 export interface StaysTableProps {
   onSelect: StayCallback;
 }
 
-
 export default function StaysTable(props: StaysTableProps) {
-  const[stays, setStays] = React.useState<StayRecord[]>([]);
-  const getStays = async() => {
+  const [stays, setStays] = React.useState<StayRecord[]>([]);
+  const getStays = async () => {
     const stays = await new StayClient().getStays();
     setStays(stays);
-    }
+  };
 
-    React.useEffect(() => {
-        getStays();
-        return;
-    }, []);
+  React.useEffect(() => {
+    getStays();
+    return;
+  }, []);
 
-  
   async function handleCellEditCommit(params: GridCellEditCommitParams) {
-      const val: any = params.value?.valueOf();
-      if(val){
-        const stay: StayRecord = await new StayClient().patchStay(params.id.toString(), params.field, val);
-        setStays((prev) =>
-          prev.map((row) => (row.id === params.id ? { ...row, ...stay } : row)),
-        );
-      }
+    const val: any = params.value?.valueOf();
+    if (val) {
+      const stay: StayRecord = await new StayClient().patchStay(
+        params.id.toString(),
+        params.field,
+        val
+      );
+      setStays((prev) => prev.map((row) => (row.id === params.id ? { ...row, ...stay } : row)));
+    }
   }
 
   return (
     <React.Fragment>
       <Typography>Stays</Typography>
       <div style={{ display: 'flex', height: '100%' }}>
-        <div style={{flexGrow: 1}}>
-        <DataGridPro
-          onCellClick={(params: GridCellParams) => {
-            props.onSelect(params.row as StayRecord);
-          }}
-          rows={stays}
-          columns={columns}
-          pageSize={25}
-          rowsPerPageOptions={[25]}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-          onCellEditCommit={handleCellEditCommit}
-        />
+        <div style={{ flexGrow: 1 }}>
+          <DataGridPro
+            onCellClick={(params: GridCellParams) => {
+              props.onSelect(params.row as StayRecord);
+            }}
+            rows={stays}
+            columns={columns}
+            pageSize={25}
+            rowsPerPageOptions={[25]}
+            components={{
+              Toolbar: GridToolbar
+            }}
+            onCellEditCommit={handleCellEditCommit}
+          />
         </div>
       </div>
     </React.Fragment>

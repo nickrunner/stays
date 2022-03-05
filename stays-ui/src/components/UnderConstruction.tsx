@@ -1,22 +1,22 @@
-import { Box } from "@mui/material";
-import { content } from "../content";
+import { Box } from '@mui/material';
+
+import { content } from '../content';
 
 export default function UnderConstruction() {
   return (
     <Box
-        sx={{
+      sx={{
         position: 'static',
-        width:"100%",
+        width: '100%',
         bgcolor: 'background.default',
-        justifyContent: "center",
-        alignItems:"center",
-        display:"flex",
-        flexDirection:"column",
-        fontSize: 25,
-    }}>
-        <img width="40%" src={content.images.logo.purple} />
-        <code>Page under construction</code>
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: 25
+      }}>
+      <img width="40%" src={content.images.logo.purple} />
+      <code>Page under construction</code>
     </Box>
   );
 }
-

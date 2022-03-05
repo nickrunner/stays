@@ -1,98 +1,96 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ShareIcon from '@mui/icons-material/Share';
+import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Stay, StayRecord } from '../../../../common/models/Stay';
-import { globalContext } from '../../GlobalStore';
+import * as React from 'react';
+
 import { Photo } from '../../../../common/models/Photo';
-import { content } from "../../content";
+import { Stay, StayRecord } from '../../../../common/models/Stay';
+import { content } from '../../content';
+import { globalContext } from '../../GlobalStore';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
 
-
 interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-  }
-  
-  const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
-
-export interface StayDirectoryCardProps {
-    stay: StayRecord
+  expand: boolean;
 }
 
+const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest
+  })
+}));
 
-export default function StayDirectoryCard(props: StayDirectoryCardProps){
+export interface StayDirectoryCardProps {
+  stay: StayRecord;
+}
+
+export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const [expanded, setExpanded] = React.useState(false);
-  const {globalState, dispatch} = React.useContext(globalContext);
+  const { globalState, dispatch } = React.useContext(globalContext);
 
   React.useEffect(() => {
-
-        return;
-    }, []);
+    return;
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  function getFeatureImage(photos: Photo[]): string{
-      let featureUrl = photos[0].url;
-      let priority = photos[0].priority;
-      photos.forEach((p) => {
-          if(p.priority < priority) {
-              priority = p.priority;
-              featureUrl = p.url;
-          }
-      });
-      return featureUrl;
+  function getFeatureImage(photos: Photo[]): string {
+    let featureUrl = photos[0].url;
+    let priority = photos[0].priority;
+    photos.forEach((p) => {
+      if (p.priority < priority) {
+        priority = p.priority;
+        featureUrl = p.url;
+      }
+    });
+    return featureUrl;
   }
 
-  function getAvatar(region: string){
-    switch(region){
-      case "Coastal":
+  function getAvatar(region: string) {
+    switch (region) {
+      case 'Coastal':
         return content.images.regions.coastal;
-      case "Midwest":
+      case 'Midwest':
         return content.images.regions.midwest;
-      case "Northeast":
+      case 'Northeast':
         return content.images.regions.northeast;
-      case "Pacific Northwest":
+      case 'Pacific Northwest':
         return content.images.regions.pnw;
-      case "Southern":
+      case 'Southern':
         return content.images.regions.southern;
-      case "Southwest":
+      case 'Southwest':
         return content.images.regions.southwest;
-      case "Western":
+      case 'Western':
         return content.images.regions.western;
       default:
         return content.images.regions.american;
     }
   }
 
-  function getCaption(description: string){
-    return description.split(".")[0];
+  function getCaption(description: string) {
+    return description.split('.')[0];
   }
 
-  function getImageCarouselProps(stay: Stay){
+  function getImageCarouselProps(stay: Stay) {
     const imgs = [];
-    for(const photo of stay.photos){
+    for (const photo of stay.photos) {
       imgs.push({
         label: photo.description,
         imgPath: photo.url
@@ -102,12 +100,14 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
   }
 
   return (
-    <Card id={props.stay.id} sx={{ width: {xs:300, sm:500 }, minHeight:500 }}>
+    <Card id={props.stay.id} sx={{ width: { xs: 300, sm: 500 }, minHeight: 500 }}>
       <CardHeader
         height="200"
         avatar={
-          <Avatar sx={{ bgcolor: "primary.main" }} aria-label="stay" src={getAvatar(props.stay.location.region)}>
-          </Avatar>
+          <Avatar
+            sx={{ bgcolor: 'primary.main' }}
+            aria-label="stay"
+            src={getAvatar(props.stay.location.region)}></Avatar>
         }
         action={
           <IconButton aria-label="settings">
@@ -115,21 +115,18 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
           </IconButton>
         }
         title={props.stay.name}
-        titleTypographyProps={{ 
+        titleTypographyProps={{
           align: 'left',
-          variant: 'subtitle1', 
-          color: "common.black"
+          variant: 'subtitle1',
+          color: 'common.black'
         }}
-        
-        subheader={props.stay.location.address.city+", "+props.stay.location.address.state}
+        subheader={props.stay.location.address.city + ', ' + props.stay.location.address.state}
         subheaderTypographyProps={{
-          variant: "subtitle1"
+          variant: 'subtitle1'
         }}
       />
       <CardMedia>
-      <ImageCarousel 
-          width="100%" height="300" 
-          images={getImageCarouselProps(props.stay)}/>
+        <ImageCarousel width="100%" height="300" images={getImageCarouselProps(props.stay)} />
       </CardMedia>
       {/* <CardContent>
      
@@ -148,16 +145,13 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps){
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
-        >
+          aria-label="show more">
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-            {props.stay.description}
-          </Typography>
+          <Typography paragraph>{props.stay.description}</Typography>
         </CardContent>
       </Collapse>
     </Card>

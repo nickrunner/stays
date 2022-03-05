@@ -1,78 +1,88 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LoadingButton } from "@mui/lab";
-import { Box, Checkbox, FormControlLabel, Paper, TextField, Accordion, AccordionSummary, Typography, AccordionDetails, Grid, IconButton } from "@mui/material";
-import React from "react";
-import { WaitlistClient } from "../../clients/waitlistClient";
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import {content} from "../../content";
-import { AuthClient } from "../../clients/authClient";
-import Image from "next/image";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import { LoadingButton } from '@mui/lab';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography
+} from '@mui/material';
+import React from 'react';
 
-export interface WaitlistProps{
+import { AuthClient } from '../../clients/authClient';
+import { WaitlistClient } from '../../clients/waitlistClient';
+
+export interface WaitlistProps {
   close: () => void;
 }
 
-export default function Waitlist(props: WaitlistProps){
-
-  const [msg, setMsg] = React.useState("");  
-  const [msgColor, setMsgColor] = React.useState("text.primary");
+export default function Waitlist(props: WaitlistProps) {
+  const [msg, setMsg] = React.useState('');
+  const [msgColor, setMsgColor] = React.useState('text.primary');
   const [isStayer, setIsStayer] = React.useState(false);
   const [isHost, setIsHost] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [fnErr, setFnErr] = React.useState(false);
   const [lnErr, setLnErr] = React.useState(false);
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [emailErr, setEmailErr] = React.useState(false);
-  const [promo, setPromo] = React.useState("");
+  const [promo, setPromo] = React.useState('');
   const [promoErr, setPromoErr] = React.useState(false);
+  const gridBottomRef = React.useRef<null | HTMLDivElement>(null);
 
-  function enableSubmit(stayer:boolean, host:boolean){
-    if((host===true) || (stayer===true)){
+  function enableSubmit(stayer: boolean, host: boolean) {
+    if (host === true || stayer === true) {
       setSubmitEnabled(true);
-    }
-    else{
+    } else {
       setSubmitEnabled(false);
     }
   }
 
-  function clearErr(){
+  function clearErr() {
     setPromoErr(false);
     setEmailErr(false);
     setFnErr(false);
     setLnErr(false);
   }
 
-  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setMsgColor("text.primary");
-    setMsg("");
+    setMsgColor('text.primary');
+    setMsg('');
     clearErr();
-    
-    if(!firstName){
+
+    if (!firstName) {
       setFnErr(true);
       setLoading(false);
-      setMsgColor("error.main");
-      setMsg("First name required");
+      setMsgColor('error.main');
+      setMsg('First name required');
       return;
     }
 
-    if(!lastName){
+    if (!lastName) {
       setLnErr(true);
       setLoading(false);
-      setMsgColor("error.main");
-      setMsg("Last name required");
+      setMsgColor('error.main');
+      setMsg('Last name required');
       return;
     }
 
-    if(!validateEmail(email)){
-      setMsgColor("error.main");
-      setMsg("Please enter a valid email address");
+    if (!validateEmail(email)) {
+      setMsgColor('error.main');
+      setMsg('Please enter a valid email address');
       setLoading(false);
       setEmailErr(true);
       return;
@@ -80,71 +90,79 @@ export default function Waitlist(props: WaitlistProps){
 
     const waitlistClient = new WaitlistClient();
     const authClient = new AuthClient();
-  
-    try{
+
+    try {
       const isEmailValid = await authClient.isEmailValid(email);
-      if(!isEmailValid){
-        setMsgColor("error.main");
-        setMsg("Please enter a valid email address");
+      if (!isEmailValid) {
+        setMsgColor('error.main');
+        setMsg('Please enter a valid email address');
         setLoading(false);
         setEmailErr(true);
         return;
       }
       let isPromoValid = false;
-      if(promo != ""){
+      if (promo != '') {
         isPromoValid = await waitlistClient.isPromoCodeValid(promo);
-        if(!isPromoValid){
-          setMsgColor("error.main");
-          setMsg("Promo code not valid");
+        if (!isPromoValid) {
+          setMsgColor('error.main');
+          setMsg('Promo code not valid');
           setLoading(false);
           setPromoErr(true);
           return;
         }
       }
       await waitlistClient.addToWaitlist(email, isStayer, isHost, firstName, lastName, promo);
-      setMsgColor("success.main");
-      if(isPromoValid && isHost){
-        setMsg("Congratulations. Your promo code is valid.  We will notify you when it's time to get started.");
+      setMsgColor('success.main');
+      if (isPromoValid && isHost) {
+        setMsg(
+          "Congratulations. Your promo code is valid.  We will notify you when it's time to get started."
+        );
+      } else {
+        setMsg(
+          "You have been added to the waitlist! We will notify you when it's time for lift-off."
+        );
       }
-      else{
-        setMsg("You have been added to the waitlist! We will notify you when it's time for lift-off.");
-      }
-      
+
       setSubmitEnabled(false);
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    catch(err: any){
-      console.log("Error adding to waitlist:: "+ JSON.stringify(err, null, 2));
-      console.log("message: "+err.message);
-      if(err.message === "Request failed with status code 409"){
-        setMsgColor("success.main");
-        setMsg("You are already on the waitlist!");
+    } catch (err: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      console.log('Error adding to waitlist:: ' + JSON.stringify(err, null, 2));
+      console.log('message: ' + err.message);
+      if (err.message === 'Request failed with status code 409') {
+        setMsgColor('success.main');
+        setMsg('You are already on the waitlist!');
         setSubmitEnabled(false);
-      }
-      else{
-        setMsgColor("error.main");
-        setMsg("There was a problem adding you to the waitlist. Try again in a few moments.");
+      } else {
+        setMsgColor('error.main');
+        setMsg('There was a problem adding you to the waitlist. Try again in a few moments.');
       }
     }
-   
+
     setLoading(false);
   }
-  
 
-  function handleEmailChange(email: string){
+  function handleAccordionExpanded(expanded: boolean) {
+    if (expanded) {
+      if (gridBottomRef.current) {
+        gridBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
+
+  function handleEmailChange(email: string) {
     setEmailErr(false);
     setEmail(email);
     validateEmail(email);
   }
 
-  function handleStayerChange(state: boolean){
-    console.log("Is Stayer: "+isStayer);
+  function handleStayerChange(state: boolean) {
+    console.log('Is Stayer: ' + isStayer);
     setIsStayer(state);
-    console.log("After change: "+isStayer);
+    console.log('After change: ' + isStayer);
     enableSubmit(state, isHost);
   }
 
-  function handleHostChanged(state: boolean){
+  function handleHostChanged(state: boolean) {
     setIsHost(state);
     enableSubmit(isStayer, state);
   }
@@ -164,52 +182,47 @@ export default function Waitlist(props: WaitlistProps){
     setPromo(value);
   }
 
-
-  function validateEmail(email: string){
+  function validateEmail(email: string) {
     enableSubmit(isStayer, isHost);
-    if(!email.toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-    )
-    {
+    if (
+      !email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    ) {
       return false;
-    }
-    else{
+    } else {
       return true;
     }
   }
-    return (
-        <Paper 
-        component="form" 
-        onSubmit={handleSubmit} 
-        noValidate 
-        sx={{
-            
-            maxWidth: {xs:400, sm:800},
-            maxHeight: 600,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: {xs:300, md:400},
-            bgcolor: 'background.paper',
-            border: '0px solid #000',
-            boxShadow: 24,
-          }}>
-          
-          
-          
-          <Box sx={{width:"100%", display:"flex", justifyContent:"flex-start", p:1, pb:0}}>
-            <IconButton color="primary" aria-label="close waitlist modal" onClick={props.close}>
-              <CloseIcon />
-            </IconButton>
-            
-          </Box>
+  return (
+    <Paper
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{
+        maxWidth: { xs: 400, sm: 800 },
+        maxHeight: 600,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: { xs: 300, md: 400 },
+        bgcolor: 'background.paper',
+        border: '0px solid #000',
+        boxShadow: 24
+      }}>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start', p: 1, pb: 0 }}>
+        <IconButton color="primary" aria-label="close waitlist modal" onClick={props.close}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
 
-          <Box sx={{ display:"flex", justifyContent:"center"}}>
+      {/* <Box sx={{ display:"flex", justifyContent:"center"}}>
             
               <Image 
                 src={content.images.logo.purple}
@@ -217,124 +230,119 @@ export default function Waitlist(props: WaitlistProps){
                 width="180"
                 alt="Stays Logo"> 
               </Image>
-            </Box>
-          
-          
+            </Box> */}
 
-            <Grid container spacing={2} 
-              sx={{
-                mt:0, 
-                pr: 4,
-                pl:4,
-                overflow: 'auto'
-              }}>
-              <Grid item xs={12} sm={6} >
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    onChange={(event:any) => handleFirstNameChange(event.target.value)}
-                    id="firstName"
-                    label="First Name"
-                    error={fnErr}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    onChange={(event:any) => handleLastNameChange(event.target.value)}
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                    error={lnErr}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={event => handleEmailChange(event.target.value)}
-                    error={emailErr}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"primary.main"}} />}
-                        aria-controls="promo-code-content"
-                        id="promo-code-header"
-                    >
-                        <Typography 
-                        variant="body1"
-                        color="text.primary" 
-                        gutterBottom sx={{mt:2}}>
-                            Have a promo code? 
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <TextField
-                        fullWidth
-                        id="promoCode"
-                        label="Enter code here"
-                        name="promoCode"
-                        onChange={event => handlePromoCodeChange(event.target.value)}
-                        error={promoErr}
-                      />
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControlLabel 
-                  onChange={(e:any, checked: boolean) => {
-                    handleStayerChange(checked);
-                  }}
-                  control={<Checkbox />} 
-                  label="I am a traveler" />
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControlLabel 
-                    onChange={(e:any, checked:boolean) => {
-                      handleHostChanged(checked);
-                    }}
-                    control={<Checkbox />} 
-                    label="I am a host" />
-                </Grid>
-              </Grid>
-            <Box sx={{display:"inline",gap:2, mt:5}}>
-              
-            </Box>
-
-            
-            
-            <Box sx={{p:4, pt:0, width:"100%", justifyContent:"center", textAlign:"center"}}>
-              
-                <Typography 
-                sx={{margin:"auto", pb:1}}
-                  variant="subtitle2"
-                  color={msgColor}>
-                  {msg}
-                </Typography>
-             
-              <LoadingButton
-                type="submit"
+      <Grid
+        container
+        spacing={{ xs: 1, sm: 2 }}
+        id="formGrid"
+        sx={{
+          mt: 0,
+          pr: 4,
+          pl: 4,
+          overflow: 'auto'
+        }}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            autoComplete="given-name"
+            name="firstName"
+            required
+            fullWidth
+            onChange={(event: any) => handleFirstNameChange(event.target.value)}
+            id="firstName"
+            label="First Name"
+            error={fnErr}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            onChange={(event: any) => handleLastNameChange(event.target.value)}
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="family-name"
+            error={lnErr}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            onChange={(event) => handleEmailChange(event.target.value)}
+            error={emailErr}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Accordion onChange={(event, expanded) => handleAccordionExpanded(expanded)}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}
+              aria-controls="promo-code-content"
+              id="promo-code-header">
+              <Typography variant="body1" color="text.primary" gutterBottom sx={{ mt: 2 }}>
+                Have a promo code?
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TextField
                 fullWidth
-                loading={loading}
-                disabled={!submitEnabled}
-                loadingPosition="end"
-                endIcon={<RocketLaunchIcon/>}
-                variant="contained"
-                size="large"
-              >
-                Submit
-              </LoadingButton>
-            </Box>
-        </Paper>
-    );
+                id="promoCode"
+                label="Enter code here"
+                name="promoCode"
+                onChange={(event) => handlePromoCodeChange(event.target.value)}
+                error={promoErr}
+              />
+            </AccordionDetails>
+          </Accordion>
+        </Grid>
+
+        <div ref={gridBottomRef} />
+      </Grid>
+      <Box sx={{ display: 'inline', gap: 2, mt: 5 }}></Box>
+
+      <Box sx={{ p: 4, pt: 0, width: '100%', justifyContent: 'center', textAlign: 'center' }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <FormControlLabel
+              onChange={(e: any, checked: boolean) => {
+                handleStayerChange(checked);
+              }}
+              control={<Checkbox />}
+              label="I am a traveler"
+            />
+          </Grid>
+          <Grid item xs={6} id="hostCheck">
+            <FormControlLabel
+              onChange={(e: any, checked: boolean) => {
+                handleHostChanged(checked);
+              }}
+              control={<Checkbox />}
+              label="I am a host"
+            />
+          </Grid>
+        </Grid>
+
+        <Typography sx={{ margin: 'auto', pb: 1 }} variant="subtitle2" color={msgColor}>
+          {msg}
+        </Typography>
+
+        <LoadingButton
+          type="submit"
+          fullWidth
+          loading={loading}
+          disabled={!submitEnabled}
+          loadingPosition="end"
+          endIcon={<RocketLaunchIcon />}
+          variant="contained"
+          size="large">
+          Submit
+        </LoadingButton>
+      </Box>
+    </Paper>
+  );
 }

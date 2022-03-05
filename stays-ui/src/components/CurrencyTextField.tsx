@@ -1,25 +1,25 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import * as React from 'react';
 
 const currencies = [
   {
     value: 'USD',
-    label: '$',
+    label: '$'
   },
   {
     value: 'EUR',
-    label: '€',
+    label: '€'
   },
   {
     value: 'BTC',
-    label: '฿',
+    label: '฿'
   },
   {
     value: 'JPY',
-    label: '¥',
-  },
+    label: '¥'
+  }
 ];
 
 export default function CurrencyTextField() {
@@ -33,11 +33,10 @@ export default function CurrencyTextField() {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 1, width: '25ch' }
       }}
       noValidate
-      autoComplete="off"
-    >
+      autoComplete="off">
       <div>
         <TextField
           id="outlined-select-currency"
@@ -45,8 +44,7 @@ export default function CurrencyTextField() {
           label="Current Rate"
           value={currency}
           onChange={handleChange}
-          helperText="Current Rate"
-        >
+          helperText="Current Rate">
           {currencies.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}

@@ -1,25 +1,30 @@
-import * as React from 'react';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { content } from "../../content";
-import { Typography } from '@mui/material';
+import * as React from 'react';
+
+import { content } from '../../content';
 
 function Help() {
   return (
     <Container
       component="section"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 9, bgcolor:"backgound.default" }}
-    >
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        my: 9,
+        bgcolor: 'backgound.default'
+      }}>
       <Button
         sx={{
           border: '4px solid currentColor',
           borderRadius: 0,
           height: 'auto',
           py: 2,
-          px: 5,
-        }}
-      >
+          px: 5
+        }}>
         <Typography variant="h4" component="span">
           Got any questions? Need help?
         </Typography>
@@ -27,12 +32,7 @@ function Help() {
       <Typography variant="subtitle1" sx={{ my: 3 }}>
         We are here to help. Get in touch!
       </Typography>
-      <Box
-        component="img"
-        src={content.images.logo.purple}
-        alt="buoy"
-        sx={{ width: 60 }}
-      />
+      <Box component="img" src={content.images.logo.purple} alt="buoy" sx={{ width: 60 }} />
     </Container>
   );
 }

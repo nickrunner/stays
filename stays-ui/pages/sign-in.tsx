@@ -1,10 +1,11 @@
-import * as React from 'react';
 import Container from '@mui/material/Container';
-import Copyright from '../src/components/Copyright';
-import { Nav } from '../src/components/AppBar/AppBar';
-import StaysPage from '../src/StaysPage';
-import SignIn from '../src/components/SignIn';
 import { NextPage } from 'next';
+import * as React from 'react';
+
+import { Nav } from '../src/components/AppBar/AppBar';
+import Copyright from '../src/components/Copyright';
+import SignIn from '../src/components/SignIn';
+import StaysPage from '../src/StaysPage';
 
 const SignInPage: NextPage = () => {
   return (
@@ -16,6 +17,6 @@ const SignInPage: NextPage = () => {
       </Container>
     </StaysPage>
   );
-}
+};
 
 export default SignInPage;

@@ -1,12 +1,13 @@
+import { Typography } from '@mui/material';
+import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import * as React from 'react';
+
 import { UserRecord } from '../../../../common/models/User';
 import { UserClient } from '../../clients/userClient';
-import { DataGrid, GridColDef, GridValueGetterParams, GridCellParams } from '@mui/x-data-grid';
-import { Typography } from '@mui/material';
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);
-  return date.toLocaleDateString()+" "+date.toLocaleTimeString();
+  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
 
 const columns: GridColDef[] = [
@@ -15,7 +16,7 @@ const columns: GridColDef[] = [
     headerName: 'Email',
     sortable: true,
     width: 200,
-    editable: false,
+    editable: false
   },
   {
     field: 'fullName',
@@ -23,26 +24,26 @@ const columns: GridColDef[] = [
     sortable: false,
     width: 150,
     valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      `${params.row.firstName || ''} ${params.row.lastName || ''}`
   },
   {
     field: 'roles',
     headerName: 'Roles',
     sortable: true,
     width: 150,
-    editable: false,
+    editable: false
   },
   {
     field: 'stayerMembership',
     headerName: 'Stayer',
     width: 150,
-    editable: false,
+    editable: false
   },
   {
     field: 'hostMembership',
     headerName: 'Host',
     width: 150,
-    editable: false,
+    editable: false
   },
   {
     field: 'lastActive',
@@ -65,31 +66,29 @@ const columns: GridColDef[] = [
     sortable: true,
     width: 200,
     valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
-  },
-  
+  }
 ];
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
-export type UserCallback = ((user:UserRecord) => any);
+export type UserCallback = (user: UserRecord) => any;
 export interface UsersTableProps {
   users: UserRecord[];
   onSelect: UserCallback;
 }
 
 export default function UsersTable(props: UsersTableProps) {
+  const [users, setUsers] = React.useState<UserRecord[]>([]);
 
-    const[users, setUsers] = React.useState<UserRecord[]>([]);
-
-    React.useEffect(() => {
-        const getUsers = async() => {
-            const users = await new UserClient().getUsers({});
-            setUsers(users);
-        }
-        getUsers();
-        return
-    }, []);
+  React.useEffect(() => {
+    const getUsers = async () => {
+      const users = await new UserClient().getUsers({});
+      setUsers(users);
+    };
+    getUsers();
+    return;
+  }, []);
 
   return (
     <React.Fragment>
@@ -97,7 +96,7 @@ export default function UsersTable(props: UsersTableProps) {
       <div style={{ height: 700, width: '100%' }}>
         <DataGrid
           onCellClick={(params: GridCellParams) => {
-            props.onSelect(params.row as UserRecord)
+            props.onSelect(params.row as UserRecord);
           }}
           rows={users}
           columns={columns}

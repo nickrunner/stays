@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
+import clsx from 'clsx';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import { useRouter } from 'next/router';
+import * as React from 'react';
 
 // Add support for the sx prop for consistency with the other branches.
 const Anchor = styled('a')({});
@@ -30,12 +30,11 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
         scroll={scroll}
         shallow={shallow}
         passHref
-        locale={locale}
-      >
+        locale={locale}>
         <Anchor ref={ref} {...other} />
       </NextLink>
     );
-  },
+  }
 );
 
 export type LinkProps = {
@@ -63,7 +62,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
   const router = useRouter();
   const pathname = typeof href === 'string' ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: router.pathname === pathname && activeClassName,
+    [activeClassName]: router.pathname === pathname && activeClassName
   });
 
   const isExternal =

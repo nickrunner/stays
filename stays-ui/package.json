@@ -46,7 +46,8 @@
     "build": "next build",
     "start": "next start -p 8080",
     "deploy": "npm run build && gcloud app deploy",
-    "lint": "next lint"
+    "lint": "next lint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
@@ -73,7 +74,11 @@
     "babel-plugin-styled-components": "^2.0.2",
     "eslint": "^8.10.0",
     "eslint-config-next": "^12.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.1",
-    "mini-css-extract-plugin": "2.4.5"
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "mini-css-extract-plugin": "2.4.5",
+    "prettier": "^2.5.1"
   }
 }
