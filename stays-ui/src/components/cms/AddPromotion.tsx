@@ -20,7 +20,6 @@ const style = {
 export default function AddPromotion() {
   const [name, setName] = React.useState("");
   const [code, setCode] = React.useState("");
-  const [description, setDescription] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [errMsg, setErrMsg] = React.useState("");
 
@@ -65,18 +64,6 @@ export default function AddPromotion() {
                 onChange={(e: any) => setCode(e.target.value)}
               />
             </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="description"
-              name="description"
-              label={"Description of promotion"}
-              fullWidth
-              multiline
-              rows={5}
-              onChange={(e: any) => setDescription(e.target.value)}
-            />
           </Grid>
           <Typography sx={{ m: 2 }} variant="subtitle1">
             {errMsg}

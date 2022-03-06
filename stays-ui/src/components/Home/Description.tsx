@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { content } from "../../content";
 
-export default function Description(props: any) {
+export default function Description() {
   const router = useRouter();
 
   const item: SxProps<Theme> = {

@@ -32,7 +32,7 @@ export interface StaysAppBarProps {
 
 export function Nav(props: StaysAppBarProps) {
   const [scroll, setScroll] = React.useState(false);
-  const { globalState, dispatch } = React.useContext(globalContext);
+  const { globalState } = React.useContext(globalContext);
 
   React.useEffect(() => {
     function handleScroll() {
@@ -96,7 +96,7 @@ export function Nav(props: StaysAppBarProps) {
               mr: getNavMargin()
             }}>
             <Greeting transparent={props.transparent} />
-            <LoginMenu transparent={props.transparent} />
+            <LoginMenu />
           </Box>
         </Toolbar>
       </AppBar>

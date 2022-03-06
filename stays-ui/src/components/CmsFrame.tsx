@@ -80,7 +80,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 );
 
 export default function CmsFrame() {
-  const { globalState, dispatch } = React.useContext(globalContext);
+  const { globalState } = React.useContext(globalContext);
   const router = useRouter();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {

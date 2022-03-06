@@ -1,4 +1,4 @@
-import { AccountCircle, Reorder } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Divider, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -10,11 +10,10 @@ import * as React from "react";
 import { Role, UserMembership } from "../../../../common/models/User";
 import { AuthClient } from "../../clients/authClient";
 import { globalContext } from "../../GlobalStore";
-import { StaysAppBarProps } from "./AppBar";
 
-export default function LoginMenu(props: StaysAppBarProps) {
+export default function LoginMenu() {
   const router = useRouter();
-  const { globalState, dispatch } = React.useContext(globalContext);
+  const { globalState } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

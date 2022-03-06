@@ -20,7 +20,6 @@ export default function PromotionCms() {
     undefined
   );
   const [addOpen, setAddOpen] = React.useState(false);
-  const handleAddOpen = () => setAddOpen(true);
   const handleAddClose = () => setAddOpen(false);
 
   const getPromotions = async () => {

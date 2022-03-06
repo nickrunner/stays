@@ -1,0 +1,6 @@
+{
+  "env": "dev",
+  "platform": {
+    "env": "dev"
+  }
+}

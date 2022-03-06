@@ -1,6 +1,5 @@
 import Check from "@mui/icons-material/Check";
 import StarIcon from "@mui/icons-material/StarBorder";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -11,12 +10,8 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-
-import Copyright from "./Copyright";
 
 const tiers = [
   {

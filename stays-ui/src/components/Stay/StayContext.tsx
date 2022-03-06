@@ -46,6 +46,7 @@ const defaultStay: Stay = {
 };
 
 export function StayContext({ children }: { children: ReactNode }): ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stay, setStay] = React.useState<Stay>(defaultStay);
 
   return <stayContext.Provider value={{ stay }}>{children}</stayContext.Provider>;

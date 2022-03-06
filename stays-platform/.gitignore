@@ -26,4 +26,5 @@ yarn-error.log*
 /stays-prod-firebase-adminsdk-ilku1-2f0bb379eb.json
 
 #secrets
+/secrets
 /src/secrets.ts

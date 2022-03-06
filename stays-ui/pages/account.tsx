@@ -8,16 +8,6 @@ import UnderConstruction from "../src/components/UnderConstruction";
 import { theme } from "../src/Theme";
 
 function Account() {
-  const [mobile, setMobile] = React.useState(false);
-  React.useEffect(() => {
-    handleResize();
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">

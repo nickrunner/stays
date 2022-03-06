@@ -10,7 +10,7 @@ import { FilesClient } from "../../clients/filesClient";
 import { StayContext, stayContext } from "./StayContext";
 import { StayPhotoCard } from "./StayPhotoCard";
 
-export default function StayPhotoForm(props: any) {
+export default function StayPhotoForm() {
   const { stay } = useContext(stayContext);
   const [photos, setPhotos] = React.useState<Photo[]>(stay.photos);
   const [open, setOpen] = React.useState(false);

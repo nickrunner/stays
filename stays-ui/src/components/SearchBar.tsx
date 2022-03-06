@@ -1,11 +1,8 @@
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, TextField } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Paper from "@mui/material/Paper";
 import React from "react";
 
 export default function SearchBar(props: any) {

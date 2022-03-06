@@ -14,10 +14,8 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { Photo } from "../../../../common/models/Photo";
 import { Stay, StayRecord } from "../../../../common/models/Stay";
 import { content } from "../../content";
-import { globalContext } from "../../GlobalStore";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -25,7 +23,7 @@ interface ExpandMoreProps extends IconButtonProps {
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -41,7 +39,6 @@ export interface StayDirectoryCardProps {
 
 export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const [expanded, setExpanded] = React.useState(false);
-  const { globalState, dispatch } = React.useContext(globalContext);
 
   React.useEffect(() => {
     return;
@@ -50,18 +47,6 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  function getFeatureImage(photos: Photo[]): string {
-    let featureUrl = photos[0].url;
-    let priority = photos[0].priority;
-    photos.forEach((p) => {
-      if (p.priority < priority) {
-        priority = p.priority;
-        featureUrl = p.url;
-      }
-    });
-    return featureUrl;
-  }
 
   function getAvatar(region: string) {
     switch (region) {
@@ -84,9 +69,9 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
     }
   }
 
-  function getCaption(description: string) {
-    return description.split(".")[0];
-  }
+  // function getCaption(description: string) {
+  //   return description.split(".")[0];
+  // }
 
   function getImageCarouselProps(stay: Stay) {
     const imgs = [];

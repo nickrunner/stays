@@ -3,10 +3,11 @@ import Head from "next/head";
 import React from "react";
 
 import ComingSoon from "../src/components/ComingSoon/ComingSoon";
+import StaysPage from "../src/StaysPage";
 
 const ComingSoonPage: NextPage = () => {
   return (
-    <div>
+    <StaysPage noLogin="true">
       <Head>
         <title>Stays - Coming Soon!</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -20,7 +21,7 @@ const ComingSoonPage: NextPage = () => {
         />
       </Head>
       <ComingSoon />
-    </div>
+    </StaysPage>
   );
 };
 

@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { globalContext } from "../../GlobalStore";
 import { StaysAppBarProps } from "./AppBar";
 
 export interface NavButtonProps extends StaysAppBarProps {

@@ -5,10 +5,24 @@ import { getAuth } from "firebase-admin/auth";
 import { CollectionReference, DocumentData, getFirestore } from "firebase-admin/firestore";
 import { getStorage } from "firebase-admin/storage";
 
-import { default as serviceAccountJson } from "../../stays-dev-firebase-adminsdk-uwz4z-a24f839c4d.json";
+import { default as config } from "../../config.json";
+import { default as devServiceAccountJson } from "../../secrets/stays-dev-firebase-adminsdk.json";
+import { default as prodServiceAccountJson } from "../../secrets/stays-prod-firebase-adminsdk.json";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+let serviceAccountJson;
+switch (config.env) {
+  case "dev":
+    serviceAccountJson = devServiceAccountJson;
+    break;
+  case "prod":
+    serviceAccountJson = prodServiceAccountJson;
+    break;
+  default:
+    throw new Error("Invalid config: " + config.env);
+}
 
 // Initialize Firebase
 const admin = require("firebase-admin");

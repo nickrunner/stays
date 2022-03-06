@@ -24,7 +24,7 @@ import StayReview from "./StayReview";
 
 const steps = ["About", "Photos", "Review"];
 
-export default function AddStay(props: any) {
+export default function AddStay() {
   const [activeStep, setActiveStep] = React.useState(0);
   const { stay } = React.useContext(stayContext);
   const [loading, setLoading] = React.useState(false);
@@ -140,7 +140,7 @@ export default function AddStay(props: any) {
                 <LoadingButton
                   variant="contained"
                   onClick={handleNext}
-                  loading={false}
+                  loading={loading}
                   sx={{ mt: 3, ml: 1 }}>
                   {activeStep === steps.length - 1 ? "Submit" : "Next"}
                 </LoadingButton>
