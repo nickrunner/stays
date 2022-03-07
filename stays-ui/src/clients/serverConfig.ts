@@ -13,7 +13,7 @@ switch (config.platform.env) {
     BASE_URL = "https://platform-dot-stays-prod.uc.r.appspot.com";
     break;
   case "local":
-    BASE_URL = "http://192.168.86.206:3001";
+    BASE_URL = "http://192.168.86.233:3001";
     break;
 }
 

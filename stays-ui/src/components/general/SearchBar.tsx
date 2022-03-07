@@ -1,6 +1,6 @@
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
@@ -23,23 +23,24 @@ export default function SearchBar(props: any) {
       component="form"
       onSubmit={handleSubmit}
       sx={{
+        width: props.width,
+        height: props.height,
         p: "2px 4px",
+        mt: 1,
         display: "flex",
         alignItems: "center"
       }}>
       <TextField
+        sx={{ width: "100%", bgcolor: "background.default", borderRadius: 1 }}
         onChange={(event) => handleChange(event.target.value)}
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search Stays Directory"
-        inputProps={{ "aria-label": "search stays directory" }}>
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton color="primary" sx={{ p: "10px" }} aria-label="directions">
-          <KeyboardReturnIcon />
-        </IconButton>
-      </TextField>
+        placeholder={props.placeholder}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon sx={{ color: "primary.main" }} />
+            </InputAdornment>
+          )
+        }}></TextField>
     </Box>
   );
 }

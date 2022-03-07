@@ -8,7 +8,6 @@ import {
 } from "../../../../common/models/StayAttributes";
 import { StayClient } from "../../clients/stayClient";
 import { theme } from "../../Theme";
-import { stayContext } from "./StayContext";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,26 +33,15 @@ function getStyles(item: string, selected: string[] | undefined) {
 
 export type StayAttributeSelectorProps = {
   type: StayAttributeType;
+  selected: string[];
   label: string;
+  onChange: (attributes: string[]) => void;
+  sx?: any;
 };
 
 export default function StayAttributeSelector(props: StayAttributeSelectorProps) {
-  const { stay } = React.useContext(stayContext);
   const [attributes, setAttributes] = React.useState<StayAttributeRecord[]>([]);
-
-  function getSelected() {
-    switch (props.type) {
-      case StayAttributeType.Amenity:
-        return stay.amenities;
-      case StayAttributeType.PropertyType:
-        return stay.type;
-      case StayAttributeType.SpecialInterest:
-        return stay.specialInterests;
-      default:
-        return [];
-    }
-  }
-  const [selectedAttributes, setSelectedAttributes] = React.useState<string[]>(getSelected());
+  const [selectedAttributes, setSelectedAttributes] = React.useState<string[]>(props.selected);
 
   const getStayAttributes = async () => {
     const pt: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
@@ -69,28 +57,16 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
     const {
       target: { value }
     } = event;
-
-    switch (props.type) {
-      case StayAttributeType.Amenity:
-        stay.amenities = typeof value === "string" ? value.split(",") : value;
-        setSelectedAttributes(stay.amenities);
-        break;
-      case StayAttributeType.PropertyType:
-        stay.type = typeof value === "string" ? value.split(",") : value;
-        setSelectedAttributes(stay.type);
-        break;
-      case StayAttributeType.SpecialInterest:
-        stay.specialInterests = typeof value === "string" ? value.split(",") : value;
-        setSelectedAttributes(stay.specialInterests);
-        break;
-    }
+    const newAttributes: string[] = typeof value === "string" ? value.split(",") : value;
+    setSelectedAttributes(newAttributes);
+    props.onChange(newAttributes);
   }
 
   return (
     <Select
       required
-      sx={{ width: 500, mr: 1 }}
       label={props.label}
+      sx={props.sx}
       multiple
       value={selectedAttributes}
       defaultValue={selectedAttributes}
@@ -106,7 +82,10 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
       MenuProps={MenuProps}>
       {attributes.map((attr: StayAttribute) => {
         return (
-          <MenuItem key={attr.name} value={attr.name} style={getStyles(attr.name, stay.type)}>
+          <MenuItem
+            key={attr.name}
+            value={attr.name}
+            style={getStyles(attr.name, selectedAttributes)}>
             {attr.name}
           </MenuItem>
         );

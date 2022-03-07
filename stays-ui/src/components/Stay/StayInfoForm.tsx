@@ -143,14 +143,28 @@ export default function StayInfoForm() {
           <Grid item xs={12}>
             <FormControl>
               <InputLabel id="propertyTypeLabel">Property Type</InputLabel>
-              <StayAttributeSelector type={StayAttributeType.PropertyType} label="Property Type" />
+              <StayAttributeSelector
+                type={StayAttributeType.PropertyType}
+                label="Property Type"
+                selected={stay.type}
+                onChange={(attributes) => {
+                  stay.type = attributes;
+                }}
+              />
             </FormControl>
           </Grid>
 
           <Grid item xs={12}>
             <FormControl sx={{ width: 150, mr: 1 }}>
               <InputLabel id="amenitiesLabel">Amenities</InputLabel>
-              <StayAttributeSelector type={StayAttributeType.Amenity} label="Amenities" />
+              <StayAttributeSelector
+                type={StayAttributeType.Amenity}
+                label="Amenitities"
+                selected={stay.amenities}
+                onChange={(attributes) => {
+                  stay.amenities = attributes;
+                }}
+              />
             </FormControl>
           </Grid>
           <Grid item xs={12}>
@@ -159,6 +173,10 @@ export default function StayInfoForm() {
               <StayAttributeSelector
                 type={StayAttributeType.SpecialInterest}
                 label="Special Interests"
+                selected={stay.specialInterests}
+                onChange={(attributes) => {
+                  stay.specialInterests = attributes;
+                }}
               />
             </FormControl>
           </Grid>

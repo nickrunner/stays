@@ -66,7 +66,12 @@ export class CollectionQuery {
     return this.set("array-contains", val);
   }
   public arrContainsAny(val?: any): CollectionQuery {
-    return this.set("array-contains-any", val);
+    if (val && val.length > 0) {
+      return this.set("array-contains-any", val);
+    } else {
+      this.expressions.pop();
+    }
+    return this;
   }
   public in(val?: any): CollectionQuery {
     return this.set("in", val);

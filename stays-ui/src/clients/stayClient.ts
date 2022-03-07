@@ -3,7 +3,7 @@ import axios from "axios";
 import { Pagination } from "../../../common/models/Pagination";
 import { Stay, StayRecord, StaySearchFilter } from "../../../common/models/Stay";
 import { StayAttributeRecord, StayAttributeType } from "../../../common/models/StayAttributes";
-import { defCfg, queryCfg } from "./serverConfig";
+import { cfg, defCfg, queryCfg } from "./serverConfig";
 
 export const url = "/stays";
 
@@ -49,7 +49,7 @@ export class StayClient {
   public async getStayAttributes(
     stayAttributeType: StayAttributeType
   ): Promise<StayAttributeRecord[]> {
-    const response = await axios.get(url + "/attributes/" + stayAttributeType, await defCfg());
+    const response = await axios.get(url + "/attributes/" + stayAttributeType, cfg());
     return response.data as StayAttributeRecord[];
   }
 

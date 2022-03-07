@@ -77,7 +77,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
     const imgs = [];
     for (const photo of stay.photos) {
       imgs.push({
-        label: photo.description,
+        label: photo.url,
         imgPath: photo.url
       });
     }
@@ -85,7 +85,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   }
 
   return (
-    <Card id={props.stay.id} sx={{ width: { xs: 300, sm: 500 }, minHeight: 500 }}>
+    <Card id={props.stay.id} sx={{ width: { xs: 300, sm: 350, md: 375, lg: 400 }, minHeight: 500 }}>
       <CardHeader
         height="200"
         avatar={

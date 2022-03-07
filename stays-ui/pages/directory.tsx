@@ -7,9 +7,11 @@ import Footer from "../src/components/Footer";
 import StaysPage from "../src/StaysPage";
 
 const DirectoryPage: NextPage = () => {
+  function handleSearch(phrase: string) {}
+
   return (
     <StaysPage>
-      <Nav transparent={false} />
+      <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)} />
       <Directory />
       <Footer />
     </StaysPage>
