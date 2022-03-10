@@ -6,7 +6,8 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["ik.imagekit.io"]
-  }
+  },
+  distDir: "build"
 };
 
 module.exports = nextConfig;

@@ -1,5 +1,6 @@
 .git
-/pages
-/src
-/build
-node_modules
+/pages/
+/src/
+/secrets/
+/styles/
+node_modules/
