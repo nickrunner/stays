@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Copyright } from "@mui/icons-material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LoadingButton } from "@mui/lab";
-import { Avatar, Box, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Grid, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { AuthClient } from "../clients/authClient";
-import { UserClient } from "../clients/userClient";
-import StaysPage from "../StaysPage";
-import { Nav } from "./AppBar/AppBar";
 
 export default function SignIn() {
   const router = useRouter();
@@ -36,7 +32,6 @@ export default function SignIn() {
     setErrMsg("");
     setLoading(true);
     const authClient = new AuthClient();
-    const userClient = new UserClient();
 
     try {
       await authClient.signIn(email, password);

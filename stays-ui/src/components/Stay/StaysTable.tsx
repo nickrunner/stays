@@ -139,10 +139,6 @@ const columns: GridColDef[] = [
   }
 ];
 
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault();
-}
-
 export type StayCallback = (stay: StayRecord) => any;
 
 export interface StaysTableProps {

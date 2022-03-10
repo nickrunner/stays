@@ -64,7 +64,7 @@ export default function Description() {
         </Box>
       </Box>
 
-      <Typography align="center" variant="h4" sx={{ mt: 10, color: "text.primary" }}>
+      <Typography align="center" variant="h4" sx={{ mt: { xs: 5, sm: 10 }, color: "text.primary" }}>
         {content.pages.comingSoon.description.line2}
       </Typography>
     </Box>

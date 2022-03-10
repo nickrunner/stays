@@ -2,11 +2,9 @@ import { Button, Container, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
 
-import { globalContext } from "../../GlobalStore";
 import Jumbotron from "../Jumbotron";
 
-export default function Hero(props: any) {
-  const { globalState, dispatch } = React.useContext(globalContext);
+export default function Hero() {
   const router = useRouter();
 
   return (

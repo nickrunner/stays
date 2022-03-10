@@ -69,9 +69,6 @@ const columns: GridColDef[] = [
   }
 ];
 
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault();
-}
 export type UserCallback = (user: UserRecord) => any;
 export interface UsersTableProps {
   users: UserRecord[];

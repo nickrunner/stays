@@ -1,21 +1,11 @@
-import { Grid3x3 } from "@mui/icons-material";
-import {
-  Box,
-  Grid,
-  ImageListItemBar,
-  List,
-  ListItem,
-  ListItemText,
-  Typography
-} from "@mui/material";
+import { Grid, ImageListItemBar, List, ListItem, ListItemText, Typography } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import React from "react";
 
-import { Stay } from "../../../../common/models/Stay";
 import { stayContext } from "./StayContext";
 
-export default function StayReview(props: any) {
+export default function StayReview() {
   const { stay } = React.useContext(stayContext);
 
   return (

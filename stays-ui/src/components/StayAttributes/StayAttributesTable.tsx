@@ -2,7 +2,6 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import * as React from "react";
 
-import { StayRecord } from "../../../../common/models/Stay";
 import { StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
 
 function dateString(timestamp: number): string {
@@ -38,10 +37,6 @@ const columns: GridColDef[] = [
     valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
   }
 ];
-
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault();
-}
 
 export type StayAttributeCallback = (stayAttribute: StayAttributeRecord) => any;
 

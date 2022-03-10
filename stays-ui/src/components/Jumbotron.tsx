@@ -1,6 +1,4 @@
-import { Box, Container } from "@mui/material";
-import { table } from "console";
-import { isPropertySignature } from "typescript";
+import { Box } from "@mui/material";
 
 import styles from "../../styles/Hero.module.css";
 

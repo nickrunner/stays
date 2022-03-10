@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 
-import AirbnbLogo from "../../logos/AirbnbLogo";
-import LodgifyLogo from "../../logos/LodgifyLogo";
-import VrboLogo from "../../logos/VrboLogo";
+import AirbnbLogo from "../../graphics/AirbnbLogo";
+import LodgifyLogo from "../../graphics/LodgifyLogo";
+import VrboLogo from "../../graphics/VrboLogo";
 
 export default function Partners() {
   return (

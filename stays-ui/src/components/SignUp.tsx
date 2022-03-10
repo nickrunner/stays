@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AccountCircle } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Avatar, Box, Grid, TextField, Typography } from "@mui/material";
@@ -9,7 +8,7 @@ import React from "react";
 import { AuthClient } from "../clients/authClient";
 import { UserClient } from "../clients/userClient";
 
-export default function SignUp(props: any) {
+export default function SignUp() {
   const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);

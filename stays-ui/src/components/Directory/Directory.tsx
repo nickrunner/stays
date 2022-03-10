@@ -1,34 +1,29 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
 import React from "react";
 
-import { StayRecord } from "../../../../common/models/Stay";
+import { StayRecord, StaySearchFilter } from "../../../../common/models/Stay";
 import { StayClient } from "../../clients/stayClient";
-import SearchBar from "../SearchBar";
-import StayDirectoryCard from "./StayDirectoryCard";
+import { Nav } from "../AppBar/AppBar";
+import SearchBar from "../general/SearchBar";
+import SwipeableEdgeDrawer from "../general/SwipeableEdgeDrawer";
+import DirectoryFilter from "./DirectoryFilter";
+import DirectoryListings from "./DirectoryListings";
 
-export default function Directory() {
+export default function Directory(props: any) {
   const [staysArr, setStaysArr] = React.useState<StayRecord[]>([]);
   const [searchPhrase, setSearchPhrase] = React.useState("");
-  let lastKey = 0;
+  const [filter, setFilter] = React.useState<StaySearchFilter>({ enable: true });
+  const [pagination, setPagination] = React.useState({ lastEvaluatedKey: 0, count: 10 });
 
   const getStays = async () => {
-    console.log("GETTING STAYS with search: " + searchPhrase);
-    // const newStays = await new StayClient().getStays(
-    //   searchPhrase,
-    //   {
-    //     enable: true
-    //   },
-    //   {
-    //     lastEvaluatedKey: lastKey,
-    //     count: 10
-    //   }
-    // );
-    // for(const s of newStays){
-    //   setStaysArr(staysArr => {
-    //     return [...staysArr, s]
-    //   });
-    // }
-    lastKey = lastKey + 10;
+    console.log("GETTING STAYS with filter: " + JSON.stringify(filter, null, 2));
+    try {
+      const newStays = await new StayClient().getStays(searchPhrase, filter, pagination);
+      setStaysArr([]);
+      setStaysArr(newStays);
+    } catch (err) {
+      console.log("FAILED getting stays: " + JSON.stringify(err, null, 2));
+    }
   };
 
   async function handleScroll() {
@@ -36,6 +31,16 @@ export default function Directory() {
     //   await getStays();
     // }
   }
+
+  React.useEffect(() => {
+    getStays();
+    return;
+  }, [filter]);
+
+  React.useEffect(() => {
+    getStays();
+    return;
+  }, [searchPhrase]);
 
   React.useEffect(() => {
     getStays();
@@ -48,36 +53,60 @@ export default function Directory() {
     setStaysArr([]);
     setSearchPhrase(phrase);
     console.log("Searching with phrase: " + phrase);
-    const newStays = await new StayClient().getStays(phrase, {
-      enable: true
-    });
-    for (const s of newStays) {
-      setStaysArr((staysArr) => {
-        return [...staysArr, s];
-      });
-    }
+    getStays();
+  }
+
+  function handleFilterChange(filter: StaySearchFilter) {
+    setFilter(filter);
+  }
+
+  function handleDrawerOpen() {
+    return null;
+  }
+
+  function handleDrawerClose() {
+    return null;
   }
 
   return (
     <React.Fragment>
-      <Box
-        sx={{
-          p: 5,
-          width: 400
-        }}>
-        <SearchBar onSearch={(phrase: string) => handleSearch(phrase)} />
+      <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)} />
+      <Box sx={{ display: "flex", mt: 10 }}>
+        <SwipeableEdgeDrawer>
+          <Box sx={{ p: 5, overflow: "auto" }}>
+            <DirectoryFilter
+              filter={filter}
+              onChange={(filter: StaySearchFilter) => {
+                handleFilterChange(filter);
+              }}
+            />
+          </Box>
+        </SwipeableEdgeDrawer>
+
+        <Box sx={{ height: "100%", display: { xs: "none", sm: "block" } }}>
+          <Drawer
+            anchor="left"
+            variant="permanent"
+            sx={{
+              width: 350,
+              height: "100%",
+              [`& .MuiDrawer-paper`]: { width: 350, height: "100%", boxSizing: "border-box" }
+            }}>
+            <Box sx={{ mt: 15, height: "100%", p: 5, overflow: "auto" }}>
+              <DirectoryFilter
+                filter={filter}
+                onChange={(filter: StaySearchFilter) => {
+                  handleFilterChange(filter);
+                }}
+              />
+            </Box>
+          </Drawer>
+        </Box>
+
+        <Box component="main">
+          <DirectoryListings stays={staysArr} />
+        </Box>
       </Box>
-      <Grid
-        container
-        justifyContent="center"
-        spacing={5}
-        sx={{ pl: 10, pr: 10, bgcolor: "background.default" }}>
-        {staysArr.map((stay) => (
-          <Grid key={stay.id} item xs={11} sm={5} md={5} lg={3} xl={2}>
-            <StayDirectoryCard stay={stay} />
-          </Grid>
-        ))}
-      </Grid>
     </React.Fragment>
   );
 }

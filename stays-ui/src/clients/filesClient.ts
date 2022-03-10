@@ -65,7 +65,7 @@ export class FilesClient {
     );
   }
 
-  public async download(url: string, name: string): Promise<Blob[]> {
+  public async download(url: string): Promise<Blob[]> {
     const response = await axios.get(url, {
       responseType: "blob"
     });

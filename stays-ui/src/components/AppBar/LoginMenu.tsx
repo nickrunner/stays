@@ -1,5 +1,12 @@
-import { AccountCircle, Reorder } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import CottageIcon from "@mui/icons-material/Cottage";
+import HotelIcon from "@mui/icons-material/Hotel";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import MenuIcon from "@mui/icons-material/Menu";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, Divider, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -10,11 +17,12 @@ import * as React from "react";
 import { Role, UserMembership } from "../../../../common/models/User";
 import { AuthClient } from "../../clients/authClient";
 import { globalContext } from "../../GlobalStore";
-import { StaysAppBarProps } from "./AppBar";
 
-export default function LoginMenu(props: StaysAppBarProps) {
+const menuPadding = 2;
+
+export default function LoginMenu(props: any) {
   const router = useRouter();
-  const { globalState, dispatch } = React.useContext(globalContext);
+  const { globalState } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,7 +67,7 @@ export default function LoginMenu(props: StaysAppBarProps) {
   return (
     <div>
       <Button
-        sx={{ height: 50, width: 120, p: 1, mt: 1 }}
+        sx={{ height: props.height, width: 120, mt: 1, p: "2px 4px" }}
         size="medium"
         variant="contained"
         id="basic-button"
@@ -84,66 +92,82 @@ export default function LoginMenu(props: StaysAppBarProps) {
         <MenuItem
           onClick={() => router.push("/stayers/premium/sign-up")}
           sx={{
+            width: 300,
+            p: menuPadding,
+            pl: 2,
+            pr: 2,
             display:
-              globalState.isSignedIn && !hasMembership(UserMembership.Premium) ? "block" : "none"
+              globalState.isSignedIn && !hasMembership(UserMembership.Premium) ? "flex" : "none"
           }}>
+          <LoyaltyIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography variant="subtitle1">Upgrade to Premium</Typography>
         </MenuItem>
 
         <Divider sx={{ display: globalState.isSignedIn ? "block" : "none" }}></Divider>
 
         <MenuItem
-          sx={{ display: globalState.isSignedIn ? "none" : "block" }}
+          sx={{ width: 300, p: menuPadding, display: globalState.isSignedIn ? "none" : "flex" }}
           onClick={() => router.push("/sign-up")}>
+          <AccountCircleIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography variant="subtitle1">Create free account</Typography>
         </MenuItem>
 
         <MenuItem
-          sx={{ display: globalState.isSignedIn ? "block" : "none" }}
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "flex" : "none" }}
           onClick={() => onSignOutClick()}>
+          <LogoutIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Sign out</Typography>
         </MenuItem>
 
         <MenuItem
-          sx={{ display: globalState.isSignedIn ? "block" : "none" }}
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "flex" : "none" }}
           onClick={() => router.push("/account")}>
+          <SettingsIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Account Settings</Typography>
         </MenuItem>
 
         <MenuItem
           onClick={() => router.push("/sign-in")}
-          sx={{ display: globalState.isSignedIn ? "none" : "block" }}>
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "none" : "flex" }}>
+          <AccountCircle sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Sign in</Typography>
         </MenuItem>
 
         <Divider />
 
-        <MenuItem onClick={() => router.push("/directory")}>
+        <MenuItem sx={{ p: menuPadding }} onClick={() => router.push("/directory")}>
+          <HotelIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Find a stay</Typography>
         </MenuItem>
 
         <MenuItem
           onClick={() => router.push("/hosts")}
-          sx={{ display: hasRole(Role.Host) ? "none" : "block" }}>
+          sx={{ p: menuPadding, display: hasRole(Role.Host) ? "none" : "flex" }}>
+          <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Become a host</Typography>
         </MenuItem>
 
         <MenuItem
           onClick={() => router.push("/hosts/portal")}
-          sx={{ display: hasRole(Role.Host) ? "block" : "none" }}>
+          sx={{ display: hasRole(Role.Host) ? "flex" : "none" }}>
+          <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Host Portal</Typography>
         </MenuItem>
 
         <MenuItem
           onClick={() => router.push("/stayers")}
-          sx={{ display: globalState.isSignedIn ? "none" : "block" }}>
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "none" : "flex" }}>
           <Typography>Become a member</Typography>
         </MenuItem>
 
         <MenuItem
           onClick={() => router.push("/cms/dashboard")}
-          sx={{ display: hasRole(Role.Admin) || hasRole(Role.Employee) ? "block" : "none" }}>
-          <Typography>CMS</Typography>
+          sx={{
+            p: menuPadding,
+            display: hasRole(Role.Admin) || hasRole(Role.Employee) ? "flex" : "none"
+          }}>
+          <AdminPanelSettingsIcon sx={{ color: "primary.main", mr: 1 }} />
+          <Typography>Admin Portal</Typography>
         </MenuItem>
       </Menu>
     </div>
