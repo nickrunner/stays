@@ -327,7 +327,7 @@ export default function Waitlist(props: WaitlistProps) {
           </Grid>
         </Grid>
 
-        <Typography sx={{ margin: "auto", pb: 1 }} variant="subtitle2" color={msgColor}>
+        <Typography sx={{ margin: "auto", p: 2 }} variant="subtitle2" color={msgColor}>
           {msg}
         </Typography>
 

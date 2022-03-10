@@ -8,7 +8,7 @@ export default function Section(props: any) {
         sx={{
           maxWidth: "lg",
           p: "10%",
-          mb: 10,
+          mb: "10%",
           display: "flex",
           justifyContent: "center"
         }}>

@@ -4,6 +4,7 @@ const BASE_IMG_URL = "https://ik.imagekit.io/stays/" + config.env + "/content";
 
 export const content = {
   images: {
+    sectionDivider: BASE_IMG_URL + "/section-divider.svg",
     logo: {
       purple: BASE_IMG_URL + "/logos/stays-purple.svg",
       white: BASE_IMG_URL + "/logos/stays-white.png",

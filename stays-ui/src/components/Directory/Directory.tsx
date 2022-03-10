@@ -34,10 +34,12 @@ export default function Directory(props: any) {
 
   React.useEffect(() => {
     getStays();
+    return;
   }, [filter]);
 
   React.useEffect(() => {
     getStays();
+    return;
   }, [searchPhrase]);
 
   React.useEffect(() => {
@@ -56,7 +58,6 @@ export default function Directory(props: any) {
 
   function handleFilterChange(filter: StaySearchFilter) {
     setFilter(filter);
-    getStays();
   }
 
   function handleDrawerOpen() {
@@ -71,13 +72,16 @@ export default function Directory(props: any) {
     <React.Fragment>
       <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)} />
       <Box sx={{ display: "flex", mt: 10 }}>
-        {/* <Box sx={{ display: { xs: "block", sm: "none" } }}>
-          <SwipeableEdgeDrawer>
-            <Box sx={{ p: 5, overflow: "auto" }}>
-              <DirectoryFilter />
-            </Box>
-          </SwipeableEdgeDrawer>
-        </Box> */}
+        <SwipeableEdgeDrawer>
+          <Box sx={{ p: 5, overflow: "auto" }}>
+            <DirectoryFilter
+              filter={filter}
+              onChange={(filter: StaySearchFilter) => {
+                handleFilterChange(filter);
+              }}
+            />
+          </Box>
+        </SwipeableEdgeDrawer>
 
         <Box sx={{ height: "100%", display: { xs: "none", sm: "block" } }}>
           <Drawer
@@ -86,7 +90,7 @@ export default function Directory(props: any) {
             sx={{
               width: 350,
               height: "100%",
-              [`& .MuiDrawer-paper`]: { width: 350, boxSizing: "border-box" }
+              [`& .MuiDrawer-paper`]: { width: 350, height: "100%", boxSizing: "border-box" }
             }}>
             <Box sx={{ mt: 15, height: "100%", p: 5, overflow: "auto" }}>
               <DirectoryFilter

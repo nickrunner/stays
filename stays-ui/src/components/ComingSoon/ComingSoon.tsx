@@ -4,12 +4,12 @@ import React from "react";
 import { content } from "../../content";
 import Hero from "../general/Hero";
 import Section from "../general/Section";
+import SectionDivider from "../general/SectionDivider";
 import About from "./About";
 import Description from "./Description";
 import Details from "./Details";
 import Footer from "./Footer";
 import Mockups from "./Mockups";
-import SocialProof from "./SocialProof";
 import Waitlist from "./Waitlist";
 
 export default function ComingSoon() {
@@ -58,17 +58,25 @@ export default function ComingSoon() {
           <Description />
         </Section>
 
+        <SectionDivider />
+
         <Section>
           <About />
         </Section>
+
+        <SectionDivider />
 
         <Section>
           <Mockups />
         </Section>
 
-        <Section>
+        <SectionDivider />
+
+        {/* <Section>
           <SocialProof />
         </Section>
+
+        <SectionDivider /> */}
 
         <Section>
           <Details />

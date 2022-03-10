@@ -13,10 +13,10 @@ export interface RangeSelectProps {
 }
 
 export default function RangeSelect(props: RangeSelectProps) {
+  const [minVals, setMinVals] = React.useState(["None", ...props.vals]);
+  const [maxVals, setMaxVals] = React.useState(["None", ...props.vals]);
   const [min, setMin] = React.useState(props.defaultMin);
   const [max, setMax] = React.useState(props.defaultMax);
-  const [minVals, setMinVals] = React.useState(props.vals);
-  const [maxVals, setMaxVals] = React.useState(props.vals);
 
   function getMinVals(maxVal: string): string[] {
     const retVal =
@@ -34,15 +34,23 @@ export default function RangeSelect(props: RangeSelectProps) {
 
   function handleMinChange(value: string) {
     setMin(value);
-    setMaxVals(getMaxVals(value));
-    props.onChange(value, max);
   }
 
   function handleMaxChange(value: string) {
     setMax(value);
-    setMinVals(getMinVals(value));
-    props.onChange(min, value);
   }
+
+  React.useEffect(() => {
+    setMinVals(getMinVals(max));
+    props.onChange(min, max);
+    return;
+  }, [max]);
+
+  React.useEffect(() => {
+    setMaxVals(getMaxVals(min));
+    props.onChange(min, max);
+    return;
+  }, [min]);
 
   return (
     <Box sx={props.sx}>

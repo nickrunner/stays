@@ -1,13 +1,20 @@
-import { Divider } from "@mui/material";
+import { Box } from "@mui/material";
+import Image from "next/image";
 
-export default function SectionDivider() {
+import { content } from "../../content";
+import SectionDividerGraphic from "../../graphics/SectionDividerGraphic";
+
+export default function SectionDivider(props: any) {
   return (
-    <Divider
+    <Box
       sx={{
-        p: 0.1,
-        width: "100%",
-        bgcolor: "primary.dark"
-      }}
-    />
+        position: "relative",
+        width: { xs: "75%", sm: "50%" },
+        height: 40,
+        justifyContent: "center",
+        margin: "auto"
+      }}>
+      <Image src={content.images.sectionDivider} layout="fill" alt="Section Divider" />
+    </Box>
   );
 }

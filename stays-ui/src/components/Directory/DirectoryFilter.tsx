@@ -1,17 +1,8 @@
 import { Filter } from "@material-ui/icons";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select
-} from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, InputLabel } from "@mui/material";
 import React from "react";
 
+import { Range } from "../../../../common/models/Range";
 import { StaySearchFilter } from "../../../../common/models/Stay";
 import { StayAttributeType } from "../../../../common/models/StayAttributes";
 import RangeSelect from "../general/RangeSelect";
@@ -37,9 +28,42 @@ export default function DirectoryFilter(props: any) {
     setFilter({ ...filter, specialInterests: value });
   }
 
+  function getRange(min: string, max: string): Range {
+    min = min.replace(/\D/g, "");
+    max = max.replace(/\D/g, "");
+    if (min === "None") {
+      min = "0";
+    }
+    if (max === "None") {
+      max = "10000";
+    }
+    return { min: Number(min), max: Number(max) };
+  }
+
+  function handleRateChange(min: string, max: string) {
+    setFilter({ ...filter, rate: getRange(min, max) });
+  }
+
+  function handleBedroomChange(min: string, max: string) {
+    setFilter({ ...filter, bedrooms: getRange(min, max) });
+  }
+
+  function handleCapacityChange(min: string, max: string) {
+    setFilter({ ...filter, capacity: getRange(min, max) });
+  }
+
+  function handleParkingChange(value: boolean) {
+    setFilter({ ...filter, onSiteParking: value });
+  }
+
+  function handlePetsChange(value: boolean) {
+    setFilter({ ...filter, petsAllowed: value });
+  }
+
   React.useEffect(() => {
     console.log("Filter: " + JSON.stringify(filter, null, 2));
     props.onChange(filter);
+    return;
   }, [filter]);
 
   return (
@@ -87,11 +111,11 @@ export default function DirectoryFilter(props: any) {
           <RangeSelect
             sx={{ width: "100%" }}
             label="Nightly Rate"
-            vals={["$100", "$200", "$300", "$400", "$500", "$600+"]}
-            defaultMin={"$100"}
-            defaultMax={"$100"}
+            vals={["$100", "$200", "$300", "$400", "$500", "$600"]}
+            defaultMin={"None"}
+            defaultMax={"None"}
             onChange={function (min: string, max: string): void {
-              console.log("Min: " + min + " Max: " + max);
+              handleRateChange(min, max);
             }}
           />
         </Grid>
@@ -99,11 +123,11 @@ export default function DirectoryFilter(props: any) {
           <RangeSelect
             sx={{ width: "100%" }}
             label="Capacity"
-            vals={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]}
-            defaultMin={"1"}
-            defaultMax={"1"}
+            vals={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
+            defaultMin={"None"}
+            defaultMax={"None"}
             onChange={function (min: string, max: string): void {
-              console.log("Min: " + min + " Max: " + max);
+              handleBedroomChange(min, max);
             }}
           />
         </Grid>
@@ -111,11 +135,11 @@ export default function DirectoryFilter(props: any) {
           <RangeSelect
             sx={{ width: "100%" }}
             label="Bedrooms"
-            vals={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]}
-            defaultMin={"1"}
-            defaultMax={"1"}
+            vals={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
+            defaultMin={"None"}
+            defaultMax={"None"}
             onChange={function (min: string, max: string): void {
-              console.log("Min: " + min + " Max: " + max);
+              handleCapacityChange(min, max);
             }}
           />
         </Grid>
@@ -124,13 +148,13 @@ export default function DirectoryFilter(props: any) {
           <FormControlLabel
             control={<Checkbox />}
             label="Pets Allowed?"
-            onChange={(e, checked) => (filter.petsAllowed = checked)}
+            onChange={(e, checked) => handlePetsChange(checked)}
           />
 
           <FormControlLabel
             control={<Checkbox />}
             label="On-Site Parking Available"
-            onChange={(e, checked) => (filter.onSiteParking = checked)}
+            onChange={(e, checked) => handleParkingChange(checked)}
           />
         </Grid>
       </Grid>
