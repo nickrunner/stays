@@ -1,5 +1,5 @@
 env: standard
-runtime: nodejs14
+runtime: nodejs16
 instance_class: F1
 # inbound_services:
 # - warmup
@@ -12,4 +12,3 @@ handlers:
     script: auto
   - url: /icons
     static_dir: /public/icons
-

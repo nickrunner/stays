@@ -9,6 +9,8 @@
     "build:spec-and-routes": "tsoa spec-and-routes",
     "build": "npm run build:spec-and-routes && npm run build:ts",
     "start": "node build/stays-platform/src/server.js",
+    "deploy:dev": "npm run build && gcloud app deploy --quiet --project=stays-dev --appyaml=app.dev.yaml",
+    "deploy:prod": "npm run build && gcloud app deploy --quiet --project=stays-prod --appyaml=app.prod.yaml",
     "lint": "eslint --fix --ext .ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },

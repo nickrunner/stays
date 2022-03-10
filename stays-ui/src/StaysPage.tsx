@@ -16,9 +16,8 @@ export default function StaysPage(props: any) {
     const eventClient = new EventClient();
     eventClient.setPage(window.location.pathname);
 
-    console.log("Getting self");
-
     if (!props.noLogin) {
+      console.log("Getting self");
       new UserClient()
         .getSelf()
         .then((value) => {

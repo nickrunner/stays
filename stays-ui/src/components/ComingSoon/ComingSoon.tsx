@@ -24,10 +24,14 @@ export default function ComingSoon() {
     <React.Fragment>
       <Modal
         open={waitlistOpen}
+        aria-labelledby="open waitlist form"
+        aria-describedby="form for submitting waitlist information"
         onClose={() => {
           closeWaitlist();
         }}>
-        <Waitlist close={closeWaitlist} />
+        <React.Suspense fallback={<p>Waiting...</p>}>
+          <Waitlist close={closeWaitlist} />
+        </React.Suspense>
       </Modal>
 
       <Section>

@@ -46,7 +46,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 8080",
-    "deploy": "npm run build && gcloud app deploy --quiet",
+    "deploy:dev": "npm run build && gcloud app deploy --quiet --project=stays-dev --appyaml=app.dev.yaml",
+    "deploy:prod": "npm run build && gcloud app deploy --quiet --project=stays-prod --appyaml=app.prod.yaml",
     "lint": "next lint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
