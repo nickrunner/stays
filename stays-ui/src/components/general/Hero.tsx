@@ -1,9 +1,11 @@
+/* eslint-disable prefer-rest-params */
 import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
 import styles from "../../../styles/ComingSoon.module.css";
+import StaysImage from "./StaysImage";
 
 export interface HeroProps {
   height?: string;
@@ -16,6 +18,51 @@ export interface HeroProps {
 }
 
 export default function Hero(props: HeroProps) {
+  // function calcHeight(): number {
+  //   const h =
+  //     typeof window != "undefined"
+  //       ? (window.innerHeight * Number(props.height?.replace("%", ""))) / 100.0
+  //       : 0;
+  //   // if (h > 0) {
+  //   //   if (window.innerWidth > 600) {
+  //   //     return h - 15;
+  //   //   }
+  //   // }
+  //   return h;
+  // }
+
+  // function calcWidth(): number {
+  //   return typeof window != "undefined" ? window.innerWidth : 0;
+  // }
+
+  // const [imgHeight, setImgHeight] = React.useState(calcHeight());
+  // const [imgWidth, setImgWidth] = React.useState(calcWidth());
+
+  // React.useEffect(() => {
+  //   // timeoutId for debounce mechanism
+  //   let timeoutId: NodeJS.Timeout | null = null;
+  //   const resizeListener = () => {
+  //     // prevent execution of previous setTimeout
+  //     if (timeoutId != null) {
+  //       clearTimeout(timeoutId);
+  //     }
+
+  //     // change width from the state object after x milliseconds
+  //     timeoutId = setTimeout(() => {
+  //       setImgWidth(calcWidth());
+  //       setImgHeight(calcHeight());
+  //     }, 100);
+  //   };
+  //   // set resize listener
+  //   window.addEventListener("resize", resizeListener);
+
+  //   // clean up function
+  //   return () => {
+  //     // remove resize listener
+  //     window.removeEventListener("resize", resizeListener);
+  //   };
+  // }, []);
+
   return (
     <React.Fragment>
       <Box
@@ -29,15 +76,22 @@ export default function Hero(props: HeroProps) {
           zIndex: -1,
           justifyContent: "center"
         }}>
+        {/* <StaysImage
+          className={styles.HeroImage}
+          width={imgWidth}
+          height={imgHeight - 0}
+          quality={80}
+          src={props.image}
+          alt="Beautiful Vacation Rental"
+          blur={true}
+        /> */}
         <Image
           className={styles.HeroImage}
-          src={props.image}
           layout="fill"
-          priority
-          placeholder="blur"
-          blurDataURL={props.blur}
+          src={props.image}
           alt="Beautiful Vacation Rental"
-        />
+          placeholder="blur"
+          blurDataURL={props.blur}></Image>
       </Box>
 
       <Box

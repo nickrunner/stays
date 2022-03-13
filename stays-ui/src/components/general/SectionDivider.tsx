@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 
 import { content } from "../../content";
-import SectionDividerGraphic from "../../graphics/SectionDividerGraphic";
 
 export default function SectionDivider(props: any) {
   return (
