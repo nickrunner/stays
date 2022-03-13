@@ -14,9 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { useRouter } from "next/router";
 import * as React from "react";
 
-import { Role, UserMembership } from "../../../../common/models/User";
 import { AuthClient } from "../../clients/authClient";
 import { globalContext } from "../../GlobalStore";
+import { Role, UserMembership } from "../../models";
 
 const menuPadding = 2;
 

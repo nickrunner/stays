@@ -7,8 +7,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 
-import { Promotion, PromotionRecord } from "../../../../common/models/Promotion";
 import { PromotionClient } from "../../clients/promotionClient";
+import { Promotion, PromotionRecord } from "../../models";
 import CmsFrame from "../CmsFrame";
 import Copyright from "../Copyright";
 import AddPromotion from "./AddPromotion";

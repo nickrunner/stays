@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import * as React from "react";
 
-import { UserRecord } from "../../../../common/models/User";
 import { UserClient } from "../../clients/userClient";
+import { UserRecord } from "../../models";
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);

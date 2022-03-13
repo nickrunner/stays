@@ -1,8 +1,8 @@
 import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
 import React from "react";
 
-import { StayRecord, StaySearchFilter } from "../../../../common/models/Stay";
 import { StayClient } from "../../clients/stayClient";
+import { StayRecord, StaySearchFilter } from "../../models";
 import { Nav } from "../AppBar/AppBar";
 import SearchBar from "../general/SearchBar";
 import SwipeableEdgeDrawer from "../general/SwipeableEdgeDrawer";

@@ -2,9 +2,9 @@ import { Filter } from "@material-ui/icons";
 import { Checkbox, FormControlLabel, Grid, InputLabel } from "@mui/material";
 import React from "react";
 
-import { Range } from "../../../../common/models/Range";
-import { StaySearchFilter } from "../../../../common/models/Stay";
-import { StayAttributeType } from "../../../../common/models/StayAttributes";
+import { StaySearchFilter } from "../../models";
+import { StayAttributeType } from "../../models";
+import { Range } from "../../models";
 import RangeSelect from "../general/RangeSelect";
 import StayAttributeSelector from "../Stay/StayAttributeSelector";
 

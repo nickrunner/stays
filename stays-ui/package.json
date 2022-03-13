@@ -47,7 +47,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 8080",
+    "start": "next start -p 3000",
     "deploy:dev": "npm run build && gcloud app deploy --quiet --project=stays-dev --appyaml=app.dev.yaml",
     "deploy:prod": "npm run build && gcloud app deploy --quiet --project=stays-prod --appyaml=app.prod.yaml",
     "lint": "next lint --fix",

@@ -6,7 +6,7 @@ import { XYCoord } from "dnd-core";
 import * as React from "react";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 
-import { Photo } from "../../../../common/models/Photo";
+import { Photo } from "../../models";
 import { stayContext } from "./StayContext";
 
 export interface StayPhotoCardProps {

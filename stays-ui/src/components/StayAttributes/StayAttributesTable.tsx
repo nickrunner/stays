@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import * as React from "react";
 
-import { StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
+import { StayAttributeRecord, StayAttributeType } from "../../models";
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);

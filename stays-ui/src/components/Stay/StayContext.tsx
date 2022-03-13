@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 
-import { Stay, StayApplicationStatus } from "../../../../common/models/Stay";
+import { Stay, StayApplicationStatus } from "../../models";
 
 export type StayContextType = {
   stay: Stay;

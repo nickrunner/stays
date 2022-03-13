@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { PromotionRecord } from "../../../common/models/Promotion";
+import { PromotionRecord } from "../models";
 import { cfg, defCfg } from "./serverConfig";
 
 export const url = "/promotions";

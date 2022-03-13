@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { WaitlistItem } from "../../../common/models/WaitlistItem";
+import { WaitlistItem } from "../models";
 import { PromotionClient } from "./promotionClient";
 import { cfg } from "./serverConfig";
 

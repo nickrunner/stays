@@ -7,11 +7,11 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 
-import { UserRecord } from "../../../../common/models/User";
 import { UserClient } from "../../../src/clients/userClient";
 import CmsFrame from "../../../src/components/CmsFrame";
 import Copyright from "../../../src/components/Copyright";
 import UsersTable from "../../../src/components/User/UsersTable";
+import { UserRecord } from "../../../src/models";
 import StaysPage from "../../../src/StaysPage";
 
 function UsersCmsContent() {

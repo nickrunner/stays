@@ -5,8 +5,8 @@ import { DropzoneDialog } from "material-ui-dropzone";
 import { useContext } from "react";
 import React from "react";
 
-import { Photo } from "../../../../common/models/Photo";
 import { FilesClient } from "../../clients/filesClient";
+import { Photo } from "../../models";
 import { StayContext, stayContext } from "./StayContext";
 import { StayPhotoCard } from "./StayPhotoCard";
 

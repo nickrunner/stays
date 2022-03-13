@@ -14,8 +14,8 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { Stay, StayRecord } from "../../../../common/models/Stay";
 import { content } from "../../content";
+import { Stay, StayRecord } from "../../models";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
 interface ExpandMoreProps extends IconButtonProps {

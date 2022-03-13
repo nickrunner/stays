@@ -7,11 +7,11 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 
-import { StayAttributeRecord, StayAttributeType } from "../../../../common/models/StayAttributes";
 import { StayClient } from "../../../src/clients/stayClient";
 import CmsFrame from "../../../src/components/CmsFrame";
 import Copyright from "../../../src/components/Copyright";
 import StayAttributesTable from "../../../src/components/StayAttributes/StayAttributesTable";
+import { StayAttributeRecord, StayAttributeType } from "../../../src/models";
 import StaysPage from "../../../src/StaysPage";
 import AddStayAttribute from "./add";
 

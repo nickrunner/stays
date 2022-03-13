@@ -1,12 +1,8 @@
 import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 
-import {
-  StayAttribute,
-  StayAttributeRecord,
-  StayAttributeType
-} from "../../../../common/models/StayAttributes";
 import { StayClient } from "../../clients/stayClient";
+import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models";
 import { theme } from "../../Theme";
 
 const ITEM_HEIGHT = 48;

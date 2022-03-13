@@ -9,8 +9,8 @@ import {
 } from "@mui/x-data-grid-pro";
 import * as React from "react";
 
-import { StayRecord } from "../../../../common/models/Stay";
 import { StayClient } from "../../clients/stayClient";
+import { StayRecord } from "../../models";
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);

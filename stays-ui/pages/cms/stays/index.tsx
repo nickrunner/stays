@@ -8,10 +8,10 @@ import Paper from "@mui/material/Paper";
 import { useRouter } from "next/router";
 import * as React from "react";
 
-import { StayRecord } from "../../../../common/models/Stay";
 import CmsFrame from "../../../src/components/CmsFrame";
 import Copyright from "../../../src/components/Copyright";
 import StaysTable from "../../../src/components/Stay/StaysTable";
+import { StayRecord } from "../../../src/models";
 import StaysPage from "../../../src/StaysPage";
 
 function StaysCmsContent() {

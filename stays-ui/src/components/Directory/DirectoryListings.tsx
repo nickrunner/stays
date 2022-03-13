@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import { StayRecord } from "../../../../common/models/Stay";
+import { StayRecord } from "../../models";
 import StayDirectoryCard from "./StayDirectoryCard";
 
 export default function DirectoryListings(props: any) {

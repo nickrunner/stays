@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { Pagination } from "../../../common/models/Pagination";
-import { Stay, StayRecord, StaySearchFilter } from "../../../common/models/Stay";
-import { StayAttributeRecord, StayAttributeType } from "../../../common/models/StayAttributes";
+import { Pagination } from "../models";
+import { StayAttributeRecord, StayAttributeType } from "../models";
+import { Stay, StayRecord, StaySearchFilter } from "../models";
 import { cfg, defCfg, queryCfg } from "./serverConfig";
 
 export const url = "/stays";
