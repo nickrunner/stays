@@ -13,9 +13,8 @@ import {
   Security
 } from "tsoa";
 
-import { Stay, StayRecord, StayRejectionInfo } from "../../../common/models/stay";
-import { Role } from "../../../common/models/user";
 import { AuthenticatedRequest } from "../auth/auth";
+import { Role, Stay, StayRecord, StayRejectionInfo } from "../models";
 import { StaysService } from "./staysService";
 
 @Route("stays")

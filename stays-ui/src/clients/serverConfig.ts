@@ -7,10 +7,10 @@ export let BASE_URL = "";
 
 switch (config.platform.env) {
   case "dev":
-    BASE_URL = "https://platform-dot-stays-dev.uc.r.appspot.com";
+    BASE_URL = "https://stays-platform-ducbymrn2a-uc.a.run.app";
     break;
   case "prod":
-    BASE_URL = "https://platform-dot-stays-prod.uc.r.appspot.com";
+    BASE_URL = "https://stays-platform-cqnprd4uoa-uc.a.run.app";
     break;
   case "local":
     BASE_URL = "http://192.168.86.233:3001";

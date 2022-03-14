@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
 
-import { Promotion, PromotionRecord } from "../../../common/models/Promotion";
-import { Role } from "../../../common/models/user";
 import { AuthenticatedRequest } from "../auth/auth";
+import { Promotion, PromotionRecord, Role } from "../models";
 import { PromotionService } from "./promotionService";
 
 @Route("promotions")

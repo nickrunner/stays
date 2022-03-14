@@ -1,8 +1,8 @@
 import { DecodedIdToken } from "firebase-admin/auth";
 
-import { UserRecord } from "../../../common/models/user";
 import { Error401 } from "../error";
 import { auth } from "../firebase/firebase";
+import { UserRecord } from "../models";
 
 export class AuthService {
   private currentUser?: UserRecord;

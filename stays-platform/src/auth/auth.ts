@@ -1,7 +1,7 @@
 import * as express from "express";
 
-import { Role, UserRecord } from "../../../common/models/user";
 import { Error401 } from "../error";
+import { Role, UserRecord } from "../models";
 import { UsersService } from "../users/usersService";
 import { AuthService } from "./authService";
 

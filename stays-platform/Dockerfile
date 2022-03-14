@@ -1,32 +1,35 @@
+
 # Get NPM packages
 FROM node:alpine AS dependencies
+RUN mkdir -p /usr/src/app
 RUN apk add --no-cache libc6-compat
-WORKDIR /stays-ui
-COPY /stays-ui/package.json package-lock.json ./
-COPY --from=dependencies /stays-ui/node_modules ./node_modules
-RUN npm install
+WORKDIR /usr/src/app
+#Copy package.json
+COPY stays-platform/package.json stays-platform/package-lock.json ./
+RUN npm ci
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
-WORKDIR /stays-ui
-COPY . .
-COPY --from=dependencies /stays-ui/node_modules ./node_modules
+WORKDIR /usr/src/app
+COPY stays-platform ./
+COPY common ./../common
+COPY --from=dependencies /usr/src/app/node_modules ./node_modules
 RUN npm run build
 
-# Production image, copy all the files and run next
+# Production image, copy all the files and run 
 FROM node:alpine AS runner
-WORKDIR /stays-ui
+WORKDIR /usr/src/app
 
 ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN adduser -S platform -u 1001
 
-COPY --from=builder --chown=nextjs:nodejs /stays-ui/.next ./.next
-COPY --from=builder /stays-ui/node_modules ./node_modules
-COPY --from=builder /stays-ui/package.json ./package.json
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder --chown=platform:nodejs /usr/src/app/build ./build
+COPY --from=builder /usr/src/app/package.json ./package.json
 
-USER nextjs
-EXPOSE 3000
+USER platform
+EXPOSE 3001
 
 CMD ["npm", "start"]

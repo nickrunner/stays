@@ -13,9 +13,9 @@ import {
   Security
 } from "tsoa";
 
-import { Role, User, UserRecord } from "../../../common/models/user";
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
+import { Role, User, UserRecord } from "../models";
 import { UsersService } from "./usersService";
 
 @Route("users")

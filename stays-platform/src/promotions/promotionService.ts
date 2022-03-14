@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Promotion, PromotionRecord } from "../../../common/models/Promotion";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import { Promotion, PromotionRecord } from "../models";
 
 export class PromotionService {
   private promotions: Collection<Promotion>;

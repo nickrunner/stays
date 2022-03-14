@@ -1,11 +1,7 @@
-import {
-  StayAttribute,
-  StayAttributeRecord,
-  StayAttributeType
-} from "../../../../common/models/StayAttributes";
 import { Error409 } from "../../error";
 import { Collection } from "../../firebase/firestore/collection";
 import { CollectionQuery } from "../../firebase/firestore/collectionQuery";
+import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models";
 
 export class StayAttributesService {
   private stayAttributes: Collection<StayAttribute>;

@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Route } from "tsoa";
 
-import { WaitlistItem } from "../../../common/models/WaitlistItem";
+import { WaitlistItem } from "../models";
 import { WaitlistService } from "./waitlistService";
 
 @Route("waitlist")

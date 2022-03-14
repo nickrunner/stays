@@ -4,17 +4,17 @@ import ow from "ow";
 
 import { Coordinates } from "../../../common/models/Location";
 import { Pagination } from "../../../common/models/Pagination";
+import { Error400, Error409 } from "../error";
+import { Collection } from "../firebase/firestore/collection";
+import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import LocationService from "../locationService";
 import {
   Stay,
   StayApplicationStatus,
   StayRecord,
   StayRejectionInfo,
   StaySearchFilter
-} from "../../../common/models/stay";
-import { Error400, Error409 } from "../error";
-import { Collection } from "../firebase/firestore/collection";
-import { CollectionQuery } from "../firebase/firestore/collectionQuery";
-import LocationService from "../locationService";
+} from "../models";
 
 export class StaysService {
   private stays: Collection<Stay>;

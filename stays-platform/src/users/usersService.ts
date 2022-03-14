@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Role,
-  User,
-  UserMembership,
-  UserRecord,
-  UserSearchFilter
-} from "../../../common/models/user";
 import { Error404, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import { Role, User, UserMembership, UserRecord, UserSearchFilter } from "../models";
 
 export class UsersService {
   private users: Collection<User>;

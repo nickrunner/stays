@@ -1,13 +1,8 @@
 import { Body, Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
 
-import {
-  StayAttribute,
-  StayAttributeRecord,
-  StayAttributeType
-} from "../../../../common/models/StayAttributes";
-import { Role } from "../../../../common/models/user";
 import { AuthenticatedRequest } from "../../auth/auth";
 import { Error401, Error409 } from "../../error";
+import { Role, StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models";
 import { StayAttributesService } from "./stayAttributesService";
 
 @Route("stays/attributes")

@@ -1,8 +1,8 @@
 import ow from "ow";
 
-import { WaitlistItem } from "../../../common/models/WaitlistItem";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
+import { WaitlistItem } from "../models";
 
 export class WaitlistService {
   private waitlist: Collection<WaitlistItem>;
