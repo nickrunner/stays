@@ -1,3 +1,29 @@
 steps:
-  -name: "docker/compose"
-  args: ["up", "-d"]
+  # Docker Build
+  - name: "docker/compose:1.19.0"
+    args: ["build"]
+
+  # Docker Tag
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["tag", "stays_ui", "gcr.io/stays-dev/stays-ui"]
+
+  # Push to container registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/stays-dev/stays-ui"]
+
+  # Entrypoint, timeout and environment variables
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
+    timeout: 240s
+    args:
+      [
+        "run",
+        "deploy",
+        "stays-ui",
+        "--image",
+        "gcr.io/stays-dev/stays-ui",
+        "--region",
+        "us-central1",
+      ]
+images:
+  - gcr.io/stays-dev/stays-ui

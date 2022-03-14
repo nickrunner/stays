@@ -1,7 +1,7 @@
 version: "3"
 services:
   
-  stays-ui:
+  ui:
     build:
       context: ./
       dockerfile: ./stays-ui/Dockerfile

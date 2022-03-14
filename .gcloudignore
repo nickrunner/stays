@@ -1,0 +1,8 @@
+.dockerignore
+/stays-platform/
+scripts/
+content/
+**/node_modules/**
+/stays-ui/npm-debug.log
+/stays-ui/build
+/stays-ui/README.md
