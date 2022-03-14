@@ -12,7 +12,6 @@ RUN npm ci
 FROM node:alpine AS builder
 WORKDIR /usr/src/app
 COPY stays-ui ./
-RUN mkdir -p ./../common
 COPY common ./../common
 COPY --from=dependencies /usr/src/app/node_modules ./node_modules
 RUN npm run build
