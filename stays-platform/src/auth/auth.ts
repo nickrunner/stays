@@ -98,8 +98,8 @@ export async function expressAuthentication(
   scopes?: string[]
 ): Promise<express.Request> {
   let authenticatedRequest: AuthenticatedRequest = request;
-
-  if (securityName == "firebase") {
+  console.log("Authenticating with security name: " + securityName);
+  if (securityName === "firebase") {
     try {
       authenticatedRequest = await firebaseAuthentication(request);
       return authenticatedRequest;
@@ -107,7 +107,7 @@ export async function expressAuthentication(
       console.log("Authentication error: ", { e });
       throw new Error401();
     }
-  } else if (securityName == "user") {
+  } else if (securityName === "user") {
     try {
       console.log("Performing user authentication for scopes: ", { scopes });
       authenticatedRequest = await firebaseAuthentication(request);
