@@ -7,8 +7,6 @@ const Reducer = (state: StaysState, action: ActionType): any => {
     case "GET_SELF":
       const user: User = action.payload;
       const signedIn = user !== undefined;
-      console.log("Get Self: ", { user });
-      console.log("signed in ? " + signedIn);
       state.isSignedIn = signedIn;
       state.self = user;
       return {

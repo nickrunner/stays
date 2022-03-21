@@ -1,5 +1,6 @@
 import { Box, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import React from "react";
+import { useUpdateEffect } from "react-use";
 
 import ValueSelect from "./ValueSelect";
 
@@ -33,20 +34,26 @@ export default function RangeSelect(props: RangeSelectProps) {
   }
 
   function handleMinChange(value: string) {
-    setMin(value);
+    if (value != min) {
+      setMin(value);
+    }
   }
 
   function handleMaxChange(value: string) {
-    setMax(value);
+    console.log("handleing max change: " + max + " value: " + value);
+    if (value != max) {
+      setMax(value);
+    }
   }
 
-  React.useEffect(() => {
+  useUpdateEffect(() => {
     setMinVals(getMinVals(max));
     props.onChange(min, max);
+    console.log("max change");
     return;
   }, [max]);
 
-  React.useEffect(() => {
+  useUpdateEffect(() => {
     setMaxVals(getMaxVals(min));
     props.onChange(min, max);
     return;

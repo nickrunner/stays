@@ -1,5 +1,6 @@
 import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
 import React from "react";
+import { useUpdateEffect } from "react-use";
 
 import { StayClient } from "../../clients/stayClient";
 import { StayRecord, StaySearchFilter } from "../../models";
@@ -10,7 +11,7 @@ import DirectoryFilter from "./DirectoryFilter";
 import DirectoryListings from "./DirectoryListings";
 
 export default function Directory(props: any) {
-  const [staysArr, setStaysArr] = React.useState<StayRecord[]>([]);
+  const [staysArr, setStaysArr] = React.useState<StayRecord[]>(props.stays ?? []);
   const [searchPhrase, setSearchPhrase] = React.useState("");
   const [filter, setFilter] = React.useState<StaySearchFilter>({ enable: true });
   const [pagination, setPagination] = React.useState({ lastEvaluatedKey: 0, count: 10 });
@@ -32,12 +33,13 @@ export default function Directory(props: any) {
     // }
   }
 
-  React.useEffect(() => {
+  useUpdateEffect(() => {
+    console.log("Filter use effect");
     getStays();
     return;
   }, [filter]);
 
-  React.useEffect(() => {
+  useUpdateEffect(() => {
     getStays();
     return;
   }, [searchPhrase]);
@@ -57,6 +59,7 @@ export default function Directory(props: any) {
   }
 
   function handleFilterChange(filter: StaySearchFilter) {
+    console.log("FILTER CHANGE");
     setFilter(filter);
   }
 
@@ -92,7 +95,7 @@ export default function Directory(props: any) {
               height: "100%",
               [`& .MuiDrawer-paper`]: { width: 350, height: "100%", boxSizing: "border-box" }
             }}>
-            <Box sx={{ mt: 15, height: "100%", p: 5, overflow: "auto" }}>
+            <Box sx={{ mt: 15, height: "100%", p: 0, overflow: "auto" }}>
               <DirectoryFilter
                 filter={filter}
                 onChange={(filter: StaySearchFilter) => {

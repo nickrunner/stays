@@ -86,4 +86,12 @@ export class StayClient {
     const response = await axios.get(url + "/attributes/specialInterests", await defCfg());
     return response.data as StayAttributeRecord[];
   }
+
+  public async getAvailableCities(states: string[]): Promise<string[]> {
+    const response = await axios.get(
+      url + "/attributes/cities/available",
+      await queryCfg({ states: JSON.stringify(states) })
+    );
+    return response.data as string[];
+  }
 }

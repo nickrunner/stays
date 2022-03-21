@@ -34,6 +34,69 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Region": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"states": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Region"
+					}
+				]
+			},
+			"State": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"cities": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"zips": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StateRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/State"
+					}
+				]
+			},
 			"Promotion": {
 				"properties": {
 					"code": {
@@ -66,7 +129,10 @@
 					"Property Type",
 					"Special Interest",
 					"Booking Partner",
-					"Social Partner"
+					"Social Partner",
+					"Region",
+					"State",
+					"Country"
 				],
 				"type": "string"
 			},
@@ -487,6 +553,112 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/regions": {
+			"get": {
+				"operationId": "GetRegions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RegionRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/states": {
+			"get": {
+				"operationId": "GetStates",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/StateRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/states/list": {
+			"get": {
+				"operationId": "ListStates",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "regions",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/states/cities": {
+			"get": {
+				"operationId": "GetCities",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "states",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/promotions": {
 			"get": {
 				"operationId": "GetPromotions",
@@ -663,6 +835,100 @@
 						}
 					}
 				}
+			}
+		},
+		"/stays/attributes/zips/available": {
+			"get": {
+				"operationId": "GetAvailableZips",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "number",
+										"format": "double"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "states",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays/attributes/cities/available": {
+			"get": {
+				"operationId": "GetAvailableCities",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "states",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays/attributes/states/available": {
+			"get": {
+				"operationId": "GetAvailableStates",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "regions",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/stays/{stayId}": {

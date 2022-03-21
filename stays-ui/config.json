@@ -1,6 +1,6 @@
 {
-  "env": "prod",
+  "env": "dev",
   "platform": {
-    "env": "prod"
+    "env": "local"
   }
 }

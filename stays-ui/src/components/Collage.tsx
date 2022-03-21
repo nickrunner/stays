@@ -60,7 +60,7 @@ export interface ImageProp {
 
 export default function Collage(props: any) {
   return (
-    <Box sx={{ mt: 8, display: "flex", flexWrap: "wrap" }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       {props.images.map((image: ImageProp) => (
         <ImageIconButton
           key={image.title}

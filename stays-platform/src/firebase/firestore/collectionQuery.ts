@@ -65,7 +65,7 @@ export class CollectionQuery {
   public arrContains(val?: any): CollectionQuery {
     return this.set("array-contains", val);
   }
-  public arrContainsAny(val?: any): CollectionQuery {
+  public arrContainsAny(val?: any[]): CollectionQuery {
     if (val && val.length > 0) {
       return this.set("array-contains-any", val);
     } else {
@@ -73,11 +73,21 @@ export class CollectionQuery {
     }
     return this;
   }
-  public in(val?: any): CollectionQuery {
-    return this.set("in", val);
+  public in(val?: any[]): CollectionQuery {
+    if (val && val.length > 0) {
+      return this.set("in", val);
+    } else {
+      this.expressions.pop();
+    }
+    return this;
   }
-  public notIn(val?: any): CollectionQuery {
-    return this.set("not-in", val);
+  public notIn(val?: any[]): CollectionQuery {
+    if (val && val.length > 0) {
+      return this.set("not-in", val);
+    } else {
+      this.expressions.pop();
+    }
+    return this;
   }
   public inRange(min: number, max: number) {
     return this.gtEq(min).and(this.exp().key).ltEq(max);

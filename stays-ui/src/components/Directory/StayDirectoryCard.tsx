@@ -19,7 +19,7 @@ import { Stay, StayRecord } from "../../models";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
 interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
+  expand: number;
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -127,7 +127,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
           <ShareIcon />
         </IconButton>
         <ExpandMore
-          expand={expanded}
+          expand={expanded ? 1 : 0}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more">

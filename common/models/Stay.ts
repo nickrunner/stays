@@ -45,10 +45,11 @@ export interface Stay {
 export interface StaySearchFilter {
   name?: string;
   enable?: boolean;
-  city?: string;
-  state?: string;
+  cities?: string[];
+  states?: string[];
+  regions?: string[];
   country?: string;
-  zip?: number;
+  zips?: number[];
   bounds?: Bounds;
   rate?: Range;
   capacity?: Range;

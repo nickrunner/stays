@@ -1,9 +1,9 @@
 import NodeGeocoder from "node-geocoder";
 import ow from "ow";
 
-import { Error500 } from "./error";
-import { Address, Coordinates } from "./models";
-import { GOOGLE_MAPS_API_KEY } from "./secrets";
+import { Error500 } from "../error";
+import { Address, Coordinates } from "../models";
+import { GOOGLE_MAPS_API_KEY } from "../secrets";
 
 export default class LocationService {
   private geocoder: NodeGeocoder.Geocoder;

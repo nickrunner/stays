@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CollectionReference, DocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
+import {
+  CollectionReference,
+  DocumentSnapshot,
+  FieldValue,
+  QuerySnapshot
+} from "firebase-admin/firestore";
 import { merge } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 
@@ -213,6 +218,23 @@ export class Collection<Type> {
     }
     console.log("update() id: " + id, { newAttr });
     await this.col.doc(id).set(newAttr, { merge: true });
+  }
+
+  public async increment(id: string, key: string): Promise<void> {
+    await this.col.doc(id).update(key, FieldValue.increment(1));
+  }
+
+  public async decrement(id: string, key: string): Promise<void> {
+    await this.col.doc(id).update(key, FieldValue.increment(-1));
+  }
+
+  public async append(id: string, key: string, items: any[]): Promise<void> {
+    console.log("Appending items: " + items + " to: " + key);
+    await this.col.doc(id).update(key, FieldValue.arrayUnion(...items));
+  }
+
+  public async arrRemove(id: string, key: string, items: any[]): Promise<void> {
+    await this.col.doc(id).update(key, FieldValue.arrayRemove(...items));
   }
 
   public async updateFirst(

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const base = require("airtable").base("appI1pJ5PV62uUQ7d");
 const { StaysService } = require("../build/stays-platform/src/stays/staysService");
+const { RegionsService } = require("../build/stays-platform/src/locations/regionsService");
+const { StatesService } = require("../build/stays-platform/src/locations/statesService");
 const {
   StayAttributesService
 } = require("../build/stays-platform/src/stays/stayAttributes/stayAttributesService");
@@ -64,9 +67,6 @@ function getBedrooms(record) {
 }
 
 async function saveStay(record) {
-  if (record.get("Listing Name") != "hintercabin") {
-    return;
-  }
   var stay = {
     name: record.get("Listing Name"),
     enable: record.get("Listing Finished?"),
@@ -95,6 +95,26 @@ async function saveStay(record) {
     tags: []
   };
   const stayAttributesService = new StayAttributesService();
+  const regionsService = new RegionsService();
+  const statesService = new StatesService();
+
+  if (stay.location.region) {
+    await regionsService.createOrUpdateRegion({ name: stay.location.region, states: [] });
+  }
+  if (stay.location.address.state) {
+    await statesService.createOrUpdateState({ name: stay.location.address.state });
+    await regionsService.addStateToRegion(stay.location.region, stay.location.address.state);
+  }
+  if (stay.location.address.city) {
+    await statesService.addCity(stay.location.address.state, stay.location.address.city);
+  }
+  if (stay.location.address.country) {
+    await stayAttributesService.createOrUpdateStayAttribute({
+      type: "Country",
+      name: stay.location.address.country
+    });
+  }
+
   await record.get("Property Type").forEach(async (pt) => {
     await stayAttributesService.createOrUpdateStayAttribute({ type: "Property Type", name: pt });
     stay.type.push(pt);
@@ -158,7 +178,7 @@ async function saveStay(record) {
 
   try {
     await new StaysService().createOrUpdateStay(stay);
-    console.log("Finihsed " + stay.name);
+    console.log("Finished migrating " + stay.name);
   } catch (error) {
     console.log("Error creating stay: ", { error });
   }

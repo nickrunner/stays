@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import e from "express";
 import {
   Body,
   Controller,
@@ -15,6 +16,7 @@ import {
 
 import { AuthenticatedRequest } from "../auth/auth";
 import { Role, Stay, StayRecord, StayRejectionInfo } from "../models";
+import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 import { StaysService } from "./staysService";
 
 @Route("stays")
@@ -51,7 +53,9 @@ export class StaysController extends Controller {
   public async createStay(@Body() stay: Stay): Promise<StayRecord> {
     console.log("POST /stays with body ", { stay });
     try {
-      return await new StaysService().createStay(stay);
+      const stayRecord: StayRecord = await new StaysService().createStay(stay);
+      await new StayAttributesService().addStayAttributesFromStay(stayRecord);
+      return stayRecord;
     } catch (e) {
       console.log("createStay() Error: " + e);
       throw e;

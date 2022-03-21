@@ -2,12 +2,12 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 
-import ComingSoon from "../src/components/ComingSoon/ComingSoon";
+import Home from "../src/components/Home/Home";
 import StaysPage from "../src/StaysPage";
 
-const ComingSoonPage: NextPage = () => {
+const HomePage: NextPage = () => {
   return (
-    <StaysPage noLogin="true">
+    <StaysPage>
       <Head>
         <title>Stays - Coming Soon!</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -20,9 +20,9 @@ const ComingSoonPage: NextPage = () => {
           content="vacation, rental, unique, host, property, stay, influencer"
         />
       </Head>
-      <ComingSoon />
+      <Home />
     </StaysPage>
   );
 };
 
-export default ComingSoonPage;
+export default HomePage;

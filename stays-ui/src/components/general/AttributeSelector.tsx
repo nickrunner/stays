@@ -2,8 +2,6 @@ import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
-import { StayClient } from "../../clients/stayClient";
-import { StayAttribute, StayAttributeRecord, StayAttributeType } from "../../models";
 import { theme } from "../../Theme";
 
 const ITEM_HEIGHT = 48;
@@ -28,22 +26,24 @@ function getStyles(item: string, selected: string[] | undefined) {
   };
 }
 
-export type StayAttributeSelectorProps = {
-  type: StayAttributeType;
+export type AttributeSelectorProps = {
+  attributes: string[];
   selected: string[];
   label: string;
   onChange: (attributes: string[]) => void;
   sx?: any;
 };
 
-export default function StayAttributeSelector(props: StayAttributeSelectorProps) {
-  const [attributes, setAttributes] = React.useState<StayAttributeRecord[]>([]);
+export default function AttributeSelector(props: AttributeSelectorProps) {
   const [selectedAttributes, setSelectedAttributes] = React.useState<string[]>(props.selected);
 
-  const getStayAttributes = async () => {
-    const pt: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
-    setAttributes(pt);
-  };
+  function handleAttributeChange(event: SelectChangeEvent<string[]>) {
+    const {
+      target: { value }
+    } = event;
+    const newAttributes: string[] = typeof value === "string" ? value.split(",") : value;
+    setSelectedAttributes(newAttributes);
+  }
 
   function handleDelete(e: any, value: any) {
     console.log("Handle Delete: ", { value });
@@ -56,19 +56,6 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
     props.onChange(selectedAttributes);
     return;
   }, [selectedAttributes]);
-
-  React.useEffect(() => {
-    getStayAttributes();
-    return;
-  }, []);
-
-  function handleAttributeChange(event: SelectChangeEvent<string[]>) {
-    const {
-      target: { value }
-    } = event;
-    const newAttributes: string[] = typeof value === "string" ? value.split(",") : value;
-    setSelectedAttributes(newAttributes);
-  }
 
   return (
     <Select
@@ -95,13 +82,10 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
         </Box>
       )}
       MenuProps={MenuProps}>
-      {attributes.map((attr: StayAttribute) => {
+      {props.attributes.map((attr: string) => {
         return (
-          <MenuItem
-            key={attr.name}
-            value={attr.name}
-            style={getStyles(attr.name, selectedAttributes)}>
-            {attr.name}
+          <MenuItem key={attr} value={attr} style={getStyles(attr, selectedAttributes)}>
+            {attr}
           </MenuItem>
         );
       })}

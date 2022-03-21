@@ -1,7 +1,8 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 
 import Collage from "../Collage";
+import SectionHead from "../general/SectionHead";
 
 const images = [
   {
@@ -53,11 +54,9 @@ const images = [
 
 export default function Showcase() {
   return (
-    <Container component="section" sx={{ mt: 8, mb: 4, bgcolor: "backgound.default" }}>
-      <Typography variant="h4" align="center" component="h2">
-        For all tastes and all desires
-      </Typography>
+    <Box sx={{ display: "grid", gap: 10 }}>
+      <SectionHead>Curated for the passionate traveler</SectionHead>
       <Collage images={images} />
-    </Container>
+    </Box>
   );
 }

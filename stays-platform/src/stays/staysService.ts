@@ -7,7 +7,7 @@ import { Pagination } from "../../../common/models/Pagination";
 import { Error400, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
-import LocationService from "../locationService";
+import LocationService from "../locations/locationService";
 import {
   Stay,
   StayApplicationStatus,
@@ -15,26 +15,30 @@ import {
   StayRejectionInfo,
   StaySearchFilter
 } from "../models";
+import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 
 export class StaysService {
   private stays: Collection<Stay>;
+  private stayAttributesService: StayAttributesService;
 
   public constructor() {
     this.stays = new Collection<Stay>("stays");
+    this.stayAttributesService = new StayAttributesService();
   }
 
   private buildQuery(search: string, filter: StaySearchFilter): CollectionQuery {
     const query = new CollectionQuery()
       .where("name")
       .eq(filter.name)
-      .and("enable")
-      .eq(filter.enable)
-      .and("city")
-      .eq(filter.city)
-      .and("state")
-      .eq(filter.state)
-      .and("zip")
-      .eq(filter.zip)
+
+      .and("location.address.city")
+      .in(filter.cities)
+      .and("location.address.state")
+      .in(filter.states)
+      .and("location.region")
+      .in(filter.regions)
+      .and("location.address.zip")
+      .in(filter.zips)
       .and("petsAllowed")
       .eq(filter.petsAllowed)
       .and("onSiteParking")
@@ -70,6 +74,9 @@ export class StaysService {
     if (keywords.length > 0) {
       query.and("tags").arrContainsAny(keywords);
     }
+
+    // Enable should be last
+    query.and("enable").eq(filter.enable);
 
     return query;
   }
@@ -135,7 +142,8 @@ export class StaysService {
     }
     await this.validateStay(stay);
     stay.tags = this.generateKeywords(stay);
-    return await this.stays.create(stay);
+    const stayRecord = await this.stays.create(stay);
+    return stayRecord;
   }
 
   public async getStayByName(name: string): Promise<StayRecord> {
@@ -182,6 +190,25 @@ export class StaysService {
     console.log("Updating stay: " + JSON.stringify(newStay, null, 2));
     await this.validateStay(newStay);
     await this.stays.update(stayId, newStay);
+  }
+
+  public async getAvailableZips(states: string[]): Promise<number[]> {
+    const stays: Stay[] = await this.getStays("", { states: states });
+    const zips: Set<number> = new Set();
+    for (const stay of stays) {
+      zips.add(stay.location.address.zip);
+    }
+    return Array.from(zips.values());
+  }
+
+  public async getAvailableCities(states: string[]): Promise<string[]> {
+    console.log("Getting available cities form states: " + states);
+    const stays: Stay[] = await this.getStays("", { states: states });
+    const cities: Set<string> = new Set();
+    for (const stay of stays) {
+      cities.add(stay.location.address.city);
+    }
+    return Array.from(cities.values());
   }
 
   public async deleteStay(stayId: string) {
