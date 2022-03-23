@@ -97,7 +97,7 @@ export const content = {
       description: {
         header: "Stays.co is a directory of top-tier stays with an exclusive perks program",
         headerSub: "Serving both travelers and hosts",
-        sub1: "Travelers get a curated list of the most desirable vacation stays while also getting exclusive access to the best deals across the most popular booking platforms.",
+        sub1: "Travelers get a powerful search tool for the best vacation stays while also getting access to deals, discounts and giveaways.",
         sub2: "Hosts can get their stay discovered, direct interested travelers to the booking site of their choice, and then contact them with discounts, deals and information.",
         line2: "We work alongside the most popular booking platforms"
       },

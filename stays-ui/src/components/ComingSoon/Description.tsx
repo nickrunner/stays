@@ -28,7 +28,7 @@ export default function Description() {
           borderRadius: 2,
           p: { xs: 0, sm: 5 }
         }}>
-        <Box sx={{ display: "block", mt: { xs: 1, sm: 7 }, gap: 0 }}>
+        <Box sx={{ display: "block", mt: { xs: 1, sm: 3 }, gap: 0 }}>
           <Typography variant="h4" align="center" color="text.primary" fontWeight={900}>
             <EmphasizedText
               fullText={content.pages.comingSoon.description.headerSub}
