@@ -11,11 +11,13 @@ import Partners from "./Partners";
 export default function Description() {
   return (
     <Box sx={{ display: "grid", gap: { xs: 5, sm: 5 }, justifyContent: "center" }}>
-      <SectionHead>{content.pages.comingSoon.description.header}</SectionHead>
-
-      <Box sx={{ maxWidth: "sm", p: 2, margin: "auto" }}>
-        <Partners />
-      </Box>
+      <SectionHead>
+        <EmphasizedText
+          fullText={content.pages.comingSoon.description.header}
+          emphasis="Stays.co"
+          class={styles.empMain}
+        />
+      </SectionHead>
 
       <Box
         sx={{
@@ -30,7 +32,7 @@ export default function Description() {
           <Typography variant="h4" align="center" color="text.primary" fontWeight={900}>
             <EmphasizedText
               fullText={content.pages.comingSoon.description.headerSub}
-              emphasis="stays.co"
+              emphasis="Stays.co"
               class={styles.empMain}
             />
           </Typography>
@@ -41,7 +43,7 @@ export default function Description() {
             display: "grid"
           }}>
           <Info
-            title="The best stays all in one place."
+            title=""
             icon={<CheckCircleOutline fontSize="large" sx={{ color: "primary.main" }} />}
             body="">
             <EmphasizedText
@@ -52,7 +54,7 @@ export default function Description() {
           </Info>
 
           <Info
-            title="A community of travel enthusiasts."
+            title=""
             icon={<CheckCircleOutline fontSize="large" sx={{ color: "primary.main" }} />}
             body="">
             <EmphasizedText
@@ -67,6 +69,10 @@ export default function Description() {
       <Typography align="center" variant="h4" sx={{ mt: { xs: 5, sm: 10 }, color: "text.primary" }}>
         {content.pages.comingSoon.description.line2}
       </Typography>
+
+      <Box sx={{ maxWidth: "sm", p: 2, pb: 0, margin: "auto" }}>
+        <Partners />
+      </Box>
     </Box>
   );
 }

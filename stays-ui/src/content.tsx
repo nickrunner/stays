@@ -95,11 +95,11 @@ export const content = {
         sub: "Discover the best vacation stays, get exclusive deals and have chances to win getaways with a free membership"
       },
       description: {
-        header: "Working alongside the most popular booking platforms",
-        headerSub: "We provide our members",
-        sub1: "Travelers can find the coolest stays and best booking opportunities from any of the most popular booking platforms",
-        sub2: "Hosts can get discovered and direct interested travelers to the booking site of their choice",
-        line2: "Plus, both travelers and hosts get some amazing membership perks..."
+        header: "Stays.co is a directory of top-tier stays with an exclusive perks program",
+        headerSub: "Serving both travelers and hosts",
+        sub1: "Travelers get a curated list of the most desirable vacation stays while also getting exclusive access to the best deals across the most popular booking platforms.",
+        sub2: "Hosts can get their stay discovered, direct interested travelers to the booking site of their choice, and then contact them with discounts, deals and information.",
+        line2: "We work alongside the most popular booking platforms"
       },
       about: {
         header: "What do stays.co members get?",

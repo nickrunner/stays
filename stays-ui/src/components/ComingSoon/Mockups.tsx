@@ -28,7 +28,7 @@ export default function Mockups() {
           display: { xs: "grid", md: "flex" },
           gap: 5
         }}>
-        <NextImageCarousel width="600" height="1200" images={getImageCarouselProps()} />
+        <NextImageCarousel width="600" height="800" images={getImageCarouselProps()} />
       </Box>
     </Box>
   );
