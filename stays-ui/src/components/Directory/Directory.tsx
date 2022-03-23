@@ -1,6 +1,9 @@
 import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
+import { replaceBasePath } from "next/dist/server/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { useUpdateEffect } from "react-use";
+import { updateSourceFile } from "typescript";
 
 import { StayClient } from "../../clients/stayClient";
 import { StayRecord, StaySearchFilter } from "../../models";
@@ -11,10 +14,22 @@ import DirectoryFilter from "./DirectoryFilter";
 import DirectoryListings from "./DirectoryListings";
 
 export default function Directory(props: any) {
+  const router = useRouter();
+  const { query } = useRouter();
   const [staysArr, setStaysArr] = React.useState<StayRecord[]>(props.stays ?? []);
-  const [searchPhrase, setSearchPhrase] = React.useState("");
-  const [filter, setFilter] = React.useState<StaySearchFilter>({ enable: true });
+  const [searchPhrase, setSearchPhrase] = React.useState((query.string as string) ?? "");
+  const [filter, setFilter] = React.useState<StaySearchFilter>({
+    ...(query.filter ? JSON.parse(decodeURI(query.filter as string)) : {}),
+    enable: true
+  });
   const [pagination, setPagination] = React.useState({ lastEvaluatedKey: 0, count: 10 });
+
+  function updateUrl() {
+    router.push({
+      pathname: "/directory",
+      query: { search: encodeURI(searchPhrase), filter: encodeURI(JSON.stringify(filter)) }
+    });
+  }
 
   const getStays = async () => {
     console.log("GETTING STAYS with filter: " + JSON.stringify(filter, null, 2));
@@ -35,11 +50,13 @@ export default function Directory(props: any) {
 
   useUpdateEffect(() => {
     console.log("Filter use effect");
+    updateUrl();
     getStays();
     return;
   }, [filter]);
 
   useUpdateEffect(() => {
+    updateUrl();
     getStays();
     return;
   }, [searchPhrase]);

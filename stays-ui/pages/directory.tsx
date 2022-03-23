@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import React from "react";
 
 import { StayClient } from "../src/clients/stayClient";
@@ -16,15 +17,15 @@ const DirectoryPage: NextPage = (props: any) => {
   );
 };
 
-// export async function getStaticProps() {
-//   const client = new StayClient();
-//   const stays = await client.getStays("", { enable: true }, { lastEvaluatedKey: 0, count: 10 });
-//   return {
-//     props: {
-//       stays
-//     },
-//     revalidate: 100
-//   };
-// }
+export async function getStaticProps() {
+  const client = new StayClient();
+  const stays = await client.getStays("", { enable: true }, { lastEvaluatedKey: 0, count: 10 });
+  return {
+    props: {
+      stays
+    },
+    revalidate: 100
+  };
+}
 
 export default DirectoryPage;

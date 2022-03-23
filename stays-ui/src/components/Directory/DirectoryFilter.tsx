@@ -104,12 +104,12 @@ export default function DirectoryFilter(props: any) {
 
   function handleParkingChange(value: boolean) {
     console.log("PARKING CHANGE: " + value);
-    setFilter({ ...filter, onSiteParking: value });
+    setFilter({ ...filter, onSiteParking: value ?? undefined });
   }
 
   function handlePetsChange(value: boolean) {
     console.log("PETS CHANGE: " + value);
-    setFilter({ ...filter, petsAllowed: value });
+    setFilter({ ...filter, petsAllowed: value ?? undefined });
   }
 
   const getStates = async () => {

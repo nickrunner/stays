@@ -56,6 +56,7 @@ export interface ImageProp {
   width: number;
   title: string;
   src: string;
+  onClick: (title: string) => void;
 }
 
 export default function Collage(props: any) {
@@ -64,6 +65,9 @@ export default function Collage(props: any) {
       {props.images.map((image: ImageProp) => (
         <ImageIconButton
           key={image.title}
+          onClick={() => {
+            props.onClick(image.title);
+          }}
           style={{
             width: image.width
           }}>
