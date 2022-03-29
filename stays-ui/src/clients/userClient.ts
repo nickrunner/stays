@@ -14,7 +14,8 @@ export class UserClient {
       email: email,
       userMembership: UserMembership.Standard,
       lastActive: Date.now(),
-      roles: [Role.Stayer]
+      roles: [Role.Stayer],
+      favorites: []
     };
     const response = await axios.post(url, user, await defCfg());
     return response.data as User;
@@ -43,5 +44,14 @@ export class UserClient {
   public async getUsers(filters: any): Promise<UserRecord[]> {
     const response = await axios.get(url, await queryCfg(filters));
     return response.data as UserRecord[];
+  }
+
+  public async addFavorite(stayId: string): Promise<void> {
+    const cfg = await defCfg();
+    await axios.post(url + "/favorites/" + stayId, +stayId, cfg);
+  }
+
+  public async removeFavorite(stayId: string): Promise<void> {
+    await axios.delete(url + "/favorites/" + stayId, await defCfg());
   }
 }

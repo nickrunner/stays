@@ -25,6 +25,7 @@ export function cfg(): AxiosRequestConfig {
 
 export async function defCfg(): Promise<AxiosRequestConfig> {
   const token = await new AuthClient().getToken(1000);
+  console.log("REQ with BASEURL: " + BASE_URL);
   return {
     baseURL: BASE_URL,
     headers: {

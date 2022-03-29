@@ -240,7 +240,31 @@ export const theme = createTheme({
     subtitle1: {
       fontSize: "1rem",
       fontWeight: 700,
-      lineHeight: 1.75
+      "@media (min-width:400px)": {
+        fontSize: "0.5rem"
+      },
+      "@media (min-width:500px)": {
+        fontSize: "0.55rem"
+      },
+      "@media (min-width:700px)": {
+        fontSize: "0.6rem"
+      },
+      "@media (min-width:800px)": {
+        fontSize: "0.65rem"
+      },
+      "@media (min-width:900px)": {
+        fontSize: "0.7rem"
+      },
+      "@media (min-width:1000px)": {
+        fontSize: "0.75rem"
+      },
+      "@media (min-width:1100px)": {
+        fontSize: "0.8rem"
+      },
+      "@media (min-width:1200px)": {
+        fontSize: "1.0rem"
+      },
+      lineHeight: 1.5
     },
     subtitle2: {
       fontSize: "0.875rem",
@@ -249,9 +273,9 @@ export const theme = createTheme({
     },
     overline: {
       fontSize: "0.75rem",
-      fontWeight: 600,
+      fontWeight: 700,
       letterSpacing: "0.5px",
-      lineHeight: 2.5,
+      lineHeight: 1.5,
       textTransform: "uppercase"
     },
     caption: {

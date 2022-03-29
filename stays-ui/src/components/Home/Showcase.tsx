@@ -7,20 +7,20 @@ import SectionHead from "../general/SectionHead";
 
 export default function Showcase() {
   const router = useRouter();
-  const pushDirectory = (propertyType: string) => {
+  function pushDirectory(propertyType: string) {
+    console.log("CABIN CLICK");
     if (typeof window !== "undefined") {
       router.push({
         pathname: "/directory",
-        query: { filter: JSON.stringify({ type: propertyType }) }
+        query: { filter: JSON.stringify({ type: [propertyType] }) }
       });
     }
-  };
+  }
   const images = [
     {
       src: "https://media.vrbo.com/lodging/38000000/37860000/37859400/37859348/4916a261.f10.jpg",
       title: "Cabin/Cottage",
-      width: "39%",
-      onClick: pushDirectory("Cabin/Cottage")
+      width: "39%"
     },
     {
       src: "https://cdn.onekindesign.com/wp-content/uploads/2019/12/Rustic-Contemporary-A-Frame-Todd-Gordon-Mather-Architect-01-1-Kindesign.jpg",
@@ -49,7 +49,7 @@ export default function Showcase() {
     },
     {
       src: "https://www.designinsiderlive.com/wp-content/uploads/2020/04/Hotel-Du-Vin-Avon-Gorge-features-artwork-by-Elegant-Clutter-web.jpg",
-      title: "Boutique Hotels",
+      title: "Boutique Hotel",
       width: "39%"
     },
     {
@@ -66,7 +66,7 @@ export default function Showcase() {
   return (
     <Box sx={{ display: "grid", gap: 10 }}>
       <SectionHead>Curated for the passionate traveler</SectionHead>
-      <Collage images={images} />
+      <Collage images={images} onClick={pushDirectory} />
     </Box>
   );
 }

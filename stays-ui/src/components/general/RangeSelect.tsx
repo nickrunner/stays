@@ -2,11 +2,11 @@ import { Box, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/m
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
+import { Range } from "../../models";
 import ValueSelect from "./ValueSelect";
 
 export interface RangeSelectProps {
-  defaultMin: string;
-  defaultMax: string;
+  default: Range | undefined;
   vals: string[];
   label: string;
   sx: any;
@@ -16,8 +16,24 @@ export interface RangeSelectProps {
 export default function RangeSelect(props: RangeSelectProps) {
   const [minVals, setMinVals] = React.useState(["None", ...props.vals]);
   const [maxVals, setMaxVals] = React.useState(["None", ...props.vals]);
-  const [min, setMin] = React.useState(props.defaultMin);
-  const [max, setMax] = React.useState(props.defaultMax);
+  const [min, setMin] = React.useState(
+    props.default
+      ? props.default.min
+        ? props.default.min.toString() == "0"
+          ? "None"
+          : props.default.min.toString()
+        : "None"
+      : "None"
+  );
+  const [max, setMax] = React.useState(
+    props.default
+      ? props.default.max
+        ? props.default.max.toString() == "0"
+          ? "None"
+          : props.default.max.toString()
+        : "None"
+      : "None"
+  );
 
   function getMinVals(maxVal: string): string[] {
     const retVal =
@@ -61,26 +77,26 @@ export default function RangeSelect(props: RangeSelectProps) {
 
   return (
     <Box sx={props.sx}>
+      <Typography variant="subtitle1" sx={{ mb: 3 }}>
+        {props.label}
+      </Typography>
       <Box sx={{ display: "flex", gap: 0.5 }}>
         <Box sx={{ width: "50%" }}>
-          <InputLabel id={props.label + "min"}>{"Min"}</InputLabel>
           <ValueSelect
-            label={"Min " + props.label}
-            default={props.defaultMin}
+            label="Min"
+            default={min}
             values={minVals}
             onSelect={(value: string) => handleMinChange(value)}
           />
         </Box>
 
-        <Box sx={{ mt: 4, p: 1 }}>
+        <Box sx={{ mt: 1, p: 1 }}>
           <Typography>-</Typography>
         </Box>
-
         <Box sx={{ width: "50%" }}>
-          <InputLabel id={props.label + "max"}>{"Max"}</InputLabel>
           <ValueSelect
-            label={"Max " + props.label}
-            default={props.defaultMax}
+            label="Max"
+            default={max}
             values={maxVals}
             onSelect={(value: string) => handleMaxChange(value)}
           />

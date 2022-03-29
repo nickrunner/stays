@@ -1,4 +1,14 @@
-import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent
+} from "@mui/material";
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
@@ -71,40 +81,48 @@ export default function StayAttributeSelector(props: StayAttributeSelectorProps)
   }
 
   return (
-    <Select
-      required
-      label={props.label}
-      sx={props.sx}
-      multiple
-      value={selectedAttributes}
-      defaultValue={selectedAttributes}
-      onChange={(e) => handleAttributeChange(e)}
-      input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-      renderValue={(selected) => (
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-          {selected.map((value: any) => (
-            <Chip
-              key={value}
-              label={value}
-              onDelete={(event) => handleDelete(event, value)}
-              onMouseDown={(event) => {
-                event.stopPropagation();
-              }}
-            />
-          ))}
-        </Box>
-      )}
-      MenuProps={MenuProps}>
-      {attributes.map((attr: StayAttribute) => {
-        return (
-          <MenuItem
-            key={attr.name}
-            value={attr.name}
-            style={getStyles(attr.name, selectedAttributes)}>
-            {attr.name}
-          </MenuItem>
-        );
-      })}
-    </Select>
+    <div>
+      <FormControl variant="outlined" sx={props.sx}>
+        <InputLabel id="test-label">{props.label}</InputLabel>
+        <Select
+          sx={{ labelWidth: 200 }}
+          key={props.label}
+          required
+          labelId="test-label"
+          label={props.label}
+          multiple
+          value={selectedAttributes}
+          defaultValue={selectedAttributes}
+          onChange={(e) => handleAttributeChange(e)}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {selected.map((value: any) => (
+                <Chip
+                  key={value}
+                  label={value}
+                  onDelete={(event) => handleDelete(event, value)}
+                  onMouseDown={(event) => {
+                    event.stopPropagation();
+                  }}
+                />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}>
+          {attributes.map((attr: StayAttribute) => {
+            return (
+              <MenuItem
+                key={attr.name}
+                value={attr.name}
+                style={getStyles(attr.name, selectedAttributes)}>
+                <Checkbox checked={selectedAttributes.includes(attr.name)} />
+                {attr.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </div>
   );
 }

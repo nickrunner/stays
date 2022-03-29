@@ -1,20 +1,27 @@
+import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
+import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
+import CircularProgress from "@mui/material/CircularProgress";
 import Collapse from "@mui/material/Collapse";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
+import styles from "../../../styles/StayDirectoryCard.module.css";
+import { UserClient } from "../../clients/userClient";
 import { content } from "../../content";
+import { globalContext } from "../../GlobalStore";
 import { Stay, StayRecord } from "../../models";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
@@ -35,10 +42,21 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export interface StayDirectoryCardProps {
   stay: StayRecord;
+  onSignInRequired: () => void;
 }
+
+const useStyles = makeStyles((theme) => ({
+  favoriteButton: {
+    "&:hover": {
+      color: "#6c5ee6"
+    }
+  }
+}));
 
 export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const [expanded, setExpanded] = React.useState(false);
+  const { globalState, dispatch } = React.useContext(globalContext);
+  const [favoriteLoading, setFavoriteLoading] = React.useState(false);
 
   React.useEffect(() => {
     return;
@@ -84,21 +102,89 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
     return imgs;
   }
 
+  async function handleAddFavoriteButtonClick() {
+    if (!globalState.isSignedIn) {
+      props.onSignInRequired();
+      return;
+    }
+    setFavoriteLoading(true);
+    const client = new UserClient();
+    await client.addFavorite(props.stay.id);
+    await client.getSelf().then((value) => {
+      dispatch({ type: "GET_SELF", payload: value });
+    });
+    setFavoriteLoading(false);
+  }
+
+  async function handleRemoveFavoriteButtonClick() {
+    if (!globalState.isSignedIn) {
+      props.onSignInRequired();
+      return;
+    }
+    setFavoriteLoading(true);
+    const client = new UserClient();
+    await client.removeFavorite(props.stay.id);
+    await client.getSelf().then((value) => {
+      dispatch({ type: "GET_SELF", payload: value });
+    });
+    setFavoriteLoading(false);
+  }
+
+  function isFavorited(): boolean {
+    if (!globalState.isSignedIn) {
+      return false;
+    }
+    if (!globalState.self) {
+      return false;
+    }
+    if (!globalState.self.favorites) {
+      return false;
+    }
+    return globalState.self.favorites.includes(props.stay.id);
+  }
+
+  function favoriteIcon(): JSX.Element {
+    if (favoriteLoading) {
+      return <CircularProgress sx={{ p: 1 }} />;
+    } else if (isFavorited()) {
+      return (
+        <IconButton
+          sx={{ color: "primary.main", display: isFavorited() ? "block" : "none" }}
+          aria-label="remove from favorites"
+          onClick={() => {
+            handleRemoveFavoriteButtonClick();
+          }}>
+          <FavoriteIcon />
+        </IconButton>
+      );
+    } else {
+      return (
+        <IconButton
+          sx={{ display: isFavorited() ? "none" : "block" }}
+          aria-label="add to favorites"
+          className={classes.favoriteButton}
+          onClick={() => {
+            handleAddFavoriteButtonClick();
+          }}>
+          <FavoriteBorderIcon />
+        </IconButton>
+      );
+    }
+  }
+
+  const classes = useStyles();
   return (
-    <Card id={props.stay.id} sx={{ width: { xs: 300, sm: 350, md: 375, lg: 400 }, minHeight: 500 }}>
+    <Card
+      id={props.stay.id}
+      sx={{ width: { xs: 300, sm: 300, md: 300, lg: 325, xl: 400 }, minHeight: 450 }}>
       <CardHeader
-        height="200"
         avatar={
           <Avatar
             sx={{ bgcolor: "primary.main" }}
             aria-label="stay"
             src={getAvatar(props.stay.location.region)}></Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        action={favoriteIcon()}
         title={props.stay.name}
         titleTypographyProps={{
           align: "left",
@@ -107,11 +193,40 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         }}
         subheader={props.stay.location.address.city + ", " + props.stay.location.address.state}
         subheaderTypographyProps={{
-          variant: "subtitle1"
+          variant: "caption"
         }}
       />
-      <CardMedia>
-        <ImageCarousel width="100%" height="300" images={getImageCarouselProps(props.stay)} />
+
+      <CardMedia sx={{ zIndex: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 0.5,
+            p: 1,
+            position: "absolute",
+            zIndex: 1,
+            mt: 26
+          }}>
+          <Typography variant="body2" sx={{ color: "common.white", mt: 1 }}>
+            Sleeps
+          </Typography>
+          <Typography variant="h6" sx={{ color: "common.white" }}>
+            {props.stay.capacity}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "common.white", mt: 1 }}>
+            for
+          </Typography>
+          <Typography variant="h6" sx={{ color: "common.white" }}>
+            ${props.stay.currentRate}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "common.white", mt: 1 }}>
+            /
+          </Typography>
+          <Typography variant="body2" sx={{ color: "common.white", mt: 1 }}>
+            night
+          </Typography>
+        </Box>
+        <ImageCarousel width="100%" height="250" images={getImageCarouselProps(props.stay)} />
       </CardMedia>
       {/* <CardContent>
      
@@ -120,9 +235,6 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         </Typography>
       </CardContent> */}
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>

@@ -40,6 +40,7 @@ export interface Stay {
   demand: string;
   social: Social[];
   booking: Booking[];
+  favoriteCount: number;
 }
 
 export interface StaySearchFilter {

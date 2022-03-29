@@ -215,6 +215,14 @@ export class StaysService {
     await this.stays.delete(stayId);
   }
 
+  public async incrementFavoriteCount(stayId: string) {
+    await this.stays.increment(stayId, "favoriteCount");
+  }
+
+  public async decrementFavoriteCount(stayId: string) {
+    await this.stays.decrement(stayId, "favoriteCount");
+  }
+
   private getKeywordsFromString(description: string): string[] {
     let keywords: string[] = [];
     keywords = keywords.concat(

@@ -1,27 +1,21 @@
-import { Box, Drawer, SwipeableDrawer, Toolbar } from "@mui/material";
-import { replaceBasePath } from "next/dist/server/router";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useUpdateEffect } from "react-use";
-import { updateSourceFile } from "typescript";
 
 import { StayClient } from "../../clients/stayClient";
 import { StayRecord, StaySearchFilter } from "../../models";
 import { Nav } from "../AppBar/AppBar";
-import SearchBar from "../general/SearchBar";
 import SwipeableEdgeDrawer from "../general/SwipeableEdgeDrawer";
-import DirectoryFilter from "./DirectoryFilter";
+import AppBarFilters from "./AppBarFilters";
 import DirectoryListings from "./DirectoryListings";
 
 export default function Directory(props: any) {
   const router = useRouter();
-  const { query } = useRouter();
+  const { query, isReady } = useRouter();
   const [staysArr, setStaysArr] = React.useState<StayRecord[]>(props.stays ?? []);
-  const [searchPhrase, setSearchPhrase] = React.useState((query.string as string) ?? "");
-  const [filter, setFilter] = React.useState<StaySearchFilter>({
-    ...(query.filter ? JSON.parse(decodeURI(query.filter as string)) : {}),
-    enable: true
-  });
+  const [searchPhrase, setSearchPhrase] = React.useState("");
+  const [filter, setFilter] = React.useState<StaySearchFilter>({});
   const [pagination, setPagination] = React.useState({ lastEvaluatedKey: 0, count: 10 });
 
   function updateUrl() {
@@ -48,8 +42,20 @@ export default function Directory(props: any) {
     // }
   }
 
+  useEffect(() => {
+    if (!isReady) return;
+    if (!query) return;
+    if (query.filter) {
+      setFilter(JSON.parse(decodeURI(query.filter as string)));
+    }
+    if (query.searchPhrase) {
+      setSearchPhrase(query.search as string);
+    }
+
+    return;
+  }, [isReady]);
+
   useUpdateEffect(() => {
-    console.log("Filter use effect");
     updateUrl();
     getStays();
     return;
@@ -61,22 +67,14 @@ export default function Directory(props: any) {
     return;
   }, [searchPhrase]);
 
-  React.useEffect(() => {
-    getStays();
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   async function handleSearch(phrase: string) {
     setStaysArr([]);
     setSearchPhrase(phrase);
-    console.log("Searching with phrase: " + phrase);
     getStays();
   }
 
   function handleFilterChange(filter: StaySearchFilter) {
-    console.log("FILTER CHANGE");
+    updateUrl();
     setFilter(filter);
   }
 
@@ -89,12 +87,19 @@ export default function Directory(props: any) {
   }
 
   return (
-    <React.Fragment>
-      <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)} />
-      <Box sx={{ display: "flex", mt: 10 }}>
+    <Box sx={{ display: "grid" }}>
+      <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)}>
+        <AppBarFilters
+          filter={filter}
+          onChange={(filter: StaySearchFilter) => {
+            handleFilterChange(filter);
+          }}></AppBarFilters>
+      </Nav>
+
+      <Box sx={{ display: "flex", mt: 0, justifyContent: "center" }}>
         <SwipeableEdgeDrawer>
           <Box sx={{ p: 5, overflow: "auto" }}>
-            <DirectoryFilter
+            <AppBarFilters
               filter={filter}
               onChange={(filter: StaySearchFilter) => {
                 handleFilterChange(filter);
@@ -103,30 +108,10 @@ export default function Directory(props: any) {
           </Box>
         </SwipeableEdgeDrawer>
 
-        <Box sx={{ height: "100%", display: { xs: "none", sm: "block" } }}>
-          <Drawer
-            anchor="left"
-            variant="permanent"
-            sx={{
-              width: 350,
-              height: "100%",
-              [`& .MuiDrawer-paper`]: { width: 350, height: "100%", boxSizing: "border-box" }
-            }}>
-            <Box sx={{ mt: 15, height: "100%", p: 0, overflow: "auto" }}>
-              <DirectoryFilter
-                filter={filter}
-                onChange={(filter: StaySearchFilter) => {
-                  handleFilterChange(filter);
-                }}
-              />
-            </Box>
-          </Drawer>
-        </Box>
-
-        <Box component="main">
+        <Box component="main" sx={{ mt: 25, zIndex: 0, p: 5 }}>
           <DirectoryListings stays={staysArr} />
         </Box>
       </Box>
-    </React.Fragment>
+    </Box>
   );
 }

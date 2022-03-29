@@ -66,6 +66,7 @@ export default function Collage(props: any) {
         <ImageIconButton
           key={image.title}
           onClick={() => {
+            console.log("IMAGE BUTTON CLICK");
             props.onClick(image.title);
           }}
           style={{

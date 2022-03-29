@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
@@ -36,14 +38,14 @@ export default function ImageCarousel(props: ImageCarouselProps) {
   };
 
   return (
-    <Box sx={{ maxWidth: props.width, flexGrow: 1 }}>
+    <Box sx={{ zIndex: 0, maxWidth: props.width, flexGrow: 1 }}>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents>
         {props.images.map((step, index) => (
-          <div key={step.label}>
+          <div className={styles.PickGradient} key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <img
                 className={styles.CarouselImg}

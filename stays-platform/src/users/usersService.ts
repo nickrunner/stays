@@ -60,7 +60,8 @@ export class UsersService {
       email: email,
       userMembership: UserMembership.Standard,
       lastActive: Date.now(),
-      roles: [Role.Stayer]
+      roles: [Role.Stayer],
+      favorites: []
     };
     return await this.createUser(user, clientId);
   }
@@ -95,5 +96,13 @@ export class UsersService {
 
   public async deleteUser(userId: string) {
     await this.users.delete(userId);
+  }
+
+  public async addFavorite(userId: string, stayId: string) {
+    await this.users.append(userId, "favorites", [stayId]);
+  }
+
+  public async removeFavorite(userId: string, stayId: string) {
+    await this.users.arrRemove(userId, "favorites", [stayId]);
   }
 }

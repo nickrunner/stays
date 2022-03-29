@@ -1,4 +1,4 @@
-import { MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 export interface ValueSelectProps {
   values: string[];
@@ -9,18 +9,22 @@ export interface ValueSelectProps {
 
 export default function ValueSelect(props: ValueSelectProps) {
   return (
-    <Select
-      fullWidth={true}
-      defaultValue={props.default}
-      labelId={props.label}
-      onChange={(event: any) => props.onSelect(event.target.value.toString())}>
-      {props.values.map((v: string) => {
-        return (
-          <MenuItem key={v} value={v}>
-            {v}
-          </MenuItem>
-        );
-      })}
-    </Select>
+    <FormControl variant="outlined">
+      <InputLabel id={props.label}>{props.label}</InputLabel>
+      <Select
+        fullWidth={true}
+        defaultValue={props.default}
+        labelId={props.label}
+        label={props.label}
+        onChange={(event: any) => props.onSelect(event.target.value.toString())}>
+        {props.values.map((v: string) => {
+          return (
+            <MenuItem key={v} value={v}>
+              {v}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
   );
 }

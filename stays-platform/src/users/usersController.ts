@@ -16,6 +16,7 @@ import {
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
 import { Role, User, UserRecord } from "../models";
+import { StaysService } from "../stays/staysService";
 import { UsersService } from "./usersService";
 
 @Route("users")
@@ -72,6 +73,52 @@ export class UsersController extends Controller {
     } catch (e) {
       console.log("updateUser() Error: " + e);
       throw e;
+    }
+  }
+
+  @Post("/favorites/{stayId}")
+  @Security("user", [Role.Stayer])
+  public async addFavorite(
+    @Request() req: AuthenticatedRequest,
+    @Path() stayId: string
+  ): Promise<void> {
+    try {
+      if (req.thisUser) {
+        await new UsersService().addFavorite(req.thisUser.id, stayId);
+      } else {
+        throw new Error401();
+      }
+    } catch (e) {
+      console.log("addFavorites() error: " + e);
+      throw e;
+    }
+    try {
+      new StaysService().incrementFavoriteCount(stayId);
+    } catch {
+      console.log("Failed incrementing stay favorite count");
+    }
+  }
+
+  @Delete("/favorites/{stayId}")
+  @Security("user", [Role.Stayer])
+  public async removeFavorite(
+    @Request() req: AuthenticatedRequest,
+    @Path() stayId: string
+  ): Promise<void> {
+    try {
+      if (req.thisUser) {
+        await new UsersService().removeFavorite(req.thisUser.id, stayId);
+      } else {
+        throw new Error401();
+      }
+    } catch (e) {
+      console.log("addFavorites() error: " + e);
+      throw e;
+    }
+    try {
+      new StaysService().decrementFavoriteCount(stayId);
+    } catch {
+      console.log("Failed decrementing stay favorite count");
     }
   }
 

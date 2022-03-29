@@ -42,7 +42,8 @@ const defaultStay: Stay = {
       latitude: 0,
       longitude: 0
     }
-  }
+  },
+  favoriteCount: 0
 };
 
 export function StayContext({ children }: { children: ReactNode }): ReactElement {

@@ -386,6 +386,10 @@
 							"$ref": "#/components/schemas/Booking"
 						},
 						"type": "array"
+					},
+					"favoriteCount": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -408,7 +412,8 @@
 					"status",
 					"demand",
 					"social",
-					"booking"
+					"booking",
+					"favoriteCount"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -477,6 +482,12 @@
 							"$ref": "#/components/schemas/Role"
 						},
 						"type": "array"
+					},
+					"favorites": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -486,7 +497,8 @@
 					"email",
 					"userMembership",
 					"lastActive",
-					"roles"
+					"roles",
+					"favorites"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -1444,6 +1456,58 @@
 					{
 						"in": "path",
 						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/favorites/{stayId}": {
+			"post": {
+				"operationId": "AddFavorite",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "RemoveFavorite",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
 						"required": true,
 						"schema": {
 							"type": "string"

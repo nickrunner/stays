@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import MuiToolbar from "@mui/material/Toolbar";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import { content } from "../../content";
 import { globalContext } from "../../GlobalStore";
@@ -26,7 +26,9 @@ const Toolbar = styled(MuiToolbar)(({ theme }) => ({
 }));
 
 function AppBar(props: AppBarProps) {
-  return <MuiAppBar elevation={0} position="fixed" {...props} />;
+  return (
+    <MuiAppBar elevation={0} position="fixed" sx={{ bgcolor: "background.default" }} {...props} />
+  );
 }
 
 export interface StaysAppBarProps {
@@ -35,32 +37,53 @@ export interface StaysAppBarProps {
   onSearch?: (phrase: string) => void;
 }
 
-export function Nav(props: StaysAppBarProps) {
+export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
   const [scroll, setScroll] = React.useState(false);
   const { globalState } = React.useContext(globalContext);
+  const [show, setShow] = React.useState(true);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
+
+  function handleScroll() {
+    if (typeof window !== "undefined") {
+      setScroll(window.scrollY != 0);
+      if (window.scrollY > lastScrollY) {
+        // if scroll down hide the navbar
+        setShow(false);
+      } else {
+        // if scroll up show the navbar
+        setShow(true);
+      }
+      // remember current page location to use in the next move
+      setLastScrollY(window.scrollY);
+    }
+  }
 
   React.useEffect(() => {
-    function handleScroll() {
-      setScroll(window.scrollY != 0);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return;
+  }, [lastScrollY]);
 
   function transparentBg() {
     return props.transparent && !scroll;
   }
 
   return (
-    <AppBar
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    <MuiAppBar
       position="fixed"
-      style={{ background: transparentBg() ? "transparent" : "background.default" }}>
+      elevation={0}
+      sx={{
+        bgcolor: "background.default",
+        background: transparentBg() ? "transparent" : "background.default",
+        display: "block"
+      }}>
       <Toolbar
         sx={{
           justifyContent: "space-between",
-          bgcolor: transparentBg() ? "common.transparent" : "background.default"
+          bgcolor: transparentBg() ? "common.transparent" : "background.default",
+          display: show ? "flex" : "none"
         }}>
         <Box
           sx={{
@@ -103,7 +126,7 @@ export function Nav(props: StaysAppBarProps) {
             <SearchBar
               width="100%"
               height="50"
-              placeholder="Looking for something specific?"
+              placeholder="Search Directory"
               onSearch={(phrase: string) => {
                 console.log("Search: " + phrase);
                 if (props.onSearch) {
@@ -126,6 +149,9 @@ export function Nav(props: StaysAppBarProps) {
           <LoginMenu height="50" />
         </Box>
       </Toolbar>
-    </AppBar>
+      <Box sx={{ mx: { xs: 1, sm: 7, lg: 10 }, bgcolor: "background.default" }}>
+        {props.children}
+      </Box>
+    </MuiAppBar>
   );
 }
