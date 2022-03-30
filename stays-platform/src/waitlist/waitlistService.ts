@@ -16,8 +16,8 @@ export class WaitlistService {
       item,
       ow.object.partialShape({
         email: ow.string.nonEmpty,
-        firstName: ow.string.nonEmpty,
-        lastName: ow.string.nonEmpty,
+        name: ow.string.nonEmpty,
+        continent: ow.string.nonEmpty,
         isStayer: ow.boolean,
         isHost: ow.boolean
       })

@@ -440,10 +440,10 @@
 					"email": {
 						"type": "string"
 					},
-					"firstName": {
+					"name": {
 						"type": "string"
 					},
-					"lastName": {
+					"continent": {
 						"type": "string"
 					},
 					"isStayer": {
@@ -458,8 +458,8 @@
 				},
 				"required": [
 					"email",
-					"firstName",
-					"lastName",
+					"name",
+					"continent",
 					"isStayer",
 					"isHost"
 				],

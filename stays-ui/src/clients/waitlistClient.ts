@@ -12,8 +12,8 @@ export class WaitlistClient {
     email: string,
     isStayer: boolean,
     isHost: boolean,
-    firstName: string,
-    lastName: string,
+    name: string,
+    continent: string,
     promoCode?: string
   ) {
     if (promoCode === "") {
@@ -21,8 +21,8 @@ export class WaitlistClient {
     }
 
     const item: WaitlistItem = {
-      firstName: firstName,
-      lastName: lastName,
+      name: name,
+      continent: continent,
       email: email,
       isStayer: isStayer,
       isHost: isHost,

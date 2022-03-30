@@ -9,13 +9,17 @@ import {
   AccordionSummary,
   Box,
   Checkbox,
+  FormControl,
   FormControlLabel,
   Grid,
   IconButton,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography
 } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 import React from "react";
 
 import { AuthClient } from "../../clients/authClient";
@@ -32,9 +36,9 @@ export default function Waitlist(props: WaitlistProps) {
   const [isHost, setIsHost] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [continent, setContinent] = React.useState("");
   const [fnErr, setFnErr] = React.useState(false);
-  const [lnErr, setLnErr] = React.useState(false);
+  const [cntErr, setCntErr] = React.useState(false);
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [emailErr, setEmailErr] = React.useState(false);
@@ -54,7 +58,7 @@ export default function Waitlist(props: WaitlistProps) {
     setPromoErr(false);
     setEmailErr(false);
     setFnErr(false);
-    setLnErr(false);
+    setCntErr(false);
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -72,11 +76,11 @@ export default function Waitlist(props: WaitlistProps) {
       return;
     }
 
-    if (!lastName) {
-      setLnErr(true);
+    if (!continent) {
+      setCntErr(true);
       setLoading(false);
       setMsgColor("error.main");
-      setMsg("Last name required");
+      setMsg("Location required");
       return;
     }
 
@@ -111,7 +115,7 @@ export default function Waitlist(props: WaitlistProps) {
           return;
         }
       }
-      await waitlistClient.addToWaitlist(email, isStayer, isHost, firstName, lastName, promo);
+      await waitlistClient.addToWaitlist(email, isStayer, isHost, firstName, continent, promo);
       setMsgColor("success.main");
       if (isPromoValid && isHost) {
         setMsg(
@@ -172,9 +176,9 @@ export default function Waitlist(props: WaitlistProps) {
     setFirstName(value);
   }
 
-  function handleLastNameChange(value: string) {
-    setLnErr(false);
-    setLastName(value);
+  function handleContinentChange(value: string) {
+    setCntErr(false);
+    setContinent(value);
   }
 
   function handlePromoCodeChange(value: string) {
@@ -244,27 +248,35 @@ export default function Waitlist(props: WaitlistProps) {
         }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            autoComplete="given-name"
-            name="firstName"
+            autoComplete="name"
+            name="name"
             required
             fullWidth
             onChange={(event: any) => handleFirstNameChange(event.target.value)}
-            id="firstName"
-            label="First Name"
+            id="name"
+            label="Name"
             error={fnErr}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            fullWidth
-            onChange={(event: any) => handleLastNameChange(event.target.value)}
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            autoComplete="family-name"
-            error={lnErr}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="continent-label">Location *</InputLabel>
+            <Select
+              required
+              fullWidth
+              onChange={(event: any) => handleContinentChange(event.target.value)}
+              id="continent"
+              labelId="continent-label"
+              label="Location *"
+              value={continent}
+              error={cntErr}>
+              <MenuItem value={"Asia"}>Asia</MenuItem>
+              <MenuItem value={"Europe"}>Europe</MenuItem>
+              <MenuItem value={"North America"}>North America</MenuItem>
+              <MenuItem value={"South America"}>South America</MenuItem>
+              <MenuItem value={"Other"}>Other</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <TextField
