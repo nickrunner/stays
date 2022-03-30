@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { BedroomChildOutlined, DownhillSkiing, GolfCourse, RoomService } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
@@ -22,7 +23,7 @@ import styles from "../../../styles/StayDirectoryCard.module.css";
 import { UserClient } from "../../clients/userClient";
 import { content } from "../../content";
 import { globalContext } from "../../GlobalStore";
-import { Stay, StayRecord } from "../../models";
+import { Stay, StayAttributeRecord, StayRecord } from "../../models";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -235,9 +236,12 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         </Typography>
       </CardContent> */}
       <CardActions disableSpacing>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        {props.stay.specialInterests.map((exp) => {
+          return <DownhillSkiing key={exp} />;
+        })}
+        {props.stay.amenities.map((am) => {
+          return <RoomService key={am} />;
+        })}
         <ExpandMore
           expand={expanded ? 1 : 0}
           onClick={handleExpandClick}

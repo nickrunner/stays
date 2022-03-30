@@ -10,7 +10,7 @@ export interface RangeSelectProps {
   default: Range | undefined;
   range: Range;
   label: string;
-  sx: any;
+  sx?: any;
   prefix?: string;
   suffix?: string;
   step: number;

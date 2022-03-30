@@ -42,10 +42,11 @@ export default function Checklist(props: ChecklistProps) {
   const [values, setValues] = React.useState(props.default);
 
   function handleChange(value: string, checked: boolean) {
+    console.log("Value: " + value + " Checked: " + checked);
     if (checked) {
       setValues([...values, value]);
     } else {
-      setValues(values.filter((v) => v === value));
+      setValues(values.filter((v) => v != value));
     }
   }
 
@@ -56,9 +57,9 @@ export default function Checklist(props: ChecklistProps) {
 
   return (
     <Box sx={props.sx}>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{ width: "100%" }}>
         {props.items.map((item: ChecklistItem) => (
-          <Grid key={item.label} item>
+          <Grid key={item.label} item sx={{ width: "100%" }}>
             <MenuItem
               onClick={() => {
                 handleChange(item.label, !values.includes(item.label));
@@ -66,19 +67,16 @@ export default function Checklist(props: ChecklistProps) {
               key={item.label}
               value={item.label}
               style={getStyles(item.label, values)}>
-              <Box sx={{ width: 70 }}>{item.icon}</Box>
-              <Box sx={{ width: 200 }}>
+              <Box sx={{ width: "20%" }}>{item.icon}</Box>
+              <Box sx={{ width: "60%" }}>
                 <Typography variant="body1" style={getStyles(item.label, values)}>
                   {item.label}
                 </Typography>
               </Box>
-              <Box sx={{ width: 100 }}>
+              <Box sx={{ width: "20%" }}>
                 <Checkbox
                   defaultChecked={props.default.includes(item.label)}
                   checked={values.includes(item.label)}
-                  onChange={(e, checked) => {
-                    handleChange(item.label, checked);
-                  }}
                 />
               </Box>
             </MenuItem>

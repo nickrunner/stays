@@ -1,5 +1,5 @@
 import { Filter, LocationCity, MonetizationOn } from "@material-ui/icons";
-import { Cabin, RoomService, TravelExplore } from "@mui/icons-material";
+import { Cabin, TravelExplore } from "@mui/icons-material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BedIcon from "@mui/icons-material/Bed";
 import DownhillSkiingIcon from "@mui/icons-material/DownhillSkiing";
@@ -21,6 +21,7 @@ import {
   Toolbar,
   Typography
 } from "@mui/material";
+import { width } from "@mui/system";
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
@@ -33,6 +34,10 @@ import AttributeSelector from "../general/AttributeSelector";
 import Checklist from "../general/Checklist";
 import RangeSelect from "../general/RangeSelect";
 import RangeSlider from "../general/RangeSlider";
+import Section from "../general/Section";
+import SectionDivider from "../general/SectionDivider";
+import SectionHead from "../general/SectionHead";
+import SectionSub from "../general/SectionSub";
 import StayAttributeSelector from "../Stay/StayAttributeSelector";
 import FilterPopover from "./FilterPopover";
 import LocationFilter from "./LocationFilter";
@@ -45,7 +50,7 @@ export interface DirectoryFilterProps {
   onChange: (filter: StaySearchFilter) => void;
 }
 
-export default function AppBarFilters(props: DirectoryFilterProps) {
+export default function Filters(props: DirectoryFilterProps) {
   const [filter, setFilter] = React.useState<StaySearchFilter>(props.filter);
   const [availableCities, setAvailableCities] = React.useState<string[]>([]);
   const [availableStates, setAvailableStates] = React.useState<string[]>([]);
@@ -184,155 +189,98 @@ export default function AppBarFilters(props: DirectoryFilterProps) {
     return;
   }, [filter]);
 
+  const MAIN_GAP = 5;
+  const SUB_GAP = 3;
   return (
     <Box
       sx={{
-        display: { xs: "none", lg: "flex" },
-        justifyContent: "space-between",
-        width: "100%",
-        px: 5,
-        pt: 2,
-        pb: 2,
-        margin: "auto"
+        display: "grid",
+        justifyContent: "center",
+        gap: MAIN_GAP,
+        p: 3
       }}>
-      <Box
-        sx={{
-          mt: 1.5,
-          gap: 1,
-          width: "100%",
-          justifyContent: "center",
-          display: "flex"
-        }}>
-        <FilterPopover
-          width={500}
-          onClear={() => {
-            console.log("clear");
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Price</SectionSub>
+        <RangeSlider
+          sx={{ px: 2 }}
+          label="Nightly Rate"
+          range={{ min: 0, max: 600 }}
+          default={props.filter.rate}
+          prefix="$"
+          step={50}
+          onChange={(min: string, max: string) => {
+            handleRateChange(min, max);
           }}
-          header={filter.type ? "Unique Stays (" + filter.type.length + ")" : "Unique Stays (0)"}
-          icon={<Cabin sx={{ color: "primary.main" }} />}>
-          <StayAttributeChecklist
-            type={StayAttributeType.PropertyType}
-            default={filter.type ?? []}
-            onChange={(attributes) => handlePropertyTypeChange(attributes)}
-          />
-        </FilterPopover>
+        />
+      </Box>
 
-        <FilterPopover
-          width={500}
-          onClear={() => {
-            console.log("clear");
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Travelers</SectionSub>
+        <RangeSlider
+          sx={{ px: 2 }}
+          label="Capacity"
+          range={{ min: 0, max: 10 }}
+          default={props.filter.capacity}
+          step={1}
+          onChange={(min: string, max: string) => {
+            handleCapacityChange(min, max);
           }}
-          header={
-            filter.specialInterests
-              ? "Experiences (" + filter.specialInterests.length + ")"
-              : "Experiences (0)"
-          }
-          icon={<DownhillSkiingIcon sx={{ color: "primary.main" }} />}>
-          <StayAttributeChecklist
-            type={StayAttributeType.SpecialInterest}
-            default={filter.specialInterests ?? []}
-            onChange={(attributes) => handleSpecialInterestChange(attributes)}
-          />
-        </FilterPopover>
-        <FilterPopover
-          width={500}
-          onClear={() => {
-            handleRegionChange([]);
-            handleStateChange([]);
-            handleCityChange([]);
-          }}
-          header={"Regions (" + getLocCount() + ")"}
-          icon={<TravelExplore sx={{ color: "primary.main" }} />}>
-          <LocationFilter
-            defaultRegions={filter.regions}
-            defaultStates={filter.states}
-            defaultCities={filter.cities}
-            onChange={(regions, states, cities) => {
-              handleLocationChange(regions, states, cities);
-            }}
-          />
-        </FilterPopover>
-        <FilterPopover
-          onClear={() => {
-            handleRateChange("None", "None");
-          }}
-          header={
-            filter.rate
-              ? "Price (" + filter.rate?.min.toString() + "-" + filter.rate?.max.toString() + ")"
-              : "Price (any)"
-          }
-          icon={<MonetizationOn />}>
-          <RangeSlider
-            sx={{ width: "100%" }}
-            label="Nightly Rate"
-            range={{ min: 0, max: 600 }}
-            default={props.filter.rate}
-            prefix="$"
-            step={50}
-            onChange={(min: string, max: string) => {
-              handleRateChange(min, max);
-            }}
-          />
-        </FilterPopover>
+        />
+      </Box>
 
-        <FilterPopover
-          onClear={() => {
-            handleCapacityChange("None", "None");
-            handleBedroomChange("None", "None");
-          }}
-          header={
-            props.filter.capacity ? "Travelers (" + props.filter.capacity?.max + ")" : "Travelers"
-          }
-          icon={<PeopleIcon sx={{ color: "primary.main" }} />}>
-          <RangeSlider
-            sx={{ width: "100%" }}
-            label="Capacity"
-            range={{ min: 0, max: 10 }}
-            default={props.filter.capacity}
-            step={1}
-            onChange={(min: string, max: string) => {
-              handleCapacityChange(min, max);
-            }}
-          />
-        </FilterPopover>
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Unique Stays</SectionSub>
+        <StayAttributeChecklist
+          type={StayAttributeType.PropertyType}
+          default={filter.type ?? []}
+          onChange={(attributes) => handlePropertyTypeChange(attributes)}
+        />
+      </Box>
+      <SectionDivider />
 
-        <FilterPopover
-          width={500}
-          onClear={() => {
-            console.log("clear");
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Experiences</SectionSub>
+        <StayAttributeChecklist
+          type={StayAttributeType.SpecialInterest}
+          default={filter.specialInterests ?? []}
+          onChange={(attributes) => handleSpecialInterestChange(attributes)}
+        />
+      </Box>
+      <SectionDivider />
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Regions</SectionSub>
+        <LocationFilter
+          defaultRegions={filter.regions}
+          defaultStates={filter.states}
+          defaultCities={filter.cities}
+          onChange={(regions, states, cities) => {
+            handleLocationChange(regions, states, cities);
           }}
-          icon={<RoomService />}
-          header={
-            filter.amenities ? "Amenities (" + filter.amenities.length + ")" : "Amenities (0)"
-          }>
-          <StayAttributeChecklist
-            type={StayAttributeType.Amenity}
-            default={filter.specialInterests ?? []}
-            onChange={(attributes) => handleAmenitiesChange(attributes)}
-          />
-        </FilterPopover>
-
-        <FilterPopover
-          onClear={() => {
-            handlePetsChange(false);
-            handleParkingChange(false);
-          }}
-          header={"More (" + getMoreCount() + ")"}
-          icon={<MoreVertIcon sx={{ color: "primary.main" }} />}>
-          <FormControlLabel
-            defaultChecked={props.filter.petsAllowed ?? false}
-            control={<Checkbox />}
-            label="Pets Allowed?"
-            onChange={(e, checked) => handlePetsChange(checked)}
-          />
-
-          <FormControlLabel
-            defaultChecked={props.filter.onSiteParking ?? false}
-            control={<Checkbox />}
-            label="On-Site Parking Available"
-            onChange={(e, checked) => handleParkingChange(checked)}
-          />
-        </FilterPopover>
+        />
+      </Box>
+      <SectionDivider />
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>Amenities</SectionSub>
+        <StayAttributeChecklist
+          type={StayAttributeType.Amenity}
+          default={filter.specialInterests ?? []}
+          onChange={(attributes) => handleAmenitiesChange(attributes)}
+        />
+      </Box>
+      <Box sx={{ display: "grid", gap: SUB_GAP }}>
+        <SectionSub>More Filters</SectionSub>
+        <FormControlLabel
+          defaultChecked={props.filter.onSiteParking ?? false}
+          control={<Checkbox />}
+          label="On-Site Parking Available"
+          onChange={(e, checked) => handleParkingChange(checked)}
+        />
+        <FormControlLabel
+          defaultChecked={props.filter.petsAllowed ?? false}
+          control={<Checkbox />}
+          label="Must Allow Pets"
+          onChange={(e, checked) => handlePetsChange(checked)}
+        />
       </Box>
     </Box>
   );

@@ -8,6 +8,7 @@ import Checklist from "../general/Checklist";
 
 export interface RegionChecklistProps {
   default: string[];
+  sx?: any;
   onChange: (regions: string[]) => void;
 }
 
@@ -47,7 +48,7 @@ export function RegionChecklist(props: RegionChecklistProps) {
 
   return (
     <Checklist
-      sx={{ width: 300 }}
+      sx={props.sx}
       default={props.default}
       onChange={(regions) => {
         props.onChange(regions);

@@ -19,7 +19,7 @@ const DirectoryPage: NextPage = (props: any) => {
 
 export async function getStaticProps() {
   const client = new StayClient();
-  const stays = await client.getStays("", { enable: true }, { lastEvaluatedKey: 0, count: 10 });
+  const stays = await client.getStays("", { enable: true }, { lastEvaluatedKey: 0, count: 12 });
   return {
     props: {
       stays
