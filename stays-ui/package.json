@@ -38,6 +38,7 @@
     "react-dnd-html5-backend": "^14.1.0",
     "react-dom": "latest",
     "react-dropzone": "^11.5.3",
+    "react-icons": "^4.3.1",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "react-use": "^17.3.2",

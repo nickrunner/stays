@@ -25,7 +25,11 @@ export default function DirectoryListings(props: any) {
       <Grid container justifyContent="center" spacing={3} sx={{ bgcolor: "background.default" }}>
         {props.stays.map((stay: StayRecord) => (
           <Grid key={stay.id} item>
-            <StayDirectoryCard stay={stay} onSignInRequired={openSignUpModal} />
+            <StayDirectoryCard
+              filter={props.filter}
+              stay={stay}
+              onSignInRequired={openSignUpModal}
+            />
           </Grid>
         ))}
       </Grid>

@@ -6,6 +6,7 @@ import { StayClient } from "../../clients/stayClient";
 import { content } from "../../content";
 import { StayAttributeRecord, StayAttributeType } from "../../models";
 import Checklist from "../general/Checklist";
+import StayAttributeIcon from "../general/StayAttributeIcon";
 
 export interface StayAttributeChecklistProps {
   type: StayAttributeType;
@@ -16,21 +17,16 @@ export interface StayAttributeChecklistProps {
 
 export function StayAttributeChecklist(props: StayAttributeChecklistProps) {
   const [attributes, setAttributes] = React.useState<StayAttributeRecord[]>([]);
+  const [selectedAttributes, setSelectedAttributes] = React.useState<string[]>(props.default);
 
   async function getStayAttributes() {
     const pt: StayAttributeRecord[] = await new StayClient().getStayAttributes(props.type);
     setAttributes(pt);
   }
 
-  function getIcon(name: string): React.ReactElement {
-    switch (props.type) {
-      case StayAttributeType.PropertyType:
-        return <Cabin sx={{ color: "primary.main" }} />;
-      case StayAttributeType.SpecialInterest:
-        return <DownhillSkiing sx={{ color: "primary.main" }} />;
-      default:
-        return <DownhillSkiing sx={{ color: "primary.main" }} />;
-    }
+  function handleChange(newSelectedAttributes: string[]) {
+    setSelectedAttributes(newSelectedAttributes);
+    props.onChange(newSelectedAttributes);
   }
 
   React.useEffect(() => {
@@ -43,12 +39,20 @@ export function StayAttributeChecklist(props: StayAttributeChecklistProps) {
       sx={props.sx}
       default={props.default}
       onChange={(attributes) => {
-        props.onChange(attributes);
+        handleChange(attributes);
       }}
       items={attributes.map((attr) => {
         return {
           label: attr.name,
-          icon: getIcon(attr.name)
+          icon: (
+            <StayAttributeIcon
+              sx={{
+                color: selectedAttributes.includes(attr.name) ? "primary.main" : "primary.dark"
+              }}
+              type={props.type}
+              name={attr.name}
+            />
+          )
         };
       })}
     />

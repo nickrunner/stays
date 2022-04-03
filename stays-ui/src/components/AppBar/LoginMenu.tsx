@@ -67,7 +67,7 @@ export default function LoginMenu(props: any) {
   return (
     <div>
       <Button
-        sx={{ height: props.height, width: 120, mt: 1, p: "2px 4px" }}
+        sx={{ height: props.height, width: { xs: 70, md: 120 }, mt: 1, p: "2px 4px" }}
         size="medium"
         variant="contained"
         id="basic-button"
@@ -76,9 +76,11 @@ export default function LoginMenu(props: any) {
         aria-expanded={open ? "true" : undefined}
         margin-top="5"
         onClick={handleClick}>
-        <Box sx={{ mt: 1 }}>
+        <Box sx={{ mt: { xs: 0, sm: 1 }, p: { xs: 1, sm: 0 }, display: "flex" }}>
           <MenuIcon fontSize="large" sx={{ p: 0.1 }} />
-          <AccountCircle fontSize="large" sx={{ p: 0.1 }} />
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <AccountCircle fontSize="large" sx={{ p: 0.1 }} />
+          </Box>
         </Box>
       </Button>
       <Menu

@@ -1,48 +1,15 @@
-import { Filter, LocationCity, MonetizationOn } from "@material-ui/icons";
-import { Cabin, TravelExplore } from "@mui/icons-material";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import BedIcon from "@mui/icons-material/Bed";
-import DownhillSkiingIcon from "@mui/icons-material/DownhillSkiing";
-import FilterIcon from "@mui/icons-material/FilterAlt";
-import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import PeopleIcon from "@mui/icons-material/People";
-import { TabContext, TabList } from "@mui/lab";
-import {
-  Accordion,
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography
-} from "@mui/material";
-import { width } from "@mui/system";
+import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
 import { StateClient } from "../../clients/stateClient";
-import { StayClient } from "../../clients/stayClient";
 import { StaySearchFilter } from "../../models";
 import { StayAttributeType } from "../../models";
 import { Range } from "../../models";
-import AttributeSelector from "../general/AttributeSelector";
-import Checklist from "../general/Checklist";
-import RangeSelect from "../general/RangeSelect";
 import RangeSlider from "../general/RangeSlider";
-import Section from "../general/Section";
 import SectionDivider from "../general/SectionDivider";
-import SectionHead from "../general/SectionHead";
 import SectionSub from "../general/SectionSub";
-import StayAttributeSelector from "../Stay/StayAttributeSelector";
-import FilterPopover from "./FilterPopover";
 import LocationFilter from "./LocationFilter";
-import PropertyTypeTabs from "./PropertyTypeTabs";
-import { RegionChecklist } from "./RegionChecklist";
 import { StayAttributeChecklist } from "./StayAttributeChecklist";
 
 export interface DirectoryFilterProps {
@@ -52,14 +19,6 @@ export interface DirectoryFilterProps {
 
 export default function Filters(props: DirectoryFilterProps) {
   const [filter, setFilter] = React.useState<StaySearchFilter>(props.filter);
-  const [availableCities, setAvailableCities] = React.useState<string[]>([]);
-  const [availableStates, setAvailableStates] = React.useState<string[]>([]);
-
-  function getLocCount(): number {
-    return (
-      (filter.regions?.length ?? 0) + (filter.states?.length ?? 0) + (filter.cities?.length ?? 0)
-    );
-  }
 
   function getRangeCount(range: Range | undefined): number {
     let count = 0;
@@ -73,18 +32,6 @@ export default function Filters(props: DirectoryFilterProps) {
       count++;
     }
     return count;
-  }
-
-  function getPriceCount(): number {
-    return getRangeCount(filter.rate);
-  }
-
-  function getGuestCount(): number {
-    return getRangeCount(filter.capacity) + getRangeCount(filter.bedrooms);
-  }
-
-  function getMoreCount(): number {
-    return (filter.onSiteParking ? 1 : 0) + (filter.petsAllowed ? 1 : 0);
   }
 
   function handlePropertyTypeChange(value: string[]) {
@@ -106,48 +53,12 @@ export default function Filters(props: DirectoryFilterProps) {
     setFilter({ ...filter, regions: regions, states: states, cities: cities });
   }
 
-  async function handleRegionChange(value: string[]) {
-    console.log("REGION CHANGE: " + value);
-    setFilter({ ...filter, regions: value.length > 0 ? value : undefined });
-    const states = await new StateClient().listStates(value);
-    setAvailableStates(states);
-  }
-
-  async function handleStateChange(value: string[]) {
-    console.log("STATE CHANGE: " + value);
-    setFilter({ ...filter, states: value.length > 0 ? value : undefined });
-    const cities = await new StateClient().listCitiesFromStates(value);
-    setAvailableCities(cities);
-  }
-
-  function handleZipChange(value: string[]) {
-    try {
-      const zips = [];
-      for (const val of value) {
-        zips.push(Number(val));
-      }
-      setFilter({ ...filter, zips: zips });
-    } catch {
-      console.log("Invalid Zip");
-    }
-  }
-
-  function handleCityChange(value: string[]) {
-    console.log("CITY CHANGE: " + value);
-    setFilter({ ...filter, cities: value.length > 0 ? value : undefined });
-  }
-
   function handleRateChange(min: string, max: string) {
     const range = getRange(min, max);
     if (range != filter.rate) {
       console.log("RATE CHANGE: " + min + "-" + max);
       setFilter({ ...filter, rate: range });
     }
-  }
-
-  function handleBedroomChange(min: string, max: string) {
-    console.log("BEDROOM CHANGE: " + min + "-" + max);
-    setFilter({ ...filter, bedrooms: getRange(min, max) });
   }
 
   function handleCapacityChange(min: string, max: string) {
@@ -165,11 +76,6 @@ export default function Filters(props: DirectoryFilterProps) {
     setFilter({ ...filter, petsAllowed: value ?? undefined });
   }
 
-  const getStates = async () => {
-    const states = await new StateClient().listStates(filter.regions);
-    setAvailableStates(states);
-  };
-
   function getRange(min: string, max: string): Range {
     min = min.replace(/\D/g, "");
     max = max.replace(/\D/g, "");
@@ -179,10 +85,6 @@ export default function Filters(props: DirectoryFilterProps) {
       max: max == "None" ? 10000 : Number(max)
     };
   }
-
-  React.useEffect(() => {
-    getStates();
-  }, []);
 
   useUpdateEffect(() => {
     props.onChange(filter);

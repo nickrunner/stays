@@ -248,11 +248,10 @@ export class StaysService {
     let keywords: string[] = [];
     keywords = keywords.concat(this.getKeywordsFromString(stay.description));
     try {
-      keywords.push(stay.location.address.city);
-      keywords.push(stay.location.address.country);
-      keywords.push(stay.location.address.state);
+      keywords.push(stay.location.address.city.toLowerCase());
+      keywords.push(stay.location.address.state.toLowerCase());
       keywords.push(stay.location.address.zip.toString());
-      keywords.push(stay.location.region);
+      keywords.push(stay.location.region.toLowerCase());
     } catch (err) {
       console.log("Failed pushing location keywords");
     }

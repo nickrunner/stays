@@ -57,6 +57,9 @@ export default function Checklist(props: ChecklistProps) {
 
   return (
     <Box sx={props.sx}>
+      <Typography sx={{ mb: 3 }} variant="subtitle2">
+        Select Multiple
+      </Typography>
       <Grid container spacing={1} sx={{ width: "100%" }}>
         {props.items.map((item: ChecklistItem) => (
           <Grid key={item.label} item sx={{ width: "100%" }}>
