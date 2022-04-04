@@ -11,7 +11,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
-import { Box } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -167,6 +167,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const classes = useStyles();
   return (
     <Card
+      elevation={10}
       id={props.stay.id}
       sx={{ width: { xs: 300, sm: 300, md: 300, lg: 325, xl: 400 }, minHeight: 450 }}>
       <CardHeader
@@ -187,6 +188,19 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
       />
 
       <CardMedia sx={{ zIndex: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 0.5,
+            p: 1,
+            position: "absolute",
+            zIndex: 1
+          }}>
+          <Chip
+            sx={{ bgcolor: "action.focus", color: "common.white", fontWeight: 6600 }}
+            size="small"
+            label={props.stay.type[0]}></Chip>
+        </Box>
         <Box
           sx={{
             display: "flex",

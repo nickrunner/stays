@@ -135,7 +135,7 @@ export const theme = createTheme({
   palette: {
     action: {
       active: "#6B7280",
-      focus: "rgba(55, 65, 81, 0.12)",
+      focus: "rgba(55, 65, 81, 0.7)",
       hover: "#d5d8de",
       selected: "rgba(55, 65, 81, 0.08)",
       disabledBackground: "rgba(55, 65, 81, 0.12)",

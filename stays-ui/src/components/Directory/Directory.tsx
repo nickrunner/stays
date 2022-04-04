@@ -84,7 +84,11 @@ export default function Directory(props: any) {
 
   return (
     <Box sx={{ display: "grid" }}>
-      <Nav variant="search" transparent={false} onSearch={(phrase) => handleSearch(phrase)}>
+      <Nav
+        hideOnScroll={true}
+        variant="search"
+        transparent={false}
+        onSearch={(phrase) => handleSearch(phrase)}>
         <AppBarFilters
           filter={filter}
           onChange={(filter: StaySearchFilter) => {
@@ -95,8 +99,17 @@ export default function Directory(props: any) {
         </Box>
       </Nav>
 
+      <Box
+        sx={{
+          bgcolor: "primary.main",
+          mt: 15,
+          mx: { xs: 1, sm: 7, lg: 10 },
+          justifyContent: "center",
+          position: "sticky"
+        }}></Box>
+
       <Box sx={{ display: "flex", mt: 0, justifyContent: "center", height: "85%" }}>
-        <Box component="main" sx={{ mt: { xs: 15, lg: 25 }, zIndex: 0, p: 5 }}>
+        <Box component="main" sx={{ mt: { xs: 2, lg: 10 }, zIndex: 0, p: 5 }}>
           <DirectoryListings filter={filter} stays={staysArr} />
         </Box>
       </Box>

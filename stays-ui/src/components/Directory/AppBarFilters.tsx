@@ -245,14 +245,14 @@ export default function AppBarFilters(props: DirectoryFilterProps) {
           <FormControlLabel
             defaultChecked={props.filter.petsAllowed ?? false}
             control={<Checkbox />}
-            label="Pets Allowed?"
+            label="Must Allow Pets"
             onChange={(e, checked) => handlePetsChange(checked)}
           />
 
           <FormControlLabel
             defaultChecked={props.filter.onSiteParking ?? false}
             control={<Checkbox />}
-            label="On-Site Parking Available"
+            label="Must have on-site parking"
             onChange={(e, checked) => handleParkingChange(checked)}
           />
         </FilterPopover>
