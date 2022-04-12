@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch } from "react";
 
-import { User } from "../../common/models/User";
+import { UserRecord } from "../../common/models/User";
 
 export interface StaysState {
-  self?: User;
+  self?: UserRecord;
   isSignedIn: boolean;
   mobile: boolean;
   persistenceType: string;

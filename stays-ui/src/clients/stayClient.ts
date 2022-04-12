@@ -46,6 +46,11 @@ export class StayClient {
     return response.data as StayRecord[];
   }
 
+  public async getStay(stayId: string): Promise<StayRecord> {
+    const response = await axios.get(url + "/" + stayId, await defCfg());
+    return response.data as StayRecord;
+  }
+
   public async getStayAttributes(
     stayAttributeType: StayAttributeType
   ): Promise<StayAttributeRecord[]> {

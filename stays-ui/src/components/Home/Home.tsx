@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { content } from "../../content";
+import { globalContext } from "../../GlobalStore";
 import { Nav } from "../AppBar/AppBar";
 import Footer from "../Footer";
 import Hero from "../general/Hero";
@@ -14,7 +15,18 @@ import Help from "./Help";
 import Showcase from "./Showcase";
 
 export default function Home(props: any) {
+  const { globalState } = React.useContext(globalContext);
   const router = useRouter();
+
+  React.useEffect(() => {
+    if (globalState.isSignedIn) {
+      if (globalState.self) {
+        router.push("/travelers/" + globalState.self?.id);
+      }
+    }
+    return;
+  }, []);
+
   return (
     <Box display="grid">
       <Nav transparent={true} />
@@ -37,7 +49,6 @@ export default function Home(props: any) {
           top: 600
         }}>
         <Section
-          backgroundImage={content.images.hero.abed.img}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -50,7 +61,6 @@ export default function Home(props: any) {
         <SectionDivider />
         <Section
           sx={{
-            fullWidth: true,
             justifyContent: "center"
           }}>
           <Showcase />

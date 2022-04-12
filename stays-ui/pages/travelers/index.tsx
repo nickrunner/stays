@@ -1,13 +1,11 @@
-import { Nav } from "../../src/components/AppBar/AppBar";
 import Footer from "../../src/components/Footer";
-import Pricing from "../../src/components/Pricing";
+import Travelers from "../../src/components/Travelers/Travelers";
 import StaysPage from "../../src/StaysPage";
 
 function Stayers() {
   return (
     <StaysPage>
-      <Nav transparent={false} />
-      <Pricing />
+      <Travelers />
       <Footer />
     </StaysPage>
   );

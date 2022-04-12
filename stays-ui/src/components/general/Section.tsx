@@ -15,7 +15,6 @@ export default function Section(props: any) {
           alt="SectionImage"></Image> */}
         <Box
           sx={{
-            maxWidth: 1600,
             p: "5%",
             mb: "10%",
             display: "flex",

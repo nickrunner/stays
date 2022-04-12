@@ -1,10 +1,7 @@
 import { Box, Button, Grid, Modal } from "@mui/material";
 import React from "react";
-import { couldStartTrivia } from "typescript";
 
-import { StayClient } from "../../clients/stayClient";
 import { StayRecord } from "../../models";
-import SignUp from "../SignUp";
 import SignUpModal from "../SignUpModal";
 import StayDirectoryCard from "./StayDirectoryCard";
 

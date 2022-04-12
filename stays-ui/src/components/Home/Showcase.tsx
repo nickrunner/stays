@@ -66,7 +66,7 @@ export default function Showcase() {
   return (
     <Box sx={{ display: "grid", gap: 10 }}>
       <SectionHead>Curated for the passionate traveler</SectionHead>
-      <Collage images={images} onClick={pushDirectory} />
+      <Collage height="40vh" cols={3} images={images} onClick={pushDirectory} />
     </Box>
   );
 }

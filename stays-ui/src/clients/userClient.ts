@@ -21,11 +21,11 @@ export class UserClient {
     return response.data as User;
   }
 
-  public async getSelf(): Promise<User> {
+  public async getSelf(): Promise<UserRecord> {
     const response = await axios.get(url + "/self", await defCfg());
-    const user = response.data as User;
+    const user = response.data as UserRecord;
     console.log("Received user: " + user.email);
-    return response.data as User;
+    return response.data as UserRecord;
   }
 
   public async getUserByEmail(email: string): Promise<User> {

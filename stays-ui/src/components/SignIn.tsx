@@ -21,6 +21,7 @@ export default function SignIn() {
       }
     }
     redirectIfSignedIn();
+    return;
   });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
