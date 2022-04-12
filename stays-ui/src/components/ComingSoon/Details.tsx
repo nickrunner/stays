@@ -3,9 +3,9 @@ import { Box, Stack } from "@mui/material";
 import styles from "../../../styles/ComingSoon.module.css";
 import { content } from "../../content";
 import EmphasizedText from "../EmphasizedText";
+import DetailsAccordion from "../general/DetailsAccordion";
 import Info from "../general/Info";
 import SectionHead from "../general/SectionHead";
-import DetailsAccordion from "./DetailsAccordion";
 
 export default function Details() {
   return (

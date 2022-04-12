@@ -11,7 +11,7 @@ const SignUpPage: NextPage = () => {
   return (
     <StaysPage>
       <Nav transparent={false} />
-      <Container component="main" maxWidth="xs">
+      <Container sx={{ mt: 20 }} component="main" maxWidth="xs">
         <SignUp />
         <Copyright sx={{ mt: 5 }} />
       </Container>

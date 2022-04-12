@@ -1,11 +1,11 @@
 /* eslint-disable no-case-declarations */
-import { User } from "../../common/models/User";
+import { User, UserRecord } from "../../common/models/User";
 import { ActionType, StaysState } from "./GlobalTypes";
 
 const Reducer = (state: StaysState, action: ActionType): any => {
   switch (action.type) {
     case "GET_SELF":
-      const user: User = action.payload;
+      const user: UserRecord = action.payload;
       const signedIn = user !== undefined;
       state.isSignedIn = signedIn;
       state.self = user;

@@ -1,31 +1,18 @@
-import { Container, ThemeProvider } from "@mui/material";
-import React from "react";
+import { HorizontalSplitSharp } from "@mui/icons-material";
+import { NextPage } from "next";
 
-import { Nav } from "../../src/components/AppBar/AppBar";
 import Footer from "../../src/components/Footer";
-import UnderConstruction from "../../src/components/UnderConstruction";
-import { theme } from "../../src/Theme";
+import Hosts from "../../src/components/Hosts/Hosts";
+import Travelers from "../../src/components/Travelers/Travelers";
+import StaysPage from "../../src/StaysPage";
 
-function Hosts() {
-  const [mobile, setMobile] = React.useState(false);
-  React.useEffect(() => {
-    handleResize();
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+const HostsPage: NextPage = (props: any) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main">
-        <Nav transparent={false} />
-        <UnderConstruction />
-        <Footer />
-      </Container>
-    </ThemeProvider>
+    <StaysPage>
+      <Hosts />
+      <Footer />
+    </StaysPage>
   );
-}
+};
 
-export default Hosts;
+export default HostsPage;

@@ -1,7 +1,8 @@
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Cabin, TravelExplore } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CottageIcon from "@mui/icons-material/Cottage";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import HotelIcon from "@mui/icons-material/Hotel";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
@@ -115,8 +116,8 @@ export default function LoginMenu(props: any) {
         </MenuItem>
 
         <MenuItem
-          sx={{ p: menuPadding, display: globalState.isSignedIn ? "flex" : "none" }}
-          onClick={() => onSignOutClick()}>
+          onClick={() => onSignOutClick()}
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "flex" : "none" }}>
           <LogoutIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Sign out</Typography>
         </MenuItem>
@@ -137,6 +138,26 @@ export default function LoginMenu(props: any) {
 
         <Divider />
 
+        <MenuItem
+          sx={{ p: menuPadding, display: hasRole(Role.Stayer) ? "flex" : "none" }}
+          onClick={() => router.push("/travelers/" + globalState.self?.id)}>
+          <TravelExplore sx={{ color: "primary.main", mr: 1 }} />
+          <Typography>Traveler Portal</Typography>
+        </MenuItem>
+
+        <MenuItem
+          sx={{ p: menuPadding, display: hasRole(Role.Host) ? "flex" : "none" }}
+          onClick={() => router.push("/hosts/" + globalState.self?.id)}>
+          <EmojiPeopleIcon sx={{ color: "primary.main", mr: 1 }} />
+          <Typography>Host Portal</Typography>
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => router.push("/stayers")}
+          sx={{ p: menuPadding, display: globalState.isSignedIn ? "none" : "flex" }}>
+          <Typography>Become a member</Typography>
+        </MenuItem>
+
         <MenuItem sx={{ p: menuPadding }} onClick={() => router.push("/directory")}>
           <HotelIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Find a stay</Typography>
@@ -147,19 +168,6 @@ export default function LoginMenu(props: any) {
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "none" : "flex" }}>
           <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Become a host</Typography>
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => router.push("/hosts/portal")}
-          sx={{ display: hasRole(Role.Host) ? "flex" : "none" }}>
-          <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
-          <Typography>Host Portal</Typography>
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => router.push("/stayers")}
-          sx={{ p: menuPadding, display: globalState.isSignedIn ? "none" : "flex" }}>
-          <Typography>Become a member</Typography>
         </MenuItem>
 
         <MenuItem

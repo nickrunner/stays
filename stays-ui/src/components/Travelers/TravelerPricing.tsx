@@ -1,5 +1,5 @@
 import Check from "@mui/icons-material/Check";
-import StarIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -11,6 +11,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import * as React from "react";
 
 const tiers = [
@@ -22,12 +23,11 @@ const tiers = [
       "Access to Stays directory",
       "Property showcases via email",
       "Cancellation opening notices",
-      "1 auto entry into all Stays Giveaways",
-      "You get to be Jeff's bitch",
-      "You should really get"
+      "1 auto entry into all Stays Giveaways"
     ],
     buttonText: "Sign up for free",
-    buttonVariant: "outlined"
+    buttonVariant: "outlined",
+    route: "sign-up"
   },
   {
     title: "Premium",
@@ -42,18 +42,15 @@ const tiers = [
       "Discount & deal notices (for select stays)"
     ],
     buttonText: "Join Now",
-    buttonVariant: "contained"
+    buttonVariant: "contained",
+    route: "sign-up/premium"
   }
 ];
 
 function PricingContent() {
   return (
-    <React.Fragment>
-      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }} />
-      <CssBaseline />
-
-      {/* Hero unit */}
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
+    <Box sx={{ display: "grid", justifyContent: "center" }}>
+      <Box maxWidth="lg" sx={{ pt: 8, pb: 6 }}>
         <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
           Choose your Membership
         </Typography>
@@ -61,19 +58,21 @@ function PricingContent() {
           Get early access to booking calendars, cancellation opening notices and select discounts
           with our partnered stays with a premium membership
         </Typography>
-      </Container>
-      {/* End hero unit */}
-      <Container maxWidth="md" component="main">
+      </Box>
+
+      <Box maxWidth="md" sx={{ justifyContent: "center", align: "center", margin: "auto" }}>
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={tier.title} xs={15} sm={10} md={6}>
-              <Card sx={{ height: 700 }}>
+              <Card sx={{ height: 650 }}>
                 <CardHeader
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: "center" }}
-                  action={tier.title === "Premium" ? <StarIcon /> : null}
+                  action={
+                    tier.title === "Premium" ? <StarIcon sx={{ color: "primary.main" }} /> : null
+                  }
                   subheaderTypographyProps={{
                     align: "center"
                   }}
@@ -99,31 +98,30 @@ function PricingContent() {
                       /mo
                     </Typography>
                   </Box>
-                  <ul>
+                  <Box sx={{ height: 250 }}>
                     {tier.description.map((line) => (
-                      <Typography
-                        component="li"
-                        variant="subtitle1"
-                        align="left"
-                        sx={{ p: 1 }}
-                        key={line}>
-                        <Check color="secondary" />
-                        {line}
-                      </Typography>
+                      <Box key={line} sx={{ display: "flex" }}>
+                        <Check sx={{ mr: 2, mt: 0.5 }} color="secondary" />
+                        <Typography variant="subtitle1" align="left" sx={{ p: 1 }} key={line}>
+                          {line}
+                        </Typography>
+                      </Box>
                     ))}
-                  </ul>
+                  </Box>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant as "outlined" | "contained"}>
-                    {tier.buttonText}
-                  </Button>
+                  <Link href={"/" + tier.route}>
+                    <Button fullWidth variant={tier.buttonVariant as "outlined" | "contained"}>
+                      {tier.buttonText}
+                    </Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
-      </Container>
-    </React.Fragment>
+      </Box>
+    </Box>
   );
 }
 

@@ -113,7 +113,10 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
                   height: { xs: 60, sm: 75 },
                   display: props.variant === "search" ? { xs: "none", sm: "flex" } : "flex"
                 }}>
-                <img height="100%" src={content.images.logo.purple} alt="Stays Logo"></img>
+                <img
+                  height="100%"
+                  src={transparentBg() ? content.images.logo.white : content.images.logo.purple}
+                  alt="Stays Logo"></img>
               </Box>
             </Link>
           </Box>
@@ -129,11 +132,11 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
               <NavButton
                 transparent={props.transparent}
                 text="Find a Stay"
-                to="/search"></NavButton>
+                to="/directory"></NavButton>
               <NavButton
                 transparent={props.transparent}
-                text="For Stayers"
-                to="/stayers"></NavButton>
+                text="For Travelers"
+                to="/travelers"></NavButton>
               <NavButton transparent={props.transparent} text="For Hosts" to="/hosts"></NavButton>
             </Box>
             <Box

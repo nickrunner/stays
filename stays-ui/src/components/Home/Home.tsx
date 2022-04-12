@@ -18,14 +18,14 @@ export default function Home(props: any) {
   const { globalState } = React.useContext(globalContext);
   const router = useRouter();
 
-  React.useEffect(() => {
-    if (globalState.isSignedIn) {
-      if (globalState.self) {
-        router.push("/travelers/" + globalState.self?.id);
-      }
-    }
-    return;
-  }, []);
+  // React.useEffect(() => {
+  //   if (globalState.isSignedIn) {
+  //     if (globalState.self) {
+  //       router.push("/travelers/" + globalState.self?.id);
+  //     }
+  //   }
+  //   return;
+  // }, []);
 
   return (
     <Box display="grid">
