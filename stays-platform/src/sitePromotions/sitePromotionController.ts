@@ -1,35 +1,35 @@
 import { Body, Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
-import { Promotion, PromotionRecord, Role } from "../models";
-import { PromotionService } from "./promotionService";
+import { Role, SitePromotion, SitePromotionRecord } from "../models";
+import { SitePromotionService } from "./sitePromotionService";
 
-@Route("promotions")
-export class PromotionsController extends Controller {
+@Route("site-promotions")
+export class SitePromotionsController extends Controller {
   @Get()
-  public async getPromotions(): Promise<PromotionRecord[]> {
-    return await new PromotionService().getPromotions();
+  public async getPromotions(): Promise<SitePromotionRecord[]> {
+    return await new SitePromotionService().getPromotions();
   }
 
   @Get("{promotionId}")
-  public async getPromotionById(@Path() promotionId: string): Promise<PromotionRecord> {
-    return await new PromotionService().getPromotion(promotionId);
+  public async getPromotionById(@Path() promotionId: string): Promise<SitePromotionRecord> {
+    return await new SitePromotionService().getPromotion(promotionId);
   }
 
   @Post()
   @Security("user", [Role.Admin])
   public async createPromotion(
     @Request() req: AuthenticatedRequest,
-    @Body() promotion: Promotion
+    @Body() promotion: SitePromotion
   ): Promise<void> {
-    return await new PromotionService().createPromotion(promotion, req.email);
+    return await new SitePromotionService().createPromotion(promotion, req.email);
   }
 
   @Get("{promoName}/{promoCode}/validate")
   public async isCodeValid(@Path() promoName: string, @Path() promoCode: string): Promise<boolean> {
     console.log("promotionController.isCodeValid() called with " + promoName + ", " + promoCode);
     try {
-      const isValid = await new PromotionService().isPromoCodeValid(promoCode, promoName);
+      const isValid = await new SitePromotionService().isPromoCodeValid(promoCode, promoName);
       console.log("promotionService().isPromoCodeValid() = " + isValid);
       return isValid;
     } catch (err) {

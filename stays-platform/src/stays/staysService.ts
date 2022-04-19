@@ -2,18 +2,19 @@
 import { isEqual, merge } from "lodash";
 import ow from "ow";
 
-import { Coordinates } from "../../../common/models/Location";
-import { Pagination } from "../../../common/models/Pagination";
 import { Error400, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 import LocationService from "../locations/locationService";
+import { Pagination } from "../models";
+import { Coordinates } from "../models";
 import {
   Stay,
   StayApplicationStatus,
   StayRecord,
   StayRejectionInfo,
-  StaySearchFilter
+  StaySearchFilter,
+  UserRecord
 } from "../models";
 import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 
@@ -221,6 +222,10 @@ export class StaysService {
 
   public async decrementFavoriteCount(stayId: string) {
     await this.stays.decrement(stayId, "favoriteCount");
+  }
+
+  public async getFavorites(user: UserRecord): Promise<StayRecord[]> {
+    return await this.stays.getAll(new CollectionQuery().where("id").in(user.favorites));
   }
 
   private getKeywordsFromString(description: string): string[] {

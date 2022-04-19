@@ -3,7 +3,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 
-import { PromotionClient } from "../../../src/clients/promotionClient";
+import { SitePromotionClient } from "../../clients/sitePromotionClient";
 
 const style = {
   position: "absolute",
@@ -26,7 +26,7 @@ export default function AddPromotion() {
   async function handleSubmit() {
     setLoading(true);
     try {
-      await new PromotionClient().addPromotion(code, name);
+      await new SitePromotionClient().addSitePromotion(code, name);
     } catch (e: any) {
       if (e.message == "Request failed with status code 409") {
         setErrMsg("Promotion Already Exists");

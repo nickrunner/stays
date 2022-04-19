@@ -1,8 +1,8 @@
 import axios from "axios";
 
 import { WaitlistItem } from "../models";
-import { PromotionClient } from "./promotionClient";
 import { cfg } from "./serverConfig";
+import { SitePromotionClient } from "./sitePromotionClient";
 
 export const url = "/waitlist";
 export const WAITLIST_PROMO_NAME = "promo-beta-waitlist";
@@ -32,7 +32,7 @@ export class WaitlistClient {
   }
 
   public async isPromoCodeValid(promoCode: string): Promise<boolean> {
-    const isValid: boolean = await new PromotionClient().isPromoCodeValid(
+    const isValid: boolean = await new SitePromotionClient().isPromoCodeValid(
       WAITLIST_PROMO_NAME,
       promoCode
     );

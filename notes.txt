@@ -1,0 +1,76 @@
+Users
+	-First name
+	-last name
+	-email
+	-password
+	-favorites
+
+Organization (maybe not mvp)
+	- 
+
+Stay
+	- name
+	- location
+	- applicationStatus
+	- type
+	- rate
+	- ...
+
+
+Promotion (Requestd by user, delivered by admin)
+	- stayId
+	- type
+		- IG Post
+		- FB post
+		- IG giveaway
+		- email showcase
+		- story highlight
+	- status
+		- Requested
+		- Pending
+		- Executed
+	- content
+		- photos/videos (min 3)
+		- booking link (not always the stay booking link)
+	- execution date
+
+	IG Post (subset of Promotion)
+		- type
+			-story
+			-feed
+		- Post Summary
+		- Special Instructions
+		- tagged accounts [] ?
+		- tagged location ?
+
+	FB Post
+		- summary
+		- special instructions
+		- tagged location?
+
+	Giveways 
+		- platform
+			- IG
+			- FB ...
+		- number of nights
+		- Stay Summary
+		- status
+			- pending
+			- active
+			- closed
+		- userIds [] (right now it's all users)
+		- duration (currently fixed at 7 days)
+		- winner
+
+	Email Showcase
+		- Stay Summary
+		- Special Instructions
+
+	Story Highlight
+		- Stay Summary
+		- tagged accounts?
+		- tagged location?
+
+Cancellations
+	
+	-

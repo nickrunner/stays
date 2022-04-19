@@ -34,6 +34,74 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Cancellation": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"endDate": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"stayId",
+					"startDate",
+					"endDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CancellationRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Cancellation"
+					}
+				]
+			},
+			"EarlyBooking": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"endDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"bookingLink": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"stayId",
+					"startDate",
+					"endDate",
+					"bookingLink"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EarlyBookingRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/EarlyBooking"
+					}
+				]
+			},
 			"Region": {
 				"properties": {
 					"name": {
@@ -97,7 +165,37 @@
 					}
 				]
 			},
-			"Promotion": {
+			"Offer": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"stayId",
+					"title",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OfferRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Offer"
+					}
+				]
+			},
+			"SitePromotion": {
 				"properties": {
 					"code": {
 						"type": "string"
@@ -113,13 +211,141 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"PromotionRecord": {
+			"SitePromotionRecord": {
 				"allOf": [
 					{
 						"$ref": "#/components/schemas/Entity"
 					},
 					{
-						"$ref": "#/components/schemas/Promotion"
+						"$ref": "#/components/schemas/SitePromotion"
+					}
+				]
+			},
+			"StayPromotionType": {
+				"enum": [
+					"Post",
+					"Giveaway",
+					"Email",
+					"Story"
+				],
+				"type": "string"
+			},
+			"SocialPlatform": {
+				"enum": [
+					"Instagram",
+					"Facebook",
+					"Tik-Tok",
+					"none"
+				],
+				"type": "string"
+			},
+			"StayPromotionStatus": {
+				"enum": [
+					"Requested",
+					"Scheduled",
+					"Executed",
+					"Closed"
+				],
+				"type": "string"
+			},
+			"PromotionMediaType": {
+				"enum": [
+					"Photo",
+					"Video"
+				],
+				"type": "string"
+			},
+			"PromotionMedia": {
+				"properties": {
+					"url": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/PromotionMediaType"
+					}
+				},
+				"required": [
+					"url",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PromotionTags": {
+				"properties": {
+					"accounts": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"locations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayPromotion": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/StayPromotionType"
+					},
+					"socialPlatform": {
+						"$ref": "#/components/schemas/SocialPlatform"
+					},
+					"status": {
+						"$ref": "#/components/schemas/StayPromotionStatus"
+					},
+					"media": {
+						"items": {
+							"$ref": "#/components/schemas/PromotionMedia"
+						},
+						"type": "array"
+					},
+					"bookingLink": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"summary": {
+						"type": "string"
+					},
+					"details": {
+						"type": "string"
+					},
+					"tags": {
+						"$ref": "#/components/schemas/PromotionTags"
+					}
+				},
+				"required": [
+					"stayId",
+					"type",
+					"socialPlatform",
+					"status",
+					"media",
+					"bookingLink",
+					"startDate",
+					"summary"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayPromotionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/StayPromotion"
 					}
 				]
 			},
@@ -565,6 +791,104 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/cancellations": {
+			"get": {
+				"operationId": "GetCancellations",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CancellationRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateCancellation",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Cancellation"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/early-bookings": {
+			"get": {
+				"operationId": "GetEarlyBookings",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/EarlyBookingRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateEarlyBooking",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EarlyBooking"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/regions": {
 			"get": {
 				"operationId": "GetRegions",
@@ -671,7 +995,56 @@
 				]
 			}
 		},
-		"/promotions": {
+		"/offers": {
+			"get": {
+				"operationId": "GetOffers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/OfferRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateOffer",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Offer"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/site-promotions": {
 			"get": {
 				"operationId": "GetPromotions",
 				"responses": {
@@ -681,7 +1054,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/PromotionRecord"
+										"$ref": "#/components/schemas/SitePromotionRecord"
 									},
 									"type": "array"
 								}
@@ -712,14 +1085,14 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Promotion"
+								"$ref": "#/components/schemas/SitePromotion"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/promotions/{promotionId}": {
+		"/site-promotions/{promotionId}": {
 			"get": {
 				"operationId": "GetPromotionById",
 				"responses": {
@@ -728,7 +1101,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PromotionRecord"
+									"$ref": "#/components/schemas/SitePromotionRecord"
 								}
 							}
 						}
@@ -747,7 +1120,7 @@
 				]
 			}
 		},
-		"/promotions/{promoName}/{promoCode}/validate": {
+		"/site-promotions/{promoName}/{promoCode}/validate": {
 			"get": {
 				"operationId": "IsCodeValid",
 				"responses": {
@@ -781,6 +1154,55 @@
 						}
 					}
 				]
+			}
+		},
+		"/stay-promotions": {
+			"get": {
+				"operationId": "GetStayPromotions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/StayPromotionRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateStayPromotion",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host",
+							"Admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StayPromotion"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/stays/attributes/{type}": {
@@ -1157,6 +1579,34 @@
 						}
 					}
 				}
+			}
+		},
+		"/stays/favorites": {
+			"get": {
+				"operationId": "GetFavorites",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/StayRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/stays/{stayId}/publish": {

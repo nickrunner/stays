@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import * as React from "react";
 
-import { PromotionRecord } from "../../models";
+import { SitePromotionRecord } from "../../models";
 
 function dateString(timestamp: number): string {
   const date: Date = new Date(timestamp);
@@ -38,21 +38,21 @@ const columns: GridColDef[] = [
   }
 ];
 
-export type PromotionCallback = (promotion: PromotionRecord) => any;
+export type SitePromotionCallback = (promotion: SitePromotionRecord) => any;
 
-export interface PromotionsTableProps {
-  promotions: PromotionRecord[];
-  onSelect: PromotionCallback;
+export interface SitePromotionsTableProps {
+  promotions: SitePromotionRecord[];
+  onSelect: SitePromotionCallback;
 }
 
-export default function PromotionsTable(props: PromotionsTableProps) {
+export default function SitePromotionsTable(props: SitePromotionsTableProps) {
   return (
     <React.Fragment>
       <Typography>Promotions</Typography>
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           onCellClick={(params: GridCellParams) => {
-            props.onSelect(params.row as PromotionRecord);
+            props.onSelect(params.row as SitePromotionRecord);
           }}
           rows={props.promotions}
           columns={columns}

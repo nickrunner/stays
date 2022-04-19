@@ -19,60 +19,37 @@ function dateString(timestamp: number): string {
 
 const columns: GridColDef[] = [
   {
-    field: "enable",
-    headerName: "Enabled",
-    sortable: true,
-    editable: true,
-    flex: 1,
-    align: "center"
-  },
-  {
     field: "name",
     headerName: "Name",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "left",
     minWidth: 100
   },
   {
-    field: "hostEmail",
-    headerName: "Host",
-    sortable: true,
-    editable: true,
-    flex: 1,
-    align: "left"
-  },
-  {
     field: "location",
     headerName: "City",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "left",
-    valueGetter: (params: GridValueGetterParams) => params.row.location.address.city
-  },
-  {
-    field: "state",
-    headerName: "State",
-    sortable: true,
-    editable: true,
-    align: "left",
-    valueGetter: (params: GridValueGetterParams) => params.row.location.address.state,
-    flex: 1
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.location.address.city + ", " + params.row.location.state;
+    }
   },
   {
     field: "region",
     headerName: "Region",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1
   },
   {
     field: "currentRate",
     headerName: "Rate",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "center"
   },
@@ -80,7 +57,7 @@ const columns: GridColDef[] = [
     field: "capacity",
     headerName: "Capacity",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "center"
   },
@@ -88,7 +65,7 @@ const columns: GridColDef[] = [
     field: "bedrooms",
     headerName: "Bedrooms",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "center"
   },
@@ -96,7 +73,7 @@ const columns: GridColDef[] = [
     field: "petsAllowed",
     headerName: "Pets",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1,
     align: "center"
   },
@@ -104,14 +81,14 @@ const columns: GridColDef[] = [
     field: "onSiteParking",
     headerName: "Parking",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1
   },
   {
     field: "specialInterests",
     headerName: "Special Interests",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1
   },
 
@@ -119,33 +96,18 @@ const columns: GridColDef[] = [
     field: "amenities",
     headerName: "Amenities",
     sortable: true,
-    editable: true,
+    editable: false,
     flex: 1
-  },
-
-  {
-    field: "createdAt",
-    headerName: "Created On",
-    sortable: true,
-    flex: 1,
-    valueGetter: (params: GridValueGetterParams) => dateString(params.row.createdAt)
-  },
-  {
-    field: "updatedAt",
-    headerName: "Updated On",
-    sortable: true,
-    flex: 1,
-    valueGetter: (params: GridValueGetterParams) => dateString(params.row.updatedAt)
   }
 ];
 
 export type StayCallback = (stay: StayRecord) => any;
 
-export interface StaysTableProps {
+export interface FavoritesTableProps {
   onSelect: StayCallback;
 }
 
-export default function StaysTable(props: StaysTableProps) {
+export default function FavoritesTable(props: FavoritesTableProps) {
   const [stays, setStays] = React.useState<StayRecord[]>([]);
   const getStays = async () => {
     const stays = await new StayClient().getFavorites();
@@ -156,18 +118,6 @@ export default function StaysTable(props: StaysTableProps) {
     getStays();
     return;
   }, []);
-
-  async function handleCellEditCommit(params: GridCellEditCommitParams) {
-    const val: any = params.value?.valueOf();
-    if (val) {
-      const stay: StayRecord = await new StayClient().patchStay(
-        params.id.toString(),
-        params.field,
-        val
-      );
-      setStays((prev) => prev.map((row) => (row.id === params.id ? { ...row, ...stay } : row)));
-    }
-  }
 
   return (
     <React.Fragment>
@@ -185,7 +135,6 @@ export default function StaysTable(props: StaysTableProps) {
             components={{
               Toolbar: GridToolbar
             }}
-            onCellEditCommit={handleCellEditCommit}
           />
         </div>
       </div>

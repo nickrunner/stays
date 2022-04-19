@@ -15,6 +15,7 @@ import {
 } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
+import { Error401 } from "../error";
 import { Role, Stay, StayRecord, StayRejectionInfo } from "../models";
 import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 import { StaysService } from "./staysService";
@@ -44,6 +45,20 @@ export class StaysController extends Controller {
       return await new StaysService().getStays(search, parsedFilter, parsedPagination);
     } catch (e) {
       console.log("Error getting stays: ", { e });
+      throw e;
+    }
+  }
+
+  @Get("/favorites")
+  @Security("user", [Role.Stayer])
+  public async getFavorites(@Request() req: AuthenticatedRequest): Promise<StayRecord[]> {
+    try {
+      if (!req.thisUser) {
+        throw new Error401();
+      }
+      return await new StaysService().getFavorites(req.thisUser);
+    } catch (err) {
+      console.log("getFavorites() Error: " + e);
       throw e;
     }
   }

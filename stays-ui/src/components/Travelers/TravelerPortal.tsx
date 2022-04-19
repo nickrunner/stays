@@ -84,7 +84,7 @@ export default function TravelerPortal(props: TravelerPortalProps) {
           </Tabs>
         </Box>
       </Nav>
-      <Box sx={{ mt: 25 }}>
+      <Section sx={{ mt: 20 }}>
         <Box sx={{ display: tabValue === 0 ? "flex" : "none" }}>
           <Opportunities />
         </Box>
@@ -100,7 +100,7 @@ export default function TravelerPortal(props: TravelerPortalProps) {
         <Box sx={{ display: tabValue === 4 ? "flex" : "none" }}>
           <EarlyBooking />
         </Box>
-      </Box>
+      </Section>
     </React.Fragment>
   );
 }

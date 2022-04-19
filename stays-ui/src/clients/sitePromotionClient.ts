@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { PromotionRecord } from "../models";
+import { SitePromotionRecord } from "../models";
 import { cfg, defCfg } from "./serverConfig";
 
 export const url = "/promotions";
 
-export class PromotionClient {
+export class SitePromotionClient {
   public async isPromoCodeValid(name: string, promoCode: string): Promise<boolean> {
     const isValid: boolean = await (
       await axios.get(url + "/" + name + "/" + promoCode + "/validate", cfg())
@@ -14,11 +14,11 @@ export class PromotionClient {
     return isValid;
   }
 
-  public async addPromotion(code: string, name: string) {
+  public async addSitePromotion(code: string, name: string) {
     await axios.post(url, { code: code, name: name }, await defCfg());
   }
 
-  public async getPromotions(): Promise<PromotionRecord[]> {
+  public async getSitePromotions(): Promise<SitePromotionRecord[]> {
     return await axios.get(url, await defCfg());
   }
 }

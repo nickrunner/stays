@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 
-import PromotionCms from "../../../src/components/cms/PromotionCms";
+import SitePromotionCms from "../../../src/components/cms/SitePromotionCms";
 import StaysPage from "../../../src/StaysPage";
 
-const PromotionsCmsPage: NextPage = () => {
+const SitePromotionsCmsPage: NextPage = () => {
   return (
     <div>
       <Head>
@@ -21,10 +21,10 @@ const PromotionsCmsPage: NextPage = () => {
         />
       </Head>
       <StaysPage>
-        <PromotionCms />
+        <SitePromotionCms />
       </StaysPage>
     </div>
   );
 };
 
-export default PromotionsCmsPage;
+export default SitePromotionsCmsPage;

@@ -27,6 +27,11 @@ export class StayClient {
     return response.data as StayRecord;
   }
 
+  public async getFavorites(): Promise<StayRecord[]> {
+    const response = await axios.get(url + "/favorites", await defCfg());
+    return response.data as StayRecord[];
+  }
+
   public async getStays(
     searchPhrase?: string,
     filter?: StaySearchFilter,
