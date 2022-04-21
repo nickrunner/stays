@@ -19,6 +19,21 @@ export class OfferController extends Controller {
     }
   }
 
+  @Get("/favorites")
+  @Security("user", [Role.Stayer])
+  public async getUserOffers(@Request() req: AuthenticatedRequest): Promise<GetOffersResponse> {
+    try {
+      if (req.thisUser) {
+        return await new OfferService().getUsersOffers(req.thisUser);
+      } else {
+        throw new Error401("Not signed in");
+      }
+    } catch (err) {
+      console.log("Failed getting offers");
+      throw err;
+    }
+  }
+
   @Post()
   @Security("user", [Role.Host])
   public async createOffer(

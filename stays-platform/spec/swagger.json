@@ -66,370 +66,6 @@
 					}
 				]
 			},
-			"EarlyBooking": {
-				"properties": {
-					"stayId": {
-						"type": "string"
-					},
-					"startDate": {
-						"type": "number",
-						"format": "double"
-					},
-					"endDate": {
-						"type": "number",
-						"format": "double"
-					},
-					"bookingLink": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"stayId",
-					"startDate",
-					"endDate",
-					"bookingLink"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"EarlyBookingRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/EarlyBooking"
-					}
-				]
-			},
-			"Region": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"states": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"RegionRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/Region"
-					}
-				]
-			},
-			"State": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"cities": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"zips": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"StateRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/State"
-					}
-				]
-			},
-			"Offer": {
-				"properties": {
-					"stayId": {
-						"type": "string"
-					},
-					"title": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"stayId",
-					"title",
-					"description"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"OfferRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/Offer"
-					}
-				]
-			},
-			"Org": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"userIds": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"stayIds": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"name",
-					"userIds",
-					"stayIds"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"OrgRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/Org"
-					}
-				]
-			},
-			"SitePromotion": {
-				"properties": {
-					"code": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"code",
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"SitePromotionRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/SitePromotion"
-					}
-				]
-			},
-			"StayPromotionType": {
-				"enum": [
-					"Post",
-					"Giveaway",
-					"Email",
-					"Story"
-				],
-				"type": "string"
-			},
-			"SocialPlatform": {
-				"enum": [
-					"Instagram",
-					"Facebook",
-					"Tik-Tok",
-					"none"
-				],
-				"type": "string"
-			},
-			"StayPromotionStatus": {
-				"enum": [
-					"Requested",
-					"Scheduled",
-					"Executed",
-					"Closed"
-				],
-				"type": "string"
-			},
-			"PromotionMediaType": {
-				"enum": [
-					"Photo",
-					"Video"
-				],
-				"type": "string"
-			},
-			"PromotionMedia": {
-				"properties": {
-					"url": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/PromotionMediaType"
-					}
-				},
-				"required": [
-					"url",
-					"type"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"PromotionTags": {
-				"properties": {
-					"accounts": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"locations": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"StayPromotion": {
-				"properties": {
-					"stayId": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/StayPromotionType"
-					},
-					"socialPlatform": {
-						"$ref": "#/components/schemas/SocialPlatform"
-					},
-					"status": {
-						"$ref": "#/components/schemas/StayPromotionStatus"
-					},
-					"media": {
-						"items": {
-							"$ref": "#/components/schemas/PromotionMedia"
-						},
-						"type": "array"
-					},
-					"bookingLink": {
-						"type": "string"
-					},
-					"startDate": {
-						"type": "number",
-						"format": "double"
-					},
-					"summary": {
-						"type": "string"
-					},
-					"details": {
-						"type": "string"
-					},
-					"tags": {
-						"$ref": "#/components/schemas/PromotionTags"
-					}
-				},
-				"required": [
-					"stayId",
-					"type",
-					"socialPlatform",
-					"status",
-					"media",
-					"bookingLink",
-					"startDate",
-					"summary"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"StayPromotionRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/StayPromotion"
-					}
-				]
-			},
-			"StayAttributeType": {
-				"enum": [
-					"Amenity",
-					"Property Type",
-					"Special Interest",
-					"Booking Partner",
-					"Social Partner",
-					"Region",
-					"State",
-					"Country"
-				],
-				"type": "string"
-			},
-			"StayAttribute": {
-				"properties": {
-					"type": {
-						"$ref": "#/components/schemas/StayAttributeType"
-					},
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"iconUrl": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"type",
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"StayAttributeRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/StayAttribute"
-					}
-				]
-			},
 			"Address": {
 				"properties": {
 					"city": {
@@ -690,6 +326,424 @@
 					}
 				]
 			},
+			"GetCancellationsResponse": {
+				"items": {
+					"properties": {
+						"stay": {
+							"$ref": "#/components/schemas/StayRecord"
+						},
+						"cancellation": {
+							"$ref": "#/components/schemas/CancellationRecord"
+						}
+					},
+					"required": [
+						"stay",
+						"cancellation"
+					],
+					"type": "object"
+				},
+				"type": "array"
+			},
+			"EarlyBooking": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"endDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"bookingLink": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"stayId",
+					"startDate",
+					"endDate",
+					"bookingLink"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EarlyBookingRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/EarlyBooking"
+					}
+				]
+			},
+			"GetEarlyBookingsResponse": {
+				"items": {
+					"properties": {
+						"stay": {
+							"$ref": "#/components/schemas/StayRecord"
+						},
+						"earlyBooking": {
+							"$ref": "#/components/schemas/EarlyBookingRecord"
+						}
+					},
+					"required": [
+						"stay",
+						"earlyBooking"
+					],
+					"type": "object"
+				},
+				"type": "array"
+			},
+			"Region": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"states": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Region"
+					}
+				]
+			},
+			"State": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"cities": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"zips": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StateRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/State"
+					}
+				]
+			},
+			"Offer": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"stayId",
+					"title",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OfferRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Offer"
+					}
+				]
+			},
+			"GetOffersResponse": {
+				"items": {
+					"properties": {
+						"stay": {
+							"$ref": "#/components/schemas/StayRecord"
+						},
+						"offer": {
+							"$ref": "#/components/schemas/OfferRecord"
+						}
+					},
+					"required": [
+						"stay",
+						"offer"
+					],
+					"type": "object"
+				},
+				"type": "array"
+			},
+			"Org": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"userIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"stayIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"userIds",
+					"stayIds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OrgRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Org"
+					}
+				]
+			},
+			"SitePromotion": {
+				"properties": {
+					"code": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"code",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SitePromotionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/SitePromotion"
+					}
+				]
+			},
+			"StayPromotionType": {
+				"enum": [
+					"Post",
+					"Giveaway",
+					"Email",
+					"Story"
+				],
+				"type": "string"
+			},
+			"SocialPlatform": {
+				"enum": [
+					"Instagram",
+					"Facebook",
+					"Tik-Tok",
+					"none"
+				],
+				"type": "string"
+			},
+			"StayPromotionStatus": {
+				"enum": [
+					"Requested",
+					"Scheduled",
+					"Executed",
+					"Closed"
+				],
+				"type": "string"
+			},
+			"PromotionMediaType": {
+				"enum": [
+					"Photo",
+					"Video"
+				],
+				"type": "string"
+			},
+			"PromotionMedia": {
+				"properties": {
+					"url": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/PromotionMediaType"
+					}
+				},
+				"required": [
+					"url",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PromotionTags": {
+				"properties": {
+					"accounts": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"locations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayPromotion": {
+				"properties": {
+					"stayId": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/StayPromotionType"
+					},
+					"socialPlatform": {
+						"$ref": "#/components/schemas/SocialPlatform"
+					},
+					"status": {
+						"$ref": "#/components/schemas/StayPromotionStatus"
+					},
+					"media": {
+						"items": {
+							"$ref": "#/components/schemas/PromotionMedia"
+						},
+						"type": "array"
+					},
+					"bookingLink": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"summary": {
+						"type": "string"
+					},
+					"details": {
+						"type": "string"
+					},
+					"tags": {
+						"$ref": "#/components/schemas/PromotionTags"
+					}
+				},
+				"required": [
+					"stayId",
+					"type",
+					"socialPlatform",
+					"status",
+					"media",
+					"bookingLink",
+					"startDate",
+					"summary"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayPromotionRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/StayPromotion"
+					}
+				]
+			},
+			"StayAttributeType": {
+				"enum": [
+					"Amenity",
+					"Property Type",
+					"Special Interest",
+					"Booking Partner",
+					"Social Partner",
+					"Region",
+					"State",
+					"Country"
+				],
+				"type": "string"
+			},
+			"StayAttribute": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/StayAttributeType"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"iconUrl": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"type",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StayAttributeRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/StayAttribute"
+					}
+				]
+			},
 			"StayRejectionInfo": {
 				"properties": {
 					"reason": {
@@ -774,24 +828,6 @@
 						"$ref": "#/components/schemas/User"
 					}
 				]
-			},
-			"GetOffersResponse": {
-				"items": {
-					"properties": {
-						"stay": {
-							"$ref": "#/components/schemas/StayRecord"
-						},
-						"offer": {
-							"$ref": "#/components/schemas/OfferRecord"
-						}
-					},
-					"required": [
-						"stay",
-						"offer"
-					],
-					"type": "object"
-				},
-				"type": "array"
 			},
 			"WaitlistItem": {
 				"properties": {
@@ -894,6 +930,29 @@
 				}
 			}
 		},
+		"/cancellations/favorites": {
+			"get": {
+				"operationId": "GetUsersCancellations",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetCancellationsResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/early-bookings": {
 			"get": {
 				"operationId": "GetEarlyBookings",
@@ -941,6 +1000,31 @@
 						}
 					}
 				}
+			}
+		},
+		"/early-bookings/favorites": {
+			"get": {
+				"operationId": "GetUserEarlyBookings",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetEarlyBookingsResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/regions": {
@@ -1108,6 +1192,31 @@
 						}
 					}
 				}
+			}
+		},
+		"/offers/favorites": {
+			"get": {
+				"operationId": "GetUserOffers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetOffersResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/orgs": {
@@ -1526,8 +1635,7 @@
 				"security": [
 					{
 						"user": [
-							"Host",
-							"Admin"
+							"Host"
 						]
 					}
 				],
@@ -2078,31 +2186,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/UserRecord"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Stayer"
-						]
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/users/self/offers": {
-			"get": {
-				"operationId": "GetUserOffers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GetOffersResponse"
 								}
 							}
 						}

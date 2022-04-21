@@ -10,8 +10,9 @@ export class StayPromotionController extends Controller {
   public async getStayPromotions(): Promise<StayPromotionRecord[]> {
     return await new StayPromotionService().getPromotions();
   }
+
   @Post()
-  @Security("user", [Role.Host, Role.Admin])
+  @Security("user", [Role.Host])
   public async createStayPromotion(
     @Request() req: AuthenticatedRequest,
     @Body() promotion: StayPromotion

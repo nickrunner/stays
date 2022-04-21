@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Error404 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
-import { EarlyBooking, EarlyBookingRecord } from "../models";
+import {
+  EarlyBooking,
+  EarlyBookingRecord,
+  GetEarlyBookingsResponse,
+  StayRecord,
+  UserRecord
+} from "../models";
+import { StaysService } from "../stays/staysService";
 
 export class EarlyBookingService {
   private earlyBookings: Collection<EarlyBooking>;
@@ -13,6 +21,30 @@ export class EarlyBookingService {
   public async getEarlyBookings(): Promise<EarlyBookingRecord[]> {
     console.log("earlyBookingsService: getEarlyBookings()");
     return await this.earlyBookings.getAll();
+  }
+
+  public async getUsersEarlyBookings(user: UserRecord): Promise<GetEarlyBookingsResponse> {
+    console.log("offersService: getOffers()");
+    const earlyBookings: EarlyBookingRecord[] = await this.earlyBookings.getAll(
+      new CollectionQuery().where("stayId").in(user.favorites)
+    );
+    const stayIds: string[] = earlyBookings.map((earlyBooking) => {
+      return earlyBooking.stayId;
+    });
+    const stays: StayRecord[] = await new StaysService().batchGetStays(stayIds);
+    const response: GetEarlyBookingsResponse = earlyBookings.map((earlyBooking) => {
+      const stay = stays.find((stay) => {
+        return stay.id === earlyBooking.stayId;
+      });
+      if (!stay) {
+        throw new Error404("Stay not found!");
+      }
+      return {
+        earlyBooking: earlyBooking,
+        stay: stay
+      };
+    });
+    return response;
   }
 
   public async getEarlyBooking(earlyBookingId: string): Promise<EarlyBookingRecord> {

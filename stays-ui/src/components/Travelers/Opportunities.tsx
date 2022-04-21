@@ -11,7 +11,7 @@ export default function Opportunities(props: any) {
 
   const getOffers = async () => {
     try {
-      const offers = await new OfferClient().getOffers();
+      const offers = await new OfferClient().getOffersFromFavorites();
       setOffersResponse(offers);
     } catch (err) {
       console.log("FAILED getting offers: " + JSON.stringify(err, null, 2));

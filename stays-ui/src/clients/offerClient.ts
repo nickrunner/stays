@@ -10,8 +10,13 @@ export class OfferClient {
     await axios.post(url, { offer: offer }, await defCfg());
   }
 
-  public async getOffers(): Promise<GetOffersResponse> {
+  public async getOffers(): Promise<OfferRecord[]> {
     const response = await axios.get(url, await defCfg());
+    return response.data as OfferRecord[];
+  }
+
+  public async getOffersFromFavorites(): Promise<GetOffersResponse> {
+    const response = await axios.get(url + "/favorites", await defCfg());
     return response.data as GetOffersResponse;
   }
 }

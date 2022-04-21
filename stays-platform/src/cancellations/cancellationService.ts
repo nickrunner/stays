@@ -1,7 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Error404 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
-import { Cancellation, CancellationRecord } from "../models";
+import {
+  Cancellation,
+  CancellationRecord,
+  GetCancellationsResponse,
+  GetOffersResponse,
+  OfferRecord,
+  StayRecord,
+  UserRecord
+} from "../models";
+import { StaysService } from "../stays/staysService";
 
 export class CancellationService {
   private cancellations: Collection<Cancellation>;
@@ -13,6 +23,30 @@ export class CancellationService {
   public async getCancellations(): Promise<CancellationRecord[]> {
     console.log("cancellationsService: getCancellations()");
     return await this.cancellations.getAll();
+  }
+
+  public async getUsersCancellations(user: UserRecord): Promise<GetCancellationsResponse> {
+    console.log("cancellationsService: getUsersCancellations()");
+    const cancellations: CancellationRecord[] = await this.cancellations.getAll(
+      new CollectionQuery().where("stayId").in(user.favorites)
+    );
+    const stayIds: string[] = cancellations.map((cancellation) => {
+      return cancellation.stayId;
+    });
+    const stays: StayRecord[] = await new StaysService().batchGetStays(stayIds);
+    const response: GetCancellationsResponse = cancellations.map((cancellation) => {
+      const stay = stays.find((stay) => {
+        return stay.id === cancellation.stayId;
+      });
+      if (!stay) {
+        throw new Error404("Stay not found!");
+      }
+      return {
+        cancellation: cancellation,
+        stay: stay
+      };
+    });
+    return response;
   }
 
   public async getCancellation(cancellationId: string): Promise<CancellationRecord> {

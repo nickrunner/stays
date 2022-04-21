@@ -15,9 +15,8 @@ import {
 } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
-import { Error401, Error404 } from "../error";
-import { GetOffersResponse, OrgRecord, Role, User, UserRecord } from "../models";
-import { OfferService } from "../offers/offerService";
+import { Error401 } from "../error";
+import { OrgRecord, Role, User, UserRecord } from "../models";
 import { OrgService } from "../org/orgService";
 import { StaysService } from "../stays/staysService";
 import { UsersService } from "./usersService";
@@ -34,21 +33,6 @@ export class UsersController extends Controller {
     }
     const user: UserRecord = req.thisUser;
     return user;
-  }
-
-  @Get("/self/offers")
-  @Security("user", [Role.Stayer])
-  public async getUserOffers(@Request() req: AuthenticatedRequest): Promise<GetOffersResponse> {
-    try {
-      if (req.thisUser) {
-        return await new OfferService().getUsersOffers(req.thisUser);
-      } else {
-        throw new Error401("Not signed in");
-      }
-    } catch (err) {
-      console.log("Failed getting offers");
-      throw err;
-    }
   }
 
   @Get("/self/orgs")

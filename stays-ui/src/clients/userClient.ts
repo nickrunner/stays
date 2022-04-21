@@ -63,11 +63,6 @@ export class UserClient {
     await axios.delete(url + "/self/favorites/" + stayId, await defCfg());
   }
 
-  public async getUserOffers(): Promise<GetOffersResponse> {
-    const response = await axios.get(url + "/self/offers", await defCfg());
-    return response.data as GetOffersResponse;
-  }
-
   public async getUserOrgs(): Promise<OrgRecord[]> {
     const response = await axios.get(url + "/self/orgs", await defCfg());
     return response.data as OrgRecord[];
