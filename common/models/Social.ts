@@ -1,8 +1,8 @@
 import { Entity } from "./Entity";
 
 export interface Social {
-    partner: string,
-    link: string
-};
+  partner: string;
+  link: string;
+}
 
-export type SocialRecord = Entity & Social; 
+export type SocialRecord = Entity & Social;

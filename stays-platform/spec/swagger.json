@@ -195,6 +195,42 @@
 					}
 				]
 			},
+			"Org": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"userIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"stayIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"userIds",
+					"stayIds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OrgRecord": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Entity"
+					},
+					{
+						"$ref": "#/components/schemas/Org"
+					}
+				]
+			},
 			"SitePromotion": {
 				"properties": {
 					"code": {
@@ -562,9 +598,6 @@
 					"onSiteParking": {
 						"type": "boolean"
 					},
-					"hostEmail": {
-						"type": "string"
-					},
 					"type": {
 						"items": {
 							"type": "string"
@@ -616,6 +649,9 @@
 					"favoriteCount": {
 						"type": "number",
 						"format": "double"
+					},
+					"organizationId": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -629,7 +665,6 @@
 					"bedrooms",
 					"petsAllowed",
 					"onSiteParking",
-					"hostEmail",
 					"type",
 					"specialInterests",
 					"amenities",
@@ -639,7 +674,8 @@
 					"demand",
 					"social",
 					"booking",
-					"favoriteCount"
+					"favoriteCount",
+					"organizationId"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -738,6 +774,24 @@
 						"$ref": "#/components/schemas/User"
 					}
 				]
+			},
+			"GetOffersResponse": {
+				"items": {
+					"properties": {
+						"stay": {
+							"$ref": "#/components/schemas/StayRecord"
+						},
+						"offer": {
+							"$ref": "#/components/schemas/OfferRecord"
+						}
+					},
+					"required": [
+						"stay",
+						"offer"
+					],
+					"type": "object"
+				},
+				"type": "array"
 			},
 			"WaitlistItem": {
 				"properties": {
@@ -997,7 +1051,7 @@
 		},
 		"/offers": {
 			"get": {
-				"operationId": "GetOffers",
+				"operationId": "GetAllOffers",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1013,21 +1067,33 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
 				"parameters": []
 			},
 			"post": {
 				"operationId": "CreateOffer",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OfferRecord"
+								}
+							}
+						}
 					}
 				},
 				"security": [
 					{
 						"user": [
-							"Host",
-							"Admin"
+							"Host"
 						]
 					}
 				],
@@ -1042,6 +1108,279 @@
 						}
 					}
 				}
+			}
+		},
+		"/orgs": {
+			"get": {
+				"operationId": "GetOrgs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/OrgRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateOrg",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrgRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Org"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/orgs/{orgId}": {
+			"get": {
+				"operationId": "GetOrg",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrgRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "EditOrg",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Org"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/orgs/{orgId}/users/{userId}": {
+			"put": {
+				"operationId": "AddUserToOrg",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "RemoveUserFromOrg",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/orgs/{orgId}/stays/{stayId}": {
+			"put": {
+				"operationId": "AddStayToOrg",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "RemoveStayFromOrg",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "orgId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/site-promotions": {
@@ -1754,6 +2093,59 @@
 				"parameters": []
 			}
 		},
+		"/users/self/offers": {
+			"get": {
+				"operationId": "GetUserOffers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetOffersResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Stayer"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/self/orgs": {
+			"get": {
+				"operationId": "GetUserOrgs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/OrgRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/users": {
 			"get": {
 				"operationId": "GetUsers",
@@ -1914,7 +2306,7 @@
 				]
 			}
 		},
-		"/users/favorites/{stayId}": {
+		"/users/self/favorites/{stayId}": {
 			"post": {
 				"operationId": "AddFavorite",
 				"responses": {

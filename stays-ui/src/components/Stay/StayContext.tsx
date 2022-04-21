@@ -22,7 +22,6 @@ const defaultStay: Stay = {
   petsAllowed: false,
   onSiteParking: false,
   photos: [],
-  hostEmail: "",
   enable: true,
   status: StayApplicationStatus.Pending,
   social: [],
@@ -43,7 +42,8 @@ const defaultStay: Stay = {
       longitude: 0
     }
   },
-  favoriteCount: 0
+  favoriteCount: 0,
+  organizationId: ""
 };
 
 export function StayContext({ children }: { children: ReactNode }): ReactElement {

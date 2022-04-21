@@ -11,6 +11,7 @@ import { StaySearchFilter } from "../../models";
 import { StayAttributeType } from "../../models";
 import { Range } from "../../models";
 import RangeSlider from "../general/RangeSlider";
+import SearchBar from "../general/SearchBar";
 import FilterPopover from "./FilterPopover";
 import LocationFilter from "./LocationFilter";
 import { StayAttributeChecklist } from "./StayAttributeChecklist";

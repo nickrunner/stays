@@ -83,21 +83,6 @@ const columns: GridColDef[] = [
     sortable: true,
     editable: false,
     flex: 1
-  },
-  {
-    field: "specialInterests",
-    headerName: "Special Interests",
-    sortable: true,
-    editable: false,
-    flex: 1
-  },
-
-  {
-    field: "amenities",
-    headerName: "Amenities",
-    sortable: true,
-    editable: false,
-    flex: 1
   }
 ];
 

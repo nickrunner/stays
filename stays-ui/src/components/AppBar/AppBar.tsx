@@ -1,20 +1,25 @@
 import { ClassNames } from "@emotion/react";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
+import Tabs from "@mui/material/Tabs";
 import MuiToolbar from "@mui/material/Toolbar";
 import { makeStyles, styled } from "@mui/styles";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
 
 import { content } from "../../content";
 import { globalContext } from "../../GlobalStore";
+import { Role } from "../../models";
 import { theme } from "../../Theme";
 import SearchBar from "../general/SearchBar";
 import Link from "../Link";
 import LoginMenu from "./LoginMenu";
 import NavButton from "./NavButton";
+import NavTab from "./NavTab";
 
 const Greeting = dynamic(() => import("./Greeting"), { ssr: false });
 
@@ -56,6 +61,7 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
   const { globalState } = React.useContext(globalContext);
   const [show, setShow] = React.useState(true);
   const [lastScrollY, setLastScrollY] = React.useState(0);
+  const router = useRouter();
 
   function handleScroll() {
     if (typeof window !== "undefined") {
@@ -70,6 +76,32 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
       // remember current page location to use in the next move
       setLastScrollY(window.scrollY);
     }
+  }
+
+  function searchDirectory(phrase: string) {
+    if (typeof window !== "undefined") {
+      if (phrase) {
+        router.push({
+          pathname: "/directory",
+          query: { search: phrase }
+        });
+      } else {
+        router.push("/directory");
+      }
+    }
+  }
+
+  function hasRole(role: Role): boolean {
+    if (!globalState.isSignedIn) {
+      return false;
+    }
+    if (!globalState.self) {
+      return false;
+    }
+    if (!globalState.self.roles) {
+      return false;
+    }
+    return globalState.self.roles.includes(role);
   }
 
   React.useEffect(() => {
@@ -103,72 +135,79 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
             sx={{
               mx: "auto",
               ml: { xs: 1, sm: 7, lg: 10 },
-              flex: 1,
               display: "flex",
               justifyContent: "flex-start"
             }}>
-            <Link href={"/"}>
-              <Box
-                sx={{
-                  height: { xs: 60, sm: 75 },
-                  display: props.variant === "search" ? { xs: "none", sm: "flex" } : "flex"
-                }}>
+            <Box
+              sx={{
+                height: { xs: 60, sm: 75 },
+                display: props.variant === "search" ? { xs: "none", sm: "flex" } : "flex"
+              }}>
+              <Link href={"/"}>
                 <img
                   height="100%"
                   src={transparentBg() ? content.images.logo.white : content.images.logo.purple}
                   alt="Stays Logo"></img>
-              </Box>
-            </Link>
-          </Box>
-          <Box
-            sx={{
-              p: 1,
-              width: { xs: "75%", sm: "33%" },
-              display: "flex",
-              justifyContent: "center",
-              mx: "auto"
-            }}>
-            <Box sx={{ display: props.variant != "search" ? "flex" : "none" }}>
-              <NavButton
-                transparent={props.transparent}
-                text="Find a Stay"
-                to="/directory"></NavButton>
-              <NavButton
-                transparent={props.transparent}
-                text="For Travelers"
-                to="/travelers"></NavButton>
-              <NavButton transparent={props.transparent} text="For Hosts" to="/hosts"></NavButton>
-            </Box>
-            <Box
-              sx={{
-                justifyContent: "center",
-                mx: "auto",
-                width: "100%",
-                display: props.variant === "search" ? "flex" : "none"
-              }}>
-              <SearchBar
-                width="100%"
-                height="50"
-                placeholder="Search Directory"
-                onSearch={(phrase: string) => {
-                  console.log("Search: " + phrase);
-                  if (props.onSearch) {
-                    props.onSearch(phrase);
-                  }
-                }}
-              />
+              </Link>
             </Box>
           </Box>
 
           <Box
             sx={{
+              display: props.variant != "search" ? "flex" : "flex",
+              p: 1,
+              mx: { xs: 1, sm: 3, lg: 5 },
+              flex: 2,
+              justifyContent: "flex-center"
+            }}>
+            <SearchBar
+              width="70%"
+              height="50"
+              placeholder="Search stays.co"
+              onSearch={(phrase: string) => {
+                console.log("Search: " + phrase);
+                searchDirectory(phrase);
+              }}
+            />
+          </Box>
+          {/* <Box>
+            <Greeting transparent={props.transparent}></Greeting>
+          </Box> */}
+
+          <Box
+            sx={{
               mx: "auto",
-              flex: 1,
+              flex: 3,
               display: "flex",
               justifyContent: "flex-end",
-              mr: { xs: 1, sm: 7, lg: 10 }
+              mr: { xs: 1, sm: 7, lg: 10 },
+              maxWidth: "md"
             }}>
-            <Greeting transparent={props.transparent} />
+            {/* <Greeting transparent={props.transparent} /> */}
+            <NavButton
+              transparent={props.transparent}
+              text="Find a Stay"
+              to="/directory"></NavButton>
+            <NavButton
+              sx={{ display: hasRole(Role.Stayer) ? "none" : "block" }}
+              transparent={props.transparent}
+              text="For Travelers"
+              to="/travelers/about"></NavButton>
+            <NavButton
+              sx={{ display: hasRole(Role.Host) ? "none" : "block" }}
+              transparent={props.transparent}
+              text="For Hosts"
+              to="/hosts/about"></NavButton>
+            <NavButton
+              sx={{ display: hasRole(Role.Stayer) ? "block" : "none" }}
+              transparent={props.transparent}
+              text={"Traveler Feed"}
+              to="/travelers"></NavButton>
+            <NavButton
+              sx={{ display: hasRole(Role.Host) ? "block" : "none" }}
+              transparent={props.transparent}
+              text={"Host Dashboard"}
+              to="/hosts"></NavButton>
             <LoginMenu height="50" />
           </Box>
         </Toolbar>

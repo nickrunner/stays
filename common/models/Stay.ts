@@ -30,7 +30,6 @@ export interface Stay {
   bedrooms: number;
   petsAllowed: boolean;
   onSiteParking: boolean;
-  hostEmail: string;
   type: string[];
   specialInterests: string[];
   amenities: string[];
@@ -41,6 +40,7 @@ export interface Stay {
   social: Social[];
   booking: Booking[];
   favoriteCount: number;
+  organizationId: string;
 }
 
 export interface StaySearchFilter {

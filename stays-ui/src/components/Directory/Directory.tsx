@@ -52,7 +52,7 @@ export default function Directory(props: any) {
     if (query.filter) {
       setFilter(JSON.parse(decodeURI(query.filter as string)));
     }
-    if (query.searchPhrase) {
+    if (query.search) {
       setSearchPhrase(query.search as string);
     }
 

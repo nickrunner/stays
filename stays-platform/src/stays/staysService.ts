@@ -6,7 +6,7 @@ import { Error400, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 import LocationService from "../locations/locationService";
-import { Pagination } from "../models";
+import { Org, Pagination } from "../models";
 import { Coordinates } from "../models";
 import {
   Stay,
@@ -224,8 +224,17 @@ export class StaysService {
     await this.stays.decrement(stayId, "favoriteCount");
   }
 
-  public async getFavorites(user: UserRecord): Promise<StayRecord[]> {
-    return await this.stays.getAll(new CollectionQuery().where("id").in(user.favorites));
+  public async getUsersFavoriteStays(user: UserRecord): Promise<StayRecord[]> {
+    console.log("Getting favorites for user: " + JSON.stringify(user, null, 2));
+    return await this.batchGetStays(user.favorites);
+  }
+
+  public async getOrgsStays(org: Org): Promise<StayRecord[]> {
+    return await this.batchGetStays(org.stayIds);
+  }
+
+  public async batchGetStays(stayIds: string[]): Promise<StayRecord[]> {
+    return await this.stays.getAll(new CollectionQuery().where("id").in(stayIds));
   }
 
   private getKeywordsFromString(description: string): string[] {

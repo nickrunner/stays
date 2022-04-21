@@ -1,6 +1,14 @@
 import axios from "axios";
 
-import { Role, User, UserMembership, UserRecord, UserSearchFilter } from "../models";
+import {
+  GetOffersResponse,
+  OrgRecord,
+  Role,
+  User,
+  UserMembership,
+  UserRecord,
+  UserSearchFilter
+} from "../models";
 import { defCfg, queryCfg } from "./serverConfig";
 
 export const url = "/users";
@@ -48,10 +56,20 @@ export class UserClient {
 
   public async addFavorite(stayId: string): Promise<void> {
     const cfg = await defCfg();
-    await axios.post(url + "/favorites/" + stayId, +stayId, cfg);
+    await axios.post(url + "/self/favorites/" + stayId, +stayId, cfg);
   }
 
   public async removeFavorite(stayId: string): Promise<void> {
-    await axios.delete(url + "/favorites/" + stayId, await defCfg());
+    await axios.delete(url + "/self/favorites/" + stayId, await defCfg());
+  }
+
+  public async getUserOffers(): Promise<GetOffersResponse> {
+    const response = await axios.get(url + "/self/offers", await defCfg());
+    return response.data as GetOffersResponse;
+  }
+
+  public async getUserOrgs(): Promise<OrgRecord[]> {
+    const response = await axios.get(url + "/self/orgs", await defCfg());
+    return response.data as OrgRecord[];
   }
 }

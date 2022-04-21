@@ -95,7 +95,6 @@ export default function AddStay() {
       case 1:
         break;
       case 2:
-        stay.hostEmail = "admin@stays.co";
         createStay();
         return;
     }

@@ -15,11 +15,7 @@ import Applications from "./Applications";
 import MyStays from "./MyStays";
 import Services from "./Services";
 
-export interface HostPortalProps {
-  user?: User;
-  userId?: string;
-}
-export default function HostPortal(props: HostPortalProps) {
+export default function HostPortal(props: any) {
   const [tabValue, setValue] = React.useState(0);
   const { globalState } = React.useContext(globalContext);
   const router = useRouter();
@@ -29,9 +25,6 @@ export default function HostPortal(props: HostPortalProps) {
       router.push("/");
     }
     if (!globalState.self) {
-      router.push("/");
-    }
-    if (globalState.self?.id !== props.userId) {
       router.push("/");
     }
     if (!globalState.self?.roles.includes(Role.Host)) {

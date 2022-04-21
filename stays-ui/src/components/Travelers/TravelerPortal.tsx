@@ -17,11 +17,7 @@ import Favorites from "./Favorites";
 import Giveaways from "./Giveaways";
 import Opportunities from "./Opportunities";
 
-export interface TravelerPortalProps {
-  user?: User;
-  userId?: string;
-}
-export default function TravelerPortal(props: TravelerPortalProps) {
+export default function TravelerPortal(props: any) {
   const [tabValue, setValue] = React.useState(0);
   const { globalState } = React.useContext(globalContext);
   const router = useRouter();
@@ -33,9 +29,6 @@ export default function TravelerPortal(props: TravelerPortalProps) {
     if (!globalState.self) {
       router.push("/");
     }
-    if (globalState.self?.id !== props.userId) {
-      router.push("/");
-    }
     return;
   }, []);
 
@@ -44,7 +37,7 @@ export default function TravelerPortal(props: TravelerPortalProps) {
   };
   return (
     <React.Fragment>
-      <Nav transparent={false}>
+      <Nav transparent={false} hideOnScroll={true}>
         <Box sx={{ margin: "auto", justifyContent: "center" }}>
           <Tabs
             sx={{ margin: "auto", textTransform: "none" }}

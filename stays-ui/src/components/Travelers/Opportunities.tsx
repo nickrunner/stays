@@ -1,24 +1,25 @@
 import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
 
+import { OfferClient } from "../../clients/offerClient";
 import { StayClient } from "../../clients/stayClient";
-import { Stay } from "../../models";
-import Opportunity from "./Opportunity";
+import { GetOffersResponse, Stay, StayRecord } from "../../models";
+import OfferCard from "./OfferCard";
 
 export default function Opportunities(props: any) {
-  const [stays, setStays] = React.useState<Stay[]>([]);
+  const [offersResponse, setOffersResponse] = React.useState<GetOffersResponse>([]);
 
-  const getStays = async () => {
+  const getOffers = async () => {
     try {
-      const newStays = await new StayClient().getStays("", {}, { lastEvaluatedKey: 0, count: 3 });
-      setStays(newStays);
+      const offers = await new OfferClient().getOffers();
+      setOffersResponse(offers);
     } catch (err) {
-      console.log("FAILED getting stays: " + JSON.stringify(err, null, 2));
+      console.log("FAILED getting offers: " + JSON.stringify(err, null, 2));
     }
   };
 
   React.useEffect(() => {
-    getStays();
+    getOffers();
     return;
   }, []);
 
@@ -28,8 +29,10 @@ export default function Opportunities(props: any) {
         Special offers for you
       </Typography>
       <Box sx={{ display: "grid", gap: 5, p: 5 }}>
-        {stays.map((stay) => (
-          <Opportunity key={stay} stay={stay} />
+        {offersResponse.map((offer) => (
+          <React.Fragment key={offer.offer.stayId}>
+            <OfferCard offer={offer.offer} stay={offer.stay as StayRecord} />
+          </React.Fragment>
         ))}
       </Box>
     </Box>

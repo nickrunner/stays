@@ -17,6 +17,7 @@ import {
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
 import { Role, Stay, StayRecord, StayRejectionInfo } from "../models";
+import { OrgService } from "../org/orgService";
 import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 import { StaysService } from "./staysService";
 
@@ -53,10 +54,11 @@ export class StaysController extends Controller {
   @Security("user", [Role.Stayer])
   public async getFavorites(@Request() req: AuthenticatedRequest): Promise<StayRecord[]> {
     try {
+      console.log("staysController getFavorites()");
       if (!req.thisUser) {
         throw new Error401();
       }
-      return await new StaysService().getFavorites(req.thisUser);
+      return await new StaysService().getUsersFavoriteStays(req.thisUser);
     } catch (err) {
       console.log("getFavorites() Error: " + e);
       throw e;
@@ -69,6 +71,7 @@ export class StaysController extends Controller {
     console.log("POST /stays with body ", { stay });
     try {
       const stayRecord: StayRecord = await new StaysService().createStay(stay);
+      await new OrgService().addStayToOrg(stayRecord.organizationId, stayRecord.id);
       await new StayAttributesService().addStayAttributesFromStay(stayRecord);
       return stayRecord;
     } catch (e) {
@@ -76,25 +79,6 @@ export class StaysController extends Controller {
       throw e;
     }
   }
-
-  // @Post("/apply")
-  // @Security("user", [Role.Host])
-  // public async createStayApplication(
-  //     @Request() req: AuthenticatedRequest,
-  //     @Body() stay: Stay
-  // ): Promise<StayRecord> {
-  //     console.log("POST /stays/apply with body ", {stay});
-  //     try{
-  //         if(!req.thisUser){
-  //             throw new Error401();
-  //         }
-  //         return await new StaysService().createApplication(stay, req.thisUser.email);
-  //     }
-  //     catch(e){
-  //         console.log("createStay() Error: "+e);
-  //         throw e;
-  //     }
-  // }
 
   @Post("/{stayId}")
   @Security("user", [Role.Admin])
@@ -183,7 +167,10 @@ export class StaysController extends Controller {
   @Security("user", [Role.Host, Role.Admin])
   public async deleteStay(@Path() stayId: string): Promise<void> {
     try {
-      await new StaysService().deleteStay(stayId);
+      const stayService = new StaysService();
+      const stay: StayRecord = await stayService.getStayById(stayId);
+      await new OrgService().removeStayFromOrg(stay.organizationId, stayId);
+      await stayService.deleteStay(stayId);
     } catch (e) {
       console.log("deleteStay() Error: " + e);
       throw e;

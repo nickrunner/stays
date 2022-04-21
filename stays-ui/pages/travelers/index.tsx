@@ -1,16 +1,16 @@
 import { NextPage } from "next";
 
 import Footer from "../../src/components/Footer";
-import Travelers from "../../src/components/Travelers/Travelers";
+import TravelerPortal from "../../src/components/Travelers/TravelerPortal";
 import StaysPage from "../../src/StaysPage";
 
-const TravelersPage: NextPage = (props: any) => {
+const TravelerPortalPage: NextPage = (props: any) => {
   return (
     <StaysPage>
-      <Travelers />
+      <TravelerPortal />
       <Footer />
     </StaysPage>
   );
 };
 
-export default TravelersPage;
+export default TravelerPortalPage;

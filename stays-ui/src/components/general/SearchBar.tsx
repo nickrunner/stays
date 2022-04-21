@@ -41,7 +41,7 @@ export default function SearchBar(props: any) {
         alignItems: "center"
       }}>
       <TextField
-        sx={{ width: "100%", bgcolor: "background.default", borderRadius: 1 }}
+        sx={{ width: "100%", height: props.height, bgcolor: "background.default", borderRadius: 1 }}
         onChange={(event) => handleChange(event.target.value)}
         value={phrase}
         placeholder={props.placeholder}

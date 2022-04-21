@@ -1,17 +1,20 @@
 import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { StaysAppBarProps } from "./AppBar";
 
-export interface NavButtonProps extends StaysAppBarProps {
+export interface NavTabProps extends StaysAppBarProps {
   text: string;
   to: string;
   sx?: any;
   icon?: any;
 }
 
-export default function NavButton(props: NavButtonProps) {
+export default function NavTab(props: NavTabProps) {
   const router = useRouter();
   const [scroll, setScroll] = React.useState(false);
 
@@ -26,9 +29,13 @@ export default function NavButton(props: NavButtonProps) {
   }, []);
 
   return (
-    <Button
-      startIcon={props.icon}
-      variant="text"
+    <Tab
+      icon={props.icon}
+      iconPosition="start"
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
       sx={{
         display: { xs: "none", md: "block" },
         p: 2,
@@ -36,10 +43,10 @@ export default function NavButton(props: NavButtonProps) {
         mr: 4,
         color: !props.transparent || scroll ? "primary.dark" : "primary.light",
         hover: "#6c5ee6",
+        textTransform: "none",
         ...props.sx
       }}
-      onClick={() => router.push(props.to)}>
-      {props.text}
-    </Button>
+      label={props.text}
+      href={props.to}></Tab>
   );
 }

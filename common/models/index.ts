@@ -15,4 +15,5 @@ export * from "./StayPromotion";
 export * from "./Cancellation";
 export * from "./EarlyBooking";
 export * from "./Offer";
+export * from "./Org";
 export type { StayAttributeRecord } from "./StayAttributes";
