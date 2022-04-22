@@ -28,8 +28,11 @@ export async function defCfg(): Promise<AxiosRequestConfig> {
   console.log("REQ with BASEURL: " + BASE_URL);
   return {
     baseURL: BASE_URL,
+    timeout: 30000,
     headers: {
-      Authorization: "Bearer " + token
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+      Accept: "application/json"
     }
   };
 }

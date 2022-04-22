@@ -1256,7 +1256,7 @@
 				]
 			},
 			"post": {
-				"operationId": "CreateOrg",
+				"operationId": "PostOrg",
 				"responses": {
 					"200": {
 						"description": "Ok",

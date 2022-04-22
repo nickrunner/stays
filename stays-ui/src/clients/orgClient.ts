@@ -7,7 +7,7 @@ const url = "/orgs";
 
 export class OrgClient {
   public async createOrg(org: Org): Promise<OrgRecord> {
-    const response = await axios.post(url, { org: org }, await defCfg());
+    const response = await axios.post(url, org, await defCfg());
     return response.data as OrgRecord;
   }
 

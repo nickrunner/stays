@@ -8,10 +8,12 @@ import {
   Post,
   Put,
   Query,
+  Request,
   Route,
   Security
 } from "tsoa";
 
+import { AuthenticatedRequest } from "../auth/auth";
 import { Org, OrgRecord, Role } from "../models";
 import { OrgService } from "./orgService";
 
@@ -20,6 +22,7 @@ export class OrgController extends Controller {
   @Get()
   @Security("user", [Role.Admin])
   public async getOrgs(@Query() name?: string): Promise<OrgRecord[]> {
+    console.log("orgController.getOrgs(): ");
     try {
       if (name) {
         return [await new OrgService().getOrgByName(name)];
@@ -31,20 +34,10 @@ export class OrgController extends Controller {
     }
   }
 
-  @Get("/{orgId}")
-  @Security("user", [Role.Host])
-  public async getOrg(@Path() orgId: string): Promise<OrgRecord> {
-    try {
-      return await new OrgService().getOrgById(orgId);
-    } catch (err) {
-      console.log("Failed getting org");
-      throw err;
-    }
-  }
-
   @Post()
   @Security("user")
-  public async createOrg(@Body() org: Org): Promise<OrgRecord> {
+  public async postOrg(@Body() org: Org): Promise<OrgRecord> {
+    console.log("orgController.createOrg(): " + JSON.stringify(org, null, 2));
     try {
       return await new OrgService().createOrg(org);
     } catch (err) {
@@ -53,9 +46,22 @@ export class OrgController extends Controller {
     }
   }
 
+  @Get("/{orgId}")
+  @Security("user", [Role.Host])
+  public async getOrg(@Path() orgId: string): Promise<OrgRecord> {
+    console.log("orgController.getOrg(): " + orgId);
+    try {
+      return await new OrgService().getOrgById(orgId);
+    } catch (err) {
+      console.log("Failed getting org");
+      throw err;
+    }
+  }
+
   @Patch("/{orgId}")
   @Security("user", [Role.Host])
   public async editOrg(@Path() orgId: string, @Body() org: Org): Promise<void> {
+    console.log("orgController.editOrg(): " + JSON.stringify(org, null, 2));
     try {
       return await new OrgService().updateOrg(orgId, org);
     } catch (err) {
@@ -67,6 +73,7 @@ export class OrgController extends Controller {
   @Put("{orgId}/users/{userId}")
   @Security("user", [Role.Host])
   public async addUserToOrg(@Path() orgId: string, @Path() userId: string): Promise<void> {
+    console.log("orgController.addUserToOrg(): " + orgId + " " + userId);
     try {
       return await new OrgService().addUserToOrg(orgId, userId);
     } catch (err) {
