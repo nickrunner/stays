@@ -40,6 +40,7 @@
     "react-dom": "latest",
     "react-dropzone": "^11.5.3",
     "react-icons": "^4.3.1",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "react-use": "^17.3.2",

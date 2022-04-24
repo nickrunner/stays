@@ -1,5 +1,7 @@
 import { ClassNames } from "@emotion/react";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import MenuIcon from "@mui/icons-material/Menu";
+import { IconButton, Menu } from "@mui/material";
 import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
@@ -39,7 +41,7 @@ const Toolbar = styled(MuiToolbar)(() => ({
   height: 75,
   bgcolor: "background.default",
   [theme.breakpoints.up("sm")]: {
-    height: 110
+    height: 80
   }
 }));
 
@@ -54,6 +56,7 @@ export interface StaysAppBarProps {
   variant?: string;
   hideOnScroll?: boolean;
   onSearch?: (phrase: string) => void;
+  onSidebarOpen?: () => void;
 }
 
 export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
@@ -138,9 +141,21 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
               display: "flex",
               justifyContent: "flex-start"
             }}>
+            <Box>
+              <IconButton
+                onClick={props.onSidebarOpen}
+                sx={{
+                  display: {
+                    xs: "inline-flex",
+                    lg: "none"
+                  }
+                }}>
+                <MenuIcon fontSize="small" sx={{ p: 0.1 }} />
+              </IconButton>
+            </Box>
             <Box
               sx={{
-                height: { xs: 60, sm: 75 },
+                height: { xs: 50, sm: 60 },
                 display: props.variant === "search" ? { xs: "none", sm: "flex" } : "flex"
               }}>
               <Link href={"/"}>
@@ -154,15 +169,15 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
 
           <Box
             sx={{
-              display: props.variant != "search" ? "flex" : "flex",
+              display: { xs: props.variant === "search" ? "flex" : "none", sm: "flex" },
               p: 1,
-              mx: { xs: 1, sm: 3, lg: 5 },
+              mx: { xs: 1, sm: 3, lg: 10 },
               flex: 2,
               justifyContent: "flex-center"
             }}>
             <SearchBar
               width="70%"
-              height="50"
+              height="60"
               placeholder="Search stays.co"
               onSearch={(phrase: string) => {
                 console.log("Search: " + phrase);
@@ -189,25 +204,25 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
               text="Find a Stay"
               to="/directory"></NavButton>
             <NavButton
-              sx={{ display: hasRole(Role.Stayer) ? "none" : "block" }}
+              sx={{ display: { xs: "none", sm: hasRole(Role.Stayer) ? "none" : "block" } }}
               transparent={props.transparent}
               text="For Travelers"
               to="/travelers/about"></NavButton>
             <NavButton
-              sx={{ display: hasRole(Role.Host) ? "none" : "block" }}
+              sx={{ display: { xs: "none", sm: hasRole(Role.Host) ? "none" : "block" } }}
               transparent={props.transparent}
               text="For Hosts"
               to="/hosts/about"></NavButton>
             <NavButton
-              sx={{ display: hasRole(Role.Stayer) ? "block" : "none" }}
+              sx={{ display: { xs: "none", sm: hasRole(Role.Stayer) ? "block" : "none" } }}
               transparent={props.transparent}
-              text={"Traveler Feed"}
+              text={"Dashboard"}
               to="/travelers"></NavButton>
             <NavButton
-              sx={{ display: hasRole(Role.Host) ? "block" : "none" }}
+              sx={{ display: { xs: "none", sm: hasRole(Role.Host) ? "block" : "none" } }}
               transparent={props.transparent}
-              text={"Host Dashboard"}
-              to="/hosts"></NavButton>
+              text={"Hosting"}
+              to="/hosts/portal"></NavButton>
             <LoginMenu height="50" />
           </Box>
         </Toolbar>

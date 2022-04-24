@@ -2,12 +2,12 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Nav } from "../AppBar/AppBar";
-import DetailsAccordion from "../general/DetailsAccordion";
-import Info from "../general/Info";
-import Section from "../general/Section";
-import SectionDivider from "../general/SectionDivider";
-import SectionHead from "../general/SectionHead";
+import { Nav } from "../../AppBar/AppBar";
+import DetailsAccordion from "../../general/DetailsAccordion";
+import Info from "../../general/Info";
+import Section from "../../general/Section";
+import SectionDivider from "../../general/SectionDivider";
+import SectionHead from "../../general/SectionHead";
 
 export default function Hosts(props: any) {
   const router = useRouter();

@@ -2,7 +2,7 @@ import { HorizontalSplitSharp } from "@mui/icons-material";
 import { NextPage } from "next";
 
 import Footer from "../../src/components/Footer";
-import Hosts from "../../src/components/Hosts/Hosts";
+import Hosts from "../../src/components/Portals/Hosts/Hosts";
 import Travelers from "../../src/components/Travelers/Travelers";
 import StaysPage from "../../src/StaysPage";
 

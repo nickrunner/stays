@@ -44,6 +44,7 @@ export default function SearchBar(props: any) {
         sx={{ width: "100%", height: props.height, bgcolor: "background.default", borderRadius: 1 }}
         onChange={(event) => handleChange(event.target.value)}
         value={phrase}
+        variant="standard"
         placeholder={props.placeholder}
         InputProps={{
           startAdornment: (

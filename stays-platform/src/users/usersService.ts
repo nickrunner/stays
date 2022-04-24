@@ -105,4 +105,12 @@ export class UsersService {
   public async removeFavorite(userId: string, stayId: string) {
     await this.users.arrRemove(userId, "favorites", [stayId]);
   }
+
+  public async addRole(userId: string, role: Role) {
+    await this.users.append(userId, "roles", [role]);
+  }
+
+  public async removeRole(userId: string, role: Role) {
+    await this.users.arrRemove(userId, "roles", [role]);
+  }
 }

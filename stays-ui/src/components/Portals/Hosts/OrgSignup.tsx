@@ -3,14 +3,16 @@ import { Box, Grid, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { OrgClient } from "../../clients/orgClient";
-import { globalContext } from "../../GlobalStore";
-import { Nav } from "../AppBar/AppBar";
+import { OrgClient } from "../../../clients/orgClient";
+import { UserClient } from "../../../clients/userClient";
+import { globalContext } from "../../../GlobalStore";
+import { UserRecord } from "../../../models";
+import { Nav } from "../../AppBar/AppBar";
 
 export default function OrgSignUp(props: any) {
   const [loading, setLoading] = React.useState(false);
   const [orgName, setOrgName] = React.useState("");
-  const { globalState } = React.useContext(globalContext);
+  const { globalState, dispatch } = React.useContext(globalContext);
   const router = useRouter();
 
   function handleOrgNameChange(name: string) {
@@ -32,7 +34,9 @@ export default function OrgSignUp(props: any) {
         userIds: [globalState.self.id],
         stayIds: []
       });
-      router.push("/hosts");
+      const self: UserRecord = await new UserClient().getSelf();
+      dispatch({ type: "GET_SELF", payload: self });
+      await router.push("/hosts");
     } catch (err) {
       console.log("Failed creating org");
     }

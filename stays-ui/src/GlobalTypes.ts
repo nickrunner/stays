@@ -2,9 +2,14 @@
 import { Dispatch } from "react";
 
 import { UserRecord } from "../../common/models/User";
+import { OrgRecord, StayRecord } from "./models";
 
 export interface StaysState {
   self?: UserRecord;
+  hosting: {
+    selectedOrg?: OrgRecord;
+    selectedStay?: StayRecord;
+  };
   isSignedIn: boolean;
   mobile: boolean;
   persistenceType: string;

@@ -12,9 +12,13 @@ import {
   Route,
   Security
 } from "tsoa";
+import { collapseTextChangeRangesAcrossMultipleVersions, isCatchClause } from "typescript";
 
 import { AuthenticatedRequest } from "../auth/auth";
-import { Org, OrgRecord, Role } from "../models";
+import { Error401 } from "../error";
+import { Org, OrgRecord, Role, StayRecord } from "../models";
+import { StaysService } from "../stays/staysService";
+import { UsersService } from "../users/usersService";
 import { OrgService } from "./orgService";
 
 @Route("orgs")
@@ -36,10 +40,15 @@ export class OrgController extends Controller {
 
   @Post()
   @Security("user")
-  public async postOrg(@Body() org: Org): Promise<OrgRecord> {
+  public async postOrg(@Request() req: AuthenticatedRequest, @Body() org: Org): Promise<OrgRecord> {
     console.log("orgController.createOrg(): " + JSON.stringify(org, null, 2));
     try {
-      return await new OrgService().createOrg(org);
+      if (!req.thisUser) {
+        throw new Error401();
+      }
+      const newOrg: OrgRecord = await new OrgService().createOrg(org);
+      await new UsersService().addRole(req.thisUser.id, Role.Host);
+      return newOrg;
     } catch (err) {
       console.log("Failed creating org");
       throw err;
@@ -89,6 +98,27 @@ export class OrgController extends Controller {
       return await new OrgService().removeUserFromOrg(orgId, userId);
     } catch (err) {
       console.log("Failed removing user from org");
+      throw err;
+    }
+  }
+
+  @Get("{orgId}/stays")
+  @Security("user", [Role.Host])
+  public async getOrgsStays(
+    @Request() req: AuthenticatedRequest,
+    @Path() orgId: string
+  ): Promise<StayRecord[]> {
+    try {
+      if (!req.thisUser) {
+        throw new Error401("Not signed in");
+      }
+      const org: OrgRecord = await new OrgService().getOrgById(orgId);
+      if (!org.userIds.includes(req.thisUser.id) && !req.thisUser.roles.includes(Role.Admin)) {
+        throw new Error401("User not authorized to access this org");
+      }
+      return await new StaysService().getOrgsStays(org);
+    } catch (err) {
+      console.log("Failed getting stays orgs");
       throw err;
     }
   }

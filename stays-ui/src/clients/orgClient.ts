@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Org, OrgRecord } from "../models";
+import { Org, OrgRecord, StayRecord } from "../models";
 import { defCfg } from "./serverConfig";
 
 const url = "/orgs";
@@ -39,5 +39,10 @@ export class OrgClient {
 
   public async removeStayFromOrg(orgId: string, stayId: string): Promise<void> {
     await axios.delete(url + "/" + orgId + "/stays/" + stayId, await defCfg());
+  }
+
+  public async getOrgsStays(orgId: string): Promise<StayRecord[]> {
+    const response = await axios.get(url + "/" + orgId + "/stays", await defCfg());
+    return response.data as StayRecord[];
   }
 }

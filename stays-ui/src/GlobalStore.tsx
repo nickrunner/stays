@@ -61,6 +61,10 @@ export const globalContext = createContext({} as StaysContextType);
 
 export const initialState: StaysState = {
   self: undefined,
+  hosting: {
+    selectedOrg: undefined,
+    selectedStay: undefined
+  },
   isSignedIn: false,
   mobile: false,
   persistenceType: "sessionStorage"

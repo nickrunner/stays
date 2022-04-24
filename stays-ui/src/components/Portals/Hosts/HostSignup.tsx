@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Nav } from "../AppBar/AppBar";
+import { Nav } from "../../AppBar/AppBar";
 import OrgSignUp from "./OrgSignup";
 
 export default function HostSignUp(props: any) {

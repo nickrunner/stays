@@ -78,7 +78,7 @@ export default function LoginMenu(props: any) {
         margin-top="5"
         onClick={handleClick}>
         <Box sx={{ mt: { xs: 0, sm: 1 }, p: { xs: 1, sm: 0 }, display: "flex" }}>
-          <MenuIcon fontSize="large" sx={{ p: 0.1 }} />
+          <MenuIcon fontSize="large" sx={{ p: 0.1, display: { sm: "none", lg: "block" } }} />
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             <AccountCircle fontSize="large" sx={{ p: 0.1 }} />
           </Box>
@@ -140,14 +140,14 @@ export default function LoginMenu(props: any) {
 
         <MenuItem
           sx={{ p: menuPadding, display: hasRole(Role.Stayer) ? "flex" : "none" }}
-          onClick={() => router.push("/travelers/" + globalState.self?.id)}>
+          onClick={() => router.push("/travelers")}>
           <TravelExplore sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Traveler Portal</Typography>
         </MenuItem>
 
         <MenuItem
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "flex" : "none" }}
-          onClick={() => router.push("/hosts/" + globalState.self?.id)}>
+          onClick={() => router.push("/hosts/portal")}>
           <EmojiPeopleIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Host Portal</Typography>
         </MenuItem>
@@ -164,7 +164,7 @@ export default function LoginMenu(props: any) {
         </MenuItem>
 
         <MenuItem
-          onClick={() => router.push("/hosts")}
+          onClick={() => router.push("/hosts/about")}
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "none" : "flex" }}>
           <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Become a host</Typography>

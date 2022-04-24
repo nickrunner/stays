@@ -14,6 +14,7 @@ export interface NavButtonProps extends StaysAppBarProps {
 export default function NavButton(props: NavButtonProps) {
   const router = useRouter();
   const [scroll, setScroll] = React.useState(false);
+  const active: boolean = router.pathname.includes(props.to);
 
   React.useEffect(() => {
     function handleScroll() {
@@ -28,14 +29,17 @@ export default function NavButton(props: NavButtonProps) {
   return (
     <Button
       startIcon={props.icon}
-      variant="text"
+      variant={active ? "outlined" : "text"}
       sx={{
         display: { xs: "none", md: "block" },
         p: 2,
+        py: 0,
         mt: 1,
         mr: 4,
         color: !props.transparent || scroll ? "primary.dark" : "primary.light",
-        hover: "#6c5ee6",
+        "&:hover": {
+          backgroundColor: "action.hover"
+        },
         ...props.sx
       }}
       onClick={() => router.push(props.to)}>
