@@ -11,20 +11,9 @@ export interface StaySelectorProps {
 }
 
 export function StaySelector(props: StaySelectorProps) {
-  const [selectedStay, setSelectedStay] = React.useState<StayRecord | null>(null);
   const [selectedStayId, setSelectedStayId] = React.useState<string>("");
 
-  React.useEffect(() => {
-    props.onStaySelected(selectedStay as StayRecord);
-    return;
-  }, [selectedStay]);
-
-  React.useEffect(() => {
-    setSelectedStay(getSelectedStay(selectedStayId));
-    return;
-  }, [selectedStayId]);
-
-  function getSelectedStay(stayId: string): StayRecord | null {
+  function getStayById(stayId: string): StayRecord | null {
     for (const stay of props.stays) {
       if (stay.id === stayId) {
         return stay;
@@ -35,6 +24,7 @@ export function StaySelector(props: StaySelectorProps) {
 
   function handleStayChange(newStayId: string) {
     setSelectedStayId(newStayId);
+    props.onStaySelected(getStayById(newStayId) as StayRecord);
   }
 
   return (
@@ -49,8 +39,7 @@ export function StaySelector(props: StaySelectorProps) {
           sx={{ color: "action.hover" }}
           labelId="stayLabel"
           id="stay-select"
-          value={selectedStayId}
-          defaultValue={props.defaultStayId}
+          value={props.defaultStayId}
           label="Stay"
           onChange={(event: SelectChangeEvent) => {
             handleStayChange(event?.target.value);

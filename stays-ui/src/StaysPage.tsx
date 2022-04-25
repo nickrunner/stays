@@ -17,19 +17,13 @@ export default function StaysPage(props: any) {
     eventClient.setPage(window.location.pathname);
 
     if (!props.noLogin) {
-      console.log("Getting self");
       new UserClient()
         .getSelf()
         .then((value) => {
-          console.log("Got self: ", { value });
           dispatch({ type: "GET_SELF", payload: value });
         })
         .catch((reason) => {
-          console.log("Not signed in: ", { reason });
           dispatch({ type: "GET_SELF", payload: undefined });
-        })
-        .finally(() => {
-          console.log("Get Self Finish");
         });
     }
   }, []);

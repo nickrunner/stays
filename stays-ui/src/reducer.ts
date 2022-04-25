@@ -6,6 +6,7 @@ import { OrgRecord, StayMembership, StayRecord } from "./models";
 const Reducer = (state: StaysState, action: ActionType): any => {
   switch (action.type) {
     case "GET_SELF":
+      console.log("REDUCER: " + action.type);
       const user: UserRecord = action.payload;
       const signedIn = user !== undefined;
       return {
@@ -14,7 +15,7 @@ const Reducer = (state: StaysState, action: ActionType): any => {
         isSignedIn: signedIn
       };
     case "HOSTING_SELECT_ORG":
-      console.log("Setting org: " + JSON.stringify(state, null, 2));
+      console.log("REDUCER: " + action.type);
       const org: OrgRecord = action.payload;
       return {
         ...state,
@@ -24,6 +25,7 @@ const Reducer = (state: StaysState, action: ActionType): any => {
         }
       };
     case "HOSTING_SELECT_STAY":
+      console.log("REDUCER: " + action.type);
       const stay: StayRecord = action.payload;
       return {
         ...state,

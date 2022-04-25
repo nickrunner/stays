@@ -29,6 +29,7 @@ export const PortalLayout = (props: PropsWithChildren<PortalLayoutProps>) => {
       <PortalLayoutRoot>
         <Box
           sx={{
+            p: 5,
             display: "flex",
             flex: "1 1 auto",
             flexDirection: "column",

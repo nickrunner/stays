@@ -1,7 +1,18 @@
-import { Cottage, RoomService, StayPrimaryLandscape } from "@mui/icons-material";
+import {
+  Approval,
+  AppShortcut,
+  BookmarkAdded,
+  CancelScheduleSend,
+  Cottage,
+  Instagram,
+  LocalOffer,
+  Loyalty,
+  RoomService,
+  StayPrimaryLandscape
+} from "@mui/icons-material";
 import { display } from "@mui/system";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import { OrgClient } from "../../../clients/orgClient";
 import { StayClient } from "../../../clients/stayClient";
@@ -19,14 +30,20 @@ import { OrgSelector } from "./OrgSelector";
 import Services from "./Services";
 import { StaySelector } from "./StaySelector";
 
-export default function HostPortal(props: any) {
+export interface HostPortalProps {
+  onStaysReceived?: (stays: StayRecord[]) => void;
+  onOrgsReceived?: (orgs: OrgRecord[]) => void;
+}
+
+export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
   const [orgs, setOrgs] = React.useState<OrgRecord[]>([]);
   const [stays, setStays] = React.useState<StayRecord[]>([]);
   const { globalState, dispatch } = React.useContext(globalContext);
-  const router = useRouter();
 
   function handleStayChange(stay: StayRecord) {
-    dispatch({ type: "HOSTING_SELECT_STAY", payload: stay });
+    if (stay) {
+      dispatch({ type: "HOSTING_SELECT_STAY", payload: stay });
+    }
   }
 
   function handleOrgChange(org: OrgRecord) {
@@ -35,15 +52,27 @@ export default function HostPortal(props: any) {
 
   async function getStays(orgId: string) {
     const userStays: StayRecord[] = await new OrgClient().getOrgsStays(orgId);
+    if (getSelectedStayId() === "") {
+      dispatch({ type: "HOSTING_SELECT_STAY", payload: userStays[0] });
+    }
     setStays(userStays);
+    if (props.onStaysReceived) {
+      props.onStaysReceived(userStays);
+    }
   }
 
   async function getOrgs() {
     const userOrgs: OrgRecord[] = await new UserClient().getUserOrgs();
+
     setOrgs(userOrgs);
-    dispatch({ type: "HOSTING_SELECT_ORG", payload: userOrgs[0] }); // Todo - select different org
+    if (getSelectedOrgId() === "") {
+      dispatch({ type: "HOSTING_SELECT_ORG", payload: userOrgs[0] }); // Todo - select different org
+    }
+    if (props.onOrgsReceived) {
+      props.onOrgsReceived(userOrgs);
+    }
     if (userOrgs.length > 0) {
-      getStays(userOrgs[0].id);
+      await getStays(userOrgs[0].id);
     }
   }
 
@@ -74,7 +103,6 @@ export default function HostPortal(props: any) {
   }
 
   React.useEffect(() => {
-    console.log("Global State: " + JSON.stringify(globalState, null, 2));
     if (!globalState.isSignedIn) {
       return;
     }
@@ -85,49 +113,49 @@ export default function HostPortal(props: any) {
   const items: NavItemProps[][] = [
     [
       {
+        href: "/hosts/portal/membership",
+        icon: <Loyalty fontSize="small" />,
+        title: "Membership"
+      },
+      {
+        href: "/hosts/portal/promotions",
+        icon: <Instagram fontSize="small" />,
+        title: "Promotions"
+      },
+      {
+        href: "/hosts/portal/offers",
+
+        icon: <LocalOffer fontSize="small" />,
+        title: "Offers"
+      },
+      {
+        href: "/hosts/portal/cancellations",
+
+        icon: <CancelScheduleSend fontSize="small" />,
+        title: "Cacellations"
+      },
+      {
+        href: "/hosts/portal/early-booking",
+
+        icon: <BookmarkAdded fontSize="small" />,
+        title: "Early Booking"
+      }
+    ],
+    [
+      {
         href: "/hosts/portal/stays",
         icon: <Cottage fontSize="small" />,
         title: "My Stays"
       },
       {
         href: "/hosts/portal/applications",
-        icon: <StayPrimaryLandscape fontSize="small" />,
+        icon: <Approval fontSize="small" />,
         title: "Applications"
       },
       {
         href: "/hosts/portal/services",
         icon: <RoomService fontSize="small" />,
         title: "Services"
-      }
-    ],
-    [
-      {
-        href: "/hosts/portal/membership",
-        icon: <Cottage fontSize="small" />,
-        title: "Membership"
-      },
-      {
-        href: "/hosts/portal/promotions",
-        icon: <StayPrimaryLandscape fontSize="small" />,
-        title: "Promotions"
-      },
-      {
-        href: "/hosts/portal/offers",
-
-        icon: <RoomService fontSize="small" />,
-        title: "Offers"
-      },
-      {
-        href: "/hosts/portal/cancellations",
-
-        icon: <RoomService fontSize="small" />,
-        title: "Cacellations"
-      },
-      {
-        href: "/hosts/portal/early-booking",
-
-        icon: <RoomService fontSize="small" />,
-        title: "Early Booking"
       }
     ]
   ];
@@ -137,15 +165,6 @@ export default function HostPortal(props: any) {
       <PortalLayout
         navItems={items}
         sidebarSelector={[
-          <OrgSelector
-            key="orgSelect"
-            defaultOrgId={getSelectedOrgId()}
-            onOrgSelected={(org: OrgRecord) => {
-              handleOrgChange(org);
-            }}
-            orgId={getSelectedOrgId()}
-            orgs={orgs}
-          />,
           <StaySelector
             key="staySelect"
             defaultStayId={getSelectedStayId()}
@@ -154,6 +173,15 @@ export default function HostPortal(props: any) {
             }}
             orgId={getSelectedOrgId()}
             stays={stays}
+          />,
+          <OrgSelector
+            key="orgSelect"
+            defaultOrgId={getSelectedOrgId()}
+            onOrgSelected={(org: OrgRecord) => {
+              handleOrgChange(org);
+            }}
+            orgId={getSelectedOrgId()}
+            orgs={orgs}
           />
         ]}>
         {props.children}

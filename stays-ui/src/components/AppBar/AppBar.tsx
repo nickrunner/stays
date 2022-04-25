@@ -217,7 +217,7 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
               sx={{ display: { xs: "none", sm: hasRole(Role.Stayer) ? "block" : "none" } }}
               transparent={props.transparent}
               text={"Dashboard"}
-              to="/travelers"></NavButton>
+              to="/travelers/portal"></NavButton>
             <NavButton
               sx={{ display: { xs: "none", sm: hasRole(Role.Host) ? "block" : "none" } }}
               transparent={props.transparent}

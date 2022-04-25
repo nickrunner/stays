@@ -31,8 +31,6 @@ export class UserClient {
 
   public async getSelf(): Promise<UserRecord> {
     const response = await axios.get(url + "/self", await defCfg());
-    const user = response.data as UserRecord;
-    console.log("Received user: " + user.email);
     return response.data as UserRecord;
   }
 

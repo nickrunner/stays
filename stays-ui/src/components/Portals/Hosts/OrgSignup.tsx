@@ -36,7 +36,7 @@ export default function OrgSignUp(props: any) {
       });
       const self: UserRecord = await new UserClient().getSelf();
       dispatch({ type: "GET_SELF", payload: self });
-      await router.push("/hosts");
+      await router.push("/hosts/portal/stays");
     } catch (err) {
       console.log("Failed creating org");
     }

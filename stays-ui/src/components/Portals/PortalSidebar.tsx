@@ -100,7 +100,7 @@ export const PortalSidebar = (props: PortalSidebarProps) => {
             py: 3
           }}>
           <Typography color="neutral.100" variant="subtitle2">
-            Need help with hosting?
+            Need help?
           </Typography>
           <Box
             sx={{

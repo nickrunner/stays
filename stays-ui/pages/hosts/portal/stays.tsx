@@ -8,6 +8,7 @@ import StaysPage from "../../../src/StaysPage";
 const MyStaysPage: NextPage = (props: any) => {
   return (
     <StaysPage>
+      <MyStays />
       <Footer />
     </StaysPage>
   );

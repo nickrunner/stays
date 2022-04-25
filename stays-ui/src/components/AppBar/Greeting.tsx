@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import { globalContext } from "../../GlobalStore";
@@ -12,11 +12,9 @@ export default function Greeting(props: any) {
       style={{
         display: globalState.isSignedIn ? "block" : "none"
       }}>
-      <NavButton
-        sx={{ fontSize: 20 }}
-        transparent={props.transparent}
-        text={"Welcome " + globalState.self?.firstName + " !"}
-        to="/account"></NavButton>
+      <Typography variant="subtitle1" sx={{ align: "center", p: 2, color: "action.hover" }}>
+        {"Welcome " + globalState.self?.firstName + " !"}
+      </Typography>
     </Box>
   );
 }

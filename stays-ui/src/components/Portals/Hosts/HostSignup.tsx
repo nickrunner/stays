@@ -2,14 +2,34 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { OrgClient } from "../../../clients/orgClient";
+import { UserClient } from "../../../clients/userClient";
+import { globalContext } from "../../../GlobalStore";
+import { UserRecord } from "../../../models";
 import { Nav } from "../../AppBar/AppBar";
 import OrgSignUp from "./OrgSignup";
 
 export default function HostSignUp(props: any) {
   const router = useRouter();
+  const { globalState, dispatch } = React.useContext(globalContext);
 
-  function handleIndividualClick() {
+  async function handleIndividualClick() {
     console.log("Individal click");
+    if (!globalState.self) {
+      return;
+    }
+    try {
+      await new OrgClient().createOrg({
+        name: globalState.self.email,
+        userIds: [globalState.self.id],
+        stayIds: []
+      });
+      const self: UserRecord = await new UserClient().getSelf();
+      dispatch({ type: "GET_SELF", payload: self });
+      await router.push("/hosts/portal/stays");
+    } catch (err) {
+      console.log("Failed creating org: " + err);
+    }
   }
 
   return (

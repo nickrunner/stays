@@ -1,8 +1,8 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import React from "react";
 
-import { Offer, OfferRecord, StayRecord } from "../../models";
-import Info from "../general/Info";
+import { Offer, OfferRecord, StayRecord } from "../../../models";
+import Info from "../../general/Info";
 
 export interface OfferCardProps {
   offer: OfferRecord;
