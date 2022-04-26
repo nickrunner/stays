@@ -49,6 +49,10 @@ export class CancellationService {
     return response;
   }
 
+  public async getStaysCancellations(stayId: string): Promise<CancellationRecord[]> {
+    return await this.cancellations.getAll(new CollectionQuery().where("stayId").eq(stayId));
+  }
+
   public async getCancellation(cancellationId: string): Promise<CancellationRecord> {
     return await this.cancellations.get(cancellationId);
   }

@@ -4,12 +4,14 @@ import {
   BookmarkAdded,
   CancelScheduleSend,
   Cottage,
+  Dashboard,
   Instagram,
   LocalOffer,
   Loyalty,
   RoomService,
   StayPrimaryLandscape
 } from "@mui/icons-material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { display } from "@mui/system";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
@@ -76,6 +78,32 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
     }
   }
 
+  function getSelectedStayPhoto() {
+    if (!globalState) {
+      return "";
+    }
+    if (!globalState.hosting) {
+      return "";
+    }
+    if (!globalState.hosting.selectedStay) {
+      return "";
+    }
+    return globalState.hosting.selectedStay.photos[0].url;
+  }
+
+  function getSelectedStayName() {
+    if (!globalState) {
+      return "";
+    }
+    if (!globalState.hosting) {
+      return "";
+    }
+    if (!globalState.hosting.selectedStay) {
+      return "";
+    }
+    return globalState.hosting.selectedStay.name;
+  }
+
   function getSelectedOrgId() {
     if (!globalState) {
       return "";
@@ -112,6 +140,11 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
 
   const items: NavItemProps[][] = [
     [
+      {
+        href: "/hosts/portal/dashboard",
+        icon: <Dashboard fontSize="small" />,
+        title: "Dashboard"
+      },
       {
         href: "/hosts/portal/membership",
         icon: <Loyalty fontSize="small" />,
@@ -184,6 +217,12 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
             orgs={orgs}
           />
         ]}>
+        <Box sx={{ justifyContent: "start", display: "flex" }}>
+          <Avatar sx={{ height: 60, width: 60, mr: 2 }} src={getSelectedStayPhoto()}></Avatar>
+          <Typography sx={{ mt: 1.5 }} align="center" variant="h4">
+            {getSelectedStayName()}
+          </Typography>
+        </Box>
         {props.children}
       </PortalLayout>
     </HostingContext>

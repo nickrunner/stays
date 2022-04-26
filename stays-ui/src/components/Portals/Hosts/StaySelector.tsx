@@ -30,7 +30,7 @@ export function StaySelector(props: StaySelectorProps) {
   return (
     <Box
       sx={{
-        display: { xs: "none", sm: "flex" },
+        display: "flex",
         justifyContent: "flex-end"
       }}>
       <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>

@@ -4,6 +4,7 @@ import React from "react";
 import { globalContext } from "../../../../GlobalStore";
 import { StayRecord } from "../../../../models";
 import HostPortal from "../HostPortal";
+import { PromotionsTable } from "./PromotionsTable";
 
 export default function Promotions(props: any) {
   const { globalState, dispatch } = React.useContext(globalContext);
@@ -29,7 +30,7 @@ export default function Promotions(props: any) {
   return (
     <React.Fragment>
       <HostPortal>
-        <Typography variant="h5">Promotions for: {getStayName()}</Typography>
+        <PromotionsTable stay={getSelectedStay() as StayRecord} />
       </HostPortal>
     </React.Fragment>
   );

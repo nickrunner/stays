@@ -15,9 +15,18 @@ import {
 } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
+import { CancellationService } from "../cancellations/cancellationService";
 import { Error401 } from "../error";
-import { Role, Stay, StayRecord, StayRejectionInfo } from "../models";
+import {
+  CancellationRecord,
+  Role,
+  Stay,
+  StayPromotionRecord,
+  StayRecord,
+  StayRejectionInfo
+} from "../models";
 import { OrgService } from "../org/orgService";
+import { StayPromotionService } from "../stayPromotions/stayPromotionService";
 import { StayAttributesService } from "./stayAttributes/stayAttributesService";
 import { StaysService } from "./staysService";
 
@@ -103,6 +112,28 @@ export class StaysController extends Controller {
     } catch (e) {
       console.log("patchStay() Error: ", { e });
       throw e;
+    }
+  }
+
+  @Get("/{stayId}/promotions")
+  @Security("user", [Role.Host])
+  public async getStaysPromotions(@Path() stayId: string): Promise<StayPromotionRecord[]> {
+    try {
+      return await new StayPromotionService().getPromotionsOfStay(stayId);
+    } catch (err) {
+      console.log("Error getting stays promotinos");
+      throw err;
+    }
+  }
+
+  @Get("/{stayId}/cancellations")
+  @Security("user", [Role.Host])
+  public async getStaysCancellations(@Path() stayId: string): Promise<CancellationRecord[]> {
+    try {
+      return await new CancellationService().getStaysCancellations(stayId);
+    } catch (err) {
+      console.log("Error getting stays cancellations");
+      throw err;
     }
   }
 

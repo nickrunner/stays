@@ -1,9 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-import { globalContext } from "../../../../GlobalStore";
-import { StayRecord } from "../../../../models";
-import HostPortal from "../HostPortal";
+import { globalContext } from "../../../../../GlobalStore";
+import { StayRecord } from "../../../../../models";
+import HostPortal from "../../HostPortal";
+import MembershipCard from "./MembershipCard";
+import StayPricing from "./StayPricing";
 
 export default function Membership(props: any) {
   const { globalState, dispatch } = React.useContext(globalContext);
@@ -29,7 +31,7 @@ export default function Membership(props: any) {
   return (
     <React.Fragment>
       <HostPortal>
-        <Typography variant="h5">Membership for: {getStayName()}</Typography>
+        <StayPricing />
       </HostPortal>
     </React.Fragment>
   );

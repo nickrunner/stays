@@ -150,13 +150,13 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
                     lg: "none"
                   }
                 }}>
-                <MenuIcon fontSize="small" sx={{ p: 0.1 }} />
+                <MenuIcon fontSize="large" sx={{ color: "primary.main", p: 0.1 }} />
               </IconButton>
             </Box>
             <Box
               sx={{
                 height: { xs: 50, sm: 60 },
-                display: props.variant === "search" ? { xs: "none", sm: "flex" } : "flex"
+                display: { xs: "none", lg: "flex" }
               }}>
               <Link href={"/"}>
                 <img

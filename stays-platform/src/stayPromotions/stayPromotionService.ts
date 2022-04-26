@@ -31,6 +31,10 @@ export class StayPromotionService {
     await this.promotions.create(promotion, clientId);
   }
 
+  public async getPromotionsOfStay(stayId: string) {
+    return await this.promotions.getAll(new CollectionQuery().where("stayId").eq(stayId));
+  }
+
   public async updatePromotion(
     promotionId: string,
     attributes: any,

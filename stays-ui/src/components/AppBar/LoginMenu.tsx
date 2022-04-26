@@ -8,7 +8,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Box, Divider, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -70,21 +70,27 @@ export default function LoginMenu(props: any) {
       <Button
         sx={{ height: props.height, width: { xs: 70, md: 120 }, mt: 1, p: "2px 4px" }}
         size="medium"
-        variant="contained"
+        variant="text"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         margin-top="5"
         onClick={handleClick}>
-        <Box sx={{ mt: { xs: 0, sm: 1 }, p: { xs: 1, sm: 0 }, display: "flex" }}>
-          <MenuIcon fontSize="large" sx={{ p: 0.1, display: { sm: "none", lg: "block" } }} />
-          <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <AccountCircle fontSize="large" sx={{ p: 0.1 }} />
-          </Box>
-        </Box>
+        {/* <Avatar
+          sx={{
+            bgcolor: "primary.main",
+            mt: { xs: 0, sm: 1 },
+            p: { xs: 1, sm: 0 },
+            display: "flex"
+          }}>
+          <MenuIcon fontSize="large" sx={{ p: 0.1, display: { sm: "none", lg: "block" } }} /> */}
+
+        <AccountCircle sx={{ height: 50, width: 50, p: 0.1 }} />
+        {/* </Avatar> */}
       </Button>
       <Menu
+        sx={{ width: 300 }}
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -138,18 +144,23 @@ export default function LoginMenu(props: any) {
 
         <Divider />
 
+        <MenuItem sx={{ p: menuPadding }} onClick={() => router.push("/directory")}>
+          <HotelIcon sx={{ color: "primary.main", mr: 1 }} />
+          <Typography>Find a stay</Typography>
+        </MenuItem>
+
         <MenuItem
           sx={{ p: menuPadding, display: hasRole(Role.Stayer) ? "flex" : "none" }}
-          onClick={() => router.push("/travelers")}>
+          onClick={() => router.push("/travelers/portal")}>
           <TravelExplore sx={{ color: "primary.main", mr: 1 }} />
-          <Typography>Traveler Portal</Typography>
+          <Typography>Dashboard</Typography>
         </MenuItem>
 
         <MenuItem
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "flex" : "none" }}
-          onClick={() => router.push("/hosts/portal")}>
+          onClick={() => router.push("/hosts/portal/dashboard")}>
           <EmojiPeopleIcon sx={{ color: "primary.main", mr: 1 }} />
-          <Typography>Host Portal</Typography>
+          <Typography>Hosting</Typography>
         </MenuItem>
 
         <MenuItem
@@ -158,17 +169,14 @@ export default function LoginMenu(props: any) {
           <Typography>Become a member</Typography>
         </MenuItem>
 
-        <MenuItem sx={{ p: menuPadding }} onClick={() => router.push("/directory")}>
-          <HotelIcon sx={{ color: "primary.main", mr: 1 }} />
-          <Typography>Find a stay</Typography>
-        </MenuItem>
-
         <MenuItem
           onClick={() => router.push("/hosts/about")}
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "none" : "flex" }}>
           <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Become a host</Typography>
         </MenuItem>
+
+        <Divider />
 
         <MenuItem
           onClick={() => router.push("/cms/dashboard")}

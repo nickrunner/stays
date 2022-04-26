@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Pagination } from "../models";
+import { CancellationRecord, Pagination, StayPromotionRecord } from "../models";
 import { StayAttributeRecord, StayAttributeType } from "../models";
 import { Stay, StayRecord, StaySearchFilter } from "../models";
 import { cfg, defCfg, queryCfg } from "./serverConfig";
@@ -103,5 +103,23 @@ export class StayClient {
       await queryCfg({ states: JSON.stringify(states) })
     );
     return response.data as string[];
+  }
+
+  public async getPromotionsOfStay(stayId: string): Promise<StayPromotionRecord[]> {
+    try {
+      const response = await axios.get(url + "/" + stayId + "/promotions");
+      return response.data as StayPromotionRecord[];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  public async getCancellationsOfStay(stayId: string): Promise<CancellationRecord[]> {
+    try {
+      const response = await axios.get(url + "/" + stayId + "/cancellations");
+      return response.data as CancellationRecord[];
+    } catch (err) {
+      return [];
+    }
   }
 }
