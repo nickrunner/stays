@@ -1,5 +1,13 @@
 import { ClassNames } from "@emotion/react";
+import { MenuBook } from "@material-ui/icons";
+import { AccountCircle, Cabin, TravelExplore } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import CottageIcon from "@mui/icons-material/Cottage";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import HotelIcon from "@mui/icons-material/Hotel";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Menu } from "@mui/material";
 import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
@@ -138,25 +146,12 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
             sx={{
               mx: "auto",
               ml: { xs: 1, sm: 7, lg: 10 },
-              display: "flex",
-              justifyContent: "flex-start"
+              justifyContent: "flex-start",
+              display: { xs: "none", lg: "flex" }
             }}>
-            <Box>
-              <IconButton
-                onClick={props.onSidebarOpen}
-                sx={{
-                  display: {
-                    xs: "inline-flex",
-                    lg: "none"
-                  }
-                }}>
-                <MenuIcon fontSize="large" sx={{ color: "primary.main", p: 0.1 }} />
-              </IconButton>
-            </Box>
             <Box
               sx={{
-                height: { xs: 50, sm: 60 },
-                display: { xs: "none", lg: "flex" }
+                height: { xs: 50, sm: 60 }
               }}>
               <Link href={"/"}>
                 <img
@@ -191,39 +186,47 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
 
           <Box
             sx={{
-              mx: "auto",
-              flex: 3,
-              display: "flex",
-              justifyContent: "flex-end",
-              mr: { xs: 1, sm: 7, lg: 10 },
-              maxWidth: "md"
+              flex: 2,
+              display: "inline-flex",
+              justifyContent: { xs: "center", sm: "flex-end" },
+              mr: { xs: 0, sm: 7, lg: 10 }
             }}>
-            {/* <Greeting transparent={props.transparent} /> */}
+            <IconButton
+              sx={{ display: { xs: props.variant === "menu" ? "block" : "none", lg: "none" } }}
+              onClick={props.onSidebarOpen}>
+              <MenuIcon fontSize="large" sx={{ color: "primary.dark", p: 0.1 }} />
+            </IconButton>
+
             <NavButton
               transparent={props.transparent}
-              text="Find a Stay"
+              icon={<MenuBook />}
+              text="Directory"
               to="/directory"></NavButton>
             <NavButton
-              sx={{ display: { xs: "none", sm: hasRole(Role.Stayer) ? "none" : "block" } }}
+              sx={{ display: hasRole(Role.Stayer) ? "none" : "block" }}
               transparent={props.transparent}
+              icon={<TravelExplore />}
               text="For Travelers"
               to="/travelers/about"></NavButton>
             <NavButton
-              sx={{ display: { xs: "none", sm: hasRole(Role.Host) ? "none" : "block" } }}
+              sx={{ display: hasRole(Role.Host) ? "none" : "block" }}
               transparent={props.transparent}
+              icon={<EmojiPeopleIcon />}
               text="For Hosts"
               to="/hosts/about"></NavButton>
             <NavButton
-              sx={{ display: { xs: "none", sm: hasRole(Role.Stayer) ? "block" : "none" } }}
+              sx={{ display: hasRole(Role.Stayer) ? "block" : "none" }}
               transparent={props.transparent}
+              icon={<TravelExplore />}
               text={"Dashboard"}
               to="/travelers/portal"></NavButton>
             <NavButton
-              sx={{ display: { xs: "none", sm: hasRole(Role.Host) ? "block" : "none" } }}
+              sx={{ display: hasRole(Role.Host) ? "block" : "none" }}
+              icon={<EmojiPeopleIcon />}
               transparent={props.transparent}
               text={"Hosting"}
               to="/hosts/portal"></NavButton>
-            <LoginMenu height="50" />
+            <LoginMenu height={50} />
           </Box>
         </Toolbar>
         <Box

@@ -48,7 +48,7 @@ export function OrgSelector(props: any) {
           id="org-select"
           value={selectedOrgId}
           defaultValue={props.defaultOrgId}
-          label="Organization"
+          label="Host Account"
           onChange={(event: SelectChangeEvent) => {
             handleOrgChange(event?.target.value);
           }}>

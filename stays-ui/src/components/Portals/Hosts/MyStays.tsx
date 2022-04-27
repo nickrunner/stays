@@ -132,7 +132,7 @@ export default function MyStays(props: any) {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ display: stays.length <= 6 ? "block" : "none" }}>
+        <Box sx={{ display: stays.length <= 600 ? "block" : "none" }}>
           <HostStayCards stays={stays} />
         </Box>
         <Box sx={{ display: stays.length <= 6 ? "none" : "block" }}>

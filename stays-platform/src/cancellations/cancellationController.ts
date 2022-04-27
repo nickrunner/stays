@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Path, Post, Query, Request, Route, Security } from "tsoa";
+import { Body, Controller, Delete, Get, Path, Post, Query, Request, Route, Security } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";
@@ -35,5 +35,16 @@ export class CancellationController extends Controller {
     @Body() promotion: Cancellation
   ): Promise<void> {
     return await new CancellationService().createCancellation(promotion, req.email);
+  }
+
+  @Delete("{cancellationId}")
+  @Security("user", [Role.Host])
+  public async deleteCancellation(@Path() cancellationId: string): Promise<void> {
+    try {
+      return await new CancellationService().deleteCancellation(cancellationId);
+    } catch (err) {
+      console.log("Failed deleting cancellation");
+      throw err;
+    }
   }
 }

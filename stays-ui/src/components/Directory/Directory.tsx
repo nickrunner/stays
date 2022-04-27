@@ -55,7 +55,7 @@ export default function Directory(props: any) {
     if (query.search) {
       setSearchPhrase(query.search as string);
     }
-
+    getStays();
     return;
   }, [isReady]);
 

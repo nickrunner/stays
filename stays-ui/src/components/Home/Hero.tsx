@@ -25,14 +25,14 @@ export default function Hero() {
         align="center"
         color="common.white"
         variant="h1"
-        sx={{ mb: 4, mt: { sx: 5, sm: 15 } }}>
-        Stay in luxury. Save Money.
+        sx={{ mb: 4, mt: { xs: 20, sm: 25 }, bgcolor: "secondary.main" }}>
+        Stay in luxury. Save test Money.
       </Typography>
       <Typography
         color="common.white"
         align="center"
         variant="h5"
-        sx={{ mb: 8, mt: { sx: 4, sm: 8 } }}>
+        sx={{ mb: 8, mt: { xs: 4, sm: 8 } }}>
         Book directly with elite vacation rentals
       </Typography>
 

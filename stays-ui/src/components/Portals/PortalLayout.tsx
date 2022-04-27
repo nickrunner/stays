@@ -38,7 +38,7 @@ export const PortalLayout = (props: PropsWithChildren<PortalLayoutProps>) => {
           {props.children}
         </Box>
       </PortalLayoutRoot>
-      <Nav transparent={false} onSidebarOpen={() => setSidebarOpen(true)} />
+      <Nav transparent={false} variant="menu" onSidebarOpen={() => setSidebarOpen(true)} />
       <PortalSidebar
         items={props.navItems}
         onClose={() => setSidebarOpen(false)}

@@ -1,4 +1,6 @@
+import { CalendarToday, List } from "@material-ui/icons";
 import {
+  Analytics,
   Approval,
   AppShortcut,
   BookmarkAdded,
@@ -41,6 +43,14 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
   const [orgs, setOrgs] = React.useState<OrgRecord[]>([]);
   const [stays, setStays] = React.useState<StayRecord[]>([]);
   const { globalState, dispatch } = React.useContext(globalContext);
+
+  const router = useRouter();
+  const staySpecific: boolean =
+    router.pathname.includes("dashboard") ||
+    router.pathname.includes("listing") ||
+    router.pathname.includes("analytics") ||
+    router.pathname.includes("membership") ||
+    router.pathname.includes("calendar");
 
   function handleStayChange(stay: StayRecord) {
     if (stay) {
@@ -141,41 +151,6 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
   const items: NavItemProps[][] = [
     [
       {
-        href: "/hosts/portal/dashboard",
-        icon: <Dashboard fontSize="small" />,
-        title: "Dashboard"
-      },
-      {
-        href: "/hosts/portal/membership",
-        icon: <Loyalty fontSize="small" />,
-        title: "Membership"
-      },
-      {
-        href: "/hosts/portal/promotions",
-        icon: <Instagram fontSize="small" />,
-        title: "Promotions"
-      },
-      {
-        href: "/hosts/portal/offers",
-
-        icon: <LocalOffer fontSize="small" />,
-        title: "Offers"
-      },
-      {
-        href: "/hosts/portal/cancellations",
-
-        icon: <CancelScheduleSend fontSize="small" />,
-        title: "Cacellations"
-      },
-      {
-        href: "/hosts/portal/early-booking",
-
-        icon: <BookmarkAdded fontSize="small" />,
-        title: "Early Booking"
-      }
-    ],
-    [
-      {
         href: "/hosts/portal/stays",
         icon: <Cottage fontSize="small" />,
         title: "My Stays"
@@ -190,6 +165,33 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
         icon: <RoomService fontSize="small" />,
         title: "Services"
       }
+    ],
+    [
+      {
+        href: "/hosts/portal/dashboard",
+        icon: <Dashboard fontSize="small" />,
+        title: "Dashboard"
+      },
+      {
+        href: "/hosts/portal/listing",
+        icon: <List fontSize="small" />,
+        title: "Listing"
+      },
+      {
+        href: "/hosts/portal/listing",
+        icon: <Analytics fontSize="small" />,
+        title: "Analytics"
+      },
+      {
+        href: "/hosts/portal/membership",
+        icon: <Loyalty fontSize="small" />,
+        title: "Membership"
+      },
+      {
+        href: "/hosts/portal/promotions",
+        icon: <CalendarToday fontSize="small" />,
+        title: "Calendar"
+      }
     ]
   ];
 
@@ -198,15 +200,6 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
       <PortalLayout
         navItems={items}
         sidebarSelector={[
-          <StaySelector
-            key="staySelect"
-            defaultStayId={getSelectedStayId()}
-            onStaySelected={(stay: StayRecord) => {
-              handleStayChange(stay);
-            }}
-            orgId={getSelectedOrgId()}
-            stays={stays}
-          />,
           <OrgSelector
             key="orgSelect"
             defaultOrgId={getSelectedOrgId()}
@@ -217,11 +210,17 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
             orgs={orgs}
           />
         ]}>
-        <Box sx={{ justifyContent: "start", display: "flex" }}>
+        <Box sx={{ justifyContent: "start", display: staySpecific ? "flex" : "none" }}>
           <Avatar sx={{ height: 60, width: 60, mr: 2 }} src={getSelectedStayPhoto()}></Avatar>
-          <Typography sx={{ mt: 1.5 }} align="center" variant="h4">
-            {getSelectedStayName()}
-          </Typography>
+          <StaySelector
+            key="staySelect"
+            defaultStayId={getSelectedStayId()}
+            onStaySelected={(stay: StayRecord) => {
+              handleStayChange(stay);
+            }}
+            orgId={getSelectedOrgId()}
+            stays={stays}
+          />
         </Box>
         {props.children}
       </PortalLayout>

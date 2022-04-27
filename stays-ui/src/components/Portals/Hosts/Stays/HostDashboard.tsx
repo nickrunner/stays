@@ -16,10 +16,10 @@ export default function HostDashboard(props: any) {
 
   function getSelectedStay(): StayRecord | undefined {
     if (!globalState) {
-      return undefined;
+      return {};
     }
     if (!globalState.hosting) {
-      return undefined;
+      return {};
     }
     return globalState.hosting.selectedStay;
   }
@@ -35,22 +35,22 @@ export default function HostDashboard(props: any) {
         <Container maxWidth={false}>
           <Grid container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <MembershipCard stay={props.stay} />
+              <MembershipCard stay={getSelectedStay() as StayRecord} />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <VisibilityCard stay={props.stay} />
+              <VisibilityCard stay={getSelectedStay() as StayRecord} />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <OffersCard stay={props.stay} />
+              <OffersCard stay={getSelectedStay() as StayRecord} />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <EarlyBookingCard stay={props.stay} />
+              <EarlyBookingCard stay={getSelectedStay() as StayRecord} />
             </Grid>
             <Grid item lg={4} md={6} xl={3} xs={12}>
-              <CancellationCard stay={props.stay} />
+              <CancellationCard stay={getSelectedStay() as StayRecord} />
             </Grid>
             <Grid item lg={8} md={12} xl={9} xs={12}>
-              <PromotionsTable stay={props.stay} />
+              <PromotionsTable stay={getSelectedStay() as StayRecord} />
             </Grid>
           </Grid>
         </Container>

@@ -54,7 +54,7 @@ export class UserClient {
 
   public async addFavorite(stayId: string): Promise<void> {
     const cfg = await defCfg();
-    await axios.post(url + "/self/favorites/" + stayId, +stayId, cfg);
+    await axios.post(url + "/self/favorites/" + stayId, await defCfg());
   }
 
   public async removeFavorite(stayId: string): Promise<void> {

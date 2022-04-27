@@ -1,3 +1,4 @@
+import { ArrowDownward, ArrowDropDown } from "@material-ui/icons";
 import { AccountCircle, Cabin, TravelExplore } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
@@ -34,6 +35,19 @@ export default function LoginMenu(props: any) {
     setAnchorEl(null);
   };
 
+  function menuText() {
+    if (!globalState.isSignedIn) {
+      return "Menu";
+    }
+    if (!globalState) {
+      return "Menu";
+    }
+    if (!globalState.self) {
+      return "Menu";
+    }
+    return globalState.self.firstName;
+  }
+
   async function onSignOutClick() {
     await new AuthClient().signOut();
     router.push("/sign-in");
@@ -68,26 +82,38 @@ export default function LoginMenu(props: any) {
   return (
     <div>
       <Button
-        sx={{ height: props.height, width: { xs: 70, md: 120 }, mt: 1, p: "2px 4px" }}
-        size="medium"
+        sx={{
+          width: { xs: 75, sm: 100 },
+          height: { xs: 60, sm: 60 },
+          display: "block",
+          p: 0,
+          py: 0,
+          mt: 1,
+          mr: 1,
+          justifyContent: "center",
+          alightItems: "center"
+        }}
+        size="small"
         variant="text"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        margin-top="5"
         onClick={handleClick}>
-        {/* <Avatar
+        <Box
           sx={{
-            bgcolor: "primary.main",
-            mt: { xs: 0, sm: 1 },
-            p: { xs: 1, sm: 0 },
-            display: "flex"
+            color: "primary.main"
           }}>
-          <MenuIcon fontSize="large" sx={{ p: 0.1, display: { sm: "none", lg: "block" } }} /> */}
-
-        <AccountCircle sx={{ height: 50, width: 50, p: 0.1 }} />
-        {/* </Avatar> */}
+          <AccountCircle />
+        </Box>
+        <Box
+          sx={{ margin: "auto", color: "primary.dark", display: "flex", justifyContent: "center" }}>
+          <Typography sx={{ display: { xs: "block", sm: "none" } }} variant="caption">
+            {menuText()}
+          </Typography>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>Menu</Box>
+          <ArrowDropDown />
+        </Box>
       </Button>
       <Menu
         sx={{ width: 300 }}
@@ -142,7 +168,7 @@ export default function LoginMenu(props: any) {
           <Typography>Sign in</Typography>
         </MenuItem>
 
-        <Divider />
+        {/* <Divider />
 
         <MenuItem sx={{ p: menuPadding }} onClick={() => router.push("/directory")}>
           <HotelIcon sx={{ color: "primary.main", mr: 1 }} />
@@ -174,7 +200,7 @@ export default function LoginMenu(props: any) {
           sx={{ p: menuPadding, display: hasRole(Role.Host) ? "none" : "flex" }}>
           <CottageIcon sx={{ color: "primary.main", mr: 1 }} />
           <Typography>Become a host</Typography>
-        </MenuItem>
+        </MenuItem> */}
 
         <Divider />
 

@@ -58,7 +58,7 @@ export default function Hero(props: HeroProps) {
               xl: 1000
             },
             p: { xs: "10%", sm: "5%" },
-            pt: { xs: "20%", sm: "10%" },
+            pt: { xs: "30%", sm: "10%" },
             display: "grid",
             textAlign: { xs: "center", sm: "left" },
             verticalAlign: "center",

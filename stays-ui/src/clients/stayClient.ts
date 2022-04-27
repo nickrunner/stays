@@ -107,7 +107,7 @@ export class StayClient {
 
   public async getPromotionsOfStay(stayId: string): Promise<StayPromotionRecord[]> {
     try {
-      const response = await axios.get(url + "/" + stayId + "/promotions");
+      const response = await axios.get(url + "/" + stayId + "/promotions", await defCfg());
       return response.data as StayPromotionRecord[];
     } catch (err) {
       return [];
@@ -116,7 +116,7 @@ export class StayClient {
 
   public async getCancellationsOfStay(stayId: string): Promise<CancellationRecord[]> {
     try {
-      const response = await axios.get(url + "/" + stayId + "/cancellations");
+      const response = await axios.get(url + "/" + stayId + "/cancellations", await defCfg());
       return response.data as CancellationRecord[];
     } catch (err) {
       return [];

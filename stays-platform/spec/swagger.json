@@ -953,6 +953,33 @@
 				"parameters": []
 			}
 		},
+		"/cancellations/{cancellationId}": {
+			"delete": {
+				"operationId": "DeleteCancellation",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "cancellationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/early-bookings": {
 			"get": {
 				"operationId": "GetEarlyBookings",

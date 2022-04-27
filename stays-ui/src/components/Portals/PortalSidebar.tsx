@@ -46,7 +46,7 @@ export const PortalSidebar = (props: PortalSidebarProps) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100%",
+          minHeight: "100%",
           bgcolor: "primary.dark"
         }}>
         <div>
@@ -66,7 +66,7 @@ export const PortalSidebar = (props: PortalSidebarProps) => {
               <div>{props.selector[0]}</div>
             </Box>
           </Box>
-          <Box sx={{ flexGrow: 1, mt: 3 }}>
+          <Box sx={{ flexGrow: 1, mt: 1 }}>
             {props.items[0].map((item) => (
               <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
             ))}
@@ -88,7 +88,7 @@ export const PortalSidebar = (props: PortalSidebarProps) => {
             <div>{props.selector[1]}</div>
           </Box>
         </Box>
-        <Box sx={{ flexGrow: 1, my: 3 }}>
+        <Box sx={{ flexGrow: 1, my: 1 }}>
           {props.items[1].map((item) => (
             <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
           ))}
@@ -96,6 +96,7 @@ export const PortalSidebar = (props: PortalSidebarProps) => {
         <Divider sx={{ borderColor: "#2D3748" }} />
         <Box
           sx={{
+            bgcolor: "primary.dark",
             px: 2,
             py: 3
           }}>

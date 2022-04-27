@@ -11,7 +11,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
-import { Box, Chip } from "@mui/material";
+import { Box, CardActionArea, Chip } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -24,6 +24,7 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { StringDecoder } from "string_decoder";
 
@@ -75,6 +76,7 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
   const [expanded, setExpanded] = React.useState(false);
   const { globalState, dispatch } = React.useContext(globalContext);
   const [favoriteLoading, setFavoriteLoading] = React.useState(false);
+  const router = useRouter();
 
   React.useEffect(() => {
     return;
@@ -95,7 +97,8 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
     return imgs;
   }
 
-  async function handleAddFavoriteButtonClick() {
+  async function handleAddFavoriteButtonClick(event: any) {
+    event.stopPropagation();
     if (!globalState.isSignedIn) {
       props.onSignInRequired();
       return;
@@ -109,7 +112,8 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
     setFavoriteLoading(false);
   }
 
-  async function handleRemoveFavoriteButtonClick() {
+  async function handleRemoveFavoriteButtonClick(event: any) {
+    event.stopPropagation();
     if (!globalState.isSignedIn) {
       props.onSignInRequired();
       return;
@@ -144,8 +148,8 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
         <IconButton
           sx={{ color: "primary.main", display: isFavorited() ? "block" : "none" }}
           aria-label="remove from favorites"
-          onClick={() => {
-            handleRemoveFavoriteButtonClick();
+          onClick={(e: any) => {
+            handleRemoveFavoriteButtonClick(e);
           }}>
           <FavoriteIcon />
         </IconButton>
@@ -156,8 +160,8 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
           sx={{ display: isFavorited() ? "none" : "block" }}
           aria-label="add to favorites"
           className={classes.favoriteButton}
-          onClick={() => {
-            handleAddFavoriteButtonClick();
+          onClick={(e: any) => {
+            handleAddFavoriteButtonClick(e);
           }}>
           <FavoriteBorderIcon />
         </IconButton>
@@ -167,7 +171,10 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
 
   const classes = useStyles();
   return (
-    <Link href={"/listings/" + props.stay.id}>
+    <CardActionArea
+      onClick={() => {
+        router.push("/listings/" + props.stay.id);
+      }}>
       <Card
         elevation={10}
         id={props.stay.id}
@@ -284,6 +291,6 @@ export default function StayDirectoryCard(props: StayDirectoryCardProps) {
           </CardContent>
         </Collapse>
       </Card>
-    </Link>
+    </CardActionArea>
   );
 }

@@ -34,13 +34,13 @@ export function StaySelector(props: StaySelectorProps) {
         justifyContent: "flex-end"
       }}>
       <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>
-        <InputLabel id="stay-label">Stay</InputLabel>
+        <InputLabel id="stay-label">Selected Stay</InputLabel>
         <Select
-          sx={{ color: "action.hover" }}
+          sx={{ color: "primary.dark" }}
           labelId="stayLabel"
           id="stay-select"
           value={props.defaultStayId}
-          label="Stay"
+          label="Select Stay"
           onChange={(event: SelectChangeEvent) => {
             handleStayChange(event?.target.value);
           }}>
