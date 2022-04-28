@@ -198,6 +198,28 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"EarlyBooking": {
+				"properties": {
+					"startDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"endDate": {
+						"type": "number",
+						"format": "double"
+					},
+					"bookingLink": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"startDate",
+					"endDate",
+					"bookingLink"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Stay": {
 				"properties": {
 					"name": {
@@ -288,6 +310,9 @@
 					},
 					"organizationId": {
 						"type": "string"
+					},
+					"earlyBooking": {
+						"$ref": "#/components/schemas/EarlyBooking"
 					}
 				},
 				"required": [
@@ -339,60 +364,6 @@
 					"required": [
 						"stay",
 						"cancellation"
-					],
-					"type": "object"
-				},
-				"type": "array"
-			},
-			"EarlyBooking": {
-				"properties": {
-					"stayId": {
-						"type": "string"
-					},
-					"startDate": {
-						"type": "number",
-						"format": "double"
-					},
-					"endDate": {
-						"type": "number",
-						"format": "double"
-					},
-					"bookingLink": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"stayId",
-					"startDate",
-					"endDate",
-					"bookingLink"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"EarlyBookingRecord": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Entity"
-					},
-					{
-						"$ref": "#/components/schemas/EarlyBooking"
-					}
-				]
-			},
-			"GetEarlyBookingsResponse": {
-				"items": {
-					"properties": {
-						"stay": {
-							"$ref": "#/components/schemas/StayRecord"
-						},
-						"earlyBooking": {
-							"$ref": "#/components/schemas/EarlyBookingRecord"
-						}
-					},
-					"required": [
-						"stay",
-						"earlyBooking"
 					],
 					"type": "object"
 				},
@@ -978,80 +949,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/early-bookings": {
-			"get": {
-				"operationId": "GetEarlyBookings",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/EarlyBookingRecord"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateEarlyBooking",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Host",
-							"Admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/EarlyBooking"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/early-bookings/favorites": {
-			"get": {
-				"operationId": "GetUserEarlyBookings",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GetEarlyBookingsResponse"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"user": [
-							"Stayer"
-						]
-					}
-				],
-				"parameters": []
 			}
 		},
 		"/regions": {
@@ -2192,6 +2089,43 @@
 						}
 					}
 				]
+			}
+		},
+		"/stays/{stayId}/early-booking": {
+			"post": {
+				"operationId": "PostEarlyBooking",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EarlyBooking"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/stays/{stayId}/publish": {

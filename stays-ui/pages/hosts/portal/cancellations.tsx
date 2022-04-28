@@ -1,13 +1,14 @@
 import { NextPage } from "next";
 
 import Footer from "../../../src/components/Footer";
-import Cancellations from "../../../src/components/Portals/Hosts/Stays/Cancellations";
+import CancellationCalendar from "../../../src/components/Portals/Hosts/Stays/Cancellations/CancellationCalendar";
+import Cancellations from "../../../src/components/Portals/Hosts/Stays/Cancellations/CancellationCalendar";
+import CancellationCard from "../../../src/components/Portals/Hosts/Stays/Cancellations/CancellationsCard";
 import StaysPage from "../../../src/StaysPage";
 
 const PromotionsPage: NextPage = (props: any) => {
   return (
     <StaysPage>
-      <Cancellations />
       <Footer />
     </StaysPage>
   );

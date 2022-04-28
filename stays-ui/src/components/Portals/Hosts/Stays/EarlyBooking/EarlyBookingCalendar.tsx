@@ -1,25 +1,23 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { DateRange, LoadingButton, LocalizationProvider, StaticDateRangePicker } from "@mui/lab";
-import { Box, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { DateRange, LoadingButton } from "@mui/lab";
+import { Box, TextField, Typography } from "@mui/material";
 import React from "react";
 
-import { CancellationClient } from "../../../../../clients/cancellationClient";
-import { globalContext } from "../../../../../GlobalStore";
+import { StayClient } from "../../../../../clients/stayClient";
 import { StayRecord } from "../../../../../models";
 import DateRangePicker from "../../../../general/DateRangePicker";
 import Popup from "../../../../general/Popup";
 
-export interface CancellationCalendarProps {
+export interface EarlyBookingCalendarProps {
   stay: StayRecord | undefined;
   close: () => void;
 }
 
-export default function CancellationCalendar(props: CancellationCalendarProps) {
-  const { globalState, dispatch } = React.useContext(globalContext);
+export default function EarlyBookingCalendar(props: EarlyBookingCalendarProps) {
   const [msg, setMsg] = React.useState("");
   const [selectedDateRange, setSelectedDateRange] = React.useState<DateRange<Date>>([null, null]);
   const [loading, setLoading] = React.useState(false);
   const [submitEnabled, setSubmitEnabled] = React.useState(false);
+  const [link, setLink] = React.useState("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,11 +31,12 @@ export default function CancellationCalendar(props: CancellationCalendarProps) {
       return;
     }
     setLoading(true);
-    await new CancellationClient().createCancellation({
-      stayId: props.stay.id,
-      startDate: selectedDateRange[0].getTime(),
-      endDate: selectedDateRange[1].getTime()
-    });
+    await new StayClient().createEarlyBooking(
+      props.stay.id,
+      selectedDateRange[0],
+      selectedDateRange[1],
+      link
+    );
     setLoading(false);
     props.close();
   }
@@ -47,17 +46,29 @@ export default function CancellationCalendar(props: CancellationCalendarProps) {
       return;
     }
     setSelectedDateRange(dateRange);
+  }
+
+  function handleLinkChange(newLink: string) {
+    setLink(newLink);
     setSubmitEnabled(true);
   }
-  0;
 
   return (
     <React.Fragment>
       <Popup close={props.close} submit={handleSubmit}>
         <Typography sx={{ margin: "auto", p: 2 }} variant="subtitle1">
-          New Cancellation
+          Schedule Early Booking
         </Typography>
         <DateRangePicker onChange={handleDateRangeSelect} />
+        <TextField
+          sx={{ p: 3 }}
+          required
+          fullWidth
+          onChange={(event: any) => handleLinkChange(event.target.value)}
+          id="link"
+          label="Early Booking Link"
+          name="link"
+        />
         <Typography sx={{ margin: "auto", p: 2 }} variant="subtitle2">
           {msg}
         </Typography>

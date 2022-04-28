@@ -16,10 +16,10 @@ export default function HostDashboard(props: any) {
 
   function getSelectedStay(): StayRecord | undefined {
     if (!globalState) {
-      return {};
+      return undefined;
     }
     if (!globalState.hosting) {
-      return {};
+      return undefined;
     }
     return globalState.hosting.selectedStay;
   }

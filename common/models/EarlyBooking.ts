@@ -1,7 +1,6 @@
 import { Entity } from "./Entity";
 import { StayRecord } from "./Stay";
 export interface EarlyBooking {
-  stayId: string;
   startDate: number;
   endDate: number;
   bookingLink: string;

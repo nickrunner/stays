@@ -4,6 +4,7 @@ import { Booking } from "./Booking";
 import { Range } from "./Range";
 import { Photo } from "./Photo";
 import { Location, Bounds } from "./Location";
+import { EarlyBooking } from "./EarlyBooking";
 
 export enum StayMembership {
   None = "None",
@@ -41,6 +42,7 @@ export interface Stay {
   booking: Booking[];
   favoriteCount: number;
   organizationId: string;
+  earlyBooking?: EarlyBooking;
 }
 
 export interface StaySearchFilter {

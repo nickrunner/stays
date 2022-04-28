@@ -17,14 +17,14 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import { formatDistanceToNow, subHours } from "date-fns";
-import { format } from "date-fns";
+import { format, formatDistanceToNow, subHours } from "date-fns";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { CancellationClient } from "../../../../../clients/cancellationClient";
 import { StayClient } from "../../../../../clients/stayClient";
 import { CancellationRecord, StayRecord } from "../../../../../models";
+import AddButton from "../../../../general/AddButton";
 import CancellationCalendar from "./CancellationCalendar";
 
 export interface CancellationCardProps {
@@ -34,8 +34,6 @@ export interface CancellationCardProps {
 export default function CancellationCard(props: CancellationCardProps) {
   const [cancellations, setCancellations] = React.useState<CancellationRecord[]>([]);
   const [calendarOpen, setCalendarOpen] = React.useState(false);
-
-  const router = useRouter();
 
   async function getCancellations() {
     if (props.stay) {
@@ -78,15 +76,10 @@ export default function CancellationCard(props: CancellationCardProps) {
           subtitle={`${cancellations.length} in total`}
           title="Cancellations"
           action={
-            <IconButton
-              sx={{ height: 50, width: 50, bgcolor: "primary.dark" }}
-              color="secondary"
-              aria-label="open cancellation calendar"
-              onClick={(e: any) => {
+            <AddButton
+              onClick={() => {
                 setCalendarOpen(true);
-              }}>
-              <Add />
-            </IconButton>
+              }}></AddButton>
           }
         />
         <Divider />
@@ -100,9 +93,9 @@ export default function CancellationCard(props: CancellationCardProps) {
             <ListItem divider={i < cancellations.length - 1} key={cancellation.id}>
               <ListItemText
                 primary={
-                  format(cancellation.startDate, "MM/dd/yy") +
+                  format(cancellation.startDate, "MMMM, do") +
                   " - " +
-                  format(cancellation.endDate, "MM/dd/yy")
+                  format(cancellation.endDate, "MMMM, do")
                 }
                 secondary={formatDistanceToNow(cancellation.startDate) + " remaining"}
               />

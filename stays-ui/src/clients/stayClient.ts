@@ -114,6 +114,18 @@ export class StayClient {
     }
   }
 
+  public async createEarlyBooking(stayId: string, startDate: Date, endDate: Date, link: string) {
+    await axios.post(
+      url + "/" + stayId + "/early-booking",
+      {
+        startDate: startDate.getTime(),
+        endDate: endDate.getTime(),
+        bookingLink: link
+      },
+      await defCfg()
+    );
+  }
+
   public async getCancellationsOfStay(stayId: string): Promise<CancellationRecord[]> {
     try {
       const response = await axios.get(url + "/" + stayId + "/cancellations", await defCfg());

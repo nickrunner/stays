@@ -19,6 +19,7 @@ import { CancellationService } from "../cancellations/cancellationService";
 import { Error401 } from "../error";
 import {
   CancellationRecord,
+  EarlyBooking,
   Role,
   Stay,
   StayPromotionRecord,
@@ -133,6 +134,17 @@ export class StaysController extends Controller {
       return await new CancellationService().getStaysCancellations(stayId);
     } catch (err) {
       console.log("Error getting stays cancellations");
+      throw err;
+    }
+  }
+
+  @Post("/{stayId}/early-booking")
+  @Security("user", [Role.Host])
+  public async postEarlyBooking(@Path() stayId: string, @Body() earlyBooking: EarlyBooking) {
+    try {
+      return await new StaysService().createEarlyBooking(stayId, earlyBooking);
+    } catch (err) {
+      console.log("Error creating early booking: ", e);
       throw err;
     }
   }

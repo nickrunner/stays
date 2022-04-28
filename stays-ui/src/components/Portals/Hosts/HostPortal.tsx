@@ -52,9 +52,10 @@ export default function HostPortal(props: PropsWithChildren<HostPortalProps>) {
     router.pathname.includes("membership") ||
     router.pathname.includes("calendar");
 
-  function handleStayChange(stay: StayRecord) {
+  async function handleStayChange(stay: StayRecord) {
     if (stay) {
-      dispatch({ type: "HOSTING_SELECT_STAY", payload: stay });
+      const s = await new StayClient().getStay(stay.id);
+      dispatch({ type: "HOSTING_SELECT_STAY", payload: s });
     }
   }
 

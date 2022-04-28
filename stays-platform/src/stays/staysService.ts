@@ -6,7 +6,7 @@ import { Error400, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 import LocationService from "../locations/locationService";
-import { Org, Pagination } from "../models";
+import { EarlyBooking, Org, Pagination } from "../models";
 import { Coordinates } from "../models";
 import {
   Stay,
@@ -235,6 +235,10 @@ export class StaysService {
 
   public async batchGetStays(stayIds: string[]): Promise<StayRecord[]> {
     return await this.stays.getAll(new CollectionQuery().where("id").in(stayIds));
+  }
+
+  public async createEarlyBooking(stayId: string, earlyBooking: EarlyBooking): Promise<void> {
+    return await this.updateStay(stayId, { earlyBooking: earlyBooking });
   }
 
   private getKeywordsFromString(description: string): string[] {
