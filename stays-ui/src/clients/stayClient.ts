@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CancellationRecord, Pagination, StayPromotionRecord } from "../models";
+import { CancellationRecord, OfferRecord, Pagination, StayPromotionRecord } from "../models";
 import { StayAttributeRecord, StayAttributeType } from "../models";
 import { Stay, StayRecord, StaySearchFilter } from "../models";
 import { cfg, defCfg, queryCfg } from "./serverConfig";
@@ -132,6 +132,24 @@ export class StayClient {
       return response.data as CancellationRecord[];
     } catch (err) {
       return [];
+    }
+  }
+
+  public async getStaysOffers(stayId: string): Promise<OfferRecord[]> {
+    try {
+      const response = await axios.get(url + "/" + stayId + "/offers", await defCfg());
+      return response.data as OfferRecord[];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  public async getStaysLatestOffer(stayId: string): Promise<OfferRecord | undefined> {
+    try {
+      const response = await axios.get(url + "/" + stayId + "/offers/latest", await defCfg());
+      return response.data as OfferRecord;
+    } catch (err) {
+      return undefined;
     }
   }
 }

@@ -18,9 +18,10 @@ import { format } from "path";
 import React from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-import { StayClient } from "../../../../clients/stayClient";
-import { StayPromotionRecord, StayPromotionStatus, StayRecord } from "../../../../models";
-import { StatusPill } from "../../StatusPill";
+import { StayClient } from "../../../../../clients/stayClient";
+import { StayPromotionRecord, StayPromotionStatus, StayRecord } from "../../../../../models";
+import AddButton from "../../../../general/AddButton";
+import { StatusPill } from "../../../StatusPill";
 
 export interface PromotionsCardProps {
   stay: StayRecord;
@@ -50,7 +51,15 @@ export function PromotionsTable(props: PromotionsCardProps) {
         router.push("/hosts/portal/promotions");
       }}>
       <Card {...props}>
-        <CardHeader title="Promotions" />
+        <CardHeader
+          title="Promotions"
+          action={
+            <AddButton
+              onClick={() => {
+                router.push("/hosts/portal/dashboard/promotions/add");
+              }}></AddButton>
+          }
+        />
         <PerfectScrollbar>
           <Box sx={{ minWidth: 800 }}>
             <Table>

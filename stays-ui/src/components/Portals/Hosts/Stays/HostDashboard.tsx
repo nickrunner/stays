@@ -9,7 +9,7 @@ import VisibilityCard from "./Demand/DemandCard";
 import EarlyBookingCard from "./EarlyBooking/EarlyBookingCard";
 import MembershipCard from "./Membership/MembershipCard";
 import OffersCard from "./Offers/OffersCard";
-import { PromotionsTable } from "./PromotionsTable";
+import { PromotionsTable } from "./Promotions/PromotionsTable";
 
 export default function HostDashboard(props: any) {
   const { globalState, dispatch } = React.useContext(globalContext);

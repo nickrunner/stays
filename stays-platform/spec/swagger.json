@@ -2091,6 +2091,77 @@
 				]
 			}
 		},
+		"/stays/{stayId}/offers": {
+			"get": {
+				"operationId": "GetStaysOffers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/OfferRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/stays/{stayId}/offers/latest": {
+			"get": {
+				"operationId": "GetStaysLatestOffer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OfferRecord"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": [
+							"Host"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "stayId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/stays/{stayId}/early-booking": {
 			"post": {
 				"operationId": "PostEarlyBooking",

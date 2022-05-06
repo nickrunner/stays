@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-import { globalContext } from "../../../../GlobalStore";
-import { StayRecord } from "../../../../models";
-import HostPortal from "../HostPortal";
+import { globalContext } from "../../../../../GlobalStore";
+import { StayRecord } from "../../../../../models";
+import HostPortal from "../../HostPortal";
 import { PromotionsTable } from "./PromotionsTable";
 
 export default function Promotions(props: any) {

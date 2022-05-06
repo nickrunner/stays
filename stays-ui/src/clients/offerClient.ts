@@ -7,7 +7,7 @@ export const url = "/offers";
 
 export class OfferClient {
   public async createOffer(offer: Offer) {
-    await axios.post(url, { offer: offer }, await defCfg());
+    await axios.post(url, offer, await defCfg());
   }
 
   public async getOffers(): Promise<OfferRecord[]> {

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import _ from "lodash";
+
 import { Error404 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
@@ -41,8 +43,17 @@ export class OfferService {
     return response;
   }
 
-  public async getStayOffers(stayId: string): Promise<OfferRecord[]> {
+  public async getStaysOffers(stayId: string): Promise<OfferRecord[]> {
     return await this.offers.getAll(new CollectionQuery().where("stayId").eq(stayId));
+  }
+
+  public async getStaysLatestOffer(stayId: string): Promise<OfferRecord> {
+    let offers = await this.getStaysOffers(stayId);
+    if (offers.length < 1) {
+      throw new Error404("No offers found for stay: " + stayId);
+    }
+    offers = _.orderBy(offers, ["createdAt"], ["desc"]);
+    return offers[0];
   }
 
   public async getOffer(offerId: string): Promise<OfferRecord> {

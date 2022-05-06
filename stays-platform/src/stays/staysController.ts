@@ -20,12 +20,14 @@ import { Error401 } from "../error";
 import {
   CancellationRecord,
   EarlyBooking,
+  OfferRecord,
   Role,
   Stay,
   StayPromotionRecord,
   StayRecord,
   StayRejectionInfo
 } from "../models";
+import { OfferService } from "../offers/offerService";
 import { OrgService } from "../org/orgService";
 import { StayPromotionService } from "../stayPromotions/stayPromotionService";
 import { StayAttributesService } from "./stayAttributes/stayAttributesService";
@@ -134,6 +136,28 @@ export class StaysController extends Controller {
       return await new CancellationService().getStaysCancellations(stayId);
     } catch (err) {
       console.log("Error getting stays cancellations");
+      throw err;
+    }
+  }
+
+  @Get("/{stayId}/offers")
+  @Security("user", [Role.Host])
+  public async getStaysOffers(@Path() stayId: string): Promise<OfferRecord[]> {
+    try {
+      return await new OfferService().getStaysOffers(stayId);
+    } catch (err) {
+      console.log("Error getting stays offers");
+      throw err;
+    }
+  }
+
+  @Get("/{stayId}/offers/latest")
+  @Security("user", [Role.Host])
+  public async getStaysLatestOffer(@Path() stayId: string): Promise<OfferRecord> {
+    try {
+      return await new OfferService().getStaysLatestOffer(stayId);
+    } catch (err) {
+      console.log("Error getting stays offers");
       throw err;
     }
   }
