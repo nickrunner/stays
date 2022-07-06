@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { GetOffersResponse, Offer, OfferRecord } from "../models";
-import { cfg, defCfg } from "./serverConfig";
+import { defCfg } from "./serverConfig";
 
 export const url = "/offers";
 

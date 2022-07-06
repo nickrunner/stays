@@ -1,10 +1,7 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import router from "next/router";
 import React from "react";
 
-import { UserClient } from "../../../clients/userClient";
-import { globalContext } from "../../../GlobalStore";
-import { Org, OrgRecord, Role } from "../../../models";
+import { Org, OrgRecord } from "../../../models";
 
 export interface OrgSelectorProps {
   onOrgSelected: (org: Org) => void;

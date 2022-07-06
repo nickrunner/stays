@@ -1,5 +1,4 @@
-import { Close, FilterList } from "@mui/icons-material";
-import { Box, Button, Drawer, IconButton, SwipeableDrawer, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useUpdateEffect } from "react-use";
@@ -10,7 +9,6 @@ import { Nav } from "../AppBar/AppBar";
 import AppBarFilters from "./AppBarFilters";
 import DirectoryListings from "./DirectoryListings";
 import FilterDrawer from "./FilterDrawer";
-import Filters from "./Filters";
 
 export default function Directory(props: any) {
   const router = useRouter();

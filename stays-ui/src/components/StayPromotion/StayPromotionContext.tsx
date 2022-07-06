@@ -15,7 +15,7 @@ export const stayPromotionContext = React.createContext({} as StayPromotionConte
 
 const defaultPromotion: StayPromotion = {
   stayId: "",
-  type: StayPromotionType.Post,
+  type: StayPromotionType.Feed,
   socialPlatform: SocialPlatform.None,
   status: StayPromotionStatus.Requested,
   media: [],

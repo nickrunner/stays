@@ -1,14 +1,6 @@
 import axios from "axios";
 
-import {
-  GetOffersResponse,
-  OrgRecord,
-  Role,
-  User,
-  UserMembership,
-  UserRecord,
-  UserSearchFilter
-} from "../models";
+import { OrgRecord, Role, User, UserMembership, UserRecord, UserSearchFilter } from "../models";
 import { defCfg, queryCfg } from "./serverConfig";
 
 export const url = "/users";

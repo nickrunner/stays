@@ -1,9 +1,6 @@
-import { Box, Divider } from "@mui/material";
-import Image from "next/image";
+import { Divider } from "@mui/material";
 
-import { content } from "../../content";
-
-export default function SectionDivider(props: any) {
+export default function SectionDivider() {
   return (
     // <Box
     //   sx={{

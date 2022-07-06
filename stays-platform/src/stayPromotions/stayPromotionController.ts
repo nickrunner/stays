@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
+import { Body, Controller, Get, Post, Request, Route, Security } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
 import { Role, StayPromotion, StayPromotionRecord } from "../models";

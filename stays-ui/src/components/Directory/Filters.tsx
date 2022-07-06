@@ -2,10 +2,7 @@ import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React from "react";
 import { useUpdateEffect } from "react-use";
 
-import { StateClient } from "../../clients/stateClient";
-import { StaySearchFilter } from "../../models";
-import { StayAttributeType } from "../../models";
-import { Range } from "../../models";
+import { Range, StayAttributeType, StaySearchFilter } from "../../models";
 import RangeSlider from "../general/RangeSlider";
 import SectionDivider from "../general/SectionDivider";
 import SectionSub from "../general/SectionSub";

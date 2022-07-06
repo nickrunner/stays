@@ -1,4 +1,4 @@
-import { Controller, Get, Path, Query, Route } from "tsoa";
+import { Controller, Get, Query, Route } from "tsoa";
 
 import { StateRecord } from "../models";
 import { RegionsService } from "./regionsService";

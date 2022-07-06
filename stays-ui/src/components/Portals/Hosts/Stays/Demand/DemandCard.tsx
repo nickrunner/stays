@@ -1,14 +1,5 @@
-import { Analytics, ArrowDownward, ArrowUpward, Loyalty, People } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Typography
-} from "@mui/material";
+import { Analytics, ArrowUpward } from "@mui/icons-material";
+import { Box, Card, CardActionArea, CardContent, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 import { StayRecord } from "../../../../../models";

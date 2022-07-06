@@ -1,8 +1,16 @@
 import axios from "axios";
 
-import { CancellationRecord, OfferRecord, Pagination, StayPromotionRecord } from "../models";
-import { StayAttributeRecord, StayAttributeType } from "../models";
-import { Stay, StayRecord, StaySearchFilter } from "../models";
+import {
+  CancellationRecord,
+  OfferRecord,
+  Pagination,
+  Stay,
+  StayAttributeRecord,
+  StayAttributeType,
+  StayPromotionRecord,
+  StayRecord,
+  StaySearchFilter
+} from "../models";
 import { cfg, defCfg, queryCfg } from "./serverConfig";
 
 export const url = "/stays";

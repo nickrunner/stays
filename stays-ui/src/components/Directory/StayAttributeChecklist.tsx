@@ -1,9 +1,6 @@
-import { Cabin, DownhillSkiing } from "@mui/icons-material";
-import { Avatar } from "@mui/material";
 import React from "react";
 
 import { StayClient } from "../../clients/stayClient";
-import { content } from "../../content";
 import { StayAttributeRecord, StayAttributeType } from "../../models";
 import Checklist from "../general/Checklist";
 import StayAttributeIcon from "../general/StayAttributeIcon";

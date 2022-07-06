@@ -1,20 +1,6 @@
 import { CalendarToday, List } from "@material-ui/icons";
-import {
-  Analytics,
-  Approval,
-  AppShortcut,
-  BookmarkAdded,
-  CancelScheduleSend,
-  Cottage,
-  Dashboard,
-  Instagram,
-  LocalOffer,
-  Loyalty,
-  RoomService,
-  StayPrimaryLandscape
-} from "@mui/icons-material";
-import { Avatar, Box, Typography } from "@mui/material";
-import { display } from "@mui/system";
+import { Analytics, Approval, Cottage, Dashboard, Loyalty, RoomService } from "@mui/icons-material";
+import { Avatar, Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
 
@@ -22,16 +8,11 @@ import { OrgClient } from "../../../clients/orgClient";
 import { StayClient } from "../../../clients/stayClient";
 import { UserClient } from "../../../clients/userClient";
 import { globalContext } from "../../../GlobalStore";
-import { Org, OrgRecord, Role, StayRecord, User } from "../../../models";
-import { Nav } from "../../AppBar/AppBar";
-import Section from "../../general/Section";
+import { OrgRecord, StayRecord } from "../../../models";
 import { NavItemProps } from "../NavItem";
 import { PortalLayout } from "../PortalLayout";
-import Applications from "./Applications";
-import { HostingContext, hostingContext } from "./HostingContext";
-import MyStays from "./MyStays";
+import { HostingContext } from "./HostingContext";
 import { OrgSelector } from "./OrgSelector";
-import Services from "./Services";
 import { StaySelector } from "./StaySelector";
 
 export interface HostPortalProps {

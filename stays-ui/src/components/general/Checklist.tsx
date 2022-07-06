@@ -4,15 +4,6 @@ import { useUpdateEffect } from "react-use";
 
 import { theme } from "../../Theme";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      width: 250
-    }
-  }
-};
 function getStyles(item: string, selected: string[] | undefined) {
   if (!selected) {
     return;

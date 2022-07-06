@@ -1,7 +1,7 @@
 import { Error400 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
-import { Org, OrgRecord, StayRecord, UserRecord } from "../models";
+import { Org, OrgRecord, UserRecord } from "../models";
 import { StaysService } from "../stays/staysService";
 import { UsersService } from "../users/usersService";
 

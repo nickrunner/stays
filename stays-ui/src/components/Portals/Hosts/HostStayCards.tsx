@@ -1,7 +1,6 @@
 import { Box, Grid, Pagination } from "@mui/material";
 import React from "react";
 
-import stays from "../../../../pages/cms/stays";
 import { StayRecord } from "../../../models";
 import HostStayCard from "./HostStayCard";
 

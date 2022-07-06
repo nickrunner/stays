@@ -6,9 +6,11 @@ import { Error400, Error409 } from "../error";
 import { Collection } from "../firebase/firestore/collection";
 import { CollectionQuery } from "../firebase/firestore/collectionQuery";
 import LocationService from "../locations/locationService";
-import { EarlyBooking, Org, Pagination } from "../models";
-import { Coordinates } from "../models";
 import {
+  Coordinates,
+  EarlyBooking,
+  Org,
+  Pagination,
   Stay,
   StayApplicationStatus,
   StayRecord,

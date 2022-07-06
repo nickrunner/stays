@@ -1,10 +1,8 @@
-import { Box, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import React from "react";
-import { useUpdateEffect } from "react-use";
 
 import { Range } from "../../models";
-import ValueSelect from "./ValueSelect";
 
 export interface RangeSelectProps {
   default: Range | undefined;
@@ -18,8 +16,6 @@ export interface RangeSelectProps {
 }
 
 export default function RangeSlider(props: RangeSelectProps) {
-  const [max, setMax] = React.useState(props.default?.min ?? props.range.min);
-  const [min, setMin] = React.useState(props.default?.max ?? props.range.max);
   const [value, setValue] = React.useState<number[]>([
     interpolate(props.default?.min ?? props.range.min, props.range, { min: 0, max: 100 }),
     interpolate(props.default?.max ?? props.range.max, props.range, { min: 0, max: 100 })
@@ -56,9 +52,6 @@ export default function RangeSlider(props: RangeSelectProps) {
 
   function handleChange(event: Event, newValue: number | number[]) {
     setValue(newValue as number[]);
-    const vRange = getValueRange(newValue);
-    setMin(vRange.min);
-    setMax(vRange.max);
   }
 
   function handleChangeCommited(newValue: number | number[]) {

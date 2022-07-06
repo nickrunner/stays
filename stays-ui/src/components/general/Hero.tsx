@@ -1,11 +1,9 @@
 /* eslint-disable prefer-rest-params */
-import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
 import styles from "../../../styles/ComingSoon.module.css";
-import StaysImage from "./StaysImage";
 
 export interface HeroProps {
   height?: string | number;

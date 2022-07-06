@@ -1,9 +1,8 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import { OfferClient } from "../../../clients/offerClient";
-import { StayClient } from "../../../clients/stayClient";
-import { GetOffersResponse, Stay, StayRecord } from "../../../models";
+import { GetOffersResponse, StayRecord } from "../../../models";
 import OfferCard from "./OfferCard";
 import TravelerPortal from "./TravelerPortal";
 

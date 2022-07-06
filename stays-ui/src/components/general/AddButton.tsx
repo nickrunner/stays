@@ -13,7 +13,7 @@ export default function AddButton(props: AddButtonProps) {
       aria-label="open cancellation calendar"
       onClick={(e: any) => {
         e.stopPropagation();
-        props.onClick(e);
+        props.onClick();
       }}>
       <Add />
     </IconButton>

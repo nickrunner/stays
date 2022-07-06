@@ -1,6 +1,5 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { DateRange, LoadingButton, LocalizationProvider, StaticDateRangePicker } from "@mui/lab";
-import { Box, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { DateRange, LoadingButton } from "@mui/lab";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import { CancellationClient } from "../../../../../clients/cancellationClient";

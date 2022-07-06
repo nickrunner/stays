@@ -1,15 +1,4 @@
-import { ArrowDownward, ArrowUpward, LocalOffer, Loyalty, People } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Modal,
-  Typography
-} from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Grid, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 

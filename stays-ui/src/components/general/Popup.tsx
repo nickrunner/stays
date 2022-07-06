@@ -1,6 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { LoadingButton } from "@mui/lab";
-import { Box, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { Box, IconButton, Paper } from "@mui/material";
 import React, { PropsWithChildren } from "react";
 
 export interface PopupProps {

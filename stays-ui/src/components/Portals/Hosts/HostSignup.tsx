@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -7,7 +7,6 @@ import { UserClient } from "../../../clients/userClient";
 import { globalContext } from "../../../GlobalStore";
 import { UserRecord } from "../../../models";
 import { Nav } from "../../AppBar/AppBar";
-import OrgSignUp from "./OrgSignup";
 
 export default function HostSignUp(props: any) {
   const router = useRouter();

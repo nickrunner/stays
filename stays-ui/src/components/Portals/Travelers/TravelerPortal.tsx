@@ -4,22 +4,13 @@ import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FmdBadIcon from "@mui/icons-material/FmdBad";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import { Box, Hidden, Tab, Tabs, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { globalContext } from "../../../GlobalStore";
-import { User } from "../../../models";
-import { Nav } from "../../AppBar/AppBar";
 import Greeting from "../../AppBar/Greeting";
-import Section from "../../general/Section";
 import { NavItemProps } from "../NavItem";
 import { PortalLayout } from "../PortalLayout";
-import Cancellations from "./Cancellations";
-import EarlyBooking from "./EarlyBooking";
-import Favorites from "./Favorites";
-import Giveaways from "./Giveaways";
-import Opportunities from "./Opportunities";
 
 export default function TravelerPortal(props: any) {
   const [tabValue, setValue] = React.useState(0);

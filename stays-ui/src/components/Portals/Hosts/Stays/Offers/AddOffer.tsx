@@ -1,10 +1,8 @@
-import { ConstructionOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
+import { Box, FormGroup, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 
 import { OfferClient } from "../../../../../clients/offerClient";
-import { StayClient } from "../../../../../clients/stayClient";
 import { StayRecord } from "../../../../../models";
 import Popup from "../../../../general/Popup";
 

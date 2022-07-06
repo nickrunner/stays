@@ -1,7 +1,4 @@
 import { Box } from "@mui/material";
-import Image from "next/image";
-
-import styles from "../../../styles/Section.module.css";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Section(props: any) {

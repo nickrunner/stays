@@ -1,8 +1,6 @@
-import { Typography } from "@mui/material";
 import React from "react";
 
 import { globalContext } from "../../../../GlobalStore";
-import { StayRecord } from "../../../../models";
 import AddStay from "../../../Stay/AddStay";
 import { StayContext } from "../../../Stay/StayContext";
 import HostPortal from "../HostPortal";

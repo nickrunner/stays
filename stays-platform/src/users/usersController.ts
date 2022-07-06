@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Auth } from "firebase-admin/auth";
 import {
   Body,
   Controller,

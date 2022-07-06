@@ -6,8 +6,6 @@ import {
   Cancellation,
   CancellationRecord,
   GetCancellationsResponse,
-  GetOffersResponse,
-  OfferRecord,
   StayRecord,
   UserRecord
 } from "../models";

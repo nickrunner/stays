@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Path, Post, Query, Request, Route, Security } from "tsoa";
+import { Body, Controller, Delete, Get, Path, Post, Request, Route, Security } from "tsoa";
 
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";

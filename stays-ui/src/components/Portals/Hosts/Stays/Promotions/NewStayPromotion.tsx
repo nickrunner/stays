@@ -1,11 +1,13 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 import { globalContext } from "../../../../../GlobalStore";
 import { StayRecord } from "../../../../../models";
+import AddStayPromotion from "../../../../StayPromotion/AddStayPromotion";
+import { StayPromotionContext } from "../../../../StayPromotion/StayPromotionContext";
 import HostPortal from "../../HostPortal";
-import { PromotionsTable } from "./PromotionsTable";
 
-export default function Promotions(props: any) {
+export default function NewStayPromotion(props: any) {
   const { globalState, dispatch } = React.useContext(globalContext);
 
   function getSelectedStay(): StayRecord | undefined {
@@ -18,18 +20,14 @@ export default function Promotions(props: any) {
     return globalState.hosting.selectedStay;
   }
 
-  function getStayName() {
-    const stay: StayRecord | undefined = getSelectedStay();
-    if (!stay) {
-      return "";
-    }
-    return stay.name;
-  }
-
   return (
     <React.Fragment>
       <HostPortal>
-        <PromotionsTable stay={getSelectedStay() as StayRecord} />
+        <Box sx={{ justifyContent: "center", display: "flex" }}>
+          <StayPromotionContext>
+            <AddStayPromotion stay={getSelectedStay()} />
+          </StayPromotionContext>
+        </Box>
       </HostPortal>
     </React.Fragment>
   );

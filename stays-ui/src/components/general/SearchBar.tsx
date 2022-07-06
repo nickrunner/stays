@@ -1,8 +1,6 @@
 import { Cancel } from "@mui/icons-material";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, InputAdornment, TextField } from "@mui/material";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
 

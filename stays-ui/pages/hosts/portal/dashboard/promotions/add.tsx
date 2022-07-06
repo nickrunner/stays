@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 
-import AddStayPromotion from "../../../../../src/components/Portals/Hosts/Stays/Promotions/AddStayPromotion";
+import NewStayPromotion from "../../../../../src/components/Portals/Hosts/Stays/Promotions/NewStayPromotion";
 import StaysPage from "../../../../../src/StaysPage";
 
 const AddStayPromotionPage: NextPage = (props: any) => {
   return (
     <StaysPage>
-      <AddStayPromotion />
+      <NewStayPromotion />
     </StaysPage>
   );
 };

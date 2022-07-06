@@ -1,17 +1,5 @@
-import { ArrowDownward, BookmarkAdded, Loyalty } from "@mui/icons-material";
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardHeader,
-  Grid,
-  Modal,
-  Typography
-} from "@mui/material";
-import { isAfter } from "date-fns";
-import { format } from "date-fns";
-import { useRouter } from "next/router";
+import { Box, Card, CardContent, Grid, Modal, Typography } from "@mui/material";
+import { format, isAfter } from "date-fns";
 import React from "react";
 
 import { StayClient } from "../../../../../clients/stayClient";

@@ -12,7 +12,6 @@ import {
   Route,
   Security
 } from "tsoa";
-import { collapseTextChangeRangesAcrossMultipleVersions, isCatchClause } from "typescript";
 
 import { AuthenticatedRequest } from "../auth/auth";
 import { Error401 } from "../error";

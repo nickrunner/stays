@@ -1,43 +1,12 @@
-import { Add, Edit, PlusOne, Star } from "@mui/icons-material";
+import { Add, Edit } from "@mui/icons-material";
 import Delete from "@mui/icons-material/Delete";
-import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
-import PrintIcon from "@mui/icons-material/Print";
-import SaveIcon from "@mui/icons-material/Save";
-import Search from "@mui/icons-material/Search";
-import ShareIcon from "@mui/icons-material/Share";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Checkbox,
-  Grid,
-  InputAdornment,
-  Pagination,
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  SvgIcon,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { format } from "path";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { StayRecord } from "../../../models";
-import PropertyTypeTabs from "../../Directory/PropertyTypeTabs";
 import StayTable from "../StayTable";
 import HostPortal from "./HostPortal";
-import HostStayCard from "./HostStayCard";
 import HostStayCards from "./HostStayCards";
 
 export default function MyStays(props: any) {

@@ -1,19 +1,8 @@
-import { ArrowDownward, Loyalty } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Typography
-} from "@mui/material";
-import NextLink from "next/link";
+import { Loyalty } from "@mui/icons-material";
+import { Box, Card, CardActionArea, CardContent, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 import { StayRecord } from "../../../../../models";
-import { NextLinkComposed } from "../../../../Link";
 
 export interface MembershipCardProps {
   stay: StayRecord;

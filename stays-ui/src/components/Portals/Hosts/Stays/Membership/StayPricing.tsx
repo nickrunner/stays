@@ -9,7 +9,6 @@ import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import * as React from "react";
 
 const tiers = [
   {

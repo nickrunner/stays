@@ -1,10 +1,8 @@
-import { Typography } from "@mui/material";
 import React from "react";
 
 import { globalContext } from "../../../../../GlobalStore";
 import { StayRecord } from "../../../../../models";
 import HostPortal from "../../HostPortal";
-import MembershipCard from "./MembershipCard";
 import StayPricing from "./StayPricing";
 
 export default function Membership(props: any) {

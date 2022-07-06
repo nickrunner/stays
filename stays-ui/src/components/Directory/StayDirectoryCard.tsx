@@ -1,18 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  BedroomChildOutlined,
-  DownhillSkiing,
-  GolfCourse,
-  RoomService,
-  SportsGolf
-} from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ShareIcon from "@mui/icons-material/Share";
 import { Box, CardActionArea, Chip } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -23,23 +13,12 @@ import Collapse from "@mui/material/Collapse";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { StringDecoder } from "string_decoder";
 
-import styles from "../../../styles/StayDirectoryCard.module.css";
 import { UserClient } from "../../clients/userClient";
-import { content } from "../../content";
 import { globalContext } from "../../GlobalStore";
-import {
-  Stay,
-  StayAttribute,
-  StayAttributeRecord,
-  StayAttributeType,
-  StayRecord,
-  StaySearchFilter
-} from "../../models";
+import { Stay, StayAttributeType, StayRecord, StaySearchFilter } from "../../models";
 import StayAttributeIcon from "../general/StayAttributeIcon";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 

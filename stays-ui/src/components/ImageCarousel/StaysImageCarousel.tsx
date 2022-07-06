@@ -4,7 +4,6 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MobileStepper from "@mui/material/MobileStepper";
-import Image from "next/image";
 import * as React from "react";
 import SwipeableViews from "react-swipeable-views";
 

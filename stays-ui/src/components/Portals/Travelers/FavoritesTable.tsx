@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import {
   DataGridPro,
-  GridCellEditCommitParams,
   GridCellParams,
   GridColDef,
   GridToolbar,
@@ -11,11 +10,6 @@ import * as React from "react";
 
 import { StayClient } from "../../../clients/stayClient";
 import { StayRecord } from "../../../models";
-
-function dateString(timestamp: number): string {
-  const date: Date = new Date(timestamp);
-  return date.toLocaleDateString() + " " + date.toLocaleTimeString();
-}
 
 const columns: GridColDef[] = [
   {

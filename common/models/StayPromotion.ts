@@ -1,7 +1,7 @@
 import { Entity } from "./Entity";
 
 export enum StayPromotionType {
-  Post = "Post",
+  Feed = "Feed",
   Giveaway = "Giveaway",
   Email = "Email",
   Story = "Story",
