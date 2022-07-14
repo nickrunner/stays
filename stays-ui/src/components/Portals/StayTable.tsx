@@ -19,43 +19,11 @@ import { StayRecord } from "../../models";
 
 export interface StayTableProps {
   stays: StayRecord[];
+  onStaySelected: (stay: StayRecord) => void;
 }
 export default function StayTable(props: StayTableProps) {
-  const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
-  const handleSelectAll = (event: any) => {
-    let newSelectedStayIds: string[];
-
-    if (event.target.checked) {
-      newSelectedStayIds = props.stays.map((stay: StayRecord) => stay.id);
-    } else {
-      newSelectedStayIds = [];
-    }
-
-    setSelectedStayIds(newSelectedStayIds);
-  };
-
-  const handleSelectOne = (event: any, id: string) => {
-    const selectedIndex = selectedStayIds.indexOf(id);
-    let newSelectedStayIds: string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelectedStayIds = newSelectedStayIds.concat(selectedStayIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedStayIds = newSelectedStayIds.concat(selectedStayIds.slice(1));
-    } else if (selectedIndex === selectedStayIds.length - 1) {
-      newSelectedStayIds = newSelectedStayIds.concat(selectedStayIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedStayIds = newSelectedStayIds.concat(
-        selectedStayIds.slice(0, selectedIndex),
-        selectedStayIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedStayIds(newSelectedStayIds);
-  };
 
   const handleLimitChange = (event: any) => {
     setLimit(event.target.value);
@@ -72,16 +40,6 @@ export default function StayTable(props: StayTableProps) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedStayIds.length === stays.length}
-                    color="primary"
-                    indeterminate={
-                      selectedStayIds.length > 0 && selectedStayIds.length < stays.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Location</TableCell>
                 <TableCell>Plan</TableCell>
@@ -89,14 +47,11 @@ export default function StayTable(props: StayTableProps) {
             </TableHead>
             <TableBody>
               {props.stays.slice(0, limit).map((stay: StayRecord) => (
-                <TableRow hover key={stay.id} selected={selectedStayIds.indexOf(stay.id) !== -1}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedStayIds.indexOf(stay.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, stay.id)}
-                      value="true"
-                    />
-                  </TableCell>
+                <TableRow
+                  sx={{ cursor: "pointer" }}
+                  hover
+                  key={stay.id}
+                  onClick={() => props.onStaySelected(stay)}>
                   <TableCell>
                     <Box
                       sx={{

@@ -9,16 +9,21 @@ import {
   Grid,
   Typography
 } from "@mui/material";
+import { useRouter } from "next/router";
 
 import { StayRecord } from "../../../models";
 
 export interface HostStayCardProps {
   stay: StayRecord;
+  onClick?: (stay: StayRecord) => void;
 }
 
 export default function HostStayCard(props: HostStayCardProps) {
   function handleClick() {
     console.log("Handle click: " + props.stay.id);
+    if (props.onClick) {
+      props.onClick(props.stay);
+    }
   }
   return (
     <CardActionArea

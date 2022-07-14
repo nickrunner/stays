@@ -13,7 +13,7 @@ switch (config.platform.env) {
     BASE_URL = "https://stays-platform-cqnprd4uoa-uc.a.run.app";
     break;
   case "local":
-    BASE_URL = "http://192.168.86.233:3001";
+    BASE_URL = "http://192.168.86.249:3001";
     break;
 }
 

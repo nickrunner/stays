@@ -4,12 +4,14 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+import { globalContext } from "../../../GlobalStore";
 import { StayRecord } from "../../../models";
 import StayTable from "../StayTable";
 import HostPortal from "./HostPortal";
 import HostStayCards from "./HostStayCards";
 
 export default function MyStays(props: any) {
+  const { globalState, dispatch } = React.useContext(globalContext);
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
   const [stays, setStays] = React.useState<StayRecord[]>([]);
   const [limit, setLimit] = useState(10);
@@ -60,6 +62,11 @@ export default function MyStays(props: any) {
     setStays(newStays);
   }
 
+  function handleStaySelected(stay: StayRecord) {
+    dispatch({ type: "HOSTING_SELECT_STAY", payload: stay });
+    router.push("/hosts/portal/dashboard");
+  }
+
   return (
     <HostPortal
       onStaysReceived={(newStays: StayRecord[]) => {
@@ -101,11 +108,11 @@ export default function MyStays(props: any) {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ display: stays.length <= 600 ? "block" : "none" }}>
-          <HostStayCards stays={stays} />
+        <Box sx={{ display: stays.length <= 6 ? "block" : "none" }}>
+          <HostStayCards stays={stays} onStaySelected={(stay) => handleStaySelected(stay)} />
         </Box>
         <Box sx={{ display: stays.length <= 6 ? "none" : "block" }}>
-          <StayTable stays={stays} />
+          <StayTable stays={stays} onStaySelected={(stay) => handleStaySelected(stay)} />
         </Box>
       </Box>
     </HostPortal>

@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 import { default as config } from "../config.json";
 import { default as firebaseDevConfig } from "../secrets/stays_dev_creds.json";
@@ -21,3 +22,4 @@ switch (config.env) {
 }
 
 export const auth = getAuth(app);
+export const storage = getStorage(app);

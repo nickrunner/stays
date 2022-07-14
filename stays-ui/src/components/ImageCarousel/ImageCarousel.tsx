@@ -16,8 +16,8 @@ export interface CarouselImage {
 }
 export interface ImageCarouselProps {
   images: CarouselImage[];
-  width: string;
-  height: string;
+  width: any;
+  height: any;
 }
 
 export default function ImageCarousel(props: ImageCarouselProps) {

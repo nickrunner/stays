@@ -27,6 +27,19 @@ export default function LoginMenu(props: any) {
   const { globalState } = React.useContext(globalContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [scroll, setScroll] = React.useState(false);
+  const [active, setActive] = React.useState(false);
+
+  React.useEffect(() => {
+    function handleScroll() {
+      setScroll(window.scrollY != 0);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -91,7 +104,13 @@ export default function LoginMenu(props: any) {
           mt: 1,
           mr: 1,
           justifyContent: "center",
-          alightItems: "center"
+          alightItems: "center",
+          bgcolor: active ? "action.selected" : "",
+          color: !props.transparent || scroll ? "primary.dark" : "primary.light",
+          "&:hover": {
+            backgroundColor: "action.hover",
+            color: "primary.dark"
+          }
         }}
         size="small"
         variant="text"
@@ -106,13 +125,20 @@ export default function LoginMenu(props: any) {
           }}>
           <AccountCircle />
         </Box>
-        <Box
-          sx={{ margin: "auto", color: "primary.dark", display: "flex", justifyContent: "center" }}>
-          <Typography sx={{ display: { xs: "block", sm: "none" } }} variant="caption">
+        <Box sx={{ margin: "auto", display: "flex", justifyContent: "center" }}>
+          <Typography
+            sx={{
+              display: { xs: "block", sm: "none" }
+            }}>
             {menuText()}
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>Menu</Box>
-          <ArrowDropDown />
+          <Box
+            sx={{
+              display: { xs: "none", sm: "flex", gap: 1 }
+            }}>
+            <Typography variant="button">{menuText()}</Typography>
+            <ArrowDropDown />
+          </Box>
         </Box>
       </Button>
       <Menu

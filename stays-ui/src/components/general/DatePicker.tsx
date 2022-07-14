@@ -5,10 +5,11 @@ import React from "react";
 
 export interface DatePickerProps {
   onChange: (date: Date | null) => void;
+  default: Date | null;
 }
 
 export default function DatePick(props: DatePickerProps) {
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(props.default);
 
   function handleDateSelect(date: Date | null) {
     setSelectedDate(date);

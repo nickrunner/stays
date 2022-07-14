@@ -1,6 +1,8 @@
 import axios from "axios";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+
+import { storage } from "../firebase";
 
 export type UploadStatusCallback = (file: File, state: string, progress: number) => any;
 export type UploadErrorCallback = (file: File, error: string) => any;
@@ -13,10 +15,10 @@ export interface FileUploadListener {
 
 export class FilesClient {
   public async uploadFile(file: File, path: string, listener: FileUploadListener) {
-    const storage = getStorage();
-
     // Upload file and metadata
-    const storageRef = ref(storage, path + "/" + uuidv4());
+    const fullPath = path + "/" + file.name;
+    console.log("Uploading file to: " + fullPath);
+    const storageRef = ref(storage, fullPath);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     // Listen for state changes, errors, and completion of the upload.
@@ -57,10 +59,14 @@ export class FilesClient {
       },
       () => {
         // Upload completed successfully, now we can get the download URL
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          listener.onComplete(file, downloadURL);
-        });
+        try {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            listener.onComplete(file, downloadURL);
+          });
+        } catch (err) {
+          listener.onError(file, "Failed getting download URL");
+        }
       }
     );
   }

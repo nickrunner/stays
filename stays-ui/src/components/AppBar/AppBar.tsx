@@ -225,8 +225,8 @@ export function Nav(props: PropsWithChildren<StaysAppBarProps>) {
               icon={<EmojiPeopleIcon />}
               transparent={props.transparent}
               text={"Hosting"}
-              to="/hosts/portal"></NavButton>
-            <LoginMenu height={50} />
+              to="/hosts/portal/stays"></NavButton>
+            <LoginMenu transparent={props.transparent} height={50} />
           </Box>
         </Toolbar>
         <Box

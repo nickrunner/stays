@@ -6,6 +6,7 @@ import HostStayCard from "./HostStayCard";
 
 export interface HostStayCardsProps {
   stays: StayRecord[];
+  onStaySelected: (stay: StayRecord) => void;
 }
 
 export default function HostStayCards(props: HostStayCardsProps) {
@@ -15,7 +16,7 @@ export default function HostStayCards(props: HostStayCardsProps) {
         <Grid container spacing={3}>
           {props.stays.map((stay) => (
             <Grid item key={stay.id} lg={4} md={6} xs={12}>
-              <HostStayCard stay={stay} />
+              <HostStayCard stay={stay} onClick={(stay) => props.onStaySelected(stay)} />
             </Grid>
           ))}
         </Grid>
